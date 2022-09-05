@@ -1,67 +1,60 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.layout-enter-active,
+.layout-leave-active .page-enter-active,
+.page-leave-active {
+  transition: opacity 1s ease;
+}
+
+
 body {
-	font-family: Verdana, sans-serif;
-	margin: auto;
-	padding: 20px;
-	max-width: 65ch;
-	text-align: left;
-	background-color: #fff;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	line-height: 1.5;
-	color: #444;
+  /* These values can be overriden by specifying different custom properties on the body using JavaScript. */
+  --brand-hue: 0;
+  --brand-saturation: 78%;
+  --brand-lightness: 50%;
+
+  --light-threshold: 5%;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong,
-b {
-	color: #222;
+
+body {
+  accent-color: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-lightness));
 }
+
+
+body{ 
+  --color-brand-50: hsl(var(--brand-hue), 5%, calc(100% - var(--light-threshold)));
+  --color-brand-100: hsl(var(--brand-hue), 5%, calc(95% - var(--light-threshold)));
+  --color-brand-200: hsl(var(--brand-hue), 15%, calc(88% - var(--light-threshold)));
+  --color-brand-300: hsl(var(--brand-hue), 30%, calc(81% - var(--light-threshold)));
+  --color-brand-400: hsl(var(--brand-hue), 40%, calc(67% - var(--light-threshold)));
+  --color-brand-500: hsl(var(--brand-hue), 50%, calc(53% - var(--light-threshold)));
+  --color-brand-600: hsl(var(--brand-hue), 50%, calc(48% - var(--light-threshold)));
+  --color-brand-700: hsl(var(--brand-hue), 40%, calc(40% - var(--light-threshold)));
+  --color-brand-800: hsl(var(--brand-hue), 25%, calc(31% - var(--light-threshold)));
+  --color-brand-900: hsl(var(--brand-hue), 15%, calc(26% - var(--light-threshold)));
+  --color-brand-950: hsl(var(--brand-hue), 10%, calc(15% - var(--light-threshold)));
+
+  --color-verse-50: hsl(var(--brand-hue), 5%, calc(100% - var(--light-threshold)));
+  --color-verse-100: hsl(var(--brand-hue), 5%, calc(95% - var(--light-threshold)));
+  --color-verse-200: hsl(var(--brand-hue), 15%, calc(88% - var(--light-threshold)));
+  --color-verse-300: hsl(var(--brand-hue), 30%, calc(81% - var(--light-threshold)));
+  --color-verse-400: hsl(var(--brand-hue), 40%, calc(67% - var(--light-threshold)));
+  --color-verse-500: hsl(var(--brand-hue), 50%, calc(53% - var(--light-threshold)));
+  --color-verse-600: hsl(var(--brand-hue), 50%, calc(48% - var(--light-threshold)));
+  --color-verse-700: hsl(var(--brand-hue), 40%, calc(40% - var(--light-threshold)));
+  --color-verse-800: hsl(var(--brand-hue), 25%, calc(31% - var(--light-threshold)));
+  --color-verse-900: hsl(var(--brand-hue), 15%, calc(26% - var(--light-threshold)));
+  --color-verse-950: hsl(var(--brand-hue), 10%, calc(5% - var(--light-threshold)));
+}
+
 a {
-	color: #3273dc;
-}
-nav a {
-	margin-right: 10px;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-content {
-	line-height: 1.6;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-}
-code {
-	padding: 2px 5px;
-	background-color: #f2f2f2;
-}
-pre {
-	padding: 1rem;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border: 1px solid #999;
-	color: #222;
-	padding: 2px 0px 2px 20px;
-	margin: 0px;
-	font-style: italic;
+  text-decoration: none;
 }

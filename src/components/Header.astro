@@ -5,43 +5,35 @@ import { SITE_TITLE } from '../config';
 ---
 
 <nav class="relative shadow">
-    <div class="max-w-[1475px] mx-auto px-4 sm:px-4">
-      <div
-        class="flex justify-between items-center py-4 md:py-7 md:justify-start md:space-x-10"
-      >
-        <div class="logo-image flex justify-start lg:w-0 lg:flex-1">
-          <HeaderLink
-            href="/"
-            class="flex justify-center items-center gap-1 md:gap-2"
+  <div class="max-w-[1475px] mx-auto px-4 sm:px-4">
+    <div
+      class="flex justify-between items-center py-4 md:py-7 md:justify-start md:space-x-10"
+    >
+      <div class="logo-image flex justify-start lg:w-0 lg:flex-1">
+        <a
+          href="/"
+          class="flex justify-center items-center gap-1 md:gap-2"
+        >
+          <h1 class="sr-only">Front-end Coders Mauritius</h1>
+          <LogoFec class="w-16" />
+          <span
+            class="text-lg font-mono leading-none font-bold md:text-3xl text-verse-500 tracking-tighter hidden md:block"
           >
-            <h1 class="sr-only">Front-end Coders Mauritius</h1>
-            <LogoFec class="w-16" />
-            <span
-              class="text-lg font-mono leading-none font-bold md:text-3xl text-verse-500 tracking-tighter hidden md:block"
-            >
-              Front-End Coders
-            </span>
-          </HeaderLink>
-        </div>
+            Front-End Coders
+          </span>
+        </a>
+      </div>
 
-        <div class="md:flex items-center justify-end md:flex-1 lg:w-0 gap-4">
-			<HeaderLink href="/events"
-            class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
-          >View all meetups</HeaderLink>
-			<HeaderLink href="/about"
-            class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
-          >About</HeaderLink>          
-        </div>
+      <div class="md:flex items-center justify-end md:flex-1 lg:w-0 gap-4">
+    <HeaderLink href="/meetups"
+          class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
+        >View all meetups</HeaderLink>
+    <HeaderLink href="/about"
+          class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
+        >About</HeaderLink>          
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
 
-<style>
-	header {
-		margin: 0em 0 2em;
-	}
-	h2 {
-		margin: 0.5em 0;
-	}
-</style>

@@ -1,0 +1,64 @@
+---
+import { getDirectusClient}  from '../utils/directus-client';
+import LayoutCustom from '../layouts/LayoutCustom.astro';
+import DetailedEventCard from '../components/DetailedEventCard.astro';
+
+
+const directus = await getDirectusClient()
+const response = await directus.items("Events").readByQuery({
+  fields: ["*.*"],
+})
+
+const content = {
+	title: "My event title",
+  description: "my event description",
+}
+
+---
+
+<LayoutCustom content={content}>
+	<div>
+		<div>
+		  <!-- start  -->
+		  <div class="past-events-container bg-brand-50 pb-4 md:pb-16">
+			<div
+			  class="past-events-wrapper mx-auto py-8 px-4 md:px-20"
+			>
+			  <div
+				class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-4xl"
+			  >
+				<h1 class=" text-black">All meetups</h1>
+			  </div>
+	
+			  <div  class="grid-container gap-8">
+				{response.data.map((event) => (
+					// <div>{event.title }</div>
+				  <DetailedEventCard event={event} />
+				))}
+			  </div>	
+			</div>
+		  </div>
+		  <!-- ends -->
+		</div>
+	  </div>
+
+</LayoutCustom>
+
+<style scoped>
+	@media screen and (min-width: 650px) {
+	  .grid-container {
+		--minmax: 500px;
+	  }
+	}
+	
+	@media screen and (max-width: 650px) {
+	  .grid-container {
+		--minmax: 100%;
+	  }
+	}
+	.grid-container {
+	  display: grid;
+	  grid-template-columns: repeat(auto-fill, minmax(var(--minmax), 1fr));
+	}
+	</style>
+	
