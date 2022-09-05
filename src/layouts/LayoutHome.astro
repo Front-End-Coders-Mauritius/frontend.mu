@@ -1,0 +1,41 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Sponsors from "../components/Sponsors.astro";
+
+// export interface Props {
+// 	content: {
+// 		title: string;
+// 		description: string;
+// 		pubDate?: string;
+// 		updatedDate?: string;
+// 		heroImage?: string;
+// 	};
+// }
+
+// const {
+// 	content: { title, description, pubDate, updatedDate, heroImage },
+// } = Astro.props;
+const title = 'hi'
+const description = 'hi'
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body>
+		<div>
+			<Header />
+
+			<slot />
+
+			<Sponsors />
+
+
+			<Footer />
+		</div>
+	</body>
+</html>
