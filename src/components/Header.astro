@@ -1,19 +1,42 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import LogoFec from '../components/LogoFec.astro';
 import { SITE_TITLE } from '../config';
 ---
 
-<header>
-	<h2>
-		{SITE_TITLE}
-	</h2>
-	<nav>
-		<HeaderLink href="/">Home</HeaderLink>
-		<HeaderLink href="/about">About</HeaderLink>
-		<HeaderLink href="/events">Events</HeaderLink>
-		<HeaderLink href="https://github.com/withastro/astro" target="_blank">GitHub</HeaderLink>
-	</nav>
-</header>
+<nav class="relative shadow">
+    <div class="max-w-[1475px] mx-auto px-4 sm:px-4">
+      <div
+        class="flex justify-between items-center py-4 md:py-7 md:justify-start md:space-x-10"
+      >
+        <div class="logo-image flex justify-start lg:w-0 lg:flex-1">
+          <HeaderLink
+            href="/"
+            class="flex justify-center items-center gap-1 md:gap-2"
+          >
+            <h1 class="sr-only">Front-end Coders Mauritius</h1>
+            <LogoFec class="w-16" />
+            <span
+              class="text-lg font-mono leading-none font-bold md:text-3xl text-verse-500 tracking-tighter hidden md:block"
+            >
+              Front-End Coders
+            </span>
+          </HeaderLink>
+        </div>
+
+        <div class="md:flex items-center justify-end md:flex-1 lg:w-0 gap-4">
+			<HeaderLink href="/events"
+            class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
+          >View all meetups</HeaderLink>
+			<HeaderLink href="/about"
+            class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
+          >About</HeaderLink>          
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
 <style>
 	header {
 		margin: 0em 0 2em;
