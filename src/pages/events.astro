@@ -1,42 +1,30 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 import { getDirectusClient}  from '../utils/directus-client';
+import LayoutCustom from '../layouts/LayoutCustom.astro';
 
 const directus = await getDirectusClient()
 const response = await directus.items("Events").readByQuery({
   fields: ["*.*"],
 })
 
-console.log(response)
-
-//   const events = await directus.items("events").readByQuery({
-//     fields: ['*.*'],
-//   })
+const content = {
+	title: "My event title",
+  description: "my event description",
+}
 
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />		
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				Events
-				<ul>
-					{response.data.map((event) => (
-						<li>							
-							{ event.title }
-						</li>
-					))}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<LayoutCustom content={content}>
+	<main>
+		<section>
+			Events
+			<ul>
+				{response.data.map((event) => (
+					<li>							
+						{ event.title }
+					</li>
+				))}
+			</ul>
+		</section>
+	</main>
+</LayoutCustom>
