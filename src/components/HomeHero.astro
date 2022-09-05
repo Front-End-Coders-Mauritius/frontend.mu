@@ -3,7 +3,7 @@ import HeaderLink from './HeaderLink.astro';
 import LogoFec from '../components/LogoFec.astro';
 ---
 
-<div class="homepage-container bg-blue-900">
+<div class="homepage-container bg-brand-900">
   <div class="homepage-wrapper">
     <main >
       <div class="relative z-0 h-[700px] w-full md:h-[850px]">
@@ -26,7 +26,7 @@ import LogoFec from '../components/LogoFec.astro';
             <div class="grid place-items-center md:place-items-start">
               <HeaderLink
                 href="/meetups"
-                class="text-md block w-48 rounded-md bg-blue-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
+                class="text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
               >
                 View all meetups
               </HeaderLink>
@@ -35,8 +35,11 @@ import LogoFec from '../components/LogoFec.astro';
 
           <div class="md:w-1/2 grid place-items-center">
             <div class="image-container">
+              
               <div class="image-bg" />
+
               <LogoFec class="img-src text-white" />
+
             </div>
           </div>
         </div>
@@ -74,7 +77,7 @@ import LogoFec from '../components/LogoFec.astro';
     border-radius: 50%;
     width: var(--size);
     height: var(--size);
-    background-image: linear-gradient(-45deg, var(--color-blue-700) 50%, var(--color-blue-400)  50%);
+    background-image: linear-gradient(-45deg, var(--color-brand-700) 50%, var(--color-brand-400)  50%);
     filter: blur(100px);
     transform: translate(-50%, -50%);
     transition: all 1s ease-in-out;
