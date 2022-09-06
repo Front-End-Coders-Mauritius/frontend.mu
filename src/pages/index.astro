@@ -1,11 +1,17 @@
 ---
+import HomeHero from "../components/HomeHero.astro";
+import LayoutHome from "../layouts/LayoutHome.astro";
+import { getDirectusClient } from "../utils/directus-client";
+import HomeLatestMeetup from "../components/HomeLatestMeetup.vue";
 
-import HomeHero from '../components/HomeHero.astro';
-import LayoutHome from '../layouts/LayoutHome.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+const directus = await getDirectusClient();
+const response = await directus.items("Events").readByQuery({
+	fields: ["*.*"],
+});
 ---
 
 <LayoutHome>
 	<HomeHero />
 
+	<HomeLatestMeetup response={response} />
 </LayoutHome>
