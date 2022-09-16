@@ -1,0 +1,49 @@
+---
+import HomeSocialPresence from "../../components/HomeSocialPresence.astro";
+import LayoutSingleMeetup from "../../layouts/LayoutSingleMeetup.astro";
+import MeetupSingle from "../../components/MeetupSingle.astro";
+import Meetup from "../../components/Meetup.vue";
+import { getDirectusClient } from "../../utils/directus-client";
+
+const props = Astro.params;
+
+export async function getStaticPaths() {
+    const directus = await getDirectusClient();
+    const response = await directus.items("Events").readByQuery({
+    	fields: ["*.*"],
+    });    
+
+    return response.data.map((event) => {
+    	return { 
+            params: {
+                id: event.id.toString(),
+                		
+            },    	
+        };
+    });
+}
+
+// Get Data for the current meetup based on the id
+const directus = await getDirectusClient();
+const meetup = await directus.items("Events").readByQuery({
+    filter: {
+        id: {
+            _eq: props.id,
+        },
+    },
+	fields: ["*.*"],
+});
+
+console.log(meetup)
+---
+
+<LayoutSingleMeetup>
+
+	<!-- <HomeSocialPresence /> -->
+    <Meetup
+        key={props.id}
+        routeId={props.id}
+        get-current-event={meetup.data[0]}
+  />
+
+</LayoutSingleMeetup>
