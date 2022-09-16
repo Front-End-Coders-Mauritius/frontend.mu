@@ -1,7 +1,6 @@
 {
-  "name": "@example/blog",
-  "version": "0.0.1",
-  "private": true,
+  "name": "frontend.mu",
+  "version": "0.0.2",  
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
