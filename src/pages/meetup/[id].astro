@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 
 // Get Data for the current meetup based on the id
 const directus = await getDirectusClient();
-const meetup = await directus.items("Events").readByQuery({
+const getCurrentMeetup = await directus.items("Events").readByQuery({
     filter: {
         id: {
             _eq: props.id,
@@ -34,16 +34,18 @@ const meetup = await directus.items("Events").readByQuery({
 	fields: ["*.*"],
 });
 
+const meetup = getCurrentMeetup.data[0];
+
 console.log(meetup)
 ---
 
-<LayoutSingleMeetup>
+<LayoutSingleMeetup title={meetup.title} description={meetup.description}>
 
 	<!-- <HomeSocialPresence /> -->
     <Meetup
         key={props.id}
         routeId={props.id}
-        get-current-event={meetup.data[0]}
+        get-current-event={meetup}
   />
 
 </LayoutSingleMeetup>

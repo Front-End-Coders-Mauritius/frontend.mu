@@ -6,21 +6,26 @@ import Sponsors from "../components/Sponsors.astro";
 
 const title = 'hi'
 const description = 'hi'
+
+const props = Astro.props
+
+
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={props.title} description={props.description} />
 	</head>
 
 	<body>
 		<div>
 			<Header />
 
+
 			<slot />
 
 
-			<!-- <Footer /> -->
+			<Footer />
 		</div>
 	</body>
 </html>
