@@ -34,7 +34,6 @@ const getCurrentMeetup = await directus.items("Events").readByQuery({
 
 const meetup = getCurrentMeetup.data[0];
 
-console.log(meetup)
 ---
 
 <LayoutSingleMeetup title={meetup.title} description={meetup.description}>

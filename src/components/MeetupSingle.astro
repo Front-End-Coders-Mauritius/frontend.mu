@@ -18,7 +18,6 @@ function isUpcoming(){
   const past = new Date(props.getCurrentEvent.Date);
   const today = new Date();
   const verifyValue = dateInPast(past, today);
-  console.log(verifyValue)
   return !verifyValue;
 };
 ---

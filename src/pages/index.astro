@@ -3,7 +3,7 @@ import HomeHero from "../components/HomeHero.astro";
 import HomeSocialPresence from "../components/HomeSocialPresence.astro";
 import LayoutHome from "../layouts/LayoutHome.astro";
 import { getDirectusClient } from "../utils/directus-client";
-import HomeLatestMeetup from "../components/HomeLatestMeetup.vue";
+import HomeLatestMeetup from "../components/HomeLatestMeetup.astro";
 
 const directus = await getDirectusClient();
 const response = await directus.items("Events").readByQuery({
