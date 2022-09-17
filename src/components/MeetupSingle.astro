@@ -1,39 +1,229 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import LogoFec from '../components/LogoFec.astro';
-import { SITE_TITLE } from '../config';
+import IconDots from "./icons/icon-dots.astro";
+import FecAnchor from "./FecAnchor.astro";
+import IconFacebook from "./icons/icon-facebook.astro";
+import IconTwitter from "./icons/icon-twitter.astro";
+import IconLinkedin from "./icons/icon-linkedin.astro";
+
+const props = Astro.props;
+
+const dateInPast = function (firstDate: Date, secondDate: Date) {
+  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
+    return true;
+
+  return false;
+};
+
+function isUpcoming(){
+  const past = new Date(props.getCurrentEvent.Date);
+  const today = new Date();
+  const verifyValue = dateInPast(past, today);
+  console.log(verifyValue)
+  return !verifyValue;
+};
 ---
 
-<nav class="relative shadow">
-  <div class="max-w-[1475px] mx-auto px-4 sm:px-4">
-    <div
-      class="flex justify-between items-center py-4 md:py-7 md:justify-start md:space-x-10"
-    >
-      <div class="logo-image flex justify-start lg:w-0 lg:flex-1">
-        <a
-          href="/"
-          class="flex justify-center items-center gap-1 md:gap-2"
-        >
-          <h1 class="sr-only">Front-end Coders Mauritius</h1>
-          <LogoFec class="w-16" />
-          <span
-            class="text-lg font-mono leading-none font-bold md:text-3xl text-verse-500 tracking-tighter hidden md:block"
-          >
-            Front-End Coders
-          </span>
-        </a>
-      </div>
+<div>
+  <div>
+    <div class="relative">
+      <div class="pt-8 pb-10 md:pt-16 md:pb-24">
+        <div class="lg:mx-auto overflow-hidden lg:max-w-[1400px] lg:px-4">
+          <div class="relative">
+            <div
+              aria-hidden="true"
+              class="hidden sm:block lg:inset-y-0 lg:right-0 lg:w-screen"
+            >
+              <div
+                class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"
+              >
+              </div>
+              <IconDots class="w-[600px] opacity-5 saturate-0" />
+            </div>
+          </div>
 
-      <div class="md:flex items-center justify-end md:flex-1 lg:w-0 gap-4">
-    <HeaderLink href="/meetups"
-          class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
-        >View all meetups</HeaderLink>
-    <HeaderLink href="/about"
-          class="whitespace-nowrap text-md md:text-base font-medium text-gray-500 hover:text-red-600"
-        >About</HeaderLink>          
+          <div
+            class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-0"
+          >
+            <!-- Content area -->
+            <div>
+              <div class="flex w-full items-center justify-end">
+                <p
+                  class:list={[
+                    isUpcoming()
+                    ? "tagStyle bg-green-100 text-green-800"
+                    : "tagStyle bg-yellow-100 text-yellow-800"
+                  ]}
+                >
+                  {isUpcoming() ? "upcoming" : "past"}
+                </p>
+              </div>
+              <h1
+                class="text-3xl font-extrabold font-mono tracking-tight text-gray-900 md:text-4xl lg:text-5xl"
+              >
+                {props.getCurrentEvent?.title}
+              </h1>
+
+              {
+                props.getCurrentEvent.description ? (
+                  <div class="mt-6 space-y-6 text-gray-500">
+                    <div
+                      class="text-md prose md:text-lg"
+                      set:html={props.getCurrentEvent.description}
+                    />
+                  </div>
+                ) : (
+                  <div class="text-md prose md:text-lg">
+                    Please add a description.
+                  </div>
+                )
+              }
+            </div>
+            <!-- Stats section -->
+            <div class="mt-10">
+              <dl
+                class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
+              >
+                {
+                  props.getCurrentEvent.Date && (
+                    <div class="border-t-2 border-gray-100 pt-6">
+                      <dt class="text-base font-medium text-gray-500">Date</dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                        {new Date(props.getCurrentEvent.Date).toDateString()}
+                      </dd>
+                    </div>
+                  )
+                }
+                {
+                  props.getCurrentEvent.Venue && (
+                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                      <dt class="text-base font-medium text-gray-500">Venue</dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                        {props.getCurrentEvent.Venue}
+                      </dd>
+                    </div>
+                  )
+                }
+                {
+                  props.getCurrentEvent.Time && (
+                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                      <dt class="text-base font-medium text-gray-500">Time</dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                        {props.getCurrentEvent.Time}
+                      </dd>
+                    </div>
+                  )
+                }
+                {
+                  props.getCurrentEvent.Location && (
+                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                      <dt class="text-base font-medium text-gray-500">
+                        Location
+                      </dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                        {props.getCurrentEvent.Location}
+                      </dd>
+                    </div>
+                  )
+                }
+                {
+                  props.getCurrentEvent.Attendees && (
+                    <div v-if="" class="border-t-2 border-gray-100 pt-6">
+                      <dt class="text-base font-medium text-gray-500">
+                        Seats Limit
+                      </dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                        {props.getCurrentEvent.Attendees}
+                      </dd>
+                    </div>
+                  )
+                }
+
+                <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
+                  <dt class="text-base font-medium text-gray-500">Share</dt>
+                  <div class="flex gap-8 py-4">
+                    <button
+                      class="hover:text-[#4267B2]"
+                      onclick="shareOnFacebook()"
+                    >
+                      <IconFacebook class="w-10 md:w-12" />
+                    </button>
+                    <button
+                      class="hover:text-[#00acee]"
+                      onclick="shareOnTwitter()"
+                    >
+                      <IconTwitter class="w-10 md:w-12" />
+                    </button>
+                    <button
+                      class="hover:text-[#007db1]"
+                      onclick="shareOnLinkedIn()"
+                    >
+                      <IconLinkedin class="w-10 md:w-12" />
+                    </button>
+                  </div>
+                  <dd
+                    class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]"
+                  >
+                    <input
+                      id="myInput"
+                      class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
+                      type="text"
+                      value={`https://frontend.mu/meetup/${props.routeId}/`}
+                    />
+                    <div class="cursor-pointer" onclick="copy()">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                        ></path>
+                        <path
+                          d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+                        ></path>
+                      </svg>
+                    </div>
+                  </dd>
+                </div>
+
+                {
+                  isUpcoming() && (
+                    <div
+                      class="md:border-t-2 border-gray-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4"
+                    >
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                        {props.getCurrentEvent.rsvplink && (
+                          <FecAnchor
+                            href={props.getCurrentEvent.rsvplink}
+                          >
+                            Book my seat
+                          </FecAnchor>
+                        )}
+                      </dd>
+                    </div>
+                  )
+                }
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="lg:mx-auto lg:max-w-[1400px] px-4">
+          <div v-if="props.getCurrentEvent.album" class="flex flex-col items-center gap-8 py-20">
+            <div class="w-full grid grid-cols-4  gap-4">
+
+              <div v-for="photo in currentAlbum" :key="photo" class="rounded-md overflow-hidden aspect-video">
+                <img :src="`${source}/${photo}`" class="object-cover w-full h-full object-center block">
+              </div>
+
+            </div>
+            <div v-if="limit < maxAlbumLength" class="cursor-pointer hover:opacity-90 transition-all text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl" @click="viewMore()">
+              View more
+            </div>
+          </div>
+
+        </div> -->
       </div>
     </div>
   </div>
-</nav>
-
-
+</div>
