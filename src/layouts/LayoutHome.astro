@@ -1,6 +1,6 @@
 ---
+import { Header } from "../components/react/Header.jsx";
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Sponsors from "../components/Sponsors.astro";
 
@@ -28,7 +28,7 @@ const description = 'Front-End Coders Mauritius is a community around front-end 
 
 	<body>
 		<div>
-			<Header />
+			<Header client:only="react" />
 
 			<slot />
 

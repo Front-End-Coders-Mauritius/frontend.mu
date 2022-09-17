@@ -1,7 +1,7 @@
 module.exports = {
 	mode: 'jit',
 	content: [
-	  './src/components/**/*.{astro,vue}',
+	  './src/components/**/*.{astro,vue,jsx}',
 	  './src/layouts/**/*.astro',
 	  './src/pages/**/*.astro',
 	],
