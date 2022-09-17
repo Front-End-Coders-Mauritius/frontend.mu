@@ -1,110 +1,82 @@
 ---
 const { event } = Astro.props;
+import { LocationMarkerIcon, UsersIcon } from "@heroicons/vue/solid/index.js";
+
+import {
+  CalendarIcon,
+  MenuIcon,
+  TrendingUpIcon,
+  XIcon,
+} from "@heroicons/vue/outline/index.js";
 ---
 
 <div
-    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
-  >
-    <div v-if="event.Date" class="">
-      <span
-        class="inline-flex rounded-lg p-3 ring-4 ring-white"        
-      >
-        <!-- <CalendarIcon class="mr-2 h-6 w-6" /> -->
-        <span>{ event.Date }</span>
-      </span>
-    </div>
-    <div class="flex flex-col gap-4 md:gap-0">
-      <h3 class="leading-2 text-xl md:text-2xl font-medium py-2">
-        { event?.title }
-        <!-- <router-link
-          :to="{ name: 'meetup-id', params: { id: event.id } }"
-          class="w-[300px] md:w-96 focus:outline-none"
-        >
-          <span class="absolute inset-0" aria-hidden="true" />
-        </router-link> -->
-      </h3>
-      <div class="flex gap-4 border-gray-100">
-        <div
-          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
-        >
-          <!-- <UsersIcon
-            class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
-            aria-hidden="true"
-          /> -->
-          <div v-if="event?.Attendees !== 0" class="pt-[2px] line-clamp-1 md:line-clamp-0">
-            Attendees { event?.Attendees }
-          </div>
-          <div v-else class="pt-[2px]">Seats: { event?.Attendees }</div>
-        </div>
-        <div
-          v-if="event.Venue"
-          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500"
-        >
-          <!-- <LocationMarkerIcon
-            class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
-            aria-hidden="true"
-          /> -->
-          <div class="pt-1 line-clamp-1 md:line-clamp-0">{ event.Venue }</div>
-        </div>
-        <div v-else>No venue added.</div>
+  class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
+>
+  {
+    event.Date && (
+      <div class=" ">
+        <span class="inline-flex rounded-lg p-3 ring-4 ring-white bg-gray-100 ">
+          <CalendarIcon class="mr-2 h-6 w-6" />
+          <span>{event.Date}</span>
+        </span>
       </div>
+    )
+  }
+  <div class="flex flex-col gap-4 md:gap-0">
+    <h3 class="leading-2 text-xl md:text-2xl font-medium py-2">
+      {event?.title}
+      <a
+        href={`/meetup/${event?.id}`}
+        class="w-[300px] md:w-96 focus:outline-none"
+      >
+        <span class="absolute inset-0" aria-hidden="true"></span>
+      </a>
+    </h3>
+    <div class="flex gap-4 border-gray-100">
       <div
-        v-if="event.description"
-        class="mt-2 max-w-lg text-sm text-gray-500 line-clamp-3"
+        class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
       >
-
-        { event.description.replace(/<\/?[^>]+>/gi, "") }
+        <UsersIcon
+          class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+          aria-hidden="true"
+        />
+        {
+          event?.Attendees !== 0 ? (
+            <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+              Attendees {event?.Attendees}
+            </div>
+          ) : (
+            <div class="pt-[2px]">Seats: {event?.Attendees}</div>
+          )
+        }
       </div>
+      {
+        event.Venue ? (
+          <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500">
+            <LocationMarkerIcon
+              class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
+              aria-hidden="true"
+            />
+            <div class="pt-1 line-clamp-1 md:line-clamp-0">{event.Venue}</div>
+          </div>
+        ) : (
+          <div>No venue added.</div>
+        )
+      }
     </div>
-    <span
-      class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-verse-500"
-      aria-hidden="true"
-    >
-      <!-- <TrendingUpIcon class="h-6 w-6" /> -->
-    </span>
-</div>
-
-<style scoped>
-  .image-container {
-    position: relative;
-    margin: 0 auto;
-    --size: 200px;
-    width: var(--size);
-    height: var(--size);
-  }
-  
-  .img-src{
-    position: absolute;
-      top: 50%;
-      left: 50%;
-      max-width: var(--size);
-      width: calc(var(--size) * 0.8);
-      height: calc(var(--size) * 0.8);
-      transform: translate(-50%,-50%);
-  }
-  
-  .image-bg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    width: var(--size);
-    height: var(--size);
-    background-image: linear-gradient(-45deg, var(--color-brand-700) 50%, var(--color-brand-400)  50%);
-    filter: blur(100px);
-    transform: translate(-50%, -50%);
-    transition: all 1s ease-in-out;
-  }
-  
-  .image-container:hover  .image-bg {
-      background-position: -300px -300px;
-      transition: all 0.3s ease-in-out;
-  }
-  
-  @media  (min-width: 768px) {
-    .image-container {
-      --size: 500px;
+    {
+      event.description && (
+        <div class="mt-2 max-w-lg text-sm text-gray-500 line-clamp-3">
+          {event.description.replace(/<\/?[^>]+>/gi, "")}
+        </div>
+      )
     }
-  }
-  </style>
-  
+  </div>
+  <span
+    class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-verse-500"
+    aria-hidden="true"
+  >
+    <TrendingUpIcon class="h-6 w-6" />
+  </span>
+</div>

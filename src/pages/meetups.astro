@@ -9,14 +9,12 @@ const response = await directus.items("Events").readByQuery({
   fields: ["*.*"],
 })
 
-const content = {
-	title: "My event title",
-  description: "my event description",
-}
+const title = "My event title"
+const description = "my event description"
 
 ---
 
-<LayoutCustom content={content}>
+<LayoutCustom title={title} description={description}>
 	<div>
 		<div>
 		  <!-- start  -->
