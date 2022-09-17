@@ -1,8 +1,6 @@
 ---
-import HomeSocialPresence from "../../components/HomeSocialPresence.astro";
 import LayoutSingleMeetup from "../../layouts/LayoutSingleMeetup.astro";
 import MeetupSingle from "../../components/MeetupSingle.astro";
-// import Meetup from "../../components/Meetup.vue";
 import { getDirectusClient } from "../../utils/directus-client";
 
 const props = Astro.params;
@@ -40,13 +38,6 @@ console.log(meetup)
 ---
 
 <LayoutSingleMeetup title={meetup.title} description={meetup.description}>
-
-	<!-- <HomeSocialPresence /> -->
-    <!-- <Meetup
-        key={props.id}
-        routeId={props.id}
-        get-current-event={meetup}
-    /> -->
 
     <MeetupSingle
         routeId={props.id}
