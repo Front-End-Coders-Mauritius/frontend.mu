@@ -39,7 +39,6 @@ const { title, description, image = '/placeholder-social.jpg' } = Astro.props;
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
 <script is:inline>
-
 	const tod = new Date().getHours();
 	const todHue = tod * 15;
 	// insert hue in dom
