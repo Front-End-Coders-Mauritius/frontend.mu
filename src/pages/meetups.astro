@@ -1,6 +1,6 @@
 ---
 import { getDirectusClient}  from '../utils/directus-client';
-import LayoutCustom from '../layouts/LayoutCustom.astro';
+import Layout from '../layouts/LayoutHome.astro';
 import DetailedEventCard from '../components/DetailedEventCard.astro';
 
 
@@ -14,7 +14,7 @@ const description = "my event description"
 
 ---
 
-<LayoutCustom title={title} description={description}>
+<Layout title={title} description={description}>
 	<div>
 		<div>
 		  <!-- start  -->
@@ -40,7 +40,7 @@ const description = "my event description"
 		</div>
 	  </div>
 
-</LayoutCustom>
+</Layout>
 
 <style scoped>
 	@media screen and (min-width: 650px) {

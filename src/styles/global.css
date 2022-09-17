@@ -15,9 +15,9 @@
 }
 
 
-body {
+html {
   /* These values can be overriden by specifying different custom properties on the body using JavaScript. */
-  --brand-hue: 0;
+  --brand-hue: 30;
   --brand-saturation: 78%;
   --brand-lightness: 50%;
 

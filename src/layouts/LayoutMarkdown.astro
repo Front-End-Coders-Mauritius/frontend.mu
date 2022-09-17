@@ -15,23 +15,23 @@ import Sponsors from "../components/Sponsors.astro";
 // 	};
 // }
 
-// const {
-// 	content: { title, description, pubDate, updatedDate, heroImage },
-// } = Astro.props;
-const title = 'Front-End Coders Mauritius'
-const description = 'Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.'
+const {	title, description, pubDate, updatedDate, heroImage } = Astro.props;
+// const title = 'Front-End Coders Mauritius'
+// const description = 'Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.'
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title}  description={description}  />
 	</head>
 
 	<body>
 		<div>
 			<Header />
 
-			<slot />
+			<div class="prose max-w-5xl mx-auto py-10">
+				<slot />
+			</div>
 
 			<Sponsors />
 
