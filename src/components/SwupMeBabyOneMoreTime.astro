@@ -1,0 +1,50 @@
+---
+
+---
+
+
+
+<script
+  src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"
+  async
+></script>
+<script src="https://unpkg.com/swup@2.0.18/dist/swup.min.js" defer></script>
+<script
+  src="https://unpkg.com/@mgjules/swup-progress-plugin@1.3.0/dist/SwupProgressPlugin.min.js"
+  defer
+></script>
+<script
+  src="https://unpkg.com/@swup/preload-plugin@1.0.4/dist/SwupPreloadPlugin.min.js"
+  defer
+></script>
+<script
+  src="https://unpkg.com/@swup/head-plugin@1.2.1/dist/SwupHeadPlugin.min.js"
+  defer
+></script>
+<script
+  src="https://unpkg.com/swup-morph-plugin@0.2.0/dist/SwupMorphPlugin.min.js"
+  defer
+></script>
+<script
+  src="https://unpkg.com/@ngsctt/swup-preserve-scroll-plugin@0.1.0/dist/SwupPreserveScrollPlugin.min.js"
+  defer
+></script>
+<script type="module" is:inline defer>
+  new Swup({
+    animationSelector: '[class*="swup-transition-"]',
+    plugins: [
+      new SwupProgressPlugin(),
+      new SwupPreloadPlugin(),
+      new SwupHeadPlugin({
+        persistAssets: true,
+      }),
+      new SwupMorphPlugin({
+        containers: ["#header", "#sidebar", "#title"],
+      }),
+      new SwupPreserveScrollPlugin({
+        selector: ".swup-preserve-scroll",
+        quiet: false,
+      }),
+    ],
+  });
+</script>

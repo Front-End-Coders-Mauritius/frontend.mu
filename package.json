@@ -15,6 +15,7 @@
     "@directus/sdk": "^10.1.4",
     "@heroicons/vue": "^1.0.6",
     "astro": "^1.2.5",
+    "swup": "^2.0.19",
     "vanilla-tilt": "^1.7.2",
     "vanilla-tilt-vue": "^0.1.3"
   },

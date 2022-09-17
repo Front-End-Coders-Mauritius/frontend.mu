@@ -58,3 +58,30 @@ body{
 a {
   text-decoration: none;
 }
+
+.swup-transition-pulse {
+    transition-duration: 1ms;
+    filter: blur(0);
+  }
+
+  html.is-animating .swup-transition-pulse {
+    filter: blur(0.000001rem);
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-delay: 300ms;
+  }
+
+
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.8;
+    }
+  }
