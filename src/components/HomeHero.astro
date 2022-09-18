@@ -1,27 +1,32 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import LogoFec from '../components/LogoFec.astro';
+import HeaderLink from "./HeaderLink.astro";
+import LogoFec from "../components/LogoFec.astro";
 ---
 
 <div class="homepage-container bg-brand-950 -mt-32 pt-16 md:pt-0">
   <div class="homepage-wrapper">
-    <main >
+    <main>
       <div class="relative z-0 h-[700px] w-full md:h-[850px]">
         <div
-          class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center max-w-6xl px-12 "
+          class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center max-w-6xl px-12"
         >
           <div
-            class="flex flex-col justify-center text-center md:text-left gap-10  md:w-1/2"
+            class="flex flex-col justify-center text-center md:text-left gap-10 md:w-1/2"
           >
             <h1
               class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
             >
               Frontend Coders
-              <span class="block font-sans text-gray-200 xl:inline capitalize font-mono"> Mauritius</span>
+              <span
+                class="flex items-start font-sans text-gray-200 xl:inline justify-center sm:justify-start capitalize font-mono spotlight"
+                data-text="Mauritius">Mauritius</span
+              >
             </h1>
             <!-- <flip-book class="mt-[-16%] md:mt-[-12%]" /> -->
             <p class="text-md md:text-lg text-gray-300 font-mono font-bold">
-              Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.
+              Front-End Coders Mauritius is a community around front-end
+              development based in Mauritius. We also organise monthly meetups
+              free for anyone interested to attend.
             </p>
             <div class="grid place-items-center md:place-items-start">
               <HeaderLink
@@ -35,11 +40,9 @@ import LogoFec from '../components/LogoFec.astro';
 
           <div class="md:w-1/2 grid place-items-center">
             <div class="image-container">
-              
-              <div class="image-bg" /> 
+              <div class="image-bg"></div>
 
               <LogoFec class="img-src text-white" />
-
             </div>
           </div>
         </div>
@@ -58,19 +61,19 @@ import LogoFec from '../components/LogoFec.astro';
     --size: 100px;
     width: var(--size);
     height: var(--size);
-    display:none;
+    display: none;
   }
-  
-  .img-src{
+
+  .img-src {
     position: absolute;
-      top: 50%;
-      left: 50%;
-      max-width: var(--size);
-      width: calc(var(--size) * 0.8);
-      height: calc(var(--size) * 0.8);
-      transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    max-width: var(--size);
+    width: calc(var(--size) * 0.8);
+    height: calc(var(--size) * 0.8);
+    transform: translate(-50%, -50%);
   }
-  
+
   .image-bg {
     position: absolute;
     top: 50%;
@@ -78,22 +81,62 @@ import LogoFec from '../components/LogoFec.astro';
     border-radius: 50%;
     width: var(--size);
     height: var(--size);
-    background-image: linear-gradient(-45deg, var(--color-brand-700) 50%, var(--color-brand-400)  50%);
+    background-image: linear-gradient(
+      -45deg,
+      var(--color-brand-700) 50%,
+      var(--color-brand-400) 50%
+    );
     filter: blur(100px);
     transform: translate(-50%, -50%);
     transition: all 1s ease-in-out;
   }
-  
-  .image-container:hover  .image-bg {
-      background-position: -300px -300px;
-      transition: all 0.3s ease-in-out;
+
+  .image-container:hover .image-bg {
+    background-position: -300px -300px;
+    transition: all 0.3s ease-in-out;
   }
-  
-  @media  (min-width: 768px) {
-    .image-container {
-      --size: 500px;
-      display:block;
+
+  .spotlight {
+    position: relative;
+  }
+
+  .spotlight::before {
+    content: attr(data-text);
+    position: absolute;
+    background: linear-gradient(
+      to right,
+      #ea2839 0,
+      #1a206d 33.3%,
+      #ffd500 66.6%,
+      #00a551 100%
+    );
+    background-clip: text;
+    color: transparent;
+    background-size: 100% 90%;
+    clip-path: ellipse(60px 60px at -2.54% -9.25%);
+    animation: swing 5s infinite;
+    animation-direction: alternate;
+  }
+
+  @keyframes swing {
+    0% {
+      -webkit-clip-path: ellipse(60px 60px at -2.54% -9.25%);
+      clip-path: ellipse(60px 60px at -2.54% -9.25%);
+    }
+    50% {
+      -webkit-clip-path: ellipse(60px 60px at 49.66% 64.36%);
+      clip-path: ellipse(60px 60px at 49.66% 64.36%);
+    }
+    100% {
+      -webkit-clip-path: ellipse(60px 60px at 102.62% -1.61%);
+      clip-path: ellipse(60px 60px at 102.62% -1.61%);
     }
   }
-  </style>
-  
+
+  @media (min-width: 768px) {
+    .image-container {
+      --size: 500px;
+      display: block;
+    }
+  }
+</style>
