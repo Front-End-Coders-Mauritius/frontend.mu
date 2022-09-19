@@ -14,18 +14,57 @@ const dateInPast = function (firstDate: Date, secondDate: Date) {
   return false;
 };
 
-function isUpcoming(){
+function isUpcoming() {
   const past = new Date(props.getCurrentEvent.Date);
   const today = new Date();
   const verifyValue = dateInPast(past, today);
   return !verifyValue;
-};
+}
+
+// Google Photos Album Section
+const source =
+  "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
+// let currentAlbum = ref([])
+let albumsPhotos = await fetch(`${source}index.json`);
+albumsPhotos = await albumsPhotos.json();
+let limit = 12;
+
+console.log(albumsPhotos);
+
+let maxAlbumLength = 0;
+
+function fetchAlbumDetails() {
+  const albumName = props.getCurrentEvent.album;
+  console.log(albumsPhotos)
+  if (!albumName) return [];
+  // return []
+
+  if (albumsPhotos) {
+    const albumPhotosParsed = albumsPhotos[albumName];
+    // check if array
+    if (Array.isArray(albumPhotosParsed)) {
+      maxAlbumLength = albumPhotosParsed.length;
+      // filter all strings that end with .mp4
+      const filteredPhotos = albumPhotosParsed.filter((photo) => {
+        return !photo.endsWith(".mp4");
+      });
+      // return filteredPhotos.slice(0, limit);
+      return filteredPhotos;
+    }
+  }
+}
+
+let currentAlbum = fetchAlbumDetails();
+
+// function viewMore () {
+//   if (limit < maxAlbumLength) limit += 8;
+// };
 ---
 
 <div>
   <div>
     <div class="relative">
-      <div class="pb-10  md:pb-24">
+      <div class="pb-10 md:pb-24">
         <div class="lg:mx-auto overflow-hidden lg:max-w-[1400px] lg:px-4">
           <div class="relative">
             <div
@@ -49,8 +88,8 @@ function isUpcoming(){
                 <p
                   class:list={[
                     isUpcoming()
-                    ? "tagStyle bg-green-100 text-green-800"
-                    : "tagStyle bg-yellow-100 text-yellow-800"
+                      ? "tagStyle bg-green-100 text-green-800"
+                      : "tagStyle bg-yellow-100 text-yellow-800",
                   ]}
                 >
                   {isUpcoming() ? "upcoming" : "past"}
@@ -187,14 +226,10 @@ function isUpcoming(){
 
                 {
                   isUpcoming() && (
-                    <div
-                      class="md:border-t-2 border-gray-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4"
-                    >
+                    <div class="md:border-t-2 border-gray-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
                         {props.getCurrentEvent.rsvplink && (
-                          <FecAnchor
-                            href={props.getCurrentEvent.rsvplink}
-                          >
+                          <FecAnchor href={props.getCurrentEvent.rsvplink}>
                             Book my seat
                           </FecAnchor>
                         )}
@@ -207,21 +242,38 @@ function isUpcoming(){
           </div>
         </div>
 
-        <!-- <div class="lg:mx-auto lg:max-w-[1400px] px-4">
-          <div v-if="props.getCurrentEvent.album" class="flex flex-col items-center gap-8 py-20">
-            <div class="w-full grid grid-cols-4  gap-4">
-
-              <div v-for="photo in currentAlbum" :key="photo" class="rounded-md overflow-hidden aspect-video">
-                <img :src="`${source}/${photo}`" class="object-cover w-full h-full object-center block">
-              </div>
-
+        <div class="lg:mx-auto lg:max-w-[1400px] px-4">
+          <div
+            v-if="props.getCurrentEvent.album"
+            class="flex flex-col items-center gap-8 py-20"
+          >
+            <div class="w-full grid grid-cols-4 gap-4">
+              {
+                currentAlbum.length > 0 &&
+                  currentAlbum.map((photo) => (
+                    <div class="rounded-md overflow-hidden aspect-video">
+                      <img
+                        src={`${source}/${photo}`}
+                        class="object-cover w-full h-full object-center block"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))
+              }
             </div>
-            <div v-if="limit < maxAlbumLength" class="cursor-pointer hover:opacity-90 transition-all text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl" @click="viewMore()">
-              View more
-            </div>
+            <!-- ToDo -->
+            <!-- {
+              limit < maxAlbumLength && (
+                <div
+                  class="cursor-pointer hover:opacity-90 transition-all text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
+                  onClick={viewMore}
+                >
+                  View more
+                </div>
+              )
+            } -->
           </div>
-
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
