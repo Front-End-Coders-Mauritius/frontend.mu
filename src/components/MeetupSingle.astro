@@ -35,7 +35,7 @@ let maxAlbumLength = 0;
 
 function fetchAlbumDetails() {
   const albumName = props.getCurrentEvent.album;
-  console.log(albumsPhotos)
+  console.log(albumsPhotos);
   if (!albumName) return [];
   // return []
 
@@ -62,7 +62,7 @@ let currentAlbum = fetchAlbumDetails();
 ---
 
 <div>
-  <div>
+  <div data-title={props.getCurrentEvent.title}>
     <div class="relative">
       <div class="pb-10 md:pb-24">
         <div class="lg:mx-auto overflow-hidden lg:max-w-[1400px] lg:px-4">
@@ -176,6 +176,42 @@ let currentAlbum = fetchAlbumDetails();
                   )
                 }
 
+                <!-- Share Functions -->
+
+                <script is:inline>
+                  function copy() {
+                    const copyText = document.getElementById("myInput");
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999);
+                    navigator.clipboard.writeText(copyText.value);
+                  }
+
+                  function shareOnFacebook() {
+                    const navUrl =
+                      "https://www.facebook.com/sharer/sharer.php?u=" +
+                      `${window.location.href}`;
+                    window.open(navUrl, "_blank");
+                  }
+
+                  function shareOnTwitter() {
+                    const getTitleFromDataTitle  = document.querySelector('[data-title]').getAttribute('data-title');
+                    const str = encodeURIComponent(
+                      " #mauritius #frontendcoders "
+                    );
+                    const navUrl =
+                      `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` +
+                      `${window.location.href}`;
+                    window.open(navUrl, "_blank");
+                  }
+
+                  function shareOnLinkedIn() {
+                    const navUrl =
+                      "http://www.linkedin.com/shareArticle?mini=true&url=" +
+                      `${window.location.href}`;
+                    window.open(navUrl, "_blank");
+                  }
+                </script>
+
                 <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
                   <dt class="text-base font-medium text-gray-500">Share</dt>
                   <div class="flex gap-8 py-4">
@@ -206,6 +242,7 @@ let currentAlbum = fetchAlbumDetails();
                       class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
                       type="text"
                       value={`https://frontend.mu/meetup/${props.routeId}/`}
+                      onclick="copy()"
                     />
                     <div class="cursor-pointer" onclick="copy()">
                       <svg
