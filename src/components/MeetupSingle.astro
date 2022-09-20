@@ -35,9 +35,7 @@ let maxAlbumLength = 0;
 
 function fetchAlbumDetails() {
   const albumName = props.getCurrentEvent.album;
-  console.log(albumsPhotos);
   if (!albumName) return [];
-  // return []
 
   if (albumsPhotos) {
     const albumPhotosParsed = albumsPhotos[albumName];
