@@ -1,9 +1,9 @@
 module.exports = {
 	mode: 'jit',
 	content: [
-	  './src/components/**/*.{astro,vue}',
-	  './src/layouts/**/*.astro',
-	  './src/pages/**/*.astro',
+	  './src/components/**/*.{astro,vue,md,mdx}',
+	  './src/layouts/**/*.{astro,vue,md,mdx}',
+	  './src/pages/**/*.{astro,vue,md,mdx}',
 	],
 	theme: {
 	  fontFamily: {
