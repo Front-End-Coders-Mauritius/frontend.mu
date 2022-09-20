@@ -114,7 +114,10 @@ import LogoFec from "../components/LogoFec.astro";
     color: transparent;
     background-size: 100% 90%;
     clip-path: ellipse(60px 60px at -2.54% -9.25%);
-    animation: swing 5s infinite;
+  }
+
+  .spotlight:hover::before {
+    animation: swing 5s ease infinite;
     animation-direction: alternate;
   }
 
