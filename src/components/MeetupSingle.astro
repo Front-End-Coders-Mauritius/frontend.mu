@@ -4,6 +4,7 @@ import FecAnchor from "./FecAnchor.astro";
 import IconFacebook from "./icons/icon-facebook.astro";
 import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
+import MeetupAlbum from "./MeetupAlbum.astro";
 
 const props = Astro.props;
 
@@ -61,7 +62,7 @@ let currentAlbum = fetchAlbumDetails();
   <div data-title={props.getCurrentEvent.title}>
     <div class="relative">
       <div class="pb-10 md:pb-24">
-        <div class="lg:mx-auto overflow-hidden lg:max-w-[1400px] lg:px-4">
+        <div class="lg:mx-auto lg:max-w-[1000px] lg:px-4">
           <div class="relative">
             <div
               aria-hidden="true"
@@ -75,24 +76,26 @@ let currentAlbum = fetchAlbumDetails();
             </div>
           </div>
 
+      
+
           <div
-            class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-0"
+            class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24"
           >
             <!-- Content area -->
             <div>
-              <div class="flex w-full items-center justify-end">
+              <div class="flex w-full items-center justify-start pb-4">
                 <p
                   class:list={[
                     isUpcoming()
                       ? "tagStyle bg-green-100 text-green-800"
                       : "tagStyle bg-yellow-100 text-yellow-800",
-                  ]}
+                  , 'p-2 rounded-full text-sm font-medium tracking-wide uppercase']}
                 >
                   {isUpcoming() ? "upcoming" : "past"}
                 </p>
               </div>
               <h1
-                class="text-3xl font-extrabold font-mono tracking-tight text-gray-900 md:text-4xl lg:text-5xl"
+                class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
               >
                 {props.getCurrentEvent?.title}
               </h1>
@@ -120,7 +123,7 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   props.getCurrentEvent.Date && (
                     <div class="border-t-2 border-gray-100 pt-6">
-                      <dt class="text-base font-medium text-gray-500">Date</dt>
+                      <dt class="text-base font-medium text-verse-500">Date</dt>
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
                         {new Date(props.getCurrentEvent.Date).toDateString()}
                       </dd>
@@ -130,7 +133,7 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   props.getCurrentEvent.Venue && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-gray-500">Venue</dt>
+                      <dt class="text-base font-medium text-verse-500">Venue</dt>
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
                         {props.getCurrentEvent.Venue}
                       </dd>
@@ -140,7 +143,7 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   props.getCurrentEvent.Time && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-gray-500">Time</dt>
+                      <dt class="text-base font-medium text-verse-500">Time</dt>
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
                         {props.getCurrentEvent.Time}
                       </dd>
@@ -150,7 +153,7 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   props.getCurrentEvent.Location && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-gray-500">
+                      <dt class="text-base font-medium text-verse-500">
                         Location
                       </dt>
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
@@ -162,7 +165,7 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   props.getCurrentEvent.Attendees && (
                     <div v-if="" class="border-t-2 border-gray-100 pt-6">
-                      <dt class="text-base font-medium text-gray-500">
+                      <dt class="text-base font-medium text-verse-500">
                         Seats Limit
                       </dt>
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
@@ -190,7 +193,9 @@ let currentAlbum = fetchAlbumDetails();
                   }
 
                   function shareOnTwitter() {
-                    const getTitleFromDataTitle  = document.querySelector('[data-title]').getAttribute('data-title');
+                    const getTitleFromDataTitle = document
+                      .querySelector("[data-title]")
+                      .getAttribute("data-title");
                     const str = encodeURIComponent(
                       " #mauritius #frontendcoders "
                     );
@@ -208,8 +213,9 @@ let currentAlbum = fetchAlbumDetails();
                   }
                 </script>
 
+                <!-- Share Buttons -->
                 <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
-                  <dt class="text-base font-medium text-gray-500">Share</dt>
+                  <dt class="text-base font-medium text-verse-500">Share</dt>
                   <div class="flex gap-8 py-4">
                     <button
                       class="hover:text-[#4267B2]"
@@ -257,6 +263,7 @@ let currentAlbum = fetchAlbumDetails();
                   </dd>
                 </div>
 
+                <!-- RSVP Button -->
                 {
                   isUpcoming() && (
                     <div class="md:border-t-2 border-gray-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
@@ -275,38 +282,8 @@ let currentAlbum = fetchAlbumDetails();
           </div>
         </div>
 
-        <div class="lg:mx-auto lg:max-w-[1400px] px-4">
-          <div
-            v-if="props.getCurrentEvent.album"
-            class="flex flex-col items-center gap-8 py-20"
-          >
-            <div class="w-full grid grid-cols-4 gap-4">
-              {
-                currentAlbum.length > 0 &&
-                  currentAlbum.map((photo) => (
-                    <div class="rounded-md overflow-hidden aspect-video">
-                      <img
-                        src={`${source}/${photo}`}
-                        class="object-cover w-full h-full object-center block"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))
-              }
-            </div>
-            <!-- ToDo -->
-            <!-- {
-              limit < maxAlbumLength && (
-                <div
-                  class="cursor-pointer hover:opacity-90 transition-all text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
-                  onClick={viewMore}
-                >
-                  View more
-                </div>
-              )
-            } -->
-          </div>
-        </div>
+        <MeetupAlbum currentAlbum={currentAlbum} source={source} />
+
       </div>
     </div>
   </div>

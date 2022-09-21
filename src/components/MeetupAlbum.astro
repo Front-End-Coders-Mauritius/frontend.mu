@@ -1,0 +1,36 @@
+---
+const props = Astro.props
+---
+
+<div class="lg:mx-auto lg:w-[80%] px-4">
+    <div
+      v-if="props.getCurrentEvent.album"
+      class="flex flex-col items-center gap-8 py-20"
+    >
+      <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {
+          props.currentAlbum.length > 0 &&
+            props.currentAlbum.map((photo) => (
+              <div class="rounded-md overflow-hidden aspect-video">
+                <img
+                  src={`${props.source}/${photo}`}
+                  class="object-cover w-full h-full object-center block"
+                  loading="lazy"
+                />
+              </div>
+            ))
+        }
+      </div>
+      <!-- ToDo -->
+      <!-- {
+        limit < maxAlbumLength && (
+          <div
+            class="cursor-pointer hover:opacity-90 transition-all text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
+            onClick={viewMore}
+          >
+            View more
+          </div>
+        )
+      } -->
+    </div>
+  </div>
