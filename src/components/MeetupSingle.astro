@@ -29,8 +29,6 @@ let albumsPhotos = await fetch(`${source}index.json`);
 albumsPhotos = await albumsPhotos.json();
 let limit = 12;
 
-console.log(albumsPhotos);
-
 let maxAlbumLength = 0;
 
 function fetchAlbumDetails() {
