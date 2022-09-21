@@ -58,8 +58,7 @@ const getUpcomingData = () => {
   }) as Meetup[];
 };
 
-const upcomingData = getUpcomingData()
-
+const upcomingData = getUpcomingData();
 ---
 
 <div
@@ -75,23 +74,18 @@ const upcomingData = getUpcomingData()
     </div>
 
     <!-- This is how you embed external client side library in astro -->
-    <script >
-      import 'vanilla-tilt/dist/vanilla-tilt.min.js';
+    <script>
+      import "vanilla-tilt/dist/vanilla-tilt.min.js";
       const elements = document.querySelectorAll(".card-3d");
       VanillaTilt.init(elements, {
         reverse: false,
         speed: 1000,
       });
     </script>
-    
-    <div class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">
-      {
-        upcomingData.map((event) => (   
-          <EventCard event={event}  />
-        ))
-      }
-    </div>
 
+    <div class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">
+      {upcomingData.map((event) => <EventCard event={event} />)}
+    </div>
 
     <div
       class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-4xl"
@@ -100,11 +94,7 @@ const upcomingData = getUpcomingData()
     </div>
 
     <div class="sm:grid sm:grid-cols-2 gap-8 px-4 md:px-0">
-      {
-        filteredData().map((event) => (
-          <SmallEventCard event={event} />
-        ))
-      }
+      {filteredData().map((event) => <SmallEventCard event={event} />)}
     </div>
 
     <div class="flex h-32 items-center justify-center">

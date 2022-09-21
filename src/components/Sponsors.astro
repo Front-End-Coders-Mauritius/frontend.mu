@@ -45,15 +45,19 @@ import HeaderLink from "./HeaderLink.astro";
                   <a
                     title={sponsor.description}
                     target="_blank"
-                    href={ sponsor.sponsorUrl } 
-                    class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-center items-center flex-col gap-4 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
+                    href={sponsor.sponsorUrl}
+                    class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-between items-center flex-col gap-4 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
                   >
-                    <img v-if="sponsor.logo" src={`/img/sponsors/${sponsor.logo}`}>
-                    <div v-else>
-                      <span class="text-2xl font-bold">{ sponsor.name }</span>
+                    <div>
+                      <span class="text-2xl font-bold">{sponsor.name}</span>
                     </div>
-                    <div v-if="sponsor.description" class="bg-brand-200 py-1 px-4 text-xs w-full text-center text-verse-600 font-medium rounded-2xl">
-                      { sponsor.description }</div>
+                    <img src={`/img/sponsors/${sponsor.logo}`} />
+                    <div
+                      v-if="sponsor.description"
+                      class="bg-brand-200 py-1 px-4 text-xs w-full text-center text-verse-600 font-medium rounded-2xl self-end"
+                    >
+                      {sponsor.description}
+                    </div>
                   </a>
                 ))
               )
