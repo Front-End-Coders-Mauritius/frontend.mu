@@ -10,5 +10,6 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), vue()],
   vite: {
     resolve: { dedupe: ['vue'] },
+    define: { "import.meta.env.VERCEL_ANALYTICS_ID": JSON.stringify( process.env.VERCEL_ANALYTICS_ID ) }
   },
 });
