@@ -3,6 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import '../styles/tailwind.css';
+import VercelAnalytics from "./VercelAnalytics.astro"
 
 export interface Props {
 	title: string;
@@ -44,3 +45,5 @@ const { title, description, image = '/placeholder-social.jpg' } = Astro.props;
 	// insert hue in dom
 	document.documentElement.style.setProperty('--brand-hue', todHue);
 </script>
+
+<VercelAnalytics />
