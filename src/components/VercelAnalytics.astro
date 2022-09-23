@@ -67,9 +67,11 @@
 	}
 
 	if (analyticsId) {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
 		webVitals({
-			path: Astro.url.pathname,
-			params: Astro.url.searchParams.entries(),
+			path: window.location.href,
+			params: params,
 			analyticsId,
 		})
 	}
