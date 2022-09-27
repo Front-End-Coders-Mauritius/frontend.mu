@@ -6,9 +6,13 @@ import { getDirectusClient } from "../utils/directus-client";
 import HomeLatestMeetup from "../components/HomeLatestMeetup.astro";
 
 const directus = await getDirectusClient();
-const response = await directus.items("Events").readByQuery({
+global.events = global.events
+    ? global.events
+    :  await directus.items("Events").readByQuery({
 	fields: ["*.*"],
 });
+
+let response = global.events
 ---
 
 <LayoutHome>
