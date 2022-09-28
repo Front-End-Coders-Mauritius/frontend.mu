@@ -1,17 +1,10 @@
 ---
-import { getDirectusClient}  from '../utils/directus-client';
 import Layout from '../layouts/LayoutHome.astro';
 import DetailedEventCard from '../components/DetailedEventCard.astro';
+import { loadEvents } from '../utils/api';
 
 
-const directus = await getDirectusClient()
-global.events = global.events
-    ? global.events
-    :  await directus.items("Events").readByQuery({
-	fields: ["*.*"],
-});
-
-let response = global.events
+let response = await loadEvents();
 
 const title = "My event title"
 const description = "my event description"
