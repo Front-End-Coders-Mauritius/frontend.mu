@@ -5,7 +5,7 @@ const directus = await getDirectusClient();
 
 async function loadEventsUncached() {
 	const events = await directus.items("Events").readByQuery({
-		fields: ["*.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title",  "sessions.Session_id.speakers.id",  "sessions.Session_id.speakers.github_account"],
+		fields: ["*.*","sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title",  "sessions.Session_id.speakers.id",  "sessions.Session_id.speakers.github_account"],
 	});
 
 

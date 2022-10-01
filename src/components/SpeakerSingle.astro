@@ -5,7 +5,8 @@ import IconFacebook from "./icons/icon-facebook.astro";
 import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
-import SessionList from "./SessionList.astro";
+import EventsList from "./EventsList.astro";
+import LogoSpiral from "./LogoSpiral.astro";
 
 const props = Astro.props;
 ---
@@ -17,166 +18,176 @@ const props = Astro.props;
   <div data-title={props.speaker.person.name}>
     <div class="relative">
       <div class="pb-10 md:pb-24">
-        <div class="lg:mx-auto lg:max-w-[1000px] lg:px-4">
-          <div class="relative">
+        <div class="contain">
+          <!-- <div class="">
             <div
               aria-hidden="true"
-              class="hidden sm:block lg:inset-y-0 lg:right-0 lg:w-screen relative"
+              class="hidden sm:block lg:inset-y-0 lg:right-0 lg:w-screen"
             >
               <div
                 class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"
-              > 
-              <IconDots class="w-[600px] opacity-5 saturate-0" />
+              >
+                <IconDots class="w-[600px] opacity-5 saturate-0" />
+              </div>
             </div>
-              
-              
-            </div>
-          </div>
-
-          <div class=""> 
-            <img
-              class="h-20 w-20 rounded-full lg:h-64 lg:w-64"
-              src={props.speaker.person.github_account
-                ? "https://github.com/" +
-                  props.speaker.person.github_account +
-                  ".png"
-                : "https://i.pravatar.cc/300"}
-              alt=""
-            />
-          </div>
+          </div> -->
 
           <div
-            class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24"
+            class="relative mx-auto px-8 py-3 sm:px-6 md:px-0 md:mx-0 md:py-24"
           >
-            <!-- Content area -->
-            <div>
-              <h1
-                class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-              >
-                {props.speaker.person.name}
-              </h1>
-
-              <SessionList
-                sessions={props.speaker.sessions}
-                show-avatar={false}
-              />
-            </div>
-            <!-- Stats section -->
-            <div class="mt-10">
-              <dl
-                class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
-              >
-                {
-                  props.speaker.Date && (
-                    <div class="border-t-2 border-gray-100 pt-6">
-                      <dt class="text-base font-medium text-verse-500">Date</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {new Date(props.speaker.Date).toDateString()}
-                      </dd>
-                    </div>
-                  )
-                }
-                {
-                  props.speaker.Venue && (
-                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500">
-                        Venue
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {props.speaker.Venue}
-                      </dd>
-                    </div>
-                  )
-                }
-
-                <!-- Share Functions -->
-
-                <script is:inline>
-                  function copy() {
-                    const copyText = document.getElementById("myInput");
-                    copyText.select();
-                    copyText.setSelectionRange(0, 99999);
-                    navigator.clipboard.writeText(copyText.value);
-                  }
-
-                  function shareOnFacebook() {
-                    const navUrl =
-                      "https://www.facebook.com/sharer/sharer.php?u=" +
-                      `${window.location.href}`;
-                    window.open(navUrl, "_blank");
-                  }
-
-                  function shareOnTwitter() {
-                    const getTitleFromDataTitle = document
-                      .querySelector("[data-title]")
-                      .getAttribute("data-title");
-                    const str = encodeURIComponent(
-                      " #mauritius #frontendcoders "
-                    );
-                    const navUrl =
-                      `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` +
-                      `${window.location.href}`;
-                    window.open(navUrl, "_blank");
-                  }
-
-                  function shareOnLinkedIn() {
-                    const navUrl =
-                      "http://www.linkedin.com/shareArticle?mini=true&url=" +
-                      `${window.location.href}`;
-                    window.open(navUrl, "_blank");
-                  }
-                </script>
-
-                <!-- Share Buttons -->
-                <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
-                  <dt class="text-base font-medium text-verse-500">Share</dt>
-                  <div class="flex gap-8 py-4">
-                    <button
-                      class="hover:text-[#4267B2]"
-                      onclick="shareOnFacebook()"
-                    >
-                      <IconFacebook class="w-10 md:w-12" />
-                    </button>
-                    <button
-                      class="hover:text-[#00acee]"
-                      onclick="shareOnTwitter()"
-                    >
-                      <IconTwitter class="w-10 md:w-12" />
-                    </button>
-                    <button
-                      class="hover:text-[#007db1]"
-                      onclick="shareOnLinkedIn()"
-                    >
-                      <IconLinkedin class="w-10 md:w-12" />
-                    </button>
-                  </div>
-                  <dd
-                    class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]"
+            <div class="flex">
+              <div>
+                <!-- Content area -->
+                <div>
+                  <h1
+                    class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
                   >
-                    <input
-                      id="myInput"
-                      class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
-                      type="text"
-                      value={`https://frontend.mu/meetup/${props.routeId}/`}
-                      onclick="copy()"
-                    />
-                    <div class="cursor-pointer" onclick="copy()">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
-                        ></path>
-                        <path
-                          d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </dd>
+                    {props.speaker.person.name}
+                  </h1>
+
+                  <EventsList sessions={props.speaker.sessions} />
                 </div>
-              </dl>
+
+                <!-- Stats section -->
+                <div class="mt-10">
+                  <dl
+                    class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
+                  >
+                    {
+                      props.speaker.Date && (
+                        <div class="border-t-2 border-gray-100 pt-6">
+                          <dt class="text-base font-medium text-verse-500">
+                            Date
+                          </dt>
+                          <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                            {new Date(props.speaker.Date).toDateString()}
+                          </dd>
+                        </div>
+                      )
+                    }
+                    {
+                      props.speaker.Venue && (
+                        <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                          <dt class="text-base font-medium text-verse-500">
+                            Venue
+                          </dt>
+                          <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                            {props.speaker.Venue}
+                          </dd>
+                        </div>
+                      )
+                    }
+
+                    <!-- Share Functions -->
+
+                    <script is:inline>
+                      function copy() {
+                        const copyText = document.getElementById("myInput");
+                        copyText.select();
+                        copyText.setSelectionRange(0, 99999);
+                        navigator.clipboard.writeText(copyText.value);
+                      }
+
+                      function shareOnFacebook() {
+                        const navUrl =
+                          "https://www.facebook.com/sharer/sharer.php?u=" +
+                          `${window.location.href}`;
+                        window.open(navUrl, "_blank");
+                      }
+
+                      function shareOnTwitter() {
+                        const getTitleFromDataTitle = document
+                          .querySelector("[data-title]")
+                          .getAttribute("data-title");
+                        const str = encodeURIComponent(
+                          " #mauritius #frontendcoders "
+                        );
+                        const navUrl =
+                          `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` +
+                          `${window.location.href}`;
+                        window.open(navUrl, "_blank");
+                      }
+
+                      function shareOnLinkedIn() {
+                        const navUrl =
+                          "http://www.linkedin.com/shareArticle?mini=true&url=" +
+                          `${window.location.href}`;
+                        window.open(navUrl, "_blank");
+                      }
+                    </script>
+
+                    <!-- Share Buttons -->
+                    <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
+                      <dt class="text-base font-medium text-verse-500">
+                        Share
+                      </dt>
+                      <div class="flex gap-8 py-4">
+                        <button
+                          class="hover:text-[#4267B2]"
+                          onclick="shareOnFacebook()"
+                        >
+                          <IconFacebook class="w-10 md:w-12" />
+                        </button>
+                        <button
+                          class="hover:text-[#00acee]"
+                          onclick="shareOnTwitter()"
+                        >
+                          <IconTwitter class="w-10 md:w-12" />
+                        </button>
+                        <button
+                          class="hover:text-[#007db1]"
+                          onclick="shareOnLinkedIn()"
+                        >
+                          <IconLinkedin class="w-10 md:w-12" />
+                        </button>
+                      </div>
+                      <dd
+                        class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]"
+                      >
+                        <input
+                          id="myInput"
+                          class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
+                          type="text"
+                          value={`https://frontend.mu/meetup/${props.routeId}/`}
+                          onclick="copy()"
+                        />
+                        <div class="cursor-pointer" onclick="copy()">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                            ></path>
+                            <path
+                              d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+                            ></path>
+                          </svg>
+                        </div>
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              <div class="flex-grow relative">
+                <div class="w-full">
+                    <img
+                    class="h-20 w-20 object-cover rounded-full lg:h-96 lg:w-96"
+                    src={props.speaker.person.github_account
+                      ? "https://github.com/" +
+                        props.speaker.person.github_account +
+                        ".png"
+                      : "https://i.pravatar.cc/300"}
+                    alt=""
+                  />
+                  <div class="w-full h-full absolute top-0">
+                    <LogoSpiral class="w-full opacity-5 saturate-0" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
