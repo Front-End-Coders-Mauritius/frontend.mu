@@ -11,14 +11,14 @@ import LogoFec from "../components/LogoFec.astro";
           class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center "
         >
           <div
-            class="flex flex-col justify-center text-center md:text-left gap-10 md:w-1/2"
+            class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3"
           >
             <h1
-              class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-verse-500 to-violet-500"
+              class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-white to-verse-400 spotlight"
             >
               Frontend Coders
               <span
-                class="flex items-start font-sans text-gray-200 xl:inline justify-center sm:justify-start capitalize font-mono spotlight"
+                class="flex items-start font-sans text-gray-200 xl:inline justify-center sm:justify-start capitalize spotlight"
                 data-text="Mauritius">Mauritius</span
               >
             </h1>
@@ -31,14 +31,14 @@ import LogoFec from "../components/LogoFec.astro";
             <div class="grid place-items-center md:place-items-start">
               <HeaderLink
                 href="/meetups"
-                class="text-md block w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
+                class="text-md block w-48 rounded-full bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
               >
                 View all meetups
               </HeaderLink>
             </div>
           </div>
 
-          <div class="md:w-1/2 grid place-items-center">
+          <div class="md:w-1/3 grid place-items-center">
             <div class="image-container">
               <div class="image-bg"></div>
 
@@ -71,6 +71,27 @@ import LogoFec from "../components/LogoFec.astro";
     transform: translate(-50%, -50%);
   }
 
+  @keyframes glow {
+    0% {    
+      opacity: 0.5;
+    }
+    50% {    
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes lightup {
+    0% {    
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+
   .image-bg {
     position: absolute;
     top: 50%;
@@ -78,19 +99,24 @@ import LogoFec from "../components/LogoFec.astro";
     border-radius: 50%;
     width: var(--size);
     height: var(--size);
+    filter: blur(75px);
+    transform: translate(-50%, -50%);
+    animation: lightup 0.5s linear forwards;
+    opacity: 0;
     background-image: linear-gradient(
       -45deg,
       var(--color-brand-700) 50%,
       var(--color-brand-400) 50%
     );
-    filter: blur(100px);
-    transform: translate(-50%, -50%);
-    transition: all 1s ease-in-out;
+    /* transition: all 1s ease-in-out; */
   }
 
   .image-container:hover .image-bg {
-    background-position: -300px -300px;
-    transition: all 0.3s ease-in-out;
+    /* background-position: -300px -300px; */
+    opacity: 0.5;
+    transition: all 2s ease-in-out;
+    animation: glow 4s ease-out infinite alternate ;
+
   }
 
   .spotlight {
@@ -135,7 +161,7 @@ import LogoFec from "../components/LogoFec.astro";
 
   @media (min-width: 768px) {
     .image-container {
-      --size: 500px;
+      --size: 400px;
       display: block;
     }
   }
