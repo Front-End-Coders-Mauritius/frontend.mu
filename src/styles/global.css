@@ -58,3 +58,7 @@ body{
 a {
   text-decoration: none;
 }
+
+.contain {
+  @apply px-5 sm:px-4 lg:mx-auto lg:max-w-[1220px] ;
+}
