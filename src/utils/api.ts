@@ -45,7 +45,7 @@ export async function getSpeaker(id: string | number) {
     }
 
     // Get sessions of this speaker from the events
-    const allSessions = events.data.map(event => event.sessions).flat()//.filter(session => session.speakers.find(speaker => speaker.id == id))
+    const allSessions = events.data.map(event => event.sessions).flat();
     const speakerSession = allSessions.filter(session => {
         let session_speaker_id = session.Session_id.speakers.id
         return id === session_speaker_id
