@@ -5,6 +5,7 @@ import IconFacebook from "./icons/icon-facebook.astro";
 import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
+import SessionList from "./SessionList.astro";
 
 const props = Astro.props;
 
@@ -49,20 +50,17 @@ function fetchAlbumDetails() {
       return filteredPhotos;
     }
   }
-}
+} 
 
 let currentAlbum = fetchAlbumDetails();
 
-// function viewMore () {
-//   if (limit < maxAlbumLength) limit += 8;
-// };
 ---
 
 <div>
   <div data-title={props.getCurrentEvent.title}>
     <div class="relative">
       <div class="pb-10 md:pb-24">
-        <div class="lg:mx-auto lg:max-w-[1000px] lg:px-4">
+        <div class="contain">
           <div class="relative">
             <div
               aria-hidden="true"
@@ -76,31 +74,35 @@ let currentAlbum = fetchAlbumDetails();
             </div>
           </div>
 
-      
-
           <div
             class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24"
           >
             <!-- Content area -->
             <div>
-              <div class="flex w-full items-center justify-start pb-4">
-                <p
-                  class:list={[
-                    isUpcoming()
-                      ? "tagStyle bg-green-100 text-green-800"
-                      : "tagStyle bg-yellow-100 text-yellow-800",
-                  , 'p-2 rounded-full text-sm font-medium tracking-wide uppercase']}
-                >
-                  {isUpcoming() ? "upcoming" : "past"}
-                </p>
-              </div>
+              {
+                isUpcoming() && (
+                  <div class="flex w-full items-center justify-start pb-4">
+                    <p
+                      class:list={[
+                        isUpcoming()
+                          ? "tagStyle bg-green-100 text-green-800"
+                          : "tagStyle bg-yellow-100 text-yellow-800",
+                        ,
+                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase",
+                      ]}
+                    >
+                      upcoming
+                    </p>
+                  </div>
+                )
+              }
               <h1
                 class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
               >
                 {props.getCurrentEvent?.title}
               </h1>
 
-              {
+              <!-- {
                 props.getCurrentEvent.description ? (
                   <div class="mt-6 space-y-6 text-gray-500">
                     <div
@@ -113,7 +115,9 @@ let currentAlbum = fetchAlbumDetails();
                     Please add a description.
                   </div>
                 )
-              }
+              } -->
+
+              <SessionList sessions={props.getCurrentEvent.sessions} />
             </div>
             <!-- Stats section -->
             <div class="mt-10">
@@ -133,7 +137,9 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   props.getCurrentEvent.Venue && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500">Venue</dt>
+                      <dt class="text-base font-medium text-verse-500">
+                        Venue
+                      </dt>
                       <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
                         {props.getCurrentEvent.Venue}
                       </dd>
@@ -283,7 +289,6 @@ let currentAlbum = fetchAlbumDetails();
         </div>
 
         <MeetupAlbum currentAlbum={currentAlbum} source={source} />
-
       </div>
     </div>
   </div>

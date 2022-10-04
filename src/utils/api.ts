@@ -5,28 +5,24 @@ const directus = await getDirectusClient();
 
 async function loadEventsUncached() {
 	const events = await directus.items("Events").readByQuery({
-		fields: ["*.*"],
+		fields: ["*.*","sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title",  "sessions.Session_id.speakers.id",  "sessions.Session_id.speakers.github_account"],
 	});
+
 
 	return events;
 }
 
 export const loadEvents = Memoize(loadEventsUncached);
 
-async function loadEventUncached(id: string | number) {
-    const event = await directus.items("Events").readByQuery({
-        filter: {
-            id: {
-            _eq: id,
-            },
-        },
-        fields: ["*.*"],
+async function loadSpeakersUncached() {
+    const speaker = await directus.items("Person").readByQuery({
+        fields: ["*.*.*"],
     });
 
-    return event.data[0];
+    return speaker;
 }
 
-export const loadEvent: (id: string | number) => any = Memoize(loadEventUncached); 
+export const loadSpeakers = Memoize(loadSpeakersUncached); 
 
 export async function getEvent(id: string | number) {
     const events = await loadEvents();
@@ -37,4 +33,28 @@ export async function getEvent(id: string | number) {
     }
 
     return event;
+}
+
+export async function getSpeaker(id: string | number) {
+    const speakers = await loadSpeakers();
+    const speaker = speakers.data.find(ev => ev.id == id);
+    const events  = await loadEvents()
+    
+    if (speaker === null) {
+        console.error("cannot find speaker id: ", id);
+    }
+
+    // Get sessions of this speaker from the events
+    const allSessions = events.data.map(event => event.sessions).flat();
+    const speakerSession = allSessions.filter(session => {
+        let session_speaker_id = session.Session_id.speakers.id
+        return id === session_speaker_id
+
+    })
+
+
+    return {
+        person: speaker,
+        sessions: speakerSession
+    };
 }

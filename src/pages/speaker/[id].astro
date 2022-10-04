@@ -1,0 +1,27 @@
+---
+import SpeakerSingle from "../../components/SpeakerSingle.astro";
+import LayoutSingleMeetup from "../../layouts/LayoutSingleMeetup.astro";
+import { getSpeaker, loadSpeakers } from "../../utils/api";
+
+const props = Astro.params;
+
+export async function getStaticPaths() {
+    const speakers = await loadSpeakers();
+
+    return speakers.data.map((speaker) => {
+        return {
+            params: {
+                id: speaker.id.toString(),
+            },
+        };
+    });
+}
+
+const speaker = await getSpeaker(props.id);
+---
+
+
+<LayoutSingleMeetup title={speaker.person.name} description="Speaker Profile">
+    <SpeakerSingle routeId={props.id} speaker={speaker}  />
+</LayoutSingleMeetup>
+

@@ -1,6 +1,5 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-// import Header from "../components/Header.astro";
 import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import Sponsors from "../components/Sponsors.astro";
@@ -20,9 +19,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     <div>
       <Header />
 
-      <div class="prose max-w-5xl mx-auto py-10 text-center px-4 md:text-left">
-        <slot />
-      </div>
+			<div class="prose contain">
+				<slot />
+			</div>
 
       <Team />
 
