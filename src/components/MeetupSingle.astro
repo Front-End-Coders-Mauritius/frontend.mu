@@ -6,12 +6,12 @@ import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import SessionList from "./SessionList.astro";
+import RsvpPopup from "../components/RsvpPopup.vue";
 
 const props = Astro.props;
 
 const dateInPast = function (firstDate: Date, secondDate: Date) {
-  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
-    return true;
+  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0)) return true;
 
   return false;
 };
@@ -24,13 +24,12 @@ function isUpcoming() {
 }
 
 // Google Photos Album Section
-const source =
-  "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
+const source = "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
 // let currentAlbum = ref([])
 let albumsPhotos = await fetch(`${source}index.json`);
 albumsPhotos = await albumsPhotos.json();
-let limit = 12;
 
+let limit = 12;
 let maxAlbumLength = 0;
 
 function fetchAlbumDetails() {
@@ -62,58 +61,31 @@ let currentAlbum = fetchAlbumDetails();
       <div class="pb-10 md:pb-24">
         <div class="contain">
           <div class="relative">
-            <div
-              aria-hidden="true"
-              class="hidden sm:block lg:inset-y-0 lg:right-0 lg:w-screen"
-            >
-              <div
-                class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"
-              >
-              </div>
+            <div aria-hidden="true" class="hidden sm:block lg:inset-y-0 lg:right-0 lg:w-screen">
+              <div class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"></div>
               <IconDots class="w-[600px] opacity-5 saturate-0" />
             </div>
           </div>
 
-          <div
-            class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24"
-          >
+          <div class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24">
             <!-- Content area -->
             <div>
-              {
-                isUpcoming() && (
-                  <div class="flex w-full items-center justify-start pb-4">
-                    <p
-                      class:list={[
-                        isUpcoming()
-                          ? "tagStyle bg-green-100 text-green-800"
-                          : "tagStyle bg-yellow-100 text-yellow-800",
-                        ,
-                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase",
-                      ]}
-                    >
-                      upcoming
-                    </p>
-                  </div>
-                )
-              }
-              <h1
-                class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-              >
+              <div class="flex w-full items-center justify-start pb-4">
+                <p class:list={[isUpcoming() ? "tagStyle bg-green-100 text-green-800" : "tagStyle bg-yellow-100 text-yellow-800", , "p-2 rounded-full text-sm font-medium tracking-wide uppercase"]}>
+                  {isUpcoming() ? "upcoming" : "past"}
+                </p>
+              </div>
+              <h1 class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl">
                 {props.getCurrentEvent?.title}
               </h1>
 
               <!-- {
                 props.getCurrentEvent.description ? (
                   <div class="mt-6 space-y-6 text-gray-500">
-                    <div
-                      class="text-md prose md:text-lg"
-                      set:html={props.getCurrentEvent.description}
-                    />
+                    <div class="text-md prose md:text-lg" set:html={props.getCurrentEvent.description} />
                   </div>
                 ) : (
-                  <div class="text-md prose md:text-lg">
-                    Please add a description.
-                  </div>
+                  <div class="text-md prose md:text-lg">Please add a description.</div>
                 )
               } -->
 
@@ -121,28 +93,20 @@ let currentAlbum = fetchAlbumDetails();
             </div>
             <!-- Stats section -->
             <div class="mt-10">
-              <dl
-                class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
-              >
+              <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8">
                 {
                   props.getCurrentEvent.Date && (
                     <div class="border-t-2 border-gray-100 pt-6">
                       <dt class="text-base font-medium text-verse-500">Date</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {new Date(props.getCurrentEvent.Date).toDateString()}
-                      </dd>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{new Date(props.getCurrentEvent.Date).toDateString()}</dd>
                     </div>
                   )
                 }
                 {
                   props.getCurrentEvent.Venue && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500">
-                        Venue
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {props.getCurrentEvent.Venue}
-                      </dd>
+                      <dt class="text-base font-medium text-verse-500">Venue</dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{props.getCurrentEvent.Venue}</dd>
                     </div>
                   )
                 }
@@ -150,33 +114,23 @@ let currentAlbum = fetchAlbumDetails();
                   props.getCurrentEvent.Time && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">Time</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {props.getCurrentEvent.Time}
-                      </dd>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{props.getCurrentEvent.Time}</dd>
                     </div>
                   )
                 }
                 {
                   props.getCurrentEvent.Location && (
                     <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500">
-                        Location
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {props.getCurrentEvent.Location}
-                      </dd>
+                      <dt class="text-base font-medium text-verse-500">Location</dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{props.getCurrentEvent.Location}</dd>
                     </div>
                   )
                 }
                 {
                   props.getCurrentEvent.Attendees && (
                     <div v-if="" class="border-t-2 border-gray-100 pt-6">
-                      <dt class="text-base font-medium text-verse-500">
-                        Seats Limit
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {props.getCurrentEvent.Attendees}
-                      </dd>
+                      <dt class="text-base font-medium text-verse-500">Seats Limit</dt>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{props.getCurrentEvent.Attendees}</dd>
                     </div>
                   )
                 }
@@ -192,29 +146,19 @@ let currentAlbum = fetchAlbumDetails();
                   }
 
                   function shareOnFacebook() {
-                    const navUrl =
-                      "https://www.facebook.com/sharer/sharer.php?u=" +
-                      `${window.location.href}`;
+                    const navUrl = "https://www.facebook.com/sharer/sharer.php?u=" + `${window.location.href}`;
                     window.open(navUrl, "_blank");
                   }
 
                   function shareOnTwitter() {
-                    const getTitleFromDataTitle = document
-                      .querySelector("[data-title]")
-                      .getAttribute("data-title");
-                    const str = encodeURIComponent(
-                      " #mauritius #frontendcoders "
-                    );
-                    const navUrl =
-                      `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` +
-                      `${window.location.href}`;
+                    const getTitleFromDataTitle = document.querySelector("[data-title]").getAttribute("data-title");
+                    const str = encodeURIComponent(" #mauritius #frontendcoders ");
+                    const navUrl = `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` + `${window.location.href}`;
                     window.open(navUrl, "_blank");
                   }
 
                   function shareOnLinkedIn() {
-                    const navUrl =
-                      "http://www.linkedin.com/shareArticle?mini=true&url=" +
-                      `${window.location.href}`;
+                    const navUrl = "http://www.linkedin.com/shareArticle?mini=true&url=" + `${window.location.href}`;
                     window.open(navUrl, "_blank");
                   }
                 </script>
@@ -223,47 +167,22 @@ let currentAlbum = fetchAlbumDetails();
                 <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
                   <dt class="text-base font-medium text-verse-500">Share</dt>
                   <div class="flex gap-8 py-4">
-                    <button
-                      class="hover:text-[#4267B2]"
-                      onclick="shareOnFacebook()"
-                    >
+                    <button class="hover:text-[#4267B2]" onclick="shareOnFacebook()">
                       <IconFacebook class="w-10 md:w-12" />
                     </button>
-                    <button
-                      class="hover:text-[#00acee]"
-                      onclick="shareOnTwitter()"
-                    >
+                    <button class="hover:text-[#00acee]" onclick="shareOnTwitter()">
                       <IconTwitter class="w-10 md:w-12" />
                     </button>
-                    <button
-                      class="hover:text-[#007db1]"
-                      onclick="shareOnLinkedIn()"
-                    >
+                    <button class="hover:text-[#007db1]" onclick="shareOnLinkedIn()">
                       <IconLinkedin class="w-10 md:w-12" />
                     </button>
                   </div>
-                  <dd
-                    class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]"
-                  >
-                    <input
-                      id="myInput"
-                      class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
-                      type="text"
-                      value={`https://frontend.mu/meetup/${props.routeId}/`}
-                      onclick="copy()"
-                    />
+                  <dd class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]">
+                    <input id="myInput" class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]" type="text" value={`https://frontend.mu/meetup/${props.routeId}/`} onclick="copy()" />
                     <div class="cursor-pointer" onclick="copy()">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
-                        ></path>
-                        <path
-                          d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-                        ></path>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
                       </svg>
                     </div>
                   </dd>
@@ -273,19 +192,18 @@ let currentAlbum = fetchAlbumDetails();
                 {
                   isUpcoming() && (
                     <div class="md:border-t-2 border-gray-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                        {props.getCurrentEvent.rsvplink && (
-                          <FecAnchor href={props.getCurrentEvent.rsvplink}>
-                            Book my seat
-                          </FecAnchor>
-                        )}
-                      </dd>
+                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{props.getCurrentEvent.rsvplink && <FecAnchor href={props.getCurrentEvent.rsvplink}>Book my seat</FecAnchor>}</dd>
                     </div>
+                    <div>
+                     <RsvpPopup client:only />
+                   </div>
                   )
-                }
+          
+          }
               </dl>
             </div>
           </div>
+          
         </div>
 
         <MeetupAlbum currentAlbum={currentAlbum} source={source} />

@@ -14,6 +14,7 @@
     "@astrojs/sitemap": "^1.0.0",
     "@directus/sdk": "^10.1.4",
     "@heroicons/vue": "^1.0.6",
+    "@supabase/supabase-js": "^1.35.7",
     "astro": "^1.2.5",
     "vanilla-tilt": "^1.7.2",
     "vanilla-tilt-vue": "^0.1.3"
