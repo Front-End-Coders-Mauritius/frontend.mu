@@ -60,7 +60,7 @@ onMounted(() => {
     <div class="fixed top-0 bottom-0 right-0 left-0 bg-overlay opacity-70" />
     <!--overlay-->
     <div
-      class="flex flex-row z-10 flex-wrap sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%] fixed top-0 left-0 h-full w-full sm:w-auto sm:h-auto overflow:auto"
+      class="flex flex-row z-10 flex-wrap sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%] fixed top-0 left-0 h-full w-full sm:w-auto sm:h-auto overflow-auto"
     >
       <form
         class="md:w-1/2-screen m-0 p-5 bg-white w-full tw-h-full shadow md:rounded-lg shadow-xl"
