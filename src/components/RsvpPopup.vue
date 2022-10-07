@@ -43,14 +43,6 @@ const togglePopup = () => {
   isRsvpPopupOpen.value = !isRsvpPopupOpen.value;
 };
 
-const fetchRSVP = async () => {
-  const { data: rsvp } = await supabase.from("RSVP").select("*");
-  console.log(rsvp);
-};
-
-onMounted(() => {
-  fetchRSVP();
-});
 </script>
 
 <template>
