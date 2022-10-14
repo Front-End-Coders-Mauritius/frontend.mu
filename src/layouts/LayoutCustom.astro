@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import Sponsors from "../components/Sponsors.astro";
+import OgImage from "../components/OgImage.astro";
 
 const props = Astro.props
 ---
@@ -10,6 +11,7 @@ const props = Astro.props
 <html lang="en">
 	<head>
 		<BaseHead title={props.title} description={props.description} />
+		<OgImage pageType="page" title={props.title} />
 	</head>
 
 	<body>

@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import Sponsors from "../components/Sponsors.astro";
+import OgImage from "../components/OgImage.astro";
 
 // export interface Props {
 // 	content: {
@@ -14,28 +15,27 @@ import Sponsors from "../components/Sponsors.astro";
 // 	};
 // }
 
-// const {
-// 	content: { title, description, pubDate, updatedDate, heroImage },
-// } = Astro.props;
-const title = 'Front-End Coders Mauritius'
-const description = 'Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.'
+const {
+  title ,
+  description = "Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.",
+} = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-	</head>
+  <head>
+    <BaseHead title={title} description={description} />
+    <OgImage pageType="page" title={title} />
+  </head>
 
-	<body>
-		<div>
-			<Header />
+  <body>
+    <div>
+      <Header />
 
-			<slot />
+      <slot />
 
-			<Sponsors />
+      <Sponsors />
 
-
-			<Footer />
-		</div>
-	</body>
+      <Footer />
+    </div>
+  </body>
 </html>
