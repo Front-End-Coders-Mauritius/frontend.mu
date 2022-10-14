@@ -1,6 +1,6 @@
 ---
 import SpeakerSingle from "../../components/SpeakerSingle.astro";
-import LayoutSingleMeetup from "../../layouts/LayoutSingleMeetup.astro";
+import LayoutSpeaker from "../../layouts/LayoutSpeaker.astro";
 import { getSpeaker, loadSpeakers } from "../../utils/api";
 
 const props = Astro.params;
@@ -21,7 +21,7 @@ const speaker = await getSpeaker(props.id);
 ---
 
 
-<LayoutSingleMeetup title={speaker.person.name} description="Speaker Profile">
+<LayoutSpeaker title={speaker.person.name} username={speaker.person.github_account} description="Speaker Profile">
     <SpeakerSingle routeId={props.id} speaker={speaker}  />
-</LayoutSingleMeetup>
+</LayoutSpeaker>
 
