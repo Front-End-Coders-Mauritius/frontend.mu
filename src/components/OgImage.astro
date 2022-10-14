@@ -1,0 +1,21 @@
+---
+const { title, pageType, username = "Github" } = Astro.props;
+
+let imageUrl = "";
+if (pageType === "page") {
+  if (typeof title === 'undefined') {
+    imageUrl = "https://vercel-og-next.vercel.app/api/fec-home";
+  } else {
+    imageUrl = "https://vercel-og-next.vercel.app/api/fec-page?title=" + title;
+  }
+} else if (pageType === "speaker") {
+  imageUrl =
+    "https://vercel-og-next.vercel.app/api/fec-speaker?username=" + username;
+} else if (pageType === "event") {
+  imageUrl = "https://vercel-og-next.vercel.app/api/fec-event?title=" + title;
+} else {
+  imageUrl = "https://vercel-og-next.vercel.app/api/fec-home";
+}
+---
+
+<meta property="og:image" content={new URL(imageUrl)} />
