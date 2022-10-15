@@ -1,6 +1,7 @@
 ---
 import { loadSpeakers } from "../utils/api";
 import { Image } from "@astrojs/image/components";
+import { getGithubUrl } from "../utils/fns";
 
 const people = [
   {
@@ -100,9 +101,7 @@ const speakers = await loadSpeakers();
         >
           {
             speakers.data.map((person) => {
-              let speaker_photo = person.github_account
-                ? "https://github.com/" + person.github_account + ".png"
-                : "https://github.com/Github.png";
+              let speaker_photo = getGithubUrl(person.github_account);
 
               return (
                 <li>

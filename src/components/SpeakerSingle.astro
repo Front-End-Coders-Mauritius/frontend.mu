@@ -8,12 +8,10 @@ import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import EventsList from "./EventsList.astro";
 import LogoSpiral from "./LogoSpiral.astro";
+import { getGithubUrl } from '../utils/fns';
 
 const props = Astro.props;
-
-const speaker_photo = props.speaker.person.github_account
-  ? "https://github.com/" + props.speaker.person.github_account + ".png"
-  : "https://github.com/Github.png";
+const speaker_photo = getGithubUrl(props.speaker.person.github_account);
 ---
 
 <div>
