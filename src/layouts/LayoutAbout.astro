@@ -2,8 +2,8 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
-import Sponsors from "../components/Sponsors.astro";
 import Team from "../components/Team.astro";
+import OgImage from "../components/OgImage.astro";
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 // const title = 'Front-End Coders Mauritius'
@@ -13,6 +13,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
+    <OgImage pageType="page" title="About" />
+
   </head>
 
   <body>

@@ -6,8 +6,8 @@ import { loadEvents } from '../utils/api';
 
 let response = await loadEvents();
 
-const title = "My event title"
-const description = "my event description"
+const title = "All meetups"
+const description = "A list of all meetups we've held"
 
 ---
 
@@ -27,7 +27,6 @@ const description = "my event description"
 	
 			  <div  class="grid-container gap-8">
 				{response.data.map((event) => (
-					// <div>{event.title }</div>
 				  <DetailedEventCard event={event} />
 				))}
 			  </div>	
