@@ -6,6 +6,7 @@ import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import SessionList from "./SessionList.astro";
+import { getPhotos,photoAlbumSource } from "../utils/api"
 
 const props = Astro.props;
 
@@ -24,12 +25,7 @@ function isUpcoming() {
 }
 
 // Google Photos Album Section
-const source =
-  "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
-// let currentAlbum = ref([])
-let albumsPhotos = await fetch(`${source}index.json`);
-albumsPhotos = await albumsPhotos.json();
-let limit = 12;
+const albumsPhotos = await getPhotos();
 
 let maxAlbumLength = 0;
 
@@ -288,7 +284,7 @@ let currentAlbum = fetchAlbumDetails();
           </div>
         </div>
 
-        <MeetupAlbum currentAlbum={currentAlbum} source={source} />
+        <MeetupAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />
       </div>
     </div>
   </div>
