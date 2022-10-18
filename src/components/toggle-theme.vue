@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { useDark, useToggle } from '@vueuse/core'
+import { watch } from 'vue'
 
-const isDark = useDark()
+const isDark = useDark({
+    selector: 'body',
+})
+console.log(isDark.value);
+
+watch(isDark, () => {
+    console.log('dark mode changed'); // does not trigger watch
+}, { deep: true })
+
 const toggleDark = useToggle(isDark)
 </script>
 
