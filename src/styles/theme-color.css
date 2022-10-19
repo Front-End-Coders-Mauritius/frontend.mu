@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --light-background-primary: #fff;
     --dark-background-primary: #000;
 }
@@ -9,4 +9,4 @@ body {
 
 body.dark {
     --background-primary: var(--dark-background-primary);
-}
+} */
