@@ -8,7 +8,7 @@ const sponsors = [
         sponsorUrl: 'https://www.ringier.com/about-us/south-africa/',
         logo: 'logo-ringier.svg',
         description: 'Domain Name',
-      },
+      }, 
     ],
   },
   {
