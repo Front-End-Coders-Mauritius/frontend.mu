@@ -42,6 +42,7 @@ module.exports = {
 			},
 			colors: {
 				brand: {
+					0: 'var(--color-brand-0)',
 					50: 'var(--color-brand-50)',
 					100: 'var(--color-brand-100)',
 					200: 'var(--color-brand-200)',
@@ -55,6 +56,7 @@ module.exports = {
 					950: 'var(--color-brand-950)',
 				},
 				verse: {
+					0: 'var(--color-verse-0)',
 					50: 'var(--color-verse-50)',
 					100: 'var(--color-verse-100)',
 					200: 'var(--color-verse-200)',

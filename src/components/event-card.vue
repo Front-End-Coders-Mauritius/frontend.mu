@@ -54,7 +54,7 @@ const tiltOptions = {
   <!-- <Tilt :options="tiltOptions"> -->
 
     <div
-         class="mt-4 md:mt-0 relative rounded-xl group flex flex-col  items-start md:items-center gap-6 md:gap-16 group bg-white p-8 md:p-16 shadow-xl">
+         class="mt-4 md:mt-0 relative rounded-xl group flex flex-col  items-start md:items-center gap-6 md:gap-16 group bg-brand-200 p-8 md:p-16 shadow-xl">
 
       <logo-fec
                 class="w-32 z-0 transition-all hidden md:block select-none top-0 saturate-100  opacity-100  overflow-hidden" />
