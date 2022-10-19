@@ -46,7 +46,7 @@ const isUpcoming = (currentEventDate: string) => {
 
 <template>
   <div
-    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
+    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-brand-0 p-6 shadow-md transition-all hover:shadow-lg"
   >
     <div v-if="event.Date" class="">
       <span
@@ -62,7 +62,7 @@ const isUpcoming = (currentEventDate: string) => {
       </span>
     </div>
     <div class="flex flex-col gap-4 md:gap-0">
-      <h3 class="leading-2 text-xl md:text-2xl font-medium py-2">
+      <h3 class="leading-2 text-xl md:text-2xl font-medium py-2 text-verse-0">
         <a
           :href="`meetup/${event.id}`"
           class="w-[300px] md:w-96 focus:outline-none"

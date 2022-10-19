@@ -22,7 +22,7 @@ html {
   --brand-lightness: 50%;
 
   --light-threshold: 5%;
-  --dark-threshold: 25%;
+  --dark-threshold: 0%;
 }
 
 body {
@@ -59,7 +59,7 @@ body {
 }
 
 body[color-scheme="dark"] {
-  --color-brand-0: hsl(var(--brand-hue), 5%, 0%);
+  --color-brand-0: hsl(var(--brand-hue), 8%, calc((var(--dark-threshold) * -1) + 12%));
   --color-brand-50: hsl(var(--brand-hue), 11%, calc((var(--dark-threshold) * -1) + 45%));
   --color-brand-100: hsl(var(--brand-hue), 11%, calc((var(--dark-threshold) * -1) + 40%));
   --color-brand-200: hsl(var(--brand-hue), 11%, calc((var(--dark-threshold) * -1) + 35%));

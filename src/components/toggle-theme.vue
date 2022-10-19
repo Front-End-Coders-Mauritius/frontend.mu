@@ -8,16 +8,11 @@ const isDark = useDark({
 })
 console.log(isDark.value);
 
-watch(isDark, () => {
-    console.log('dark mode changed'); // does not trigger watch
-}, { deep: true })
-
 const toggleDark = useToggle(isDark)
 </script>
 
 <template>
     <button @click="toggleDark()">
-        <!-- Is Dark: {{ isDark }} -->
         <svg width="724" height="724" viewBox="0 0 724 724" fill="#fff" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" v-if="isDark">
             <path
                 d="M723.373 525.027C667.957 555.839 604.18 573.469 536.267 573.469C323.32 573.469 150.693 400.829 150.693 187.896C150.693 119.975 168.308 56.2079 199.147 0.775879C80.7919 66.5932 0.679932 192.869 0.679932 337.896C0.679932 550.829 173.307 723.456 386.253 723.456C531.28 723.472 657.547 643.347 723.373 525.016V525.027Z"
