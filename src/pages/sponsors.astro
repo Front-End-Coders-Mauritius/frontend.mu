@@ -1,20 +1,18 @@
 ---
 import sponsorTypes from "../data/sponsors.js";
 import Layout from "../layouts/LayoutCustom.astro";
-const title = "Our sponsors"
-const description = ""
+const title = "Our sponsors";
+const description = "";
 ---
 
-<Layout  title={title} description={description}>
+<Layout title={title} description={description}>
     <div class="contain">
-        <div class="bg-white">
+        <div class="bg-brand-0">
             <div class="lg:py-24">
                 <div class="space-y-8 sm:space-y-12">
-                    <div
-                        class="space-y-5 sm:mx-auto  sm:space-y-4  text-center"
-                    >
+                    <div class="space-y-5 sm:mx-auto sm:space-y-4 text-center">
                         <h2
-                            class="text-3xl font-bold tracking-tight sm:text-5xl sm:tracking-tight"
+                            class="text-3xl font-bold tracking-tight sm:text-5xl sm:tracking-tight text-verse-0"
                         >
                             Sponsors
                         </h2>
@@ -31,7 +29,7 @@ const description = ""
                         sponsorTypes.map((sponsorType) => (
                             <div>
                                 <div class="space-y-5 sm:mx-auto  sm:space-y-4 ">
-                                    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl sm:tracking-tight font-mono">
+                                    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl sm:tracking-tight font-mono text-verse-0">
                                         {sponsorType.title}
                                     </h2>
                                     <p class="text-xl text-gray-500">
