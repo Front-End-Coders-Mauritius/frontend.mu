@@ -89,7 +89,12 @@ body[color-scheme="dark"] {
 a {
   text-decoration: none;
 }
-
+.prose.contain h1 {
+    @apply text-verse-0;
+}
+.prose.contain p {
+    @apply text-gray-500;
+}
 .contain {
   @apply px-5 sm:px-4 lg:mx-auto lg:max-w-[1220px];
 }

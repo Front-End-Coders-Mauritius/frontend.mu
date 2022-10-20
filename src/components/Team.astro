@@ -35,12 +35,12 @@ const speakers = await loadSpeakers();
 ---
 
 <div class="contain">
-  <div class="bg-white">
+  <div class="bg-brand-0">
     <div class="py-12 lg:py-24">
       <div class="space-y-8 sm:space-y-12">
         <div class="space-y-5 sm:mx-auto sm:space-y-4">
           <h2
-            class="text-3xl font-bold tracking-tight sm:text-4xl sm:tracking-tight"
+            class="text-3xl font-bold tracking-tight sm:text-4xl sm:tracking-tight text-verse-0"
           >
             The People
           </h2>
@@ -68,11 +68,11 @@ const speakers = await loadSpeakers();
                     title={person.name}
                     width={300}
                     height={300}
-                  />                  
+                  />
 
                   <div class="space-y-2">
                     <div class="text-xs font-medium lg:text-lg text-center">
-                      <h3>{person.name}</h3>
+                      <h3 class="text-verse-0">{person.name}</h3>
                       <p class="text-brand-500">{person.role}</p>
                     </div>
                   </div>
@@ -84,7 +84,7 @@ const speakers = await loadSpeakers();
 
         <div class="space-y-5 sm:mx-auto sm:space-y-4">
           <h2
-            class="text-3xl font-bold tracking-tight sm:text-4xl sm:tracking-tight"
+            class="text-3xl text-verse-0 font-bold tracking-tight sm:text-4xl sm:tracking-tight"
           >
             Speakers
           </h2>
@@ -117,7 +117,7 @@ const speakers = await loadSpeakers();
 
                     <div class="space-y-2">
                       <div class="text-xs font-medium lg:text-lg text-center">
-                        <h3>{person.name}</h3>
+                        <h3 class="text-verse-0">{person.name}</h3>
                         <p class="text-brand-500">{person.github_account}</p>
                       </div>
                     </div>
