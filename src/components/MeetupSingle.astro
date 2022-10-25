@@ -121,9 +121,9 @@ let currentAlbum = fetchAlbumDetails();
               >
                 {
                   props.getCurrentEvent.Date && (
-                    <div class="border-t-2 border-gray-100 pt-6">
+                    <div class="border-t-2 border-brand-100 pt-6">
                       <dt class="text-base font-medium text-verse-500">Date</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 md:text-3xl">
                         {new Date(props.getCurrentEvent.Date).toDateString()}
                       </dd>
                     </div>
@@ -131,11 +131,11 @@ let currentAlbum = fetchAlbumDetails();
                 }
                 {
                   props.getCurrentEvent.Venue && (
-                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                    <div class="border-t-2 border-brand-100 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">
                         Venue
                       </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 md:text-3xl">
                         {props.getCurrentEvent.Venue}
                       </dd>
                     </div>
@@ -143,9 +143,9 @@ let currentAlbum = fetchAlbumDetails();
                 }
                 {
                   props.getCurrentEvent.Time && (
-                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                    <div class="border-t-2 border-brand-100 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">Time</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 md:text-3xl">
                         {props.getCurrentEvent.Time}
                       </dd>
                     </div>
@@ -153,11 +153,11 @@ let currentAlbum = fetchAlbumDetails();
                 }
                 {
                   props.getCurrentEvent.Location && (
-                    <div class="border-t-2 border-gray-100 pt-4 md:pt-6">
+                    <div class="border-t-2 border-brand-100 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">
                         Location
                       </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 md:text-3xl">
                         {props.getCurrentEvent.Location}
                       </dd>
                     </div>
@@ -165,11 +165,11 @@ let currentAlbum = fetchAlbumDetails();
                 }
                 {
                   props.getCurrentEvent.Attendees && (
-                    <div v-if="" class="border-t-2 border-gray-100 pt-6">
+                    <div v-if="" class="border-t-2 border-brand-100 pt-6">
                       <dt class="text-base font-medium text-verse-500">
                         Seats Limit
                       </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 md:text-3xl">
                         {props.getCurrentEvent.Attendees}
                       </dd>
                     </div>
@@ -215,23 +215,23 @@ let currentAlbum = fetchAlbumDetails();
                 </script>
 
                 <!-- Share Buttons -->
-                <div class="border-y-2 border-gray-100 pt-4 md:pt-6">
+                <div class="border-y-2 border-brand-100 pt-4 md:pt-6">
                   <dt class="text-base font-medium text-verse-500">Share</dt>
                   <div class="flex gap-8 py-4">
                     <button
-                      class="hover:text-[#4267B2]"
+                      class="hover:text-[#4267B2] text-verse-0"
                       onclick="shareOnFacebook()"
                     >
                       <IconFacebook class="w-10 md:w-12" />
                     </button>
                     <button
-                      class="hover:text-[#00acee]"
+                      class="hover:text-[#00acee] text-verse-0"
                       onclick="shareOnTwitter()"
                     >
                       <IconTwitter class="w-10 md:w-12" />
                     </button>
                     <button
-                      class="hover:text-[#007db1]"
+                      class="hover:text-[#007db1] text-verse-0"
                       onclick="shareOnLinkedIn()"
                     >
                       <IconLinkedin class="w-10 md:w-12" />
@@ -267,8 +267,8 @@ let currentAlbum = fetchAlbumDetails();
                 <!-- RSVP Button -->
                 {
                   isUpcoming() && (
-                    <div class="md:border-t-2 border-gray-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
-                      <dd class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
+                    <div class="md:border-t-2 border-brand-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 md:text-3xl">
                         {props.getCurrentEvent.rsvplink && (
                           <FecAnchor href={props.getCurrentEvent.rsvplink}>
                             Book my seat

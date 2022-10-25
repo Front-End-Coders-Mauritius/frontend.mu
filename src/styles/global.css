@@ -78,7 +78,7 @@ body[color-scheme="dark"] {
   --color-verse-200: hsl(var(--brand-hue), 11%, calc((var(--dark-threshold)) + 75%));
   --color-verse-300: hsl(var(--brand-hue), 11%, calc((var(--dark-threshold)) + 70%));
   --color-verse-400: hsl(var(--brand-hue), 10%, calc((var(--dark-threshold)) + 65%));
-  --color-verse-500: hsl(var(--brand-hue), 10%, calc((var(--dark-threshold)) + 60%));
+  --color-verse-500: hsl(var(--brand-hue), 50%, calc((var(--dark-threshold)) + 60%));
   --color-verse-600: hsl(var(--brand-hue), 8%, calc((var(--dark-threshold)) + 55%));
   --color-verse-700: hsl(var(--brand-hue), 8%, calc((var(--dark-threshold)) + 50%));
   --color-verse-800: hsl(var(--brand-hue), 7%, calc((var(--dark-threshold)) + 45%));
