@@ -1,58 +1,54 @@
 ---
-import Layout from '../layouts/LayoutHome.astro';
-import DetailedEventCard from '../components/DetailedEventCard.astro';
-import { loadEvents } from '../utils/api';
-
+import Layout from "../layouts/LayoutHome.astro";
+import DetailedEventCard from "../components/DetailedEventCard.astro";
+import { loadEvents } from "../utils/api";
 
 let response = await loadEvents();
 
-const title = "All meetups"
-const description = "A list of all meetups we've held"
-
+const title = "All meetups";
+const description = "A list of all meetups we've held";
 ---
 
 <Layout title={title} description={description}>
 	<div>
 		<div>
-		  <!-- start  -->
-		  <div class="past-events-container bg-brand-50 pb-4 md:pb-16">
-			<div
-			  class="past-events-wrapper mx-auto py-8 px-4 md:px-20"
-			>
-			  <div
-				class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-4xl"
-			  >
-				<h1 class=" text-black">All meetups</h1>
-			  </div>
-	
-			  <div  class="grid-container gap-8">
-				{response.data.map((event) => (
-				  <DetailedEventCard event={event} />
-				))}
-			  </div>	
-			</div>
-		  </div>
-		  <!-- ends -->
-		</div>
-	  </div>
+			<!-- start  -->
+			<div class="past-events-container pb-4 md:pb-16">
+				<div class="past-events-wrapper mx-auto py-8 px-4 md:px-20">
+					<div
+						class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-4xl"
+					>
+						<h1 class="text-verse-0">All meetups</h1>
+					</div>
 
+					<div class="grid-container gap-8">
+						{
+							response.data.map((event) => (
+								<DetailedEventCard event={event} />
+							))
+						}
+					</div>
+				</div>
+			</div>
+			<!-- ends -->
+		</div>
+	</div>
 </Layout>
 
 <style scoped>
 	@media screen and (min-width: 650px) {
-	  .grid-container {
-		--minmax: 500px;
-	  }
+		.grid-container {
+			--minmax: 500px;
+		}
 	}
-	
+
 	@media screen and (max-width: 650px) {
-	  .grid-container {
-		--minmax: 100%;
-	  }
+		.grid-container {
+			--minmax: 100%;
+		}
 	}
 	.grid-container {
-	  display: grid;
-	  grid-template-columns: repeat(auto-fill, minmax(var(--minmax), 1fr));
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(var(--minmax), 1fr));
 	}
-	</style>
-	
+</style>
