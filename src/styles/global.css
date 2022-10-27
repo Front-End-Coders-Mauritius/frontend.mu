@@ -23,6 +23,12 @@ html {
 
   --light-threshold: 5%;
   --dark-threshold: 0%;
+
+
+  --home-tagline: hsl(var(--brand-hue), 10%, calc(15% - var(--light-threshold)));
+  --home-gradient-dark: hsl(var(--brand-hue), 40%, calc(40% - var(--light-threshold)));
+  --home-gradient-light: hsl(var(--brand-hue), 40%, calc(67% - var(--light-threshold)));
+
 }
 
 body {
