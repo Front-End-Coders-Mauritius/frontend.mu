@@ -3,12 +3,12 @@ import HeaderLink from "./HeaderLink.astro";
 import LogoFec from "../components/LogoFec.astro";
 ---
 
-<div class="homepage-container bg-brand-950 -mt-32 pt-16 md:pt-0">
+<div class="homepage-container -mt-32 pt-16 md:pt-0">
   <div class="homepage-wrapper">
     <main>
       <div class="relative z-0 h-[700px] w-full md:h-[850px] contain">
         <div
-          class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center "
+          class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center"
         >
           <div
             class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3"
@@ -31,7 +31,7 @@ import LogoFec from "../components/LogoFec.astro";
             <div class="grid place-items-center md:place-items-start">
               <HeaderLink
                 href="/meetups"
-                class="text-md block w-48 rounded-full bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
+                class="btn-meetup text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
               >
                 View all meetups
               </HeaderLink>
@@ -52,6 +52,9 @@ import LogoFec from "../components/LogoFec.astro";
 </div>
 
 <style scoped>
+  .homepage-container {
+    background-color: var(--home-tagline);
+  }
   .image-container {
     position: relative;
     margin: 0 auto;
@@ -72,10 +75,10 @@ import LogoFec from "../components/LogoFec.astro";
   }
 
   @keyframes glow {
-    0% {    
+    0% {
       opacity: 0.5;
     }
-    50% {    
+    50% {
       opacity: 0;
     }
     100% {
@@ -84,7 +87,7 @@ import LogoFec from "../components/LogoFec.astro";
   }
 
   @keyframes lightup {
-    0% {    
+    0% {
       opacity: 0;
     }
     100% {
@@ -105,8 +108,8 @@ import LogoFec from "../components/LogoFec.astro";
     opacity: 0;
     background-image: linear-gradient(
       -45deg,
-      var(--color-brand-700) 50%,
-      var(--color-brand-400) 50%
+      var(--home-gradient-dark) 50%,
+      var(--home-gradient-light) 50%
     );
     /* transition: all 1s ease-in-out; */
   }
@@ -115,8 +118,7 @@ import LogoFec from "../components/LogoFec.astro";
     /* background-position: -300px -300px; */
     opacity: 0.5;
     transition: all 2s ease-in-out;
-    animation: glow 4s ease-out infinite alternate ;
-
+    animation: glow 4s ease-out infinite alternate;
   }
 
   .spotlight {
@@ -142,6 +144,10 @@ import LogoFec from "../components/LogoFec.astro";
   .spotlight:hover::before {
     animation: swing 2s ease-out infinite;
     animation-direction: alternate;
+  }
+
+  .btn-meetup {
+    background-color: var(--home-gradient-dark);
   }
 
   @keyframes swing {

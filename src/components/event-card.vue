@@ -54,13 +54,13 @@ const tiltOptions = {
   <!-- <Tilt :options="tiltOptions"> -->
 
     <div
-         class="mt-4 md:mt-0 relative rounded-xl group flex flex-col  items-start md:items-center gap-6 md:gap-16 group bg-white p-8 md:p-16 shadow-xl">
+         class="mt-4 md:mt-0 relative rounded-xl group flex flex-col  items-start md:items-center gap-6 md:gap-16 group bg-brand-0 p-8 md:p-16 shadow-xl">
 
       <logo-fec
                 class="w-32 z-0 transition-all hidden md:block select-none top-0 saturate-100  opacity-100  overflow-hidden" />
       <!-- <div class="w-64 top-0 h-64 z-10 bg-gradient-to-t from-white to-transparent absolute">&nbsp;</div> -->
 
-      <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20">
+      <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-0">
         <a
            :href="`meetup/${event.id}`"
            class="w-[300px] md:w-96 focus:outline-none">
