@@ -1,0 +1,25 @@
+---
+import SponsorCard from "./SponsorCard.vue";
+---
+
+<section class="sponsor-page bg-home-tagline w-full -mt-32">
+  <div class="container max-w-7xl mx-auto pt-32">
+    <div class="flex flex-col justify-center items-center gap-2 py-12">
+      <p class="text-brand-600 font-semibold tracking-wide">FEC</p>
+      <h1 class="text-white text-4xl font-medium">Meet our sponsors</h1>
+      <p
+        class="text-lg font-normal text-gray-400 max-w-md text-center pt-4 leading-6"
+      >
+        We're lucky to have sponsors support our community. If you're interested
+        in sponsoring us, please reach out to the organizers <a
+          href="mailto:hello@frontend.mu">here</a
+        >
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+      <SponsorCard client:visible cardId="1" />
+      <SponsorCard client:visible cardId="2" />
+      <SponsorCard client:visible cardId="3" />
+    </div>
+  </div>
+</section>

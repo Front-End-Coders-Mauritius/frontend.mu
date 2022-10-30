@@ -1,0 +1,25 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/NewHeader.astro";
+import Footer from "../components/Footer.astro";
+import OgImage from "../components/OgImage.astro";
+
+const props = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={props.title} description={props.description} />
+    <OgImage pageType="speaker" username={props.username} />
+  </head>
+
+  <body class="bg-brand-0">
+    <div>
+      <Header />
+
+      <slot />
+
+      <Footer />
+    </div>
+  </body>
+</html>
