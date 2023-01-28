@@ -1,0 +1,112 @@
+---
+import { MapPinIcon, UsersIcon } from "@heroicons/vue/20/solid";
+import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+import { format } from "date-fns";
+
+interface Meetup {
+  id: string;
+  title: string;
+  Date: string;
+  Attendees: number;
+  Venue: string;
+  description: string;
+  Location: string;
+  Time: string;
+  images?: [];
+  gallery?: [];
+}
+
+interface Props {
+  event: Meetup;
+}
+
+const { event } = Astro.props;
+
+// to get past or upcoming value base in Date
+const dateInPast = function (firstDate: Date, secondDate: Date) {
+  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
+    return true;
+
+  return false;
+};
+
+const isUpcoming = () => {
+  const past = new Date(event?.Date);
+  const today = new Date();
+  const verifyValue = dateInPast(past, today);
+  return verifyValue;
+};
+---
+
+<div class="py-2 group">
+  <div
+    class="relative rounded-xl flex flex-col md:flex-row p-4 md:p-0 gap-2 group bg-brand-0 group-hover:shadow-lg transition-all duration-300 border-2 group-hover:border-brand-400 group-hover:scale-105"
+  >
+    <!-- Date -->
+    {
+      event.Date && (
+        <div class="">
+          <span
+            title={isUpcoming() ? "Upcoming" : "Past"}
+            class:list={[
+              isUpcoming()
+                ? "bg-gray-50 text-gray-700"
+                : "bg-green-50 text-green-600 font-bold",
+              "inline-flex rounded-xl md:p-3 font-mono text-sm font-medium items-center",
+            ]}
+          >
+            <CalendarIcon class="mr-2 h-6 w-6" />
+            <span>{format(new Date(event.Date), "YYY dd MMM yyyy")}</span>
+          </span>
+        </div>
+      )
+    }
+
+    <!-- Title -->
+    <h3
+      class="leading-2 text-xl font-semibold flex-1 py-2 text-verse-0 group-hover:text-brand-500"
+    >
+      <a
+        href={`meetup/${event.id}`}
+        class="w-[300px] md:w-96 focus:outline-none"
+      >
+        <span class="absolute inset-0" aria-hidden="true"></span>
+        {event?.title}
+      </a>
+    </h3>
+
+    <div class="flex gap-4 pr-4 border-gray-100">
+      {
+        event.Venue && (
+          <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
+            <MapPinIcon
+              class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+              aria-hidden="true"
+            />
+            <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+              {event.Venue}
+            </div>
+          </div>
+        )
+      }
+
+      <div
+        class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
+      >
+        {
+          event.Attendees && (
+            <div class="flex items-center" title="Attendees">
+              <UsersIcon
+                class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                aria-hidden="true"
+              />
+              <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+                {event?.Attendees}
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,7 @@
     "@heroicons/vue": "^2.0.14",
     "@vueuse/core": "^9.11.1",
     "astro": "^2.0.2",
+    "date-fns": "^2.29.3",
     "sharp": "^0.31.3",
     "vanilla-tilt": "^1.8.0",
     "vanilla-tilt-vue": "^0.1.3"
