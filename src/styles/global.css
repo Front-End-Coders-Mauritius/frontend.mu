@@ -92,6 +92,11 @@ body[color-scheme="dark"] {
   --color-verse-950: hsl(var(--brand-hue), 7%, calc((var(--dark-threshold)) + 40%));
 }
 
+body[color-scheme="dark"] .bg-white{
+    background-color: var(--color-brand-500);
+  }
+
+
 a {
   text-decoration: none;
 }
