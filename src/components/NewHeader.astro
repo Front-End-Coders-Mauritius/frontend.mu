@@ -1,8 +1,7 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
 import LogoFec from "../components/LogoFec.astro";
-import { SITE_TITLE } from "../config";
 import ToggleTheme from "../components/toggle-theme.vue";
+import MainMenu from "./MainMenu.astro";
 ---
 
 <div class="flex justify-between contain">
@@ -20,42 +19,7 @@ import ToggleTheme from "../components/toggle-theme.vue";
   <div
     class="relative z-10 flex items-center justify-center h-32 col-span-3 bg-transparent"
   >
-    <nav class="mr-4 pointer-events-auto">
-      <ul
-        class="flex px-3 text-sm font-medium rounded-full shadow-lg bg-white/90 text-zinc-800 shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
-      >
-        <li>
-          <a
-            class="relative block px-3 py-2 transition hover:text-verse-500 dark:hover:text-verse-400"
-            href="/about">About</a
-          >
-        </li>
-        <li>
-          <a
-            class="relative block px-3 py-2 transition hover:text-verse-500 dark:hover:text-verse-400"
-            href="/meetups">Meetups</a
-          >
-        </li>
-        <li class="hidden md:block">
-          <a
-            class="relative block px-3 py-2 transition hover:text-verse-500 dark:hover:text-verse-400"
-            href="/about#team">Team</a
-          >
-        </li>
-        <li class="hidden md:block">
-          <a
-            class="relative block px-3 py-2 transition hover:text-verse-500 dark:hover:text-verse-400"
-            href="/sponsors">Sponsors</a
-          >
-        </li>
-        <li class="hidden md:block">
-          <a
-            class="relative block px-3 py-2 transition hover:text-verse-500 dark:hover:text-verse-400"
-            href="https://github.com/Front-End-Coders-Mauritius">Github</a
-          >
-        </li>
-      </ul>
-    </nav>
+    <MainMenu />
     <ToggleTheme client:load />
   </div>
 </div>

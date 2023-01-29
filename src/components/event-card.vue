@@ -1,12 +1,10 @@
 <script setup lang="ts">
 // import Tilt from 'vanilla-tilt-vue'
-import { LocationMarkerIcon, UsersIcon } from '@heroicons/vue/solid/index.js'
+import { MapPinIcon, UsersIcon } from '@heroicons/vue/20/solid'
 import {
   CalendarIcon,
-  MenuIcon,
-  TrendingUpIcon,
-  XIcon,
-} from '@heroicons/vue/outline/index.js'
+  ArrowTrendingUpIcon,
+} from '@heroicons/vue/24/outline'
 import { PropType } from 'vue';
 import LogoFec from '../components/logo-fec.vue';
 
@@ -95,7 +93,7 @@ const tiltOptions = {
         <div
              v-if="event.Venue"
              class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500">
-          <LocationMarkerIcon
+          <MapPinIcon
                               class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
                               aria-hidden="true" />
           <div class="pt-1 ">{{ event.Venue }}</div>
@@ -105,7 +103,7 @@ const tiltOptions = {
       <span
             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-green-500"
             aria-hidden="true">
-        <TrendingUpIcon class="h-6 w-6" />
+        <ArrowTrendingUpIcon class="h-6 w-6" />
       </span>
     </div>
   <!-- </Tilt> -->

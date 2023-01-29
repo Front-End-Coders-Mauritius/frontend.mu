@@ -5,14 +5,12 @@ import Footer from "../components/Footer.astro";
 import Team from "../components/Team.astro";
 import OgImage from "../components/OgImage.astro";
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
-// const title = 'Front-End Coders Mauritius'
-// const description = 'Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.'
+const { frontmatter } = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={frontmatter.title} description={frontmatter.description} />
     <OgImage pageType="page" title="About" />
   </head>
 
