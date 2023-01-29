@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/LayoutHome.astro";
+import { getCollection } from "astro:content";
 
+const faqEntries = await getCollection("faqs");
 const title = "FAQ";
 const description = "Frequently asked questions";
 ---
@@ -19,82 +21,54 @@ const description = "Frequently asked questions";
           </h2>
           <p class="mx-auto mt-6 max-w-2xl text-base leading-7 text-gray-600">
             Have a different question and can’t find the answer you’re looking
-            for? Reach out to <a
-              href="https://sandeep.ramgolam.com"
+            for? <a
+              href="https://discord.gg/WxXW9Jvv6k?ref=frontend.mu
+              "
               class="font-semibold text-indigo-600 hover:text-indigo-500"
             >
-              our support team
-            </a> and we’ll get back to you as soon as we can.
+              Reach out to our community on discord
+            </a> and someone might be able to help you!
           </p>
         </div>
-        <div class="mt-20">
-          <dl
-            class="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-3 lg:gap-x-10"
-          >
-            <div>
-              <dt class="text-base font-semibold leading-7 text-gray-900">
-                How to host a meetup ?
-              </dt>
-              <dd class="mt-2 text-base leading-7 text-gray-600">
-                I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Quas cupiditate
-                laboriosam fugiat.
-              </dd>
-            </div>
-            <div>
-              <dt class="text-base font-semibold leading-7 text-gray-900">
-                How to contact us?
-              </dt>
-              <dd class="mt-2 text-base leading-7 text-gray-600">
-                I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Quas cupiditate
-                laboriosam fugiat.
-              </dd>
-            </div>
-            <div>
-              <dt class="text-base font-semibold leading-7 text-gray-900">
-                What&#039;s the best thing about Frontend-Coder Maurtius?
-              </dt>
-              <dd class="mt-2 text-base leading-7 text-gray-600">
-                I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Quas cupiditate
-                laboriosam fugiat.
-              </dd>
-            </div>
-            <div>
-              <dt class="text-base font-semibold leading-7 text-gray-900">
-                What&#039;s the best thing about Frontend-Coder Maurtius?
-              </dt>
-              <dd class="mt-2 text-base leading-7 text-gray-600">
-                I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Quas cupiditate
-                laboriosam fugiat.
-              </dd>
-            </div>
-            <div>
-              <dt class="text-base font-semibold leading-7 text-gray-900">
-                What&#039;s the best thing about Frontend-Coder Maurtius?
-              </dt>
-              <dd class="mt-2 text-base leading-7 text-gray-600">
-                I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Quas cupiditate
-                laboriosam fugiat.
-              </dd>
-            </div>
-            <div>
-              <dt class="text-base font-semibold leading-7 text-gray-900">
-                What&#039;s the best thing about Frontend-Coder Maurtius?
-              </dt>
-              <dd class="mt-2 text-base leading-7 text-gray-600">
-                I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Quas cupiditate
-                laboriosam fugiat.
-              </dd>
-            </div>
-
-            <!-- More questions... -->
-          </dl>
-        </div>
+        <main class="border shadow-md px-12 py-4 mt-8 rounded-lg">
+          <section class="grid grid-cols-1 gap-y-3 divide-y">
+            {
+              faqEntries.map((faqEntry) => (
+                <details class="group py-2 text-lg">
+                  <summary class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]">
+                    {faqEntry.data.question}
+                    <svg
+                      class="h-6 w-6 rotate-0 transform text-gray-400 group-open:rotate-180"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </summary>
+                  <p class="text-gray-500 py-4">
+                    {faqEntry.data.answer}
+                    <a
+                      class="text-blue-500 hover:text-blue-700"
+                      href="https://marktownsend.rocks"
+                    >
+                      Mark Townsend
+                    </a>
+                    , a professional web developer with a passion for Laravel
+                    and Tailwind CSS.
+                  </p>
+                </details>
+              ))
+            }
+          </section>
+        </main>
       </div>
     </div>
   </div>
