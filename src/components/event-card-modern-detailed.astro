@@ -24,7 +24,6 @@ interface Props {
 }
 
 const { event } = Astro.props;
-console.log(event.album);
 
 // to get past or upcoming value base in Date
 const dateInPast = function (firstDate: Date, secondDate: Date) {
@@ -91,7 +90,7 @@ let currentAlbum = fetchAlbumDetails();
               ]}
             >
               <CalendarIcon class="mr-2 h-6 w-6" />
-              <span>{format(new Date(event.Date), "YYY dd MMM yyyy")}</span>
+              <span>{format(new Date(event.Date), "dd MMM yyyy")}</span>
             </span>
           </div>
         )

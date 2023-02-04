@@ -2,7 +2,6 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
-import Team from "../components/Team.astro";
 import OgImage from "../components/OgImage.astro";
 
 const { frontmatter } = Astro.props;
@@ -18,11 +17,11 @@ const { frontmatter } = Astro.props;
     <div>
       <Header />
 
-      <div class="prose contain">
-        <slot />
+      <div class="contain min-h-[500px]">
+        <div class="prose">
+          <slot />
+        </div>
       </div>
-
-      <Team />
 
       <Footer />
     </div>
