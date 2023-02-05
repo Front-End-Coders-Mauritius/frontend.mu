@@ -33,7 +33,7 @@ const description = "Frequently asked questions";
         <main class="border shadow-md px-12 py-4 mt-8 rounded-lg">
           <section class="grid grid-cols-1 gap-y-3 divide-y">
             {
-              faqEntries.map((faqEntry) => (
+              faqEntries.map(faqEntry => (
                 <details class="group py-2 text-lg">
                   <summary class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]">
                     {faqEntry.data.question}
@@ -53,16 +53,7 @@ const description = "Frequently asked questions";
                       />
                     </svg>
                   </summary>
-                  <p class="text-gray-500 py-4">
-                    {faqEntry.data.answer}
-                    <a
-                      class="text-blue-500 hover:text-blue-700"
-                      href="https://marktownsend.rocks"
-                    >
-                      Mark Townsend
-                    </a>
-                    , a professional web developer with a passion for Laravel
-                    and Tailwind CSS.
+                  <p class="text-gray-500 py-4 prose contain" set:html={faqEntry.body}>
                   </p>
                 </details>
               ))
