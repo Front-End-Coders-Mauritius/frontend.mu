@@ -1,6 +1,7 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "strictNullChecks": true
   }
 }
