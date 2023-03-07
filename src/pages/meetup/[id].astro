@@ -2,24 +2,26 @@
 import LayoutSingleMeetup from "../../layouts/LayoutSingleMeetup.astro";
 import MeetupSingle from "../../components/MeetupSingle.astro";
 import { getEvent, loadEvents } from "../../utils/api";
+import EventJSONLD from "../../components/EventJSONLD.astro";
 
 const props = Astro.params;
 
 export async function getStaticPaths() {
-    const events = await loadEvents();
+  const events = await loadEvents();
 
-    return events.data.map((event) => {
-        return {
-            params: {
-                id: event.id.toString(),
-            },
-        };
-    });
+  return events.data.map((event) => {
+    return {
+      params: {
+        id: event.id.toString(),
+      },
+    };
+  });
 }
 
 const meetup = await getEvent(props.id);
 ---
 
 <LayoutSingleMeetup title={meetup.title} description={meetup.description}>
+  <EventJSONLD slot="head" {...meetup} />
   <MeetupSingle routeId={props.id} getCurrentEvent={meetup} />
 </LayoutSingleMeetup>

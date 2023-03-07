@@ -4,29 +4,26 @@ import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import OgImage from "../components/OgImage.astro";
 
-const title = 'hi'
-const description = 'hi'
+const title = "hi";
+const description = "hi";
 
-const props = Astro.props
-
-
+const props = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={props.title} description={props.description} />
-		<OgImage pageType="event" title={props.title}/>
-	</head>
+  <head>
+    <BaseHead title={props.title} description={props.description} />
+    <OgImage pageType="event" title={props.title} />
+    <slot name="head" />
+  </head>
 
-	<body class="bg-brand-0">
-		<div>
-			<Header />
+  <body class="bg-brand-0">
+    <div>
+      <Header />
 
+      <slot />
 
-			<slot />
-
-
-			<Footer />
-		</div>
-	</body>
+      <Footer />
+    </div>
+  </body>
 </html>

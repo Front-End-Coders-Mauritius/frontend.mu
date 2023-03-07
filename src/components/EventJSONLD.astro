@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = CollectionEntry<"event">["data"];
+const { title, description, Location, Venue, Date, Attendees, sessions } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: title,
+  startDate: Date,
+  location: {
+    "@type": "Place",
+    name: Venue,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: Location,
+      addressCountry: "MU",
+    },
+  },
+  maximumAttendeeCapacity: Attendees,
+  image: [],
+  description: description,
+  performer: [
+    {
+      "@type": "Person",
+      name: sessions[0].Session_id.speakers,
+    },
+    {
+      "@type": "Person",
+      name: sessions[1].Session_id.speakers,
+    },
+    {
+      "@type": "Person",
+      name: sessions[2].Session_id.speakers,
+    },
+  ],
+  workPerformed: [
+    {
+      "@type": "CreativeWork",
+      name: sessions[0].Session_id.title,
+    },
+    {
+      "@type": "CreativeWork",
+      name: sessions[1].Session_id.title,
+    },
+    {
+      "@type": "CreativeWork",
+      name: sessions[2].Session_id.title,
+    },
+  ],
+  audience: {
+    "@type": "Audience",
+    audienceType: ["Developers", "Frontend Developers", "Students"],
+  },
+  organizer: {
+    "@type": "Organization",
+    name: "Sandeep Ramgolam",
+    url: "https://sandeep.ramgolam.com",
+  },
+  keywords: ["Frontend", "Mauritius", "Meetup", "Frontend Developers", "Sandeep Ramgolam"],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
