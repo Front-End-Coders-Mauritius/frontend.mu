@@ -4,11 +4,30 @@ import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"event">["data"];
 const { title, description, Location, Venue, Date, Attendees, sessions } = Astro.props;
 
+const getSpeakerData = () => {
+  return sessions.map(({ Session_id }) => {
+    return {
+      "@type": "Person",
+      name: Session_id.speakers,
+    };
+  });
+};
+
+const getSessionData = () => {
+  return sessions.map(({ Session_id }) => {
+    return {
+      "@type": "CreativeWork",
+      name: Session_id.title,
+    };
+  });
+};
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: title,
   startDate: Date,
+  endDate: Date,
   location: {
     "@type": "Place",
     name: Venue,
@@ -19,45 +38,26 @@ const schema = {
     },
   },
   maximumAttendeeCapacity: Attendees,
-  image: [],
+  image: "https://vercel-og-next.vercel.app/api/fec-event?title=" + title,
   description: description,
-  performer: [
-    {
-      "@type": "Person",
-      name: sessions[0]?.Session_id?.speakers,
-    },
-    {
-      "@type": "Person",
-      name: sessions[1]?.Session_id?.speakers,
-    },
-    {
-      "@type": "Person",
-      name: sessions[2]?.Session_id?.speakers,
-    },
-  ],
-  workPerformed: [
-    {
-      "@type": "CreativeWork",
-      name: sessions[0]?.Session_id?.title,
-    },
-    {
-      "@type": "CreativeWork",
-      name: sessions[1]?.Session_id?.title,
-    },
-    {
-      "@type": "CreativeWork",
-      name: sessions[2]?.Session_id?.title,
-    },
-  ],
+  performer: getSpeakerData(),
+  workPerformed: getSessionData(),
   audience: {
     "@type": "Audience",
     audienceType: ["Developers", "Frontend Developers", "Students"],
   },
-  organizer: {
-    "@type": "Organization",
-    name: "Sandeep Ramgolam",
-    url: "https://sandeep.ramgolam.com",
-  },
+  organizer: [
+    {
+      "@type": "Person",
+      name: "Sandeep Ramgolam",
+      url: "https://sandeep.ramgolam.com",
+    },
+    {
+      "@type": "Organization",
+      name: "Frontend Coders Mauritius",
+      url: "https://frontend.mu",
+    },
+  ],
   keywords: ["Frontend", "Mauritius", "Meetup", "Frontend Developers", "Sandeep Ramgolam"],
 };
 ---
