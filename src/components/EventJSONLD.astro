@@ -24,29 +24,29 @@ const schema = {
   performer: [
     {
       "@type": "Person",
-      name: sessions[0].Session_id.speakers,
+      name: sessions[0]?.Session_id?.speakers,
     },
     {
       "@type": "Person",
-      name: sessions[1].Session_id.speakers,
+      name: sessions[1]?.Session_id?.speakers,
     },
     {
       "@type": "Person",
-      name: sessions[2].Session_id.speakers,
+      name: sessions[2]?.Session_id?.speakers,
     },
   ],
   workPerformed: [
     {
       "@type": "CreativeWork",
-      name: sessions[0].Session_id.title,
+      name: sessions[0]?.Session_id?.title,
     },
     {
       "@type": "CreativeWork",
-      name: sessions[1].Session_id.title,
+      name: sessions[1]?.Session_id?.title,
     },
     {
       "@type": "CreativeWork",
-      name: sessions[2].Session_id.title,
+      name: sessions[2]?.Session_id?.title,
     },
   ],
   audience: {
