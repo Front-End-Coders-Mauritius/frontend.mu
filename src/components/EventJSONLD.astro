@@ -6,14 +6,18 @@ const { title, description, Location, Venue, Date, Attendees, sessions } = Astro
 
 const getSpeakerData = () => {
   return sessions.map(({ Session_id }) => {
-    console.log(Session_id.speakers);
     return {
-      "@type": "Person",
+      "@type": "CreativeWork",
       name: Session_id.speakers.name,
+      maintainer: {
+        "@type": "SoftwareSourceCode",
+        codeRepository: `https://github.com/${Session_id.speakers.github_account}`,
+      },
     };
   });
 };
 
+// "@type": "Person",
 const getSessionData = () => {
   return sessions.map(({ Session_id }) => {
     return {
