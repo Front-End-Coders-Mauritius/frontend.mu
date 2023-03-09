@@ -6,9 +6,10 @@ const { title, description, Location, Venue, Date, Attendees, sessions } = Astro
 
 const getSpeakerData = () => {
   return sessions.map(({ Session_id }) => {
+    console.log(Session_id.speakers);
     return {
       "@type": "Person",
-      name: Session_id.speakers,
+      name: Session_id.speakers.name,
     };
   });
 };
