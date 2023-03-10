@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = CollectionEntry<"event">["data"];
+const { title, description, Location, Venue, Date, Attendees, sessions } = Astro.props;
+
+const getSpeakerData = () => {
+  return sessions.map(({ Session_id }) => {
+    return {
+      "@type": "CreativeWork",
+      name: Session_id.speakers.name,
+      maintainer: {
+        "@type": "SoftwareSourceCode",
+        codeRepository: `https://github.com/${Session_id.speakers.github_account}`,
+      },
+    };
+  });
+};
+
+// "@type": "Person",
+const getSessionData = () => {
+  return sessions.map(({ Session_id }) => {
+    return {
+      "@type": "CreativeWork",
+      name: Session_id.title,
+    };
+  });
+};
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: title,
+  startDate: Date,
+  endDate: Date,
+  location: {
+    "@type": "Place",
+    name: Venue,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: Location,
+      addressCountry: "MU",
+    },
+  },
+  maximumAttendeeCapacity: Attendees,
+  image: "https://vercel-og-next.vercel.app/api/fec-event?title=" + title,
+  description: description,
+  performer: getSpeakerData(),
+  workPerformed: getSessionData(),
+  audience: {
+    "@type": "Audience",
+    audienceType: ["Developers", "Frontend Developers", "Students"],
+  },
+  organizer: [
+    {
+      "@type": "Person",
+      name: "Sandeep Ramgolam",
+      url: "https://sandeep.ramgolam.com",
+    },
+    {
+      "@type": "Organization",
+      name: "Frontend Coders Mauritius",
+      url: "https://frontend.mu",
+    },
+  ],
+  keywords: ["Frontend", "Mauritius", "Meetup", "Frontend Developers", "Software Engineering", "VueJS", "ReactJs", "Technology", "Workshop", "Angular"],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
