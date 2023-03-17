@@ -78,12 +78,12 @@ const isUpcoming = () => {
     <div class="flex gap-4 pr-4 border-gray-100">
       {
         event.Venue && (
-          <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
+          <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500">
             <MapPinIcon
               class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
               aria-hidden="true"
             />
-            <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+            <div class="line-clamp-1 md:line-clamp-0">
               {event.Venue}
             </div>
           </div>
@@ -91,7 +91,7 @@ const isUpcoming = () => {
       }
 
       <div
-        class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
+        class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500"
       >
         {
           event.Attendees && (
@@ -100,7 +100,7 @@ const isUpcoming = () => {
                 class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
                 aria-hidden="true"
               />
-              <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+              <div class="line-clamp-1 md:line-clamp-0">
                 {event?.Attendees}
               </div>
             </div>

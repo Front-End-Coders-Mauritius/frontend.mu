@@ -71,16 +71,16 @@ const isUpcoming = (currentEventDate: string) => {
       </h3>
       <div class="flex gap-4 border-gray-100">
         <div
-          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
+          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500"
         >
           <UsersIcon
             class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
             aria-hidden="true"
           />
-          <div v-if="event?.Attendees !== 0" class="pt-[2px] line-clamp-1 md:line-clamp-0">
+          <div v-if="event?.Attendees !== 0" class="line-clamp-1 md:line-clamp-0">
             Attendees {{ event?.Attendees }}
           </div>
-          <div v-else class="pt-[2px]">Seats: {{ event?.Attendees }}</div>
+          <div v-else>Seats: {{ event?.Attendees }}</div>
         </div>
         <div
           v-if="event.Venue"
@@ -90,7 +90,7 @@ const isUpcoming = (currentEventDate: string) => {
             class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
             aria-hidden="true"
           />
-          <div class="pt-1 line-clamp-1 md:line-clamp-0">{{ event.Venue }}</div>
+          <div class="line-clamp-1 md:line-clamp-0">{{ event.Venue }}</div>
         </div>
         <div v-else>No venue added.</div>
       </div>

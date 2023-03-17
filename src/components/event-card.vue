@@ -81,22 +81,22 @@ const tiltOptions = {
         </span>
 
         <div
-             class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium leading-5 text-gray-500">
+             class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500">
           <UsersIcon
-                     class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                     class="mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500"
                      aria-hidden="true" />
-          <div v-if="event?.Attendees !== 0" class="pt-[2px] line-clamp-1 md:line-clamp-0">
+          <div v-if="event?.Attendees !== 0" class="line-clamp-1 md:line-clamp-0">
             Attendees {{ event?.Attendees }}
           </div>
-          <div v-else class="pt-[2px]">Seats: {{ event?.Attendees }}</div>
+          <div v-else>Seats: {{ event?.Attendees }}</div>
         </div>
         <div
              v-if="event.Venue"
              class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500">
           <MapPinIcon
-                              class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
+                              class="ml-[-1px] mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500"
                               aria-hidden="true" />
-          <div class="pt-1 ">{{ event.Venue }}</div>
+          <div>{{ event.Venue }}</div>
         </div>
         <div v-else>No venue added.</div>
       </div>
