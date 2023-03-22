@@ -4,7 +4,7 @@ const props = Astro.props;
 
 <div class="grid grid-cols-4 items-center">
   {
-    props.currentAlbum.length > 0 &&
+    props.currentAlbum && props.currentAlbum.length > 0 &&
       props.currentAlbum.map((photo) => (
         <img
           src={`${props.source}/${photo}`}
