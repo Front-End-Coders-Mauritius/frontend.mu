@@ -10,6 +10,10 @@ module.exports = {
 		fontFamily: {
 			mono: ['Electrolize', 'Courier New', 'monospace'],
 			// sans: ['sans-serif'],
+			opensans: ['"Open Sans"', 'sans-serif'],
+			garamond: ['"garamond"', 'serif'],
+			fredericka: ['"fredericka"', 'serif'],
+			iosevka: ['"iosevka"', 'monospace'],
 		},
 		screens: {
 			'sm': '640px',

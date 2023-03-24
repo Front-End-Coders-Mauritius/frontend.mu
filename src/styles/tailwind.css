@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'garamond';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block; /* This property will help us not flash unstyled text for a couple hundred milliseconds, and then it would act like font-display: swap */
+    src: url('/fonts/eb-garamond-v26-latin/eb-garamond-v26-latin-800.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'fredericka';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block; /* This property will help us not flash unstyled text for a couple hundred milliseconds, and then it would act like font-display: swap */
+    src: url('/fonts/fredericka/fredericka.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'iosekva';
+    font-style: normal;
+    font-display: block; /* This property will help us not flash unstyled text for a couple hundred milliseconds, and then it would act like font-display: swap */
+    src: url('/fonts/iosekva/iosekva.woff2') format('woff2');
+  }
+}
+
 :root {
   --color-white: #fefeff;
   --color-tan: #f4efed;
