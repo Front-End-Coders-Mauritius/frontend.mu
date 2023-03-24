@@ -1,0 +1,115 @@
+---
+import { map } from "astro/zod";
+import BrandingCard from "../components/BrandingCard.astro";
+import Layout from "../layouts/LayoutCustom.astro";
+
+const title = "Brand Assets";
+const description = "Brand resources for all things frontend.mu";
+
+export type Asset = {
+  name: string;
+  description: string;
+  filename: string;
+  versions: string[];
+};
+
+const assets: Asset[] = [
+  {
+    name: "Standard Blue with Text",
+    description: "",
+    filename: "logo-with-text",
+    versions: ["svg", "png"],
+  },
+  {
+    name: "Spiral Green with Text",
+    description: "",
+    filename: "logo-with-text-green",
+    versions: ["svg", "png"],
+  },
+  {
+    name: "Spiral Blue",
+    description: "",
+    filename: "logo-spiral-blue",
+    versions: ["svg", "png"],
+  },
+  {
+    name: "Circle",
+    description: "",
+    filename: "logo-circle",
+    versions: ["svg", "png"],
+  },
+  {
+    name: "Discord",
+    description: "",
+    filename: "logo-discord",
+    versions: ["svg", "png"],
+  },
+  {
+    name: "Outside Blue",
+    description: "",
+    filename: "logo-outside-blue",
+    versions: ["svg", "png"],
+  },
+  {
+    name: "Outside Red",
+    description: "",
+    filename: "logo-outside-red",
+    versions: ["svg", "png"],
+  },
+
+  {
+    name: "Spiral Red",
+    description: "",
+    filename: "logo-spiral-red",
+    versions: ["svg", "png"],
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <div class="page-all-meetups py-12">
+    <div>
+      <!-- start  -->
+      <div class="past-events-container pb-4 md:pb-16">
+        <div class="contain mx-auto">
+          <div class="py-4 flex flex-col gap-2">
+            <h1
+              class="text-4xl font-extrabold tracking-tight text-verse-900 sm:text-5xl md:text-4xl"
+            >
+              Brand & Assets
+            </h1>
+            <p class="text-verse-900 text-xl max-w-3xl leading-relaxed">
+              Are you collaborating with Frontend Coders Mauritius? Grab our assets from here to use in marketing material related to our community.
+            </p>
+          </div>
+          <div class="flex flex-col gap-16">
+            <!-- Loop over assets -->
+            {assets.map((asset) => <BrandingCard asset={asset} />)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style scoped>
+  @media screen and (min-width: 650px) {
+    .grid-container {
+      --minmax: 500px;
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    .grid-container {
+      --minmax: 100%;
+    }
+  }
+  .grid-container {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(var(--minmax), 1fr)); */
+  }
+
+  .page-all-meetups {
+    /* background: linear-gradient(180deg, var(--color-brand-100) 0%, #ffffff 5%); */
+  }
+</style>
