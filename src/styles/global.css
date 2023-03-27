@@ -285,7 +285,7 @@ body[color-scheme="dark"] {
 }
 
 body[color-scheme="dark"] .bg-white {
-  background-color: var(--color-brand-500);
+  background-color: var(--color-verse-100);
 }
 
 a {
