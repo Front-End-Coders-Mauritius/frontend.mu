@@ -24,7 +24,7 @@ const sponsors = [
     ],
   },
   {
-    title: 'Parnter',
+    title: 'Partner',
     description: 'Goodies are a great way to show your appreciation to our speakers and attendees.',
     sponsors: [
       {
@@ -36,7 +36,7 @@ const sponsors = [
     ],
   },
   {
-    title: 'Parnter',
+    title: 'Partner',
     description: 'Goodies are a great way to show your appreciation to our speakers and attendees.',
     sponsors: [
       {
