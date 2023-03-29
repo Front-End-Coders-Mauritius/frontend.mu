@@ -62,24 +62,17 @@ declare module 'astro:content' {
 	};
 
 	const entryMap: {
-		"faqs": {
-"question-1.md": {
-  id: "question-1.md",
-  slug: "question-1",
+		"event": {
+"helloworld.md": {
+  id: "helloworld.md",
+  slug: "helloworld",
   body: string,
-  collection: "faqs",
-  data: InferEntrySchema<"faqs">
-},
-"question-2.md": {
-  id: "question-2.md",
-  slug: "question-2",
-  body: string,
-  collection: "faqs",
-  data: InferEntrySchema<"faqs">
+  collection: "event",
+  data: any
 },
 },
 
 	};
 
-	type ContentConfig = typeof import("../src/content/config");
+	type ContentConfig = never;
 }

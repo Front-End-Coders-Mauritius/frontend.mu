@@ -1,5 +1,5 @@
 module.exports = {
-	darkMode: 'class',
+	darkMode: ['class', '[color-scheme="dark"]'],
 	mode: 'jit',
 	content: [
 		'./src/components/**/*.{astro,vue,md,mdx}',

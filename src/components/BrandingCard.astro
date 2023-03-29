@@ -1,0 +1,33 @@
+---
+import type { Asset } from "../pages/branding.astro";
+const { asset }  = Astro.props
+
+interface Props {
+    asset: Asset;
+}
+
+const defaultPath = '/brand/' + asset.filename + '.' + asset?.versions[0]
+---
+
+<div class="grid md:grid-cols-3 gap-8 border border-verse-900 p-8">
+    <div class="flex flex-col col-span-1 gap-4 justify-center">
+        <h1 class="font-bold text-verse-950 text-xl md:text-3xl">{asset.name}</h1>
+        {
+            asset.description && <p>{asset.description}</p>
+        }
+        
+        <div class="flex items-center text-sm uppercase gap-2  text-verse-950">
+            <span>
+                Download
+            </span>
+            {
+                asset.versions.map((version) => {
+                    return <a download class="border  px-4 py-1 cursor-pointer hover:bg-gray-100 rounded-md" href={'/brand/' + asset.filename + '.' + version}>{version}</a>
+                })
+            }
+        </div>
+    </div>
+    <div class="col-span-2 flex justify-center">
+        <img class="max-h-64 w-full" src={defaultPath} />
+    </div>
+</div>

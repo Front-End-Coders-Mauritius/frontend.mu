@@ -10,7 +10,7 @@ import HeaderLink from "./HeaderLink.astro";
         <div
           class="relative z-20 mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 md:flex-row h-full justify-center max-w-6xl px-12"
         >
-        <div
+          <div
             class="flex flex-col justify-center text-center md:text-left gap-10"
           >
             <h1
@@ -25,8 +25,9 @@ import HeaderLink from "./HeaderLink.astro";
             <p class="text-md md:text-lg text-black font-mono font-bold">
               We're lucky to have sponsors support our community. If you're
               interested in sponsoring us, please reach out to us <a
-                href="mailto:hello@frontend.mu">here</a
-              >
+                href="mailto:hello@frontend.mu"
+                class="underline">here</a
+              >.
             </p>
             <div class="grid place-items-center md:place-items-start">
               <HeaderLink
@@ -54,7 +55,7 @@ import HeaderLink from "./HeaderLink.astro";
                     <img src={`/img/sponsors/${sponsor.logo}`} />
                     <div
                       v-if="sponsor.description"
-                      class="bg-brand-200 py-1 px-4 text-xs w-full text-center text-verse-600 font-medium rounded-2xl self-end"
+                      class="bg-gray-300 py-1 px-4 text-xs w-full text-center text-gray-500 font-medium rounded-2xl self-end"
                     >
                       {sponsor.description}
                     </div>

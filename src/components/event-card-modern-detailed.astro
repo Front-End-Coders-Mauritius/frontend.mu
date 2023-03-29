@@ -1,0 +1,150 @@
+---
+import { MapPinIcon, UsersIcon } from "@heroicons/vue/20/solid";
+import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+import { format } from "date-fns";
+import { getPhotos, photoAlbumSource } from "../utils/api";
+import CardAlbum from "./CardAlbum.astro";
+
+interface Meetup {
+  id: string;
+  title: string;
+  Date: string;
+  Attendees: number;
+  Venue: string;
+  description: string;
+  Location: string;
+  Time: string;
+  images?: [];
+  gallery?: [];
+  album?: string;
+}
+
+interface Props {
+  event: Meetup;
+}
+
+const { event } = Astro.props;
+
+// to get past or upcoming value base in Date
+const dateInPast = function (firstDate: Date, secondDate: Date) {
+  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
+    return true;
+
+  return false;
+};
+
+const isUpcoming = () => {
+  const past = new Date(event?.Date);
+  const today = new Date();
+  const verifyValue = dateInPast(past, today);
+  return verifyValue;
+};
+const hasAlbum = () => {
+  return Boolean(event?.album.toString() === "null");
+};
+const albumsPhotos = await getPhotos();
+
+let maxAlbumLength = 0;
+
+function fetchAlbumDetails() {
+  const albumName = event.album;
+  if (!albumName) return [];
+
+  if (albumsPhotos) {
+    const albumPhotosParsed = albumsPhotos[albumName];
+    // check if array
+    if (Array.isArray(albumPhotosParsed)) {
+      maxAlbumLength = albumPhotosParsed.length;
+      // filter all strings that end with .mp4
+      const filteredPhotos = albumPhotosParsed.filter((photo) => {
+        return !photo.endsWith(".mp4");
+      });
+      return filteredPhotos.slice(0, 4);
+    }
+  }
+}
+
+let currentAlbum = fetchAlbumDetails();
+---
+
+<div
+  class:list={[
+    event?.album ? "col-span-2" : "md:col-span-1 col-span-2",
+    "group in-card bg-brand-0 border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
+  ]}
+  title={hasAlbum ? "has album" : "no album"}
+>
+  <div
+    class="flex flex-col md:flex-row justify-between w-full  transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"
+  >
+    <div class="relative flex flex-col p-4 gap-2">
+      <!-- Date -->
+      {
+        event.Date && (
+          <div class="">
+            <span
+              title={isUpcoming() ? "Upcoming" : "Past"}
+              class:list={[
+                isUpcoming() ? "text-verse-900" : "text-green-600 font-bold",
+                "flex font-mono text-sm font-medium items-center",
+              ]}
+            >
+              <CalendarIcon class="mr-2 h-6 w-6" />
+              <span>{format(new Date(event.Date), "dd MMM yyyy")}</span>
+            </span>
+          </div>
+        )
+      }
+
+      <!-- Title -->
+      <h3
+        class="leading-2 text-2xl font-semibold flex-1 py-2 text-verse-0 group-hover[.in-card]:text-verse-500"
+      >
+        <a
+          href={`meetup/${event.id}`}
+          class="w-[300px] md:w-96 focus:outline-none"
+        >
+          <span class="absolute inset-0" aria-hidden="true"></span>
+          {event?.title}
+        </a>
+      </h3>
+
+      <div class="flex gap-4 pr-4 border-gray-100">
+        {
+          event.Venue && (
+            <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
+              <MapPinIcon
+                class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                aria-hidden="true"
+              />
+              <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+                {event.Venue}
+              </div>
+            </div>
+          )
+        }
+
+        <div
+          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
+        >
+          {
+            event.Attendees && (
+              <div class="flex items-center" title="Attendees">
+                <UsersIcon
+                  class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                  aria-hidden="true"
+                />
+                <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
+                  {event?.Attendees}
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+    <div class="max-w-screen-sm">
+      <CardAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />
+    </div>
+  </div>
+</div>

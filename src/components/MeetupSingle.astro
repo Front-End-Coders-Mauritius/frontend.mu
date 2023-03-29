@@ -83,7 +83,7 @@ let currentAlbum = fetchAlbumDetails();
                           ? "tagStyle bg-green-100 text-green-800"
                           : "tagStyle bg-yellow-100 text-yellow-800",
                         ,
-                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase",
+                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
                       ]}
                     >
                       upcoming
@@ -91,6 +91,7 @@ let currentAlbum = fetchAlbumDetails();
                   </div>
                 )
               }
+              <div class="text-base uppercase text-verse-900 font-semibold">Topic</div>
               <h1
                 class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
               >
@@ -112,6 +113,7 @@ let currentAlbum = fetchAlbumDetails();
                 )
               } -->
 
+              
               <SessionList sessions={props.getCurrentEvent.sessions} />
             </div>
             <!-- Stats section -->

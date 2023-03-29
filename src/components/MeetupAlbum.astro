@@ -9,7 +9,7 @@ const props = Astro.props
     >
       <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {
-          props.currentAlbum.length > 0 &&
+          props.currentAlbum && props.currentAlbum.length > 0 &&
             props.currentAlbum.map((photo) => (
               <div class="rounded-md overflow-hidden aspect-video">
                 <img

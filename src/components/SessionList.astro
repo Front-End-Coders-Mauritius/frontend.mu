@@ -5,8 +5,9 @@ import { getGithubUrl } from "../utils/fns";
 const props = Astro.props;
 ---
 
-<div>
-  <ul role="list" class="flex flex-col gap-8 py-8">
+<div class="py-8 flex flex-col gap-3">
+  <div class="text-base uppercase text-verse-900 font-semibold">Agenda</div>
+  <ul role="list" class="flex flex-col gap-6 ">
     {
       props.sessions.map((session, index) => {
         const speaker_photo = getGithubUrl(
