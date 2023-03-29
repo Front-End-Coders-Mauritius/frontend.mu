@@ -71,8 +71,24 @@ declare module 'astro:content' {
   data: any
 },
 },
+"faqs": {
+"question-1.md": {
+  id: "question-1.md",
+  slug: "question-1",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+},
+"question-2.md": {
+  id: "question-2.md",
+  slug: "question-2",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+},
+},
 
 	};
 
-	type ContentConfig = never;
+	type ContentConfig = typeof import("../src/content/config");
 }
