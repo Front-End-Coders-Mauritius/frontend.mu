@@ -3,34 +3,32 @@ import { CollectionEntry } from "astro:content";
 import slugify from "slugify";
 
 interface Props {
-    faqEntry: CollectionEntry<"faqs">;
+  faqEntry: CollectionEntry<"faqs">;
 }
 const { faqEntry } = Astro.props;
 const { Content } = await faqEntry.render();
 const slug = `${slugify(faqEntry.data.question)}`;
 ---
 
-<details class="group px-12 py-4 text-lg bg-gray-100 open:bg-white " id={slug}>
-    <summary
-        class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]"
+<details class="group px-12 py-4 text-lg bg-gray-100 open:bg-white" id={slug}>
+  <summary
+    class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]"
+  >
+    {faqEntry.data.question}
+    <svg
+      class="h-6 w-6 rotate-0 transform text-gray-400 group-open:rotate-180"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      aria-hidden="true"
     >
-        {faqEntry.data.question}
-        <svg
-            class="h-6 w-6 rotate-0 transform text-gray-400 group-open:rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            aria-hidden="true"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"></path>
-        </svg>
-    </summary>
-    <div class="prose py-4 prose-sm">
-        <Content />
-    </div>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"
+      ></path>
+    </svg>
+  </summary>
+  <div class="prose py-4 prose-sm max-w-2xl">
+    <Content />
+  </div>
 </details>

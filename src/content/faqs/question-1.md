@@ -1,7 +1,5 @@
 ---
-question: "How to host a meetup?"
+question: "What is Front-End Coders Mauritius?"
 ---
 
-# Eyo 
-
-The remark and rehype pipelines only runs when your content is rendered, which explains why remarkPluginFrontmatter
+Front-End Coders Mauritius is a community of frontend developers based in Mauritius. We organize monthly meetups to help the community stay aware of frontend trends and technologies.
