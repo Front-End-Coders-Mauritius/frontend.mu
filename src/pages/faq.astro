@@ -1,0 +1,74 @@
+---
+import Layout from "../layouts/LayoutHome.astro";
+import { getCollection } from "astro:content";
+import FaqRenderer from "../components/FaqRenderer.astro";
+
+const faqEntries = await getCollection("faqs");
+const title = "FAQ";
+const description = "Frequently asked questions";
+---
+
+<Layout title={title} description={description}>
+  <div class="">
+    <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <h2
+          class="text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl leading-10 tracking-tight text-gray-900"
+        >
+          Frequently asked questions
+        </h2>
+        <p class="mx-auto mt-6 max-w-2xl text-base leading-7 text-gray-600">
+          Have a different question and can’t find the answer you’re looking
+          for? <a
+            href="https://discord.gg/WxXW9Jvv6k?ref=frontend.mu
+            "
+            class="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Reach out to our community on discord
+          </a> and someone might be able to help you!
+        </p>
+      </div>
+      <main class="border bg-white shadow-md overflow-hidden  mt-8 rounded-lg">
+        <section class="grid grid-cols-1 divide-y">
+          {faqEntries.map((faqEntry) => <FaqRenderer faqEntry={faqEntry} />)}
+        </section>
+
+        <script is:inline>
+          // Get the hash from the URL
+          const hash = window.location.hash.substring(1);
+
+          // Get all the details elements on the page
+          const detailsElements = document.querySelectorAll("details");
+
+          // Loop through the details elements and check if the ID matches the hash
+          for (let i = 0; i < detailsElements.length; i++) {
+            const details = detailsElements[i];
+            console.log(details);
+            if (details.id === hash) {
+              // If the ID matches, set the "open" attribute and break out of the loop
+              details.setAttribute("open", "");
+              break;
+            }
+          }
+
+          // Loop through the details elements and add a click event listener
+          for (let i = 0; i < detailsElements.length; i++) {
+            const details = detailsElements[i];
+            details.addEventListener("click", function () {
+              // When the details element is clicked, update the URL hash with the ID
+              const id = details.getAttribute("id");
+              history.pushState(null, null, "#" + id);
+
+              for (let j = 0; j < detailsElements.length; j++) {
+                const otherDetails = detailsElements[j];
+                if (otherDetails !== details) {
+                  otherDetails.removeAttribute("open");
+                }
+              }
+            });
+          }
+        </script>
+      </main>
+    </div>
+  </div>
+</Layout>
