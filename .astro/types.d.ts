@@ -126,6 +126,41 @@ declare module 'astro:content' {
   collection: "faqs",
   data: InferEntrySchema<"faqs">
 } & { render(): Render[".md"] },
+"question-4.md": {
+  id: "question-4.md",
+  slug: "question-4",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+} & { render(): Render[".md"] },
+"question-5.md": {
+  id: "question-5.md",
+  slug: "question-5",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+} & { render(): Render[".md"] },
+"question-6.md": {
+  id: "question-6.md",
+  slug: "question-6",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+} & { render(): Render[".md"] },
+"question-7.md": {
+  id: "question-7.md",
+  slug: "question-7",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+} & { render(): Render[".md"] },
+"question-8.md": {
+  id: "question-8.md",
+  slug: "question-8",
+  body: string,
+  collection: "faqs",
+  data: InferEntrySchema<"faqs">
+} & { render(): Render[".md"] },
 },
 
 	};
