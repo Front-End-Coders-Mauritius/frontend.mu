@@ -228,3 +228,13 @@ html {
     17px 33.9px 42.7px hsl(var(--shadow-color) / 0.34),
     25px 50px 62.9px hsl(var(--shadow-color) / 0.34);
 }
+
+
+@keyframes reveal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

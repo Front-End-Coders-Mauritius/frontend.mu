@@ -6,7 +6,9 @@ import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import SessionList from "./SessionList.astro";
-import { getPhotos,photoAlbumSource } from "../utils/api"
+import MeetupAlbumSplash from "./MeetupAlbumSplash.vue";
+import { getPhotos, photoAlbumSource } from "../utils/api"
+import { Album, AlbumCollection } from "../types";
 
 const props = Astro.props;
 
@@ -25,11 +27,11 @@ function isUpcoming() {
 }
 
 // Google Photos Album Section
-const albumsPhotos = await getPhotos();
+const albumsPhotos: AlbumCollection = await getPhotos();
 
 let maxAlbumLength = 0;
 
-function fetchAlbumDetails() {
+function fetchAlbumDetails(): Album | undefined {
   const albumName = props.getCurrentEvent.album;
   if (!albumName) return [];
 
@@ -66,6 +68,15 @@ let currentAlbum = fetchAlbumDetails();
               >
               </div>
               <IconDots class="w-[600px] opacity-5 saturate-0" />
+
+              <div class="w-[600px] h-[600px] absolute left-1/2 -ml-3 lg:-right-8 lg:left-[54%] lg:top-56">
+                              <!-- Gallery Animation -->
+              {
+                currentAlbum && currentAlbum.length > 0 && (
+                    <MeetupAlbumSplash client:only currentAlbum={currentAlbum} source={photoAlbumSource} limit={3}/>
+                )
+              }
+              </div>
             </div>
           </div>
 
@@ -73,7 +84,7 @@ let currentAlbum = fetchAlbumDetails();
             class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24"
           >
             <!-- Content area -->
-            <div>
+            <div class="relative">
               {
                 isUpcoming() && (
                   <div class="flex w-full items-center justify-start pb-4">
@@ -112,9 +123,10 @@ let currentAlbum = fetchAlbumDetails();
                   </div>
                 )
               } -->
-
-              
+             
               <SessionList sessions={props.getCurrentEvent.sessions} />
+
+
             </div>
             <!-- Stats section -->
             <div class="mt-10">
