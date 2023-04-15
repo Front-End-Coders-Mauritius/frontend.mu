@@ -10,7 +10,7 @@ const toggleDark = useToggle(isDark)
 </script>
 
 <template>
-    <button @click="toggleDark()" class="toggle-button bg-brand-100">
+    <button @click="toggleDark()" class="toggle-button bg-slate-100">
         <div v-if="isDark">
             <svg width="724" height="724" viewBox="0 0 724 724" fill="#fff" xmlns="http://www.w3.org/2000/svg"
                  class="w-6 h-6">

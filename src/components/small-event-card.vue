@@ -44,7 +44,7 @@ const isUpcoming = (currentEventDate: string) => {
 
 <template>
   <div
-    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-brand-0 p-6 shadow-md transition-all hover:shadow-lg"
+    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
   >
     <div v-if="event.Date" class="">
       <span
