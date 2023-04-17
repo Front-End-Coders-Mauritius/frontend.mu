@@ -52,7 +52,10 @@ import HeaderLink from "./HeaderLink.astro";
                     <div>
                       <span class="text-2xl font-bold">{sponsor.name}</span>
                     </div>
-                    <img src={`/img/sponsors/${sponsor.logo}`} />
+                    <img
+                      src={`/img/sponsors/${sponsor.logo}`}
+                      alt={sponsor.description}
+                    />
                     <div
                       v-if="sponsor.description"
                       class="bg-gray-300 py-1 px-4 text-xs w-full text-center text-gray-500 font-medium rounded-2xl self-end"
