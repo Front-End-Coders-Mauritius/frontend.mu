@@ -5,6 +5,7 @@ import IconFacebook from "./icons/icon-facebook.astro";
 import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
+import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
 import { getPhotos,photoAlbumSource } from "../utils/api"
 
@@ -70,7 +71,7 @@ let currentAlbum = fetchAlbumDetails();
           </div>
 
           <div
-            class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24"
+            class="relative mx-auto px-8 py-3 sm:px-6 md:px-0 md:mx-0 md:py-24"
           >
             <!-- Content area -->
             <div>
@@ -113,8 +114,10 @@ let currentAlbum = fetchAlbumDetails();
                 )
               } -->
 
-              
-              <SessionList sessions={props.getCurrentEvent.sessions} />
+              <div class="grid grid-cols-2">
+                <SessionList sessions={props.getCurrentEvent.sessions} />
+                <MeetupGallery currentAlbum={currentAlbum} source={photoAlbumSource} />
+              </div>
             </div>
             <!-- Stats section -->
             <div class="mt-10">
