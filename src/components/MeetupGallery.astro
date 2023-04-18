@@ -24,20 +24,12 @@ const props = Astro.props
 
   <script define:vars={{ props }}>
 
-    const imageArray = getSplitArray(props.currentAlbum, 3);
-    let counters = [0, 0, 0];
-    let isMouseOver = false;
-
-
-    startAnimation();
-    addEventListenerOnImages();
-
     function startAnimation(){
       setInterval(() => {
         if(!isMouseOver){
           changeImages();
         }
-      }, 4000);
+      }, animationInterval);
     }
 
     function changeImages(){
@@ -86,9 +78,6 @@ const props = Astro.props
       }
     }
 
-    
-    
-
     function changeImgSrc(imgSelector, array, counter){
       const img = document.querySelector(".photo-container:nth-child("+imgSelector+") img");
       
@@ -111,9 +100,22 @@ const props = Astro.props
       }
       return resultArray;
     }
+
+    //js execution starts here
+    const imageArray = getSplitArray(props.currentAlbum, 3);
+    let counters = [0, 0, 0];
+    let isMouseOver = false;
+    
+    let animationInterval = props.animationSpeed || 3000;
+    startAnimation();
+    addEventListenerOnImages();
+
   </script>
 
-  <style lang="scss">
+  <style lang="postcss" scoped>
+    :root{
+      --photoSize : 230px;
+    }
 
     .main-container{
         display: grid;
@@ -125,8 +127,8 @@ const props = Astro.props
             position: relative;
 
             .photo-container{
-                width: 231px;
-                height: 240px;
+                width: var(--photoSize);
+                height: var(--photoSize);
                 position: absolute;
                 border-radius: 20px;
                 z-index: 1;
@@ -138,7 +140,6 @@ const props = Astro.props
                     height:100%;
                     object-fit: cover;
                     border-radius: 20px;
-                    -ms-interpolation-mode: bicubic;
                     transition: all 1s ease;
                 }
                 &:hover{
@@ -180,13 +181,8 @@ const props = Astro.props
     }
 
     @media screen and (max-width: 1020px) {
-        .main-container{
-            .container{
-                .photo-container{
-                    width: 200px;
-                    height: 230px;
-                }
-            }
+        :root{
+            --photoSize : 200px;
         }
     }
 
