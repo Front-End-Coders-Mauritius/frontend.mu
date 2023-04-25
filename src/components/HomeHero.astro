@@ -14,7 +14,7 @@ import LogoFec from "../components/LogoFec.astro";
             class="flex flex-col justify-center  text-center md:text-left gap-10 md:w-2/3"
           >
             <h1 class="accent uppercase text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-7xl" >Frontend Coders Mauritius</h1>
-            <p class="text-md md:text-lg text-gray-300 font-mono font-bold">
+            <p class="text-md md:text-lg text-slate-800 font-mono font-bold">
               Front-End Coders Mauritius is a community around front-end
               development based in Mauritius. We also organise monthly meetups
               free for anyone interested to attend.
@@ -44,7 +44,7 @@ import LogoFec from "../components/LogoFec.astro";
 
 <style scoped>
   .homepage-container {
-    background-color: var(--color-brand-950);
+    /* background-color: var(--color-brand-950); */
   }
   .image-container {
     position: relative;
@@ -97,17 +97,17 @@ import LogoFec from "../components/LogoFec.astro";
     transform: translate(-50%, -50%);
     animation: lightup 0.5s linear forwards;
     opacity: 0;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       -45deg,
       var(--home-gradient-dark) 50%,
       var(--home-gradient-light) 50%
-    );
+    ); */
     /* transition: all 1s ease-in-out; */
   }
 
   .image-container:hover .image-bg {
     /* background-position: -300px -300px; */
-    opacity: 0.5;
+    opacity: 1;
     transition: all 2s ease-in-out;
     animation: glow 4s ease-out infinite alternate;
   }
@@ -166,9 +166,10 @@ import LogoFec from "../components/LogoFec.astro";
   .accent {
   background: linear-gradient(
     135deg,
-    rgb(210, 86, 53) 10%,
-    #647eff 50%,
-    rgb(238, 224, 112) 90%
+    hsl(13, 100%, 52%) 10%,
+    hsl(230, 100%, 70%) 50%,
+    hsl(13, 100%, 52%) 80%,
+    hsl(53, 100%, 69%) 90%
   );
   background-clip: text;
   -webkit-background-clip: text;

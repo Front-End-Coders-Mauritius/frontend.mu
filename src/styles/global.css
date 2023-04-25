@@ -27,10 +27,10 @@ html {
       10%,
       calc(15% - var(--light-threshold)));
   --home-gradient-dark: hsl(var(--brand-hue),
-      40%,
+      100%,
       calc(40% - var(--light-threshold)));
   --home-gradient-light: hsl(var(--brand-hue),
-      40%,
+      100%,
       calc(67% - var(--light-threshold)));
 }
 
