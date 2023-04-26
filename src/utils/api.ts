@@ -80,12 +80,12 @@ async function loadPhotosUncached() {
 export const getPhotos = Memoize(loadPhotosUncached);
 
 // register a new user in directus
-export async function registerUser(
-  name: string,
-  email: string,
-  password: string
-) {
-  const user = await directus.users.me
+export async function registerUser() {
+  const roleId = "c408cbe5-0ced-4b99-a809-8aa282580cc2"
+  // const user = await directus.users.invites.send('test@example.com', roleId);
+  const token = await directus.auth.token;
+  // const user = await directus.users.me.read();
+  console.log(token)
 
-  return user;
+  return token;
 }
