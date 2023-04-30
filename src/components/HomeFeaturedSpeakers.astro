@@ -12,13 +12,11 @@ const isCenter = (index, length) => {
 };
 ---
 
-<div
-    class="latest-events-wrapper mx-auto px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-7xl"
->
+<div class="latest-events-wrapper">
     <div
-        class="py-4 text-4xl font-extrabold tracking-tight sm:text-5xl md:py-8 md:text-5xl"
+        class="mx-auto px-4 pt-8 py-4 text-4xl font-extrabold tracking-tight sm:text-5xl md:py-8 md:text-5xl"
     >
-        <h2 class="text-center text-verse-0 md:text-left">Featured Speakers</h2>
+        <h2 class="text-center text-verse-0">Featured Speakers</h2>
     </div>
 
     <div class="flex justify-center p-4">
@@ -30,13 +28,13 @@ const isCenter = (index, length) => {
                     return (
                         <li
                             class:list={[
-                                "single-photo relative",
+                                "single-photo rounded-xl overflow-hidden relative",
                                 isCenter(index, featuredSpeakers.length) &&
                                     "active",
                             ]}
                         >
                             <Image
-                                class="mx-auto saturate-0 rounded-xl ease-in-out duration-300 h-[640px] w-[90px] object-cover object-center hover:w-[120px] hover:saturate-100 transition-all"
+                                class="mx-auto saturate-0  rounded-xl  ease-in-out duration-300 md:h-[640px] h-[300px] w-[40px] md:w-[90px] object-cover object-center hover:w-[120px] hover:saturate-100 transition-all"
                                 src={speaker_photo}
                                 alt={person.name}
                                 title={person.name}
@@ -44,12 +42,12 @@ const isCenter = (index, length) => {
                                 height={300}
                             />
 
-                            <div class="speaker-details opacity-0 space-y-2 absolute top-0 left-0 ">
-                                <div class="p-10">
-                                    <p class="text-slate-900 text-2xl">
+                            <div class="speaker-details-background inset-0 space-y-2 absolute top-0 left-0 ">
+                                <div class="p-2 md:p-10 speaker-details opacity-0 ">
+                                    <p class="text-slate-200 text-base md:text-2xl">
                                         @{person.github_account}
                                     </p>
-                                    <h3 class="text-slate-100 font-extrabold text-4xl">
+                                    <h3 class="text-slate-100 font-extrabold text-xl md:text-4xl">
                                         {person.name}
                                     </h3>
                                 </div>
@@ -84,5 +82,14 @@ const isCenter = (index, length) => {
 
     .single-photo.active .speaker-details {
         @apply delay-300 opacity-100 transition-opacity duration-300;
+    }
+
+    .single-photo .speaker-details-background {
+        background: linear-gradient(
+            to top,
+            hsla(175, 100%, 38%, 0.284) 0%,
+            hsla(216, 100%, 95%, 0) 70%,
+            hsla(214, 22%, 15%, 0.9) 100%
+        );
     }
 </style>
