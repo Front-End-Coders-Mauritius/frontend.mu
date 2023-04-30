@@ -1,0 +1,88 @@
+---
+import { loadSpeakers } from "../utils/api";
+import { Image } from "@astrojs/image/components";
+import { getGithubUrl } from "../utils/fns";
+
+const speakers = await loadSpeakers();
+
+// select 5 random speakers
+const featuredSpeakers = speakers.data.filter((speaker) => speaker.featured);
+const isCenter = (index, length) => {
+    return index === Math.floor(length / 2);
+};
+---
+
+<div
+    class="latest-events-wrapper mx-auto px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-7xl"
+>
+    <div
+        class="py-4 text-4xl font-extrabold tracking-tight sm:text-5xl md:py-8 md:text-5xl"
+    >
+        <h2 class="text-center text-verse-0 md:text-left">Featured Speakers</h2>
+    </div>
+
+    <div class="flex justify-center p-4">
+        <ul id="team" role="list" class="mx-auto flex gap-4">
+            {
+                featuredSpeakers.map((person, index) => {
+                    let speaker_photo = getGithubUrl(person.github_account);
+
+                    return (
+                        <li
+                            class:list={[
+                                "single-photo relative",
+                                isCenter(index, featuredSpeakers.length) &&
+                                    "active",
+                            ]}
+                        >
+                            <Image
+                                class="mx-auto saturate-0 rounded-xl ease-in-out duration-300 h-[640px] w-[90px] object-cover object-center hover:w-[120px] hover:saturate-100 transition-all"
+                                src={speaker_photo}
+                                alt={person.name}
+                                title={person.name}
+                                width={300}
+                                height={300}
+                            />
+
+                            <div class="speaker-details opacity-0 space-y-2 absolute top-0 left-0 ">
+                                <div class="p-10">
+                                    <p class="text-slate-900 text-2xl">
+                                        @{person.github_account}
+                                    </p>
+                                    <h3 class="text-slate-100 font-extrabold text-4xl">
+                                        {person.name}
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
+</div>
+
+<script is:inline>
+    document.querySelectorAll(".single-photo").forEach(function (element) {
+        element.addEventListener("click", function () {
+            if (!this.classList.contains("active")) {
+                // remove all active classes
+                var actives = document.querySelectorAll(".active");
+                [].forEach.call(actives, function (elem) {
+                    elem.classList.remove("active");
+                });
+            }
+            this.classList.toggle("active");
+        });
+    });
+</script>
+
+<style>
+    .single-photo.active img {
+        @apply w-[545px] saturate-100;
+    }
+
+    .single-photo.active .speaker-details {
+        @apply delay-300 opacity-100 transition-opacity duration-300;
+    }
+</style>
