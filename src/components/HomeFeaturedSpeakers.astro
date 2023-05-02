@@ -28,13 +28,13 @@ const isCenter = (index, length) => {
                     return (
                         <li
                             class:list={[
-                                "single-photo rounded-xl overflow-hidden relative",
+                                "single-photo rounded-xl overflow-hidden relative group",
                                 isCenter(index, featuredSpeakers.length) &&
                                     "active",
                             ]}
                         >
                             <Image
-                                class="mx-auto saturate-0  rounded-xl  ease-in-out duration-300 md:h-[640px] h-[300px] w-[40px] md:w-[90px] object-cover object-center hover:w-[120px] hover:saturate-100 transition-all"
+                                class="mx-auto saturate-0  rounded-xl  ease-in-out duration-300 md:h-[640px] h-[300px] w-[40px] md:w-[90px] object-cover object-center group-hover:w-[120px] group-hover:saturate-100 transition-all"
                                 src={speaker_photo}
                                 alt={person.name}
                                 title={person.name}
@@ -76,7 +76,7 @@ const isCenter = (index, length) => {
 </script>
 
 <style>
-    .single-photo.active img {
+    .single-photo.active:hover img, .single-photo.active img {
         @apply w-[545px] saturate-100;
     }
 
