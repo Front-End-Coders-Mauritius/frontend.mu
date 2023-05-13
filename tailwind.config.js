@@ -73,6 +73,10 @@ module.exports = {
 					background_primary: 'var(--background-primary)',
 				},
 			},
+			fontFamily: {
+				iosevka: ['Iosevka Term Bold', 'sans-serif'],
+			},
+			
 		},
 	},
 	plugins: [
