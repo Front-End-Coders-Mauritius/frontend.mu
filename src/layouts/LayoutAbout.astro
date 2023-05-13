@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import OgImage from "../components/OgImage.astro";
+import Backdrop from "./Backdrop.astro";
 
 const { frontmatter } = Astro.props;
 ---
@@ -14,16 +15,16 @@ const { frontmatter } = Astro.props;
   </head>
 
   <body>
-    <div class="bg-slate-100 dark:bg-slate-950">
+    <Backdrop>
       <Header />
 
       <div class="contain min-h-[500px]">
-        <div class="prose">
+        <div class="prose dark:prose-invert">
           <slot />
         </div>
       </div>
 
       <Footer />
-    </div>
+    </Backdrop>
   </body>
 </html>

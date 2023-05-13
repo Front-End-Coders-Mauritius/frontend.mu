@@ -4,6 +4,8 @@ import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import Sponsors from "../components/Sponsors.astro";
 import OgImage from "../components/OgImage.astro";
+import BackgroundShapes from "../components/BackgroundShapes.astro";
+import Backdrop from "./Backdrop.astro";
 
 // export interface Props {
 // 	content: {
@@ -27,8 +29,8 @@ const {
     <OgImage pageType="page" title={title} />
   </head>
 
-  <body class="">
-    <div class="bg-slate-100 dark:bg-slate-950">
+  <body>
+    <Backdrop>
       <Header />
 
       <slot />
@@ -36,6 +38,6 @@ const {
       <Sponsors />
 
       <Footer />
-    </div>
+    </Backdrop>
   </body>
 </html>

@@ -40,7 +40,7 @@ const isUpcoming = () => {
   return verifyValue;
 };
 const hasAlbum = () => {
-  return Boolean(event?.album.toString() === "null");
+  return Boolean(event && event.album && event?.album.toString() === "null");
 };
 const albumsPhotos = await getPhotos();
 
@@ -70,9 +70,9 @@ let currentAlbum = fetchAlbumDetails();
 <div
   class:list={[
     event?.album ? "col-span-2" : "md:col-span-1 col-span-2",
-    "group in-card bg-white border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
+    "group in-card bg-white dark:bg-slate-700/10 dark:border-white/10 border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
   ]}
-  title={hasAlbum ? "has album" : "no album"}
+  title={hasAlbum() ? "has album" : "no album"}
 >
   <div
     class="flex flex-col md:flex-row justify-between w-full  transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"

@@ -4,6 +4,7 @@ import Header from "../components/NewHeader.astro";
 import Footer from "../components/Footer.astro";
 import Sponsors from "../components/Sponsors.astro";
 import OgImage from "../components/OgImage.astro";
+import Backdrop from "./Backdrop.astro";
 
 const props = Astro.props
 ---
@@ -15,13 +16,10 @@ const props = Astro.props
 	</head>
 
 	<body>
-		<div class="bg-slate-100 dark:bg-slate-950">
+		<Backdrop>
 			<Header />
 
 			<slot />
-
-
-			<!-- <Footer /> -->
-		</div>
+		</Backdrop>
 	</body>
 </html>

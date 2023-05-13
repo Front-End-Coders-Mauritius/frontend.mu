@@ -44,15 +44,15 @@ const isUpcoming = (currentEventDate: string) => {
 
 <template>
   <div
-    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
+    class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white dark:bg-slate-100/5 p-6 shadow-md transition-all hover:shadow-lg"
   >
     <div v-if="event.Date" class="">
       <span
-        class="inline-flex rounded-lg p-3 ring-4 ring-white"
+        class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/5"
         :class="
           isUpcoming(event.Date)
-            ? 'bg-gray-50 text-gray-700'
-            : 'bg-green-50 text-green-600 font-bold'
+            ? 'bg-gray-50 text-gray-700 '
+            : 'bg-green-50 text-green-600 font-bold dark:bg-slate-900/10'
         "
       >
         <CalendarIcon class="mr-2 h-6 w-6" />

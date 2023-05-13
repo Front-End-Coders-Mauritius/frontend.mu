@@ -186,9 +186,9 @@ body[color-scheme="dark"] {
       calc((var(--dark-threshold)) + 40%));
 }
 
-body[color-scheme="dark"] .bg-white {
+/* body[color-scheme="dark"] .bg-white {
   background-color: var(--color-verse-100);
-}
+} */
 
 a {
   text-decoration: none;
@@ -227,4 +227,15 @@ html {
     11.2px 22.3px 28.1px hsl(var(--shadow-color) / 0.34),
     17px 33.9px 42.7px hsl(var(--shadow-color) / 0.34),
     25px 50px 62.9px hsl(var(--shadow-color) / 0.34);
+}
+
+
+.dark-glow::before {
+    transition: all 0.2s ease 0s;
+    content: "";
+    position: absolute;
+    background: linear-gradient(to right, rgb(0, 220, 130), rgb(54, 228, 218), rgb(22, 167, 158));
+    inset: -3px;
+    z-index: -1;
+    border-radius: 9.5px;
 }
