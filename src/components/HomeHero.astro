@@ -33,7 +33,7 @@ import LogoFec from "../components/LogoFec.astro";
             <div class="image-container">
               <div class="image-bg"></div>
 
-              <LogoFec class="img-src text-white" />
+              <LogoFec class="img-src text-verse-500" />
             </div>
           </div>
         </div>
@@ -158,8 +158,14 @@ import LogoFec from "../components/LogoFec.astro";
 
   @media (min-width: 768px) {
     .image-container {
-      --size: 400px;
+      --size: 200px;
       display: block;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .image-container {
+      --size: 400px;
     }
   }
 
