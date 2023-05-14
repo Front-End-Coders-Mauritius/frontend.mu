@@ -3,7 +3,7 @@ const props = Astro.props
 ---
 
 
-<div class="main-container">
+<div class="main-container hidden lg:grid">
       <div class="container">
         {
           props.currentAlbum && props.currentAlbum.length > 0 &&
@@ -118,7 +118,6 @@ const props = Astro.props
     }
 
     .main-container{
-        display: grid;
         place-items: center;
 
         .container{

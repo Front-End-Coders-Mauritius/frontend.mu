@@ -114,7 +114,7 @@ let currentAlbum = fetchAlbumDetails();
                 )
               } -->
 
-              <div class="grid grid-cols-2">
+              <div class="grid md:grid-cols-2">
                 <SessionList sessions={props.getCurrentEvent.sessions} />
                 <MeetupGallery currentAlbum={currentAlbum} source={photoAlbumSource} animationSpeed={4000}/>
               </div>
