@@ -16,12 +16,10 @@ export async function getStaticPaths() {
     };
   });
 }
-const events = await loadEvents();
 const meetup = await getEvent(props.id);
-const listOfIds = events.data.map((event) => event.id);
 ---
 
 <LayoutSingleMeetup title={meetup.title} description={meetup.description}>
   <EventJSONLD slot="head" {...meetup} />
-  <MeetupSingle routeId={props.id} getCurrentEvent={meetup} ids={listOfIds} />
+  <MeetupSingle routeId={props.id} getCurrentEvent={meetup} />
 </LayoutSingleMeetup>

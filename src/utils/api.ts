@@ -23,13 +23,13 @@ export const getRelatedEvent = (events, eventId) => {
   if (eventIndex === 0) {
     previous = null;
   } else {
-    previous = events.data[eventIndex - 1].id;
+    previous = events.data[eventIndex - 1];
   }
 
   if (eventIndex === listOfIds.length) {
     next = null;
   } else {
-    next = events.data[eventIndex + 1].id;
+    next = events.data[eventIndex + 1];
   }
   return { next, previous };
 };

@@ -6,7 +6,9 @@ import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import SessionList from "./SessionList.astro";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/20/solid";
 import { getPhotos, photoAlbumSource } from "../utils/api";
+import { random } from "../utils/helpers";
 
 const props = Astro.props;
 
@@ -28,8 +30,7 @@ const albumsPhotos = await getPhotos();
 
 let maxAlbumLength = 0;
 
-function fetchAlbumDetails() {
-  const albumName = props.getCurrentEvent.album;
+function fetchAlbumDetails(albumName: string) {
   if (!albumName) return [];
 
   if (albumsPhotos) {
@@ -47,7 +48,13 @@ function fetchAlbumDetails() {
   }
 }
 
-let currentAlbum = fetchAlbumDetails();
+let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
+
+const getRelatedPhotoSource = (album: string) => {
+  let albumList = fetchAlbumDetails(album) as string[];
+  let randomImage = random(albumList);
+  return `${photoAlbumSource}/${randomImage}`;
+};
 ---
 
 <div>
@@ -62,23 +69,6 @@ let currentAlbum = fetchAlbumDetails();
             </div>
           </div>
 
-          <pre>{JSON.stringify(props.getCurrentEvent.related)}</pre>
-          <div class="flex justify-between text-white p-4">
-            {
-              props.getCurrentEvent.related.previous && (
-                <a class="bg-slate-600 p-4 rounded-md hover:bg-slate-500" href={`/meetup/${props.getCurrentEvent.related.previous}`}>
-                  Previous Meetup
-                </a>
-              )
-            }
-            {
-              props.getCurrentEvent.related.next && (
-                <a class="bg-slate-600 p-4 rounded-md hover:bg-slate-500" href={`/meetup/${props.getCurrentEvent.related.next}`}>
-                  Next Meetup
-                </a>
-              )
-            }
-          </div>
           <div class="relative mx-auto px-8 py-3 sm:max-w-4xl sm:px-6 md:px-0 md:mx-0 md:py-24">
             <!-- Content area -->
             <div>
@@ -218,6 +208,48 @@ let currentAlbum = fetchAlbumDetails();
                 }
               </dl>
             </div>
+          </div>
+
+          <div class="flex justify-between text-white p-4 gap-8">
+            {
+              props.getCurrentEvent.related.previous && (
+                <a class="ml-4 relative overflow-hidden md:bg-slate-200 md:w-full w-1/3 text-black p-4 rounded-md md:hover:bg-slate-300" href={`/meetup/${props.getCurrentEvent.related.previous.id}`}>
+                  <img class="hidden md:block absolute inset-0 z-0 object-contain opacity-40" src={getRelatedPhotoSource(props.getCurrentEvent.related.previous.album)} />
+                  <div class="flex justify-start md:justify-between items-center relative z-10">
+                    <div>
+                      <strong class="md:hidden block">Previous Meetup</strong>
+                      <ArrowLeftIcon class="h-6 w-6" />
+                    </div>
+
+                    <div class="text-right hidden md:block ">
+                      <strong class="text-lg pb-4">Previous meetup</strong>
+                      <p class="md:text-lg lg:text-2xl">{props.getCurrentEvent.related.previous.title}</p>
+                      <p class="md:text-md lg:text-xl">{props.getCurrentEvent.related.previous.Venue}</p>
+                      <p>{props.getCurrentEvent.related.previous.Date}</p>
+                    </div>
+                  </div>
+                </a>
+              )
+            }
+            {
+              props.getCurrentEvent.related.next && (
+                <a class="mr-4 relative overflow-hidden md:bg-slate-100 text-black p-4 md:w-full w-1/3 rounded-md md:hover:bg-slate-300" href={`/meetup/${props.getCurrentEvent.related.next.id}`}>
+                  <img class="hidden md:block absolute inset-0 z-0 object-contain opacity-40" src={getRelatedPhotoSource(props.getCurrentEvent.related.next.album)} />
+                  <div class="flex justify-end md:justify-between items-center relative z-10">
+                    <div class="text-left md:block hidden">
+                      <strong class="text-lg pb-4">Next Meetup</strong>
+                      <p class="md:text-lg lg:text-2xl">{props.getCurrentEvent.related.next.title}</p>
+                      <p class="md:text-md lg:text-xl">{props.getCurrentEvent.related.next.Venue}</p>
+                      <p>{props.getCurrentEvent.related.next.Date}</p>
+                    </div>
+                    <div>
+                      <strong class="md:hidden block">Next Meetup</strong>
+                      <ArrowRightIcon class="h-6 w-6" />
+                    </div>
+                  </div>
+                </a>
+              )
+            }
           </div>
         </div>
 
