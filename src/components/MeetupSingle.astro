@@ -210,21 +210,21 @@ const getRelatedPhotoSource = (album: string) => {
             </div>
           </div>
 
-          <div class="flex justify-between text-white p-4 gap-8">
+          <div class="flex justify-between gap-10">
             {
               props.getCurrentEvent.related.previous && (
-                <a class="ml-4 relative overflow-hidden md:bg-slate-200 md:w-full w-1/3 text-black p-4 rounded-md md:hover:bg-slate-300" href={`/meetup/${props.getCurrentEvent.related.previous.id}`}>
-                  <img class="hidden md:block absolute inset-0 z-0 object-contain opacity-40" src={getRelatedPhotoSource(props.getCurrentEvent.related.previous.album)} />
-                  <div class="flex justify-start md:justify-between items-center relative z-10">
+                <a class="ml-4 relative flex flex-col justify-between gap-4 lg:bg-brand-200 lg:w-full w-1/3 text-black p-4 rounded-md lg:hover:bg-brand-300" href={`/meetup/${props.getCurrentEvent.related.previous.id}`}>
+                  <img class="hidden lg:block inset-0 z-0 h-96 object-cover" src={getRelatedPhotoSource(props.getCurrentEvent.related.previous.album)} />
+                  <div class="flex justify-start lg:justify-between items-center relative z-10">
                     <div>
-                      <strong class="md:hidden block">Previous Meetup</strong>
+                      <strong class="lg:hidden block text-xl gap-2">Previous Meetup</strong>
                       <ArrowLeftIcon class="h-6 w-6" />
                     </div>
 
-                    <div class="text-right hidden md:block ">
-                      <strong class="text-lg pb-4">Previous meetup</strong>
-                      <p class="md:text-lg lg:text-2xl">{props.getCurrentEvent.related.previous.title}</p>
-                      <p class="md:text-md lg:text-xl">{props.getCurrentEvent.related.previous.Venue}</p>
+                    <div class="text-right hidden lg:block">
+                      <strong class="text-2xl">Previous meetup</strong>
+                      <p class="lg:text-2xl pt-4">{props.getCurrentEvent.related.previous.title}</p>
+                      <p class="lg:text-xl">{props.getCurrentEvent.related.previous.Venue}</p>
                       <p>{props.getCurrentEvent.related.previous.Date}</p>
                     </div>
                   </div>
@@ -233,17 +233,17 @@ const getRelatedPhotoSource = (album: string) => {
             }
             {
               props.getCurrentEvent.related.next && (
-                <a class="mr-4 relative overflow-hidden md:bg-slate-100 text-black p-4 md:w-full w-1/3 rounded-md md:hover:bg-slate-300" href={`/meetup/${props.getCurrentEvent.related.next.id}`}>
-                  <img class="hidden md:block absolute inset-0 z-0 object-contain opacity-40" src={getRelatedPhotoSource(props.getCurrentEvent.related.next.album)} />
-                  <div class="flex justify-end md:justify-between items-center relative z-10">
-                    <div class="text-left md:block hidden">
-                      <strong class="text-lg pb-4">Next Meetup</strong>
-                      <p class="md:text-lg lg:text-2xl">{props.getCurrentEvent.related.next.title}</p>
-                      <p class="md:text-md lg:text-xl">{props.getCurrentEvent.related.next.Venue}</p>
+                <a class="mr-4 relative flex flex-col justify-between gap-4 lg:bg-brand-200 overflow-hidden text-black p-4 lg:w-full w-1/3 rounded-md lg:hover:bg-brand-300" href={`/meetup/${props.getCurrentEvent.related.next.id}`}>
+                  <img class="hidden lg:block inset-0 z-0 h-96 object-cover" src={getRelatedPhotoSource(props.getCurrentEvent.related.next.album)} />
+                  <div class="flex justify-end lg:justify-between items-center relative z-10">
+                    <div class="text-left lg:block hidden">
+                      <strong class="text-2xl">Next Meetup</strong>
+                      <p class="lg:text-2xl pt-4">{props.getCurrentEvent.related.next.title}</p>
+                      <p class="lg:text-xl">{props.getCurrentEvent.related.next.Venue}</p>
                       <p>{props.getCurrentEvent.related.next.Date}</p>
                     </div>
-                    <div>
-                      <strong class="md:hidden block">Next Meetup</strong>
+                    <div class="flex flex-col items-end gap-2">
+                      <strong class="lg:hidden block text-xl text-right">Next Meetup</strong>
                       <ArrowRightIcon class="h-6 w-6" />
                     </div>
                   </div>
