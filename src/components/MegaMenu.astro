@@ -1,0 +1,94 @@
+---
+import LogoFec from "../components/LogoFec.astro";
+import ToggleTheme from "../components/toggle-theme.vue";
+import MainMenu from "./MainMenu.astro";
+---
+
+<div class="megamenu">
+    <div class="wrapper">
+        <nav>
+            <ul class="nav-links" >
+              <li>
+                <a class="nav-link" href="/about">About</a>
+              </li>
+              <li>
+                <a class="nav-link" href="/meetups">Meetups</a>
+              </li>
+              <li>
+                <a class="nav-link" href="/team">Team</a>
+              </li>
+              <li>
+                <a class="nav-link"  href="/sponsors">Sponsors</a>
+              </li>
+              <li>
+                <a class="nav-link" href="https://github.com/Front-End-Coders-Mauritius">Github</a>
+              </li>
+            </ul>
+          </nav>
+    </div>
+    <!-- <MainMenu />
+    <ToggleTheme client:load /> -->
+</div>
+
+<script>
+//   const logo = document.getElementById("logo");
+//   logo.addEventListener("contextmenu", (e) => {
+//     e.preventDefault();
+//     window.location.href = "/branding";
+//   });
+</script>
+
+<style lang="postcss">
+    .megamenu{
+        width: 100%;
+        max-width: 1004px;
+        height: 3.5rem;
+        background: rgba(18,19,22,.8);
+        color: hsla(0,0%,100%,.4);;
+        border-radius: 3.5rem;
+        -webkit-backdrop-filter: blur(24px);
+        backdrop-filter: blur(24px);
+        transition: background-color .2s ease;
+        margin-top: 10px;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+
+        
+
+        .wrapper{
+            height: 100%;
+            width: 100%;
+            padding: 10px 20px;
+
+            nav{
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .nav-links{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .nav-link{
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        color: var(--color-text);
+                        padding: 1rem;
+                        transition: all 0.3s ease-in-out;
+                        border-radius: 0.5rem;
+
+                        &:hover{
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+</style>
+
