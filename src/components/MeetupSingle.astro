@@ -218,7 +218,6 @@ const getRelatedPhotoSource = (album: string) => {
             {
               props.getCurrentEvent.related.previous && (
                 <a class="ml-4 relative flex flex-col justify-between gap-4 lg:bg-brand-200 overflow-hidden lg:w-full w-1/3 text-black p-4 rounded-md lg:hover:bg-brand-300" href={`/meetup/${props.getCurrentEvent.related.previous.id}`}>
-                  <img class="hidden lg:block inset-0 z-0 h-96 object-cover" src={getRelatedPhotoSource(props.getCurrentEvent.related.previous.album)} />
                   <div class="flex justify-start lg:justify-between items-center relative z-10">
                     <div>
                       <strong class="lg:hidden block text-xl gap-2">Previous Meetup</strong>
@@ -238,7 +237,6 @@ const getRelatedPhotoSource = (album: string) => {
             {
               props.getCurrentEvent.related.next && (
                 <a class="mr-4 relative flex flex-col justify-between gap-4 lg:bg-brand-200 overflow-hidden text-black p-4 lg:w-full w-1/3 rounded-md lg:hover:bg-brand-300" href={`/meetup/${props.getCurrentEvent.related.next.id}`}>
-                  <img class="hidden lg:block inset-0 z-0 h-96 object-cover" src={getRelatedPhotoSource(props.getCurrentEvent.related.next.album)} />
                   <div class="flex justify-end lg:justify-between items-center relative z-10">
                     <div class="text-left lg:block hidden">
                       <strong class="text-2xl">Next Meetup</strong>
