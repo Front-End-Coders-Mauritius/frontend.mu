@@ -8,10 +8,10 @@ import HeaderLink from "./HeaderLink.astro";
     <main>
       <div class="relative py-20 z-0 h-[auto] w-full">
         <div
-          class="relative z-20 mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 md:flex-row h-full justify-center max-w-6xl px-12"
+          class="relative z-20 mx-auto grid grid-cols-1 gap-8 md:flex-row h-full justify-center max-w-6xl px-12"
         >
           <div
-            class="flex flex-col justify-center text-center md:text-left gap-10"
+            class="flex flex-col justify-center text-center gap-10"
           >
             <h1
               class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
@@ -29,7 +29,7 @@ import HeaderLink from "./HeaderLink.astro";
                 class="underline">here</a
               >.
             </p>
-            <div class="grid place-items-center md:place-items-start">
+            <div class="grid place-items-center">
               <HeaderLink
                 href="/sponsors"
                 class="text-md block w-48 rounded-md bg-yellow-500/90 dark:bg-white/10 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
@@ -39,7 +39,7 @@ import HeaderLink from "./HeaderLink.astro";
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
             {
               sponsors.map((sponsorType) =>
                 sponsorType.sponsors.map((sponsor) => (
@@ -47,10 +47,10 @@ import HeaderLink from "./HeaderLink.astro";
                     title={sponsor.description}
                     target="_blank"
                     href={sponsor.sponsorUrl}
-                    class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-between items-center flex-col gap-4 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
+                    class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-between items-center flex-col gap-4 group bg-white dark:bg-white/50 dark:backdrop-blur-sm p-6 shadow-md transition-all hover:shadow-lg"
                   >
                     <div>
-                      <span class="text-2xl font-bold">{sponsor.name}</span>
+                      <span class="text-2xl font-bold text-center w-full block dark:text-white">{sponsor.name}</span>
                     </div>
                     <img
                       src={`/img/sponsors/${sponsor.logo}`}
@@ -58,7 +58,7 @@ import HeaderLink from "./HeaderLink.astro";
                     />
                     <div
                       v-if="sponsor.description"
-                      class="bg-gray-300 py-1 px-4 text-xs w-full text-center text-gray-500 font-medium rounded-2xl self-end"
+                      class="bg-gray-300 py-1 px-4 text-xs w-full text-center text-gray-500 dark:text-black font-medium rounded-2xl self-end"
                     >
                       {sponsor.description}
                     </div>
