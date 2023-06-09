@@ -155,10 +155,10 @@ const getRelatedPhotoSource = (album: string) => {
                                 height={sponsor.Sponsor_id.Logo.height}
                               />
 
-                              <div class="flex text-sm font-bold gap-4">
+                              <div class="flex text-md font-bold gap-4">
                                 {sponsor.Sponsor_id?.Sponsor_type.map(
                                   (sponsorType) => (
-                                    <div class="flex flex-col items-center  p-2 rounded-md text-yellow-800">
+                                    <div class="flex flex-col items-center bg-yellow-200 border-yellow-500 border-2 p-2 rounded-md text-yellow-800">
                                       <p class="text-center">
                                         {sponsorTypeMap[sponsorType]}
                                       </p>
