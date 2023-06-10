@@ -10,7 +10,7 @@ import SessionList from "./SessionList.astro";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/20/solid";
 import { getPhotos, photoAlbumSource } from "../utils/api";
 import { random } from "../utils/helpers";
-import { Image } from "@astrojs/image/components";
+import MeetupSonspor from "./MeetupSonspor.astro";
 
 const props = Astro.props;
 
@@ -51,10 +51,7 @@ function fetchAlbumDetails(albumName: string) {
   }
 }
 
-let sponsorTypeMap = {
-  lunch: "Lunch Sponsor",
-  venue: "Venue Sponsor",
-};
+
 
 let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 
@@ -125,54 +122,8 @@ const getRelatedPhotoSource = (album: string) => {
                 />
               </div>
 
-              <div class="">
-                {
-                  props.getCurrentEvent.sponsors &&
-                    props.getCurrentEvent.sponsors.length > 0 && (
-                      <>
-                        <div class="text-base uppercase text-verse-900 dark:text-slate-200 font-semibold mb-4">
-                          Sponsor(s)
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-4">
-                          {props.getCurrentEvent.sponsors.map((sponsor) => (
-                            <div
-                              class:list={[
-                                sponsor.Sponsor_id.darkbg
-                                  ? "bg-slate-900/90"
-                                  : "bg-white",
-                                "p-4 items-center shadow-md rounded-lg flex gap-4",
-                              ]}
-                            >
-                              <Image
-                                class="h-10 w-auto object-cover"
-                                src={
-                                  `https://directus.frontend.mu/assets/` +
-                                  sponsor.Sponsor_id.Logo.filename_disk
-                                }
-                                alt={sponsor.Sponsor_id.Name}
-                                title={sponsor.Sponsor_id.Name}
-                                width={sponsor.Sponsor_id.Logo.width}
-                                height={sponsor.Sponsor_id.Logo.height}
-                              />
-
-                              <div class="flex text-md font-bold gap-4">
-                                {sponsor.Sponsor_id?.Sponsor_type.map(
-                                  (sponsorType) => (
-                                    <div class="flex flex-col items-center bg-yellow-200 border-yellow-500 border-2 p-2 rounded-md text-yellow-800">
-                                      <p class="text-center">
-                                        {sponsorTypeMap[sponsorType]}
-                                      </p>
-                                    </div>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </>
-                    )
-                }
-              </div>
+              <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
+             
             </div>
             <!-- Stats section -->
             <div class="mt-10">
