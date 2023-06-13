@@ -21,9 +21,9 @@ let sponsorTypeMap = {
                         <div
                             class:list={[
                                 sponsor.Sponsor_id.darkbg
-                                    ? "bg-slate-900/90"
-                                    : "bg-white",
-                                "p-4 items-center shadow-md rounded-lg flex gap-4",
+                                    ? "bg-slate-900/90 text-slate-100"
+                                    : "bg-white text-slate-800",
+                                "p-4 items-center shadow-md rounded-lg flex gap-4 text-xs",
                             ]}
                         >
                             <Image
@@ -41,8 +41,8 @@ let sponsorTypeMap = {
                             <div class="flex text-md font-bold gap-4">
                                 {sponsor.Sponsor_id?.Sponsor_type.map(
                                     (sponsorType) => (
-                                        <div class="flex flex-col items-center bg-yellow-200 border-yellow-500 border-2 p-2 rounded-md text-yellow-800">
-                                            <p class="text-center">
+                                        <div class="flex flex-col items-center bg-gray-200/10 border-gray-500/10 border-2 p-2 rounded-md">
+                                            <p class="text-left uppercase font-black opacity-70 cursor-help" title={`${sponsor.Sponsor_id.Name} sponsored the ${sponsorType} for this meetup`}>
                                                 {sponsorTypeMap[sponsorType]}
                                             </p>
                                         </div>
