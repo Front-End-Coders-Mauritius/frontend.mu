@@ -16,7 +16,7 @@ let sponsorTypeMap = {
                 <div class="text-base uppercase text-verse-900 dark:text-slate-200 font-semibold mb-4">
                     Sponsor(s)
                 </div>
-                <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:gap-4">
                     {props.sponsors.map((sponsor) => (
                         <div
                             class:list={[
@@ -27,7 +27,7 @@ let sponsorTypeMap = {
                             ]}
                         >
                             <Image
-                                class="h-10 w-auto object-cover"
+                                class="h-10 w-20 md:w-auto object-contain md:object-cover"
                                 src={
                                     `https://directus.frontend.mu/assets/` +
                                     sponsor.Sponsor_id.Logo.filename_disk
@@ -38,11 +38,14 @@ let sponsorTypeMap = {
                                 height={sponsor.Sponsor_id.Logo.height}
                             />
 
-                            <div class="flex text-md font-bold gap-4">
+                            <div class="flex flex-col md:flex-row text-md font-bold gap-1 md:gap-4">
                                 {sponsor.Sponsor_id?.Sponsor_type.map(
                                     (sponsorType) => (
                                         <div class="flex flex-col items-center bg-gray-200/10 border-gray-500/10 border-2 p-2 rounded-md">
-                                            <p class="text-left uppercase font-black opacity-70 cursor-help" title={`${sponsor.Sponsor_id.Name} sponsored the ${sponsorType} for this meetup`}>
+                                            <p
+                                                class="text-left md:uppercase font-semibold md:font-black opacity-70 cursor-help text-xs md:text-md"
+                                                title={`${sponsor.Sponsor_id.Name} sponsored the ${sponsorType} for this meetup`}
+                                            >
                                                 {sponsorTypeMap[sponsorType]}
                                             </p>
                                         </div>
