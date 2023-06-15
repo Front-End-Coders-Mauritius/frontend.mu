@@ -6,23 +6,53 @@ import MainMenu from "./MainMenu.astro";
 
 <div class="megamenu">
     <div class="wrapper">
+      <div class="megamenu-brand">
+        <LogoFec class="megamenu-brand__icon w-10" />
+        <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"  >
+            frontend.mu
+        </span>
+      </div>
         <nav>
             <ul class="nav-links" >
-              <li>
-                <a class="nav-link" href="/about">About</a>
+              <li class="nav-link">
+                <a class= text-verse-500" href="/about" >About</a>
+              </li>
+              <li class="nav-link">
+                <a  href="/meetups">Meetups</a>
+              </li>
+              <li class="nav-link">
+                <a href="#">Community</a>
+                <div class="menu-dropdown menu-dropdown-community">
+                  <div class="community-cover">
+                    <div class="community-cover-text text-verse-500">FrontendMu Community<br><span>Join our community</span></div>
+                     <div class="community-cover-img-box">
+                       <img src="https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main//timeliner_repo/processed/data/2022/08/google_photos/AORIwnIE1yUQMXAQVehS4QgcFft7_vBWjj5BH6AqAOx0GM7d3iilSXFOp11wyzGBrZUzD6yYsqURV5kqmmZ2_yUbljEgs_FqSg.webp" alt="community cover image">
+                     </div>
+                  </div>
+                    <ul class="community-links" >
+                      <li> <a href="#">Discord</a></li>
+                      <li> <a href="#">Github</a></li>
+                      <li> <a href="#">WhatsApp</a></li>
+                      <li> <a href="#">Instragram</a></li>
+                      <li> <a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
+              </li>
+              <li class="nav-link">
+                <a href="#">Events</a>
+              </li>
+              <li class="nav-link" >
+                <a href="#">Sponsors</a>
+              </li>
+              <li class="nav-link">
+                <a href="#">FAQ</a>
+              </li>
+              <!-- <li>
+                <a class="nav-link" href="#">Attend A Meetup</a>
               </li>
               <li>
-                <a class="nav-link" href="/meetups">Meetups</a>
-              </li>
-              <li>
-                <a class="nav-link" href="/team">Team</a>
-              </li>
-              <li>
-                <a class="nav-link"  href="/sponsors">Sponsors</a>
-              </li>
-              <li>
-                <a class="nav-link" href="https://github.com/Front-End-Coders-Mauritius">Github</a>
-              </li>
+                <a class="nav-link" href="#">Sponsor A Meetup</a>
+              </li> -->
             </ul>
           </nav>
     </div>
@@ -40,20 +70,19 @@ import MainMenu from "./MainMenu.astro";
 
 <style lang="postcss">
     .megamenu{
-        width: 100%;
-        max-width: 1004px;
-        height: 3.5rem;
-        background: rgba(18,19,22,.8);
-        color: hsla(0,0%,100%,.4);;
-        border-radius: 3.5rem;
-        -webkit-backdrop-filter: blur(24px);
-        backdrop-filter: blur(24px);
+        height: 3.5rem; 
         transition: background-color .2s ease;
         margin-top: 10px;
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
         z-index: 20;
+        background: rgba( 255, 255, 255, 0.1 );
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        backdrop-filter: blur( 14.5px );
+        -webkit-backdrop-filter: blur( 4.5px );
+        border-radius: 50px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
 
         
 
@@ -61,28 +90,104 @@ import MainMenu from "./MainMenu.astro";
             height: 100%;
             width: 100%;
             padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .megamenu-brand{
+              display:flex;
+              justify-content: center;
+              align-items:center;
+              
+              .megamenu-brand__icon{
+                margin-right: 10px;
+              }
+
+            }
 
             nav{
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                margin-top: 5px;
 
                 .nav-links{
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    position:relative;
 
                     .nav-link{
-                        font-size: 1.1rem;
-                        font-weight: 600;
-                        color: var(--color-text);
-                        padding: 1rem;
+                        
+                        padding: 0 1rem;
                         transition: all 0.3s ease-in-out;
                         border-radius: 0.5rem;
 
+                        a{
+                          font-size: 1.1rem;
+                          color:black;
+                        }
+
                         &:hover{
-                            color: white;
+                           color: var(--color-verse-500);
+
+                           .menu-dropdown{
+                            display: flex;
+                           }
+                        }
+
+                        .menu-dropdown{
+                          display:none;
+
+                          &:hover{
+                            display:flex;
+                          }
+                        }
+
+
+                        .menu-dropdown-community{
+                            position: absolute;
+                            background: red;
+                            padding: 20px;
+                            transform: translate(-30%,8%);
+
+                            /* From https://css.glass */
+                            background-color: white;
+                            border-radius: 16px;
+                            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                            backdrop-filter: blur(8.9px);
+                            -webkit-backdrop-filter: blur(8.9px);
+                            border: 1px solid rgba(255, 255, 255, 0.3);
+                            
+                            .community-cover{
+                              padding-right: 20px;
+                              border-right: 1px solid gray;
+
+                              .community-cover-img-box{
+                                margin-top: 10px;
+                                width: 100%;
+                                border-radius: 20px;
+                                overflow: hidden;
+
+                                
+                                  img{
+                                    width:100%;
+                                    transform: scale(1.5);
+                                  }
+                              }
+                          }
+
+                          .community-links{
+                            padding-left: 20px;
+
+                            li{
+                              a{
+                                font-size: 1.1rem;
+                              }
+                            }
+                          }
+
                         }
                     }
                 }
