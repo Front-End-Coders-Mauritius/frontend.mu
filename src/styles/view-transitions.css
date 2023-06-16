@@ -1,0 +1,13 @@
+/* Profile Avatar */
+.with-transition .profile-avatar {
+  view-transition-name: profile-avatar;
+}
+
+/* Title */
+.with-transition .meetup-title-transition {
+  view-transition-name: meetup-title-transition;
+}
+
+.with-transition .speaker-name-transition {
+  view-transition-name: speaker-name-transition;
+}

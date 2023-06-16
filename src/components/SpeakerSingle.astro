@@ -30,6 +30,7 @@ const speaker_photo = getGithubUrl(props.speaker.person.github_account);
                 <!-- Content area -->
                 <div>
                   <h1
+                    style={`view-transition-name: "speakername-${props.speaker.person.name}"`}
                     class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
                   >
                     {props.speaker.person.name}
@@ -165,7 +166,7 @@ const speaker_photo = getGithubUrl(props.speaker.person.github_account);
               <div class="flex-grow relative">
                 <div class="w-full">
                   <Image
-                    class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
+                    class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96 profile-avatar"
                     src={speaker_photo}
                     alt={props.speaker.person.name}
                     title={props.speaker.person.name}
