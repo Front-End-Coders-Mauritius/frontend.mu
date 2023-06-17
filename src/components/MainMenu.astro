@@ -15,14 +15,17 @@ const links = {
   team: {
     title: "Team",
     href: "/team",
+    class: "hidden md:block",
   },
   sponsors: {
     title: "Sponsors",
     href: "/sponsors",
+    class: "hidden md:block",
   },
   github: {
     title: "Github",
     href: "https://github.com/Front-End-Coders-Mauritius",    
+    class: "hidden md:block",
   },
 };
 ---
@@ -37,6 +40,7 @@ const links = {
           <a
             class:list={[
               "relative block px-3 py-2 transition hover:text-verse-500 dark:hover:text-verse-400",
+              links[item]?.class,
             ]}
             title={currentPath}
             href={links[item].href}
