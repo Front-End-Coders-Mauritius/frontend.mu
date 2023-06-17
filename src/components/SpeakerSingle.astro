@@ -1,5 +1,5 @@
 ---
-import { Image } from '@astrojs/image/components';
+import { Image } from "@astrojs/image/components";
 import IconDots from "./icons/icon-dots.astro";
 import FecAnchor from "./FecAnchor.astro";
 import IconFacebook from "./icons/icon-facebook.astro";
@@ -8,7 +8,8 @@ import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import EventsList from "./EventsList.astro";
 import LogoSpiral from "./LogoSpiral.astro";
-import { getGithubUrl } from '../utils/fns';
+import { getGithubUrl } from "../utils/fns";
+import { toSafeVarName } from "../utils/helpers";
 
 const props = Astro.props;
 const speaker_photo = getGithubUrl(props.speaker.person.github_account);
@@ -30,7 +31,9 @@ const speaker_photo = getGithubUrl(props.speaker.person.github_account);
                 <!-- Content area -->
                 <div>
                   <h1
-                    style={`view-transition-name: "speakername-${props.speaker.person.name}"`}
+                    style={`view-transition-name: speakername-${toSafeVarName(
+                      props.speaker.person.name
+                    )}`}
                     class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
                   >
                     {props.speaker.person.name}
@@ -166,7 +169,10 @@ const speaker_photo = getGithubUrl(props.speaker.person.github_account);
               <div class="flex-grow relative">
                 <div class="w-full">
                   <Image
-                    class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96 profile-avatar"
+                    class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
+                    style={`view-transition-name: speaker-avatar-${toSafeVarName(
+                      props.speaker.person.name
+                    )}`}
                     src={speaker_photo}
                     alt={props.speaker.person.name}
                     title={props.speaker.person.name}

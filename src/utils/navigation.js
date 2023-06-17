@@ -42,58 +42,10 @@ navigation.addEventListener('navigate', (navigateEvent) => {
 
     if (location.origin !== toUrl.origin) return
 
-    if (toPath.indexOf('/playlist') === 0) {
-        return handlePlaylistTransition(navigateEvent, toPath, fromPath)
-    } else {
-        return handleHomeTransition(navigateEvent, toPath, fromPath)
-    }
+    return handleHomeTransition(navigateEvent, toPath, fromPath)
 })
 
-function handlePlaylistTransition(navigateEvent, toPath, fromPath) {
-    navigateEvent.intercept({
-        scroll: 'manual',
-        async handler() {
-            const response = await fetch(window.location.origin + toPath)
-            const data = await response.text()
 
-            if (!document.startViewTransition) {
-                updateTheDOMSomehow(data)
-                document.documentElement.scrollTop = 0
-                return
-            }
-
-            // Make sure there are no other cards with the 'with-transition' class
-            document
-                .querySelectorAll('.card')
-                .forEach((card) => card.classList.remove('with-transition'))
-
-            const card = findCardByPath(toPath)
-            let persistentEl
-
-            // Add the 'with-transition' class to the card that is transitioning
-            // and save a reference to any persistent elements (like video) if they exist
-            if (card) {
-                card.classList.add('with-transition')
-                persistentEl = getPersistentElement(card)
-            }
-
-            // Save the page scroll to restore it on the way back
-            prevPageScroll = document.documentElement.scrollTop
-
-            document.startViewTransition(() => {
-                updateTheDOMSomehow(data)
-                document.documentElement.scrollTop = 0
-
-                const persistentElContainer = getPersistentElementContainer()
-
-                // Place the persistent element into its container in the updated DOM
-                if (persistentEl && persistentElContainer) {
-                    persistentElContainer.replaceChildren(persistentEl)
-                }
-            })
-        },
-    })
-}
 
 function handleHomeTransition(navigateEvent, toPath, fromPath) {
     navigateEvent.intercept({

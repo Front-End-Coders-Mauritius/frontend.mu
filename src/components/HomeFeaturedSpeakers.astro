@@ -2,6 +2,7 @@
 import { loadSpeakers } from "../utils/api";
 import { Image } from "@astrojs/image/components";
 import { getGithubUrl } from "../utils/fns";
+import { toSafeVarName } from "../utils/helpers";
 
 const speakers = await loadSpeakers();
 
@@ -41,6 +42,9 @@ const isCenter = (index, length) => {
                             <Image
                                 class="mx-auto md:saturate-0 rounded-xl  ease-in-out duration-300 md:h-[640px] h-[150px] w-[150px] md:w-[90px] object-cover object-center md:group-hover:w-[120px] group-hover:saturate-100 transition-all"
                                 src={speaker_photo}
+                                style={`view-transition-name: speaker-avatar-${toSafeVarName(
+                                    person.name
+                                )}`}
                                 alt={person.name}
                                 title={person.name}
                                 width={300}
@@ -64,7 +68,7 @@ const isCenter = (index, length) => {
                                 </div>
                             </div>
 
-                            <div class="speaker-link hidden absolute bottom-0 right-0 p-2 md:p-10"></div>
+                            <div class="speaker-link hidden absolute bottom-0 right-0 p-2 md:p-10" />
                         </li>
                     );
                 })
@@ -74,18 +78,18 @@ const isCenter = (index, length) => {
 </div>
 
 <script is:inline>
-    document.querySelectorAll(".single-photo").forEach(function (element) {
-        element.addEventListener("click", function () {
-            if (!this.classList.contains("active")) {
-                // remove all active classes
-                var actives = document.querySelectorAll(".active");
-                [].forEach.call(actives, function (elem) {
-                    elem.classList.remove("active");
-                });
-            }
-            this.classList.toggle("active");
-        });
+document.querySelectorAll(".single-photo").forEach(function (element) {
+    element.addEventListener("click", function () {
+        if (!this.classList.contains("active")) {
+            // remove all active classes
+            var actives = document.querySelectorAll(".active");
+            [].forEach.call(actives, function (elem) {
+                elem.classList.remove("active");
+            });
+        }
+        this.classList.toggle("active");
     });
+});
 </script>
 
 <style>
@@ -102,18 +106,16 @@ const isCenter = (index, length) => {
         .single-photo.active .speaker-link {
             @apply block delay-300 opacity-100 transition-opacity duration-300;
         }
-
-
     }
 
     .single-photo .speaker-details-background {
-            background: linear-gradient(
-                to bottom,
-                hsla(175, 100%, 38%, 0.284) 0%,
-                hsla(216, 100%, 95%, 0) 70%,
-                hsla(214, 22%, 15%, 0.9) 100%
-            );
-        }
+        background: linear-gradient(
+            to bottom,
+            hsla(175, 100%, 38%, 0.284) 0%,
+            hsla(216, 100%, 95%, 0) 70%,
+            hsla(214, 22%, 15%, 0.9) 100%
+        );
+    }
 
     /* @media (max-width: 768px) {
         #team li:nth-child(1),

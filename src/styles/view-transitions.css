@@ -11,3 +11,7 @@
 .with-transition .speaker-name-transition {
   view-transition-name: speaker-name-transition;
 }
+
+.menu-border-transition {
+  view-transition-name: menu-border-transition;
+}
