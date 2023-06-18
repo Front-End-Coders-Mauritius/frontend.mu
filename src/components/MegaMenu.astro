@@ -2,6 +2,17 @@
 import LogoFec from "../components/LogoFec.astro";
 import ToggleTheme from "../components/toggle-theme.vue";
 import MainMenu from "./MainMenu.astro";
+import {
+  CalendarIcon,
+  ArrowTrendingUpIcon,
+} from '@heroicons/vue/24/outline'
+import SocialCard from "./SocialCard.astro";
+import IconDiscord from "./icons/icon-discord.astro"
+import IconGithub from "./icons/icon-github.astro"
+import IconWhatsapp from "./icons/IconWhatsappCommunity.astro"
+import IconTwitter from "./icons/icon-twitter.astro"
+import IconInstagram from "./icons/icon-instagram.astro"
+import IconLinkedin from "./icons/icon-linkedin.astro"
 ---
 
 <div class="megamenu">
@@ -15,37 +26,32 @@ import MainMenu from "./MainMenu.astro";
         <nav>
             <ul class="nav-links" >
               <li class="nav-link">
-                <a class= text-verse-500" href="/about" >About</a>
+                <a class="nav-link-text" href="/about" >About</a>
               </li>
               <li class="nav-link">
-                <a  href="/meetups">Meetups</a>
+                <a class="nav-link-text" href="/meetups">Meetups</a>
               </li>
               <li class="nav-link">
-                <a href="#">Community</a>
-                <div class="menu-dropdown menu-dropdown-community">
-                  <div class="community-cover">
-                    <div class="community-cover-text text-verse-500">FrontendMu Community<br><span>Join our community</span></div>
-                     <div class="community-cover-img-box">
-                       <img src="https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main//timeliner_repo/processed/data/2022/08/google_photos/AORIwnIE1yUQMXAQVehS4QgcFft7_vBWjj5BH6AqAOx0GM7d3iilSXFOp11wyzGBrZUzD6yYsqURV5kqmmZ2_yUbljEgs_FqSg.webp" alt="community cover image">
-                     </div>
+                <a class="nav-link-text" href="#">Community</a>
+                <div class="menu-dropdown">
+                    <div class="menu-dropdown-item menu-dropdown-community">
+                      <ul class="community-links" >
+                        <li class="community-link discord-link"><a href="#"><IconDiscord class="h-6 w-6"/><span class="community-link-text">Discord</span></a></li>
+                        <li class="community-link whatsapp-link"><a href="#"><IconWhatsapp class="h-6 w-6"/><span class="community-link-text">WhatsApp</span></a></li>
+                        <li class="community-link instagram-link"><a href="#"><IconInstagram class="h-6 w-6"/><span class="community-link-text">Instagram</span></a></li>
+                        <li class="community-link linkedin-link"><a href="#"><IconLinkedin class="h-6 w-6"/><span class="community-link-text">LinkedIn</span></a></li>
+                        <li class="community-link github-link"><a href="#"><IconGithub class="h-6 w-6"/><span class="community-link-text">Github</span></a></li>
+                      </ul>
                   </div>
-                    <ul class="community-links" >
-                      <li> <a href="#">Discord</a></li>
-                      <li> <a href="#">Github</a></li>
-                      <li> <a href="#">WhatsApp</a></li>
-                      <li> <a href="#">Instragram</a></li>
-                      <li> <a href="#">LinkedIn</a></li>
-                    </ul>
-                </div>
               </li>
               <li class="nav-link">
-                <a href="#">Events</a>
+                <a class="nav-link-text" href="#">Events</a>
               </li>
               <li class="nav-link" >
-                <a href="#">Sponsors</a>
+                <a class="nav-link-text" href="#">Sponsors</a>
               </li>
               <li class="nav-link">
-                <a href="#">FAQ</a>
+                <a class="nav-link-text" href="#">FAQ</a>
               </li>
               <!-- <li>
                 <a class="nav-link" href="#">Attend A Meetup</a>
@@ -69,7 +75,8 @@ import MainMenu from "./MainMenu.astro";
 </script>
 
 <style lang="postcss">
-    .megamenu{
+    .megamenu {
+        width: 80vw;
         height: 3.5rem; 
         transition: background-color .2s ease;
         margin-top: 10px;
@@ -84,109 +91,177 @@ import MainMenu from "./MainMenu.astro";
         border-radius: 50px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
 
-        
-
-        .wrapper{
+        .wrapper {
             height: 100%;
             width: 100%;
-            padding: 10px 20px;
+            padding: 10px 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
 
-            .megamenu-brand{
-              display:flex;
+            .megamenu-brand {
+              display: flex;
               justify-content: center;
-              align-items:center;
+              align-items: center;
               
-              .megamenu-brand__icon{
+              .megamenu-brand__icon {
                 margin-right: 10px;
               }
 
             }
 
-            nav{
+            nav {
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 margin-top: 5px;
 
-                .nav-links{
+                .nav-links {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    position:relative;
+                    position: relative;
 
-                    .nav-link{
-                        
+                    .nav-link {
+                        position: relative;
                         padding: 0 1rem;
                         transition: all 0.3s ease-in-out;
                         border-radius: 0.5rem;
+                        font-weight: 500;
 
-                        a{
+                        .nav-link-text {
                           font-size: 1.1rem;
-                          color:black;
+                          color: var(--color-verse-0);
                         }
 
-                        &:hover{
-                           color: var(--color-verse-500);
-
-                           .menu-dropdown{
-                            display: flex;
-                           }
-                        }
-
-                        .menu-dropdown{
-                          display:none;
-
-                          &:hover{
-                            display:flex;
+                        &:hover {
+                          .nav-link-text {
+                            color: var(--color-verse-500);
                           }
+
+                           .menu-dropdown {
+                              display: block;
+                              opacity: 1;
+                              clip-path: circle(100%);
+                          }
+                          
                         }
 
+                        .menu-dropdown {
+                          position: absolute;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          background-color: transparent;
+                          padding-top: 19px;
+                          clip-path: circle(2% at 41% 0%);
+                          opacity: 0;
+                          transition: 0.2s ease;
 
-                        .menu-dropdown-community{
-                            position: absolute;
-                            background: red;
-                            padding: 20px;
-                            transform: translate(-30%,8%);
+                          .menu-dropdown-item{
 
-                            /* From https://css.glass */
-                            background-color: white;
-                            border-radius: 16px;
-                            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-                            backdrop-filter: blur(8.9px);
-                            -webkit-backdrop-filter: blur(8.9px);
-                            border: 1px solid rgba(255, 255, 255, 0.3);
-                            
-                            .community-cover{
-                              padding-right: 20px;
-                              border-right: 1px solid gray;
+                          }
 
-                              .community-cover-img-box{
-                                margin-top: 10px;
+                         
+                        }
+
+                        .menu-dropdown-community {
+                            padding: 15px 10px;
+                            background: white;
+                            border-radius: 5px;
+
+                            .community-links {
+                              display:flex;
+                              flex-direction: column;
+                              align-items: flex-start;
+                              justify-content: center;
+
+                              .community-link {
                                 width: 100%;
-                                border-radius: 20px;
-                                overflow: hidden;
+                                border-radius: 50px;
+                                padding: 8px 10px;
+                                margin-bottom: 2px;
 
-                                
-                                  img{
-                                    width:100%;
-                                    transform: scale(1.5);
+                                a {
+                                  display: flex;
+                                  align-items: center;
+
+                                  span{
+                                    display: inline-block;
+                                    margin-left: 10px;
                                   }
+                                }
+
+                                &:last-child {
+                                  margin-bottom: 0;
+                                }
+
+                                &:hover {
+                                  &.discord-link {
+                                    background-color: 	hsla(235, 87%, 65%, 0.167);
+
+                                    svg{
+                                      color: 	hsl(235, 86%, 65%);
+                                    }
+
+                                    .community-link-text{
+                                      color: 	hsl(235, 86%, 65%);
+                                    }
+                                  }
+                                
+
+                                &.github-link{
+                                  background-color: 	hsla(0, 0%, 20%, 0.167);
+
+                                  svg{
+                                    color: 	hsl(0, 0%, 20%);
+                                  }
+
+                                  .community-link-text{
+                                    color: 	hsl(0, 0%, 20%);
+                                  }
+                                }
+
+                                &.whatsapp-link{
+                                  background-color: hsl(142, 70%,20%, 0.167);
+
+                                  svg{
+                                    color: 	hsl(142, 70%, 49%);
+                                  }
+
+                                  .community-link-text{
+                                    color: 	hsl(142, 70%, 49%);
+                                  }
+                                }
+
+                                &.instagram-link{
+                                  background-color: hsl(319, 71%, 49%, 0.167);
+
+                                  svg{
+                                    color: 	hsl(319, 71%, 49%);
+                                  }
+
+                                  .community-link-text{
+                                    color: 	hsl(319, 71%, 49%);
+                                  }
+                                }
+
+                                &.linkedin-link{
+                                  background-color: 	hsl(198, 100%, 35%, 0.167);
+
+                                  svg{
+                                    color: 		hsl(198, 100%, 35%);
+                                  }
+
+                                  .community-link-text{
+                                    color: 		hsl(198, 100%, 35%);
+                                  }
+                                }
+
                               }
-                          }
 
-                          .community-links{
-                            padding-left: 20px;
-
-                            li{
-                              a{
-                                font-size: 1.1rem;
                               }
                             }
-                          }
 
                         }
                     }
