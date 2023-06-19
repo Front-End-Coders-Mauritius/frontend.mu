@@ -11,10 +11,12 @@ import {
 <div class="megamenu">
     <div class="wrapper">
       <div class="megamenu-brand">
+        <a href="/">
         <LogoFec class="megamenu-brand__icon w-10" />
         <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"  >
             frontend.mu
         </span>
+      </a>
       </div>
         <nav>
             <ul class="nav-links" >
@@ -93,13 +95,19 @@ import {
             align-items: center;
 
             .megamenu-brand {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              
-              .megamenu-brand__icon {
-                margin-right: 10px;
+              padding-left: 10px;
+
+              a{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .megamenu-brand__icon {
+                  margin-right: 10px;
+                }
               }
+              
+              
 
             }
 
