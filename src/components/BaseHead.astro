@@ -4,7 +4,10 @@
 import "../styles/global.css";
 import "../styles/tailwind.css";
 import "../styles/theme-color.css";
+// import "../styles/view-transitions.css";
 import VercelAnalytics from "./VercelAnalytics.astro";
+import { ViewTransitions } from 'astro:transitions';
+
 
 export interface Props {
 	title: string;
@@ -50,6 +53,27 @@ const {
 	document.documentElement.style.setProperty("--brand-hue", todHue);
 </script>
 
+<!-- This prevents the white flash when navigating around the website if dark mode is chosen -->
+<script>
+	const setDarkMode = () => {
+	  if (localStorage["vueuse-color-scheme"] !== 'light') {
+		document.body.setAttribute('color-scheme', 'dark');
+	  } else {
+		document.body.setAttribute('color-scheme', 'light');		
+	  }
+	};
+  
+	// Runs on initial navigation
+	setDarkMode();
+	// Runs on view transitions navigation
+	document.addEventListener('astro:beforeload', setDarkMode);
+  </script>
+
 <VercelAnalytics />
 
 <script is:inline defer src="/_vercel/insights/script.js"></script>
+<!-- <script>
+	import '../utils//navigation.js'
+</script> -->
+
+<ViewTransitions />
