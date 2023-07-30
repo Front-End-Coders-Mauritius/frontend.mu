@@ -6,6 +6,8 @@ import "../styles/tailwind.css";
 import "../styles/theme-color.css";
 // import "../styles/view-transitions.css";
 import VercelAnalytics from "./VercelAnalytics.astro";
+import { ViewTransitions } from 'astro:transitions';
+
 
 export interface Props {
 	title: string;
@@ -57,3 +59,5 @@ const {
 <!-- <script>
 	import '../utils//navigation.js'
 </script> -->
+
+<ViewTransitions />
