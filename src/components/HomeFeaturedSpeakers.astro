@@ -2,7 +2,7 @@
 import { loadSpeakers } from "../utils/api";
 import { Image } from "@astrojs/image/components";
 import { getGithubUrl } from "../utils/fns";
-import { toSafeVarName } from "../utils/helpers";
+import { vTransitionName } from "../utils/helpers";
 
 const speakers = await loadSpeakers();
 
@@ -42,9 +42,7 @@ const isCenter = (index, length) => {
                             <Image
                                 class="mx-auto md:saturate-0 rounded-xl  ease-in-out duration-300 md:h-[640px] h-[150px] w-[150px] md:w-[90px] object-cover object-center md:group-hover:w-[120px] group-hover:saturate-100 transition-all"
                                 src={speaker_photo}
-                                style={`view-transition-name: speaker-avatar-${toSafeVarName(
-                                    person.name
-                                )}`}
+                                style={vTransitionName("speaker-avatar", person.name)}
                                 alt={person.name}
                                 title={person.name}
                                 width={300}

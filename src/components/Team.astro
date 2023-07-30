@@ -2,7 +2,7 @@
 import { loadSpeakers } from "../utils/api";
 import { Image } from "@astrojs/image/components";
 import { getGithubUrl } from "../utils/fns";
-import { toSafeVarName } from "../utils/helpers";
+import { vTransitionName } from "../utils/helpers";
 
 const people = [
   {
@@ -113,10 +113,8 @@ const speakers = await loadSpeakers();
                 <li>
                   <a href={`/speaker/${person.id}`} class="space-y-4">
                     <Image
-                      class="mx-auto h-20 w-20 rounded-full border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48 profile-avatar"
-                      style={`view-transition-name: speaker-avatar-${toSafeVarName(
-                        person.name
-                      )}`}
+                      class="mx-auto h-20 w-20 rounded-full border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48 profile-avatar"                      
+                      style={vTransitionName("speaker-avatar", person.name)}
                       src={speaker_photo}
                       alt={person.name}
                       title={person.name}

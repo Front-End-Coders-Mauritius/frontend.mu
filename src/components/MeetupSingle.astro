@@ -9,7 +9,7 @@ import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/20/solid";
 import { getPhotos, photoAlbumSource } from "../utils/api";
-import { random, toSafeVarName } from "../utils/helpers";
+import { random, vTransitionName } from "../utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 
 const props = Astro.props;
@@ -107,9 +107,7 @@ const getRelatedPhotoSource = (album: string) => {
               </div>
               <h1
                 class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                style={`view-transition-name: session-title-${toSafeVarName(
-                  props.getCurrentEvent?.title
-                )}`}
+                style={vTransitionName('session-title', props.getCurrentEvent.id)}
               >
                 {props.getCurrentEvent?.title}
               </h1>

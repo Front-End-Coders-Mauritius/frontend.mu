@@ -78,13 +78,18 @@ const remainingUpcomingData = upcomingData.slice(0, upcomingData.length - 1);
 
     <!-- This is how you embed external client side library in astro -->
     <script>
-      import "vanilla-tilt/dist/vanilla-tilt.min.js";
-      const elements = document.querySelectorAll(".card-3d");
+        import "vanilla-tilt/dist/vanilla-tilt.min.js";
+        document.addEventListener('astro:load', () => {
+          // This only runs once.
+            const elements = document.querySelectorAll(".card-3d");
 
-      VanillaTilt.init(elements, {
-        reverse: false,
-        speed: 1000,
-      });
+            VanillaTilt.init(elements, {
+              reverse: false,
+              speed: 1000,
+            });
+          }, 
+          { once: true }
+        );
     </script>
 
     <div class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">

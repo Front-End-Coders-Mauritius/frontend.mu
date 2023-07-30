@@ -5,8 +5,9 @@ import {
   CalendarIcon,
   ArrowTrendingUpIcon,
 } from '@heroicons/vue/24/outline'
-import { PropType } from 'vue';
+import { PropType, ref } from 'vue';
 import LogoFec from '../components/logo-fec.vue';
+
 
 interface Meetup {
   id: string
@@ -27,6 +28,12 @@ const props = defineProps({
     default: () => ({}),
   },
 })
+
+const counter = ref(0);
+const increment = () => {
+  console.log(counter.value)
+  counter.value++;
+};
 
 // to get past or upcoming value base in Date
 const dateInPast = function (firstDate: Date, secondDate: Date) {
@@ -52,18 +59,19 @@ const tiltOptions = {
   <!-- <Tilt :options="tiltOptions"> -->
 
     <div
+    @click="increment()"
          class="mt-4 md:mt-0 relative rounded-xl group flex flex-col  items-start md:items-center gap-6 md:gap-16 group bg-white dark:bg-slate-800 dark-glow p-8 md:p-16 shadow-xl">
 
       <logo-fec
                 class="w-32 z-0 transition-all hidden md:block select-none top-0 saturate-100  opacity-100  overflow-hidden" />
       <!-- <div class="w-64 top-0 h-64 z-10 bg-gradient-to-t from-white to-transparent absolute">&nbsp;</div> -->
 
-      <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-0">
+      <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-0" >
         <a
            :href="`meetup/${event.id}`"
            class="w-[300px] md:w-96 focus:outline-none">
-          <span class="absolute inset-0" aria-hidden="true" />
-          {{ event?.title }}
+          <!-- <span class="absolute inset-0" aria-hidden="true" /> -->
+          {{ event?.title }} {{  counter  }}
 
         </a>
       </h3>

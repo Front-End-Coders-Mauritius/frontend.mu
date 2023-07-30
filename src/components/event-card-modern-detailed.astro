@@ -4,7 +4,7 @@ import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
 import { format } from "date-fns";
 import { getPhotos, photoAlbumSource } from "../utils/api";
 import CardAlbum from "./CardAlbum.astro";
-import { toSafeVarName } from "../utils/helpers";
+import { vTransitionName } from "../utils/helpers";
 
 interface Meetup {
   id: string;
@@ -76,7 +76,7 @@ let currentAlbum = fetchAlbumDetails();
   title={hasAlbum() ? "has album" : "no album"}
 >
   <div
-    class="flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"
+    class="flex flex-col md:flex-row justify-between w-full  transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"
   >
     <div class="relative flex flex-col p-4 gap-2">
       <!-- Date -->
@@ -104,9 +104,7 @@ let currentAlbum = fetchAlbumDetails();
         <a
           href={`meetup/${event.id}`}
           class="w-[300px] md:w-96 focus:outline-none"
-          style={`view-transition-name: session-title-${toSafeVarName(
-            event?.title
-          )}`}
+          style={vTransitionName('session-title',event.id)}
         >
           <span class="absolute inset-0" aria-hidden="true"></span>
           {event?.title}
