@@ -39,7 +39,7 @@ export async function getEvent(id: string | number) {
   const events = await loadEvents();
   let event = events.data.find((ev) => ev.id == id);
 
-  event.related = getRelatedEvent(events, id);
+  // event.related = { ...getRelatedEvent(events, id)};
 
   if (event === null) {
     console.error("cannot find event id: ", id);
