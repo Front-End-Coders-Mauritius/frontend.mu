@@ -11,10 +11,10 @@ const props = Astro.props
         {
           props.currentAlbum && props.currentAlbum.length > 0 &&
             props.currentAlbum.map((photo) => (
-              <div class="rounded-md overflow-hidden aspect-video">
+              <div class="aspect-video">
                 <img
                   src={`${props.source}/${photo}`}
-                  class="object-cover w-full h-full object-center block"
+                  class="object-cover w-full h-full object-center block rounded-md overflow-hidden "
                   loading="lazy"
                 />
               </div>

@@ -7,7 +7,7 @@ const directus = await getDirectusClient();
 // Events
 async function loadEventsUncached() {
   const events = await directus.items("Events").readByQuery({
-    fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account"],
+    fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sponsors.Sponsor_id.*.*"],
   });
 
   return events;
@@ -38,7 +38,8 @@ export const getRelatedEvent = (events, eventId) => {
 export async function getEvent(id: string | number) {
   const events = await loadEvents();
   let event = events.data.find((ev) => ev.id == id);
-  event.related = getRelatedEvent(events, id);
+
+  // event.related = { ...getRelatedEvent(events, id)};
 
   if (event === null) {
     console.error("cannot find event id: ", id);
