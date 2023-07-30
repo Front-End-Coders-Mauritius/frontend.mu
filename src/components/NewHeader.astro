@@ -4,7 +4,7 @@ import ToggleTheme from "../components/toggle-theme.vue";
 import MainMenu from "./MegaMenu.astro";
 ---
 
-<div class="flex justify-between contain relative z-30">
+<div class="flex justify-between contain sticky top-0 z-30 h-32 items-center">
   <!-- <div class="flex justify-start logo-image">
     <a href="/" class="flex items-center justify-center gap-1 md:gap-2" id="logo">
       <h1 class="sr-only">Front-end Coders Mauritius</h1>
@@ -19,9 +19,10 @@ import MainMenu from "./MegaMenu.astro";
   <div
     class="relative z-10 flex items-center justify-center h-32 col-span-3 bg-transparent"
   > -->
-    <MainMenu />
-    <!-- <ToggleTheme client:load />
-  </div> -->
+    <MainMenu>      
+      <ToggleTheme slot="dark-mode-toggle" client:load />
+    </MainMenu>
+  <!-- </div>  -->
 </div>
 
 <script>

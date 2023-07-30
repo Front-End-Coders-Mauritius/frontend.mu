@@ -12,8 +12,27 @@ declare module 'astro:content' {
 	export { z } from 'astro/zod';
 	export type CollectionEntry<C extends keyof AnyEntryMap> = AnyEntryMap[C][keyof AnyEntryMap[C]];
 
+	// TODO: Remove this when having this fallback is no longer relevant. 2.3? 3.0? - erika, 2023-04-04
+	/**
+	 * @deprecated
+	 * `astro:content` no longer provide `image()`.
+	 *
+	 * Please use it through `schema`, like such:
+	 * ```ts
+	 * import { defineCollection, z } from "astro:content";
+	 *
+	 * defineCollection({
+	 *   schema: ({ image }) =>
+	 *     z.object({
+	 *       image: image(),
+	 *     }),
+	 * });
+	 * ```
+	 */
+	export const image: never;
+
 	// This needs to be in sync with ImageMetadata
-	export const image: () => import('astro/zod').ZodObject<{
+	export type ImageFunction = () => import('astro/zod').ZodObject<{
 		src: import('astro/zod').ZodString;
 		width: import('astro/zod').ZodNumber;
 		height: import('astro/zod').ZodNumber;
@@ -43,15 +62,6 @@ declare module 'astro:content' {
 		| BaseSchemaWithoutEffects
 		| import('astro/zod').ZodEffects<BaseSchemaWithoutEffects>;
 
-	type BaseCollectionConfig<S extends BaseSchema> = {
-		schema?: S;
-		slug?: (entry: {
-			id: CollectionEntry<keyof typeof entryMap>['id'];
-			defaultSlug: string;
-			collection: string;
-			body: string;
-			data: import('astro/zod').infer<S>;
-		}) => string | Promise<string>;
 	export type SchemaContext = { image: ImageFunction };
 
 	type DataCollectionConfig<S extends BaseSchema> = {
@@ -100,9 +110,6 @@ declare module 'astro:content' {
 		filter?: (entry: CollectionEntry<C>) => unknown
 	): Promise<CollectionEntry<C>[]>;
 
-
-	type InferEntrySchema<C extends keyof typeof entryMap> = import('astro/zod').infer<
-		Required<ContentConfig['collections'][C]>['schema']
 	export function getEntry<
 		C extends keyof ContentEntryMap,
 		E extends ValidContentEntrySlug<C> | (string & {})
@@ -177,7 +184,8 @@ declare module 'astro:content' {
 
 	type ReturnTypeOrOriginal<T> = T extends (...args: any[]) => infer R ? R : T;
 	type InferEntrySchema<C extends keyof AnyEntryMap> = import('astro/zod').infer<
-		ReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>>;
+		ReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>
+	>;
 
 	type ContentEntryMap = {
 		"event": {

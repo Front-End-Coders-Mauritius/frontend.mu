@@ -54,6 +54,7 @@ import {
               <li>
                 <a class="nav-link" href="#">Sponsor A Meetup</a>
               </li> -->
+              <slot name="dark-mode-toggle" />
             </ul>
           </nav>
     </div>
@@ -75,7 +76,7 @@ import {
         height: 3.5rem; 
         transition: background-color .2s ease;
         margin-top: 10px;
-        position: fixed;
+        position:relative;
         left: 50%;
         transform: translateX(-50%);
         z-index: 20;
@@ -89,13 +90,13 @@ import {
         .wrapper {
             height: 100%;
             width: 100%;
-            padding: 10px 6px;
+            padding: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
 
             .megamenu-brand {
-              padding-left: 10px;
+              padding-left: 3px;
 
               a{
                 display: flex;
@@ -116,7 +117,7 @@ import {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-top: 5px;
+                /* margin-top: 5px; */
 
                 .nav-links {
                     display: flex;
@@ -127,21 +128,23 @@ import {
                     .nav-link {
                       position: relative;
                       margin: 0 1px;
-                      padding: 3px 15px;
-                      transition: all 0.3s ease-in-out;
+                      /* transition: all 0.3s ease-in-out; */
                       border-radius: 50px;
                       font-weight: 500;
 
                         .nav-link-text {
                           font-size: 1.1rem;
                           color: var(--color-verse-0);
+                          padding: 5px 15px;
+                          display:block;
+                          font-weight: 600;
                         }
 
                         &:hover {
-                          background-color: var(--color-verse-100);
+                          background-color: rgba(0,0,0,0.1);
 
                           .nav-link-text {
-                            color: var(--color-verse-500);
+                            /* color: var(--color-verse-500); */
                           }
 
                            .menu-dropdown {
