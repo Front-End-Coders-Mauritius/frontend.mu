@@ -2,6 +2,9 @@
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "jsx": "preserve",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": [
+      "unplugin-icons/types/astro"
+    ]
   }
 }
