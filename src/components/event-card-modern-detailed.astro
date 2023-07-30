@@ -1,6 +1,10 @@
 ---
-import { MapPinIcon, UsersIcon } from "@heroicons/vue/20/solid";
-import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+
+import IconLocation from "~icons/carbon/location"
+import IconArrowUpRight from "~icons/carbon/arrow-up-right"
+import IconCalendar from "~icons/carbon/calendar"
+import IconGroup from "~icons/solar/users-group-rounded-bold"
+
 import { format } from "date-fns";
 import { getPhotos, photoAlbumSource } from "../utils/api";
 import CardAlbum from "./CardAlbum.astro";
@@ -90,7 +94,7 @@ let currentAlbum = fetchAlbumDetails();
                 "flex font-mono text-sm font-medium items-center",
               ]}
             >
-              <CalendarIcon class="mr-2 h-6 w-6" />
+              <IconCalendar class="mr-2 h-6 w-6" />
               <span>{format(new Date(event.Date), "dd MMM yyyy")}</span>
             </span>
           </div>
@@ -115,7 +119,7 @@ let currentAlbum = fetchAlbumDetails();
         {
           event.Venue && (
             <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
-              <MapPinIcon
+              <IconLocation
                 class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
                 aria-hidden="true"
               />
@@ -132,7 +136,7 @@ let currentAlbum = fetchAlbumDetails();
           {
             event.Attendees && (
               <div class="flex items-center" title="Attendees">
-                <UsersIcon
+                <IconGroup
                   class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
                   aria-hidden="true"
                 />
