@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { MapPinIcon, UsersIcon } from '@heroicons/vue/20/solid';
-import { CalendarIcon, ArrowTrendingUpIcon } from '@heroicons/vue/24/outline';
+
+import IconLocation from "~icons/carbon/location"
+import IconArrowUpRight from "~icons/carbon/arrow-up-right"
+import IconCalendar from "~icons/carbon/calendar"
+import IconGroup from "~icons/solar/users-group-rounded-bold"
+
 import VanillaTilt from '../components/VanillaTilt/VanillaTilt.vue';
 import LogoFec from '../components/logo-fec.vue';
 
@@ -66,12 +70,12 @@ const tiltOptions = {
           ? 'bg-gray-50 text-gray-700'
           : 'bg-green-50 text-green-600 font-bold dark:bg-slate-900/10'
           ">
-          <CalendarIcon class="mr-2 h-6 w-6" />
+          <IconCalendar class="mr-2 h-6 w-6" />
           <span>{{ new Date(props.event.Date).toDateString() }}</span>
         </span>
 
         <div class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500 dark:text-gray-100">
-          <UsersIcon class="mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500 dark:text-gray-100" aria-hidden="true" />
+          <IconGroup class="mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500 dark:text-gray-100" aria-hidden="true" />
           <div v-if="event?.Attendees !== 0" class="line-clamp-1 md:line-clamp-0">
             Attendees {{ event?.Attendees }}
           </div>
@@ -80,7 +84,7 @@ const tiltOptions = {
 
         <div v-if="props.event.Venue"
           class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500 dark:text-gray-100">
-          <MapPinIcon class="ml-[-1px] mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500 dark:text-gray-100"
+          <IconLocation class="ml-[-1px] mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500 dark:text-gray-100"
             aria-hidden="true" />
           <div>{{ props.event.Venue }}</div>
         </div>
@@ -90,7 +94,7 @@ const tiltOptions = {
 
       <span class="pointer-events-none absolute top-6 right-6 text-gray-300  group-hover:text-green-500"
         aria-hidden="true">
-        <ArrowTrendingUpIcon class="h-6 w-6" />
+        <IconArrowUpRight class="h-6 w-6" />
       </span>
     </div>
   </VanillaTilt>
