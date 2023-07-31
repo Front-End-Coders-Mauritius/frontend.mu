@@ -4,6 +4,9 @@ import { isUserLoggedIn, currentUser } from "../store/userStore";
 export const oAuthLogin = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
+    options: {
+      redirectTo: window.location.origin,
+    },
   });
 
   if (error) {
