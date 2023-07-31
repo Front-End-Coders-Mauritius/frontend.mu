@@ -3,8 +3,6 @@
   "compilerOptions": {
     "jsx": "preserve",
     "strictNullChecks": true,
-    "types": [
-      "unplugin-icons/types/astro"
-    ]
+    "types": ["unplugin-icons/types/astro", "vite/client"]
   }
 }
