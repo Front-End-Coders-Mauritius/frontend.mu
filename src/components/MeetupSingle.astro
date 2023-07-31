@@ -10,6 +10,7 @@ import SessionList from "./SessionList.astro";
 import { getPhotos, photoAlbumSource } from "../utils/api";
 import { random, vTransitionName } from "../utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
+import UserData from "./UserData.vue";
 
 
 const props = Astro.props;
@@ -107,7 +108,10 @@ const getRelatedPhotoSource = (album: string) => {
               </div>
               <h1
                 class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                style={vTransitionName('session-title', props.getCurrentEvent.id)}
+                style={vTransitionName(
+                  "session-title",
+                  props.getCurrentEvent.id
+                )}
               >
                 {props.getCurrentEvent?.title}
               </h1>
