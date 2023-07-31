@@ -1,6 +1,7 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import LogoFec from "../components/LogoFec.astro";
+import UserData from "./UserData.vue";
 ---
 
 <div class="homepage-container -mt-32 pt-16 md:pt-0">
@@ -11,10 +12,16 @@ import LogoFec from "../components/LogoFec.astro";
           class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center"
         >
           <div
-            class="flex flex-col justify-center  text-center md:text-left gap-10 md:w-2/3"
+            class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3"
           >
-            <h1 class="accent uppercase text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-7xl" >Frontend Coders Mauritius</h1>
-            <p class="text-md md:text-lg text-slate-800 dark:text-slate-300 font-mono font-bold">
+            <h1
+              class="accent uppercase text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-7xl"
+            >
+              Frontend Coders Mauritius
+            </h1>
+            <p
+              class="text-md md:text-lg text-slate-800 dark:text-slate-300 font-mono font-bold"
+            >
               Front-End Coders Mauritius is a community around front-end
               development based in Mauritius. We also organise monthly meetups
               free for anyone interested to attend.
@@ -170,29 +177,29 @@ import LogoFec from "../components/LogoFec.astro";
   }
 
   .accent {
-  background: linear-gradient(
-    135deg,
-    hsl(13, 100%, 52%) 10%,
-    hsl(230, 100%, 70%) 50%,
-    hsl(13, 100%, 52%) 80%,
-    hsl(53, 100%, 69%) 90%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-size: 400% 400%;
-  animation: gradient-animation 12s ease infinite;
-}
+    background: linear-gradient(
+      135deg,
+      hsl(13, 100%, 52%) 10%,
+      hsl(230, 100%, 70%) 50%,
+      hsl(13, 100%, 52%) 80%,
+      hsl(53, 100%, 69%) 90%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: 400% 400%;
+    animation: gradient-animation 12s ease infinite;
+  }
 
-@keyframes gradient-animation {
-  0% {
-    background-position: 0% 50%;
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 </style>
