@@ -14,4 +14,17 @@ npm install
 npm run dev
 ```
 
+## Environment variables
+
+Make a copy of .env.example and rename it to .env.development on your local machine.
+If not, the application will fail to start
+
+```
+
+```
+
+```
+
+```
+
 ## Feel free to contribute :D
