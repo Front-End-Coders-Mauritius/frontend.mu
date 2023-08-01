@@ -1,0 +1,8 @@
+---
+import LayoutSpeaker from "../../layouts/LayoutSpeaker.astro";
+import MyProfile from "./components/MyProfile.vue";
+---
+
+<LayoutSpeaker title={"Your Profile"}>
+    <MyProfile client:only />
+</LayoutSpeaker>
