@@ -14,6 +14,20 @@ const props = defineProps({
   }
 })
 
+// Get RSVP Status
+const hasAlreadyRSVP = ref(false);
+
+const getRsvpStatus = async () => {  
+  const status = await getMeetupRSVPStatus(props.meetupId)  
+  if (status) {
+    hasAlreadyRSVP.value = true
+  }
+}
+
+onMounted(async () => {
+  getRsvpStatus()
+})
+
 // Update RSVP Status
 const rsvpToMeetup = async () => {
   const { data, error } = await setMeetupRSVP(props.meetupId, true, 'bus')
@@ -22,6 +36,7 @@ const rsvpToMeetup = async () => {
   } else {
     console.log(data)
   }
+  getRsvpStatus()
 }
 
 const unRsvpToMeetup = async () => {
@@ -31,17 +46,10 @@ const unRsvpToMeetup = async () => {
   } else {
     console.log(data)
   }
+  getRsvpStatus()
 }
 
-// Get RSVP Status
-const hasAlreadyRSVP = ref(false);
 
-onMounted(async () => {
-  const status = await getMeetupRSVPStatus(props.meetupId)  
-  if (status) {
-    hasAlreadyRSVP.value = true
-  }
-})
 
 </script>
 
