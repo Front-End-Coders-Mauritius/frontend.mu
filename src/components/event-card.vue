@@ -60,7 +60,7 @@ const tiltOptions = {
 
       <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-0">
         <a :href="`meetup/${props.event.id}`" class="w-[300px] md:w-96 focus:outline-none">
-          <!-- <span class="absolute inset-0" aria-hidden="true" /> -->
+          <span class="absolute inset-0" aria-hidden="true" />
           {{ event?.title }}
         </a>
       </h3>
