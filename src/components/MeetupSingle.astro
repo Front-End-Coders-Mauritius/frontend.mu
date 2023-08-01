@@ -11,6 +11,7 @@ import { getPhotos, photoAlbumSource } from "../utils/api";
 import { random, vTransitionName } from "../utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import UserData from "./UserData.vue";
+import RsvpToMeetup from "../pages/user/components/RsvpToMeetup.vue";
 
 
 const props = Astro.props;
@@ -276,6 +277,14 @@ const getRelatedPhotoSource = (album: string) => {
                     </div>
                   </dd>
                 </div>
+
+                <!-- Internal RSVP Button -->
+
+                {
+                  isUpcoming() && (
+                    <RsvpToMeetup meetup-id={props.getCurrentEvent.id.toString()} client:only />
+                  )
+                }
 
                 <!-- RSVP Button -->
                 {
