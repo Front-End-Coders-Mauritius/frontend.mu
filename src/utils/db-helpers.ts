@@ -38,18 +38,19 @@ export const getMeetupRSVPStatus = async (
 ): Promise<boolean> => {
   const userProfileData = userProfile.get();
 
-  const { data: rsvp, error } = await supabase
+  const { data, error } = await supabase
     .from("meetup_rsvp")
     .select("*")
     .eq("meetup_id", meetupId)
-    .eq("user_uid", userProfileData?.id);
+    .eq("user_uid", userProfileData?.id)
+    .single()
 
   if (error) {
     console.log(error);
     return false;
   }
 
-  return !!rsvp[0];
+  return data && data.rsvp;
 };
 
 export const setMeetupRSVP = async (
