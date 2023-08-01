@@ -21,6 +21,8 @@ const getRsvpStatus = async () => {
   const status = await getMeetupRSVPStatus(props.meetupId)  
   if (status) {
     hasAlreadyRSVP.value = true
+  } else {
+    hasAlreadyRSVP.value = false
   }
 }
 
@@ -36,7 +38,7 @@ const rsvpToMeetup = async () => {
   } else {
     console.log(data)
   }
-  getRsvpStatus()
+  await getRsvpStatus()
 }
 
 const unRsvpToMeetup = async () => {
@@ -46,7 +48,7 @@ const unRsvpToMeetup = async () => {
   } else {
     console.log(data)
   }
-  getRsvpStatus()
+  await getRsvpStatus()
 }
 
 
