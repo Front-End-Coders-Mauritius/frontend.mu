@@ -33,6 +33,25 @@ export const updateUserProfile = async (profile: Partial<User>) => {
 
 /* Meetup RSVP Functions */
 
+export const getMeetupRSVPStatus = async (
+  meetupId: string
+): Promise<boolean> => {
+  const userProfileData = userProfile.get();
+
+  const { data: rsvp, error } = await supabase
+    .from("meetup_rsvp")
+    .select("*")
+    .eq("meetup_id", meetupId)
+    .eq("user_uid", userProfileData?.id);
+
+  if (error) {
+    console.log(error);
+    return false;
+  }
+
+  return !!rsvp[0];
+};
+
 export const setMeetupRSVP = async (
   meetupId: string,
   rsvp: boolean,
