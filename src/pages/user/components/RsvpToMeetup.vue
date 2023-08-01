@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser, userProfile } from "../../../store/userStore";
-import { getUserProfile, setMeetupRSVP } from "../../../utils/db-helpers";
+import { getUserProfile, setMeetupRSVP, getMeetupRSVPStatus } from "../../../utils/db-helpers";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
@@ -14,6 +14,7 @@ const props = defineProps({
   }
 })
 
+// Update RSVP Status
 const rsvpToMeetup = async (RSVP) => {
   const { data, error } = await setMeetupRSVP(props.meetupId, RSVP, 'bus')
   if (error) {
@@ -23,8 +24,14 @@ const rsvpToMeetup = async (RSVP) => {
   }
 }
 
-const hasAlreadyRSVP = computed(() => {
-  return true
+// Get RSVP Status
+const hasAlreadyRSVP = ref(false);
+
+onMounted(async () => {
+  const status = await getMeetupRSVPStatus(props.meetupId)  
+  if (status) {
+    hasAlreadyRSVP.value = true
+  }
 })
 
 </script>
