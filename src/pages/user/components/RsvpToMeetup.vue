@@ -15,8 +15,17 @@ const props = defineProps({
 })
 
 // Update RSVP Status
-const rsvpToMeetup = async (RSVP) => {
-  const { data, error } = await setMeetupRSVP(props.meetupId, RSVP, 'bus')
+const rsvpToMeetup = async () => {
+  const { data, error } = await setMeetupRSVP(props.meetupId, true, 'bus')
+  if (error) {
+    console.log(error)
+  } else {
+    console.log(data)
+  }
+}
+
+const unRsvpToMeetup = async () => {
+  const { data, error } = await setMeetupRSVP(props.meetupId, false, '')
   if (error) {
     console.log(error)
   } else {
@@ -45,11 +54,11 @@ onMounted(async () => {
             You've already RSVP'd to this meetup
           </div>
           <div>
-            <button @click="rsvpToMeetup(false)">Unregister your seat</button>  
+            <button @click="unRsvpToMeetup()">Unregister your seat</button>  
           </div>
         </div>
         <div v-else>
-          <button @click="rsvpToMeetup(true)">Click here to RSVP</button>
+          <button @click="rsvpToMeetup()">Click here to RSVP</button>
         </div>
         
       </div>
