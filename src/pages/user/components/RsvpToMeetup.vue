@@ -17,7 +17,7 @@ import IconChicken from "~icons/icon-park-twotone/chicken"
 import IconVegan from "~icons/iconoir/vegan"
 import IconBus from "~icons/mdi/bus-side"
 import IconCar from "~icons/mdi/car-side"
-import IconPlane from "~icons/fa6-solid/plane"
+import IconBroom from "~icons/game-icons/broom"
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
@@ -100,7 +100,7 @@ const foodSelection = shallowRef(foodOptions[1])
 const transportOptions = [
   { allowed: true, name: 'Bus', icon: IconBus },
   { allowed: true, name: 'Car', icon: IconCar },
-  { allowed: true, name: 'Plane', icon: IconPlane }
+  { allowed: true, name: 'Other', icon: IconBroom }
 ]
 
 const transportSelection = shallowRef(transportOptions[1])
