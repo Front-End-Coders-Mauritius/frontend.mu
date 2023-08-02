@@ -13,7 +13,6 @@ import MeetupSonspor from "./MeetupSonspor.astro";
 import UserData from "./UserData.vue";
 import RsvpToMeetup from "../pages/user/components/RsvpToMeetup.vue";
 
-
 const props = Astro.props;
 
 const dateInPast = function (firstDate: Date, secondDate: Date) {
@@ -119,11 +118,24 @@ const getRelatedPhotoSource = (album: string) => {
 
               <div class="grid md:grid-cols-2">
                 <SessionList sessions={props.getCurrentEvent.sessions} />
-                <MeetupGallery
-                  currentAlbum={currentAlbum}
-                  source={photoAlbumSource}
-                  animationSpeed={4000}
-                />
+
+                <!-- Internal RSVP Button -->
+
+                {
+                  isUpcoming() ? (
+                    <RsvpToMeetup
+                      meetup-id={props.getCurrentEvent.id.toString()}
+                      meetup={props.getCurrentEvent}
+                      client:only
+                    />
+                  ) : (
+                    <MeetupGallery
+                      currentAlbum={currentAlbum}
+                      source={photoAlbumSource}
+                      animationSpeed={4000}
+                    />
+                  )
+                }
               </div>
 
               <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
@@ -277,14 +289,6 @@ const getRelatedPhotoSource = (album: string) => {
                     </div>
                   </dd>
                 </div>
-
-                <!-- Internal RSVP Button -->
-
-                {
-                  isUpcoming() && (
-                    <RsvpToMeetup meetup-id={props.getCurrentEvent.id.toString()} client:only />
-                  )
-                }
 
                 <!-- RSVP Button -->
                 {
