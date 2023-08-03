@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { userProfile } from "../store/userStore";
-import type { User } from "./types";
+import type { User, Transport, Meal } from "./types";
 
 /* User Profile Functions */
 
@@ -38,24 +38,26 @@ export const getMeetupRSVPStatus = async (
 ): Promise<boolean> => {
   const userProfileData = userProfile.get();
 
-  const { data: rsvp, error } = await supabase
+  const { data, error } = await supabase
     .from("meetup_rsvp")
     .select("*")
     .eq("meetup_id", meetupId)
-    .eq("user_uid", userProfileData?.id);
+    .eq("user_uid", userProfileData?.id)
+    .single();
 
   if (error) {
     console.log(error);
     return false;
   }
 
-  return !!rsvp[0];
+  return data && data.rsvp;
 };
 
 export const setMeetupRSVP = async (
   meetupId: string,
   rsvp: boolean,
-  transport: string
+  transport: Transport,
+  meal: Meal
 ) => {
   const userProfileData = userProfile.get();
 
@@ -75,9 +77,8 @@ export const setMeetupRSVP = async (
   if (existingRSVP[0]) {
     const { data, error } = await supabase
       .from("meetup_rsvp")
-      .update({ rsvp, transport })
-      .eq("id", existingRSVP[0].id)
-      .select("*");
+      .update({ rsvp })
+      .eq("id", existingRSVP[0].id);
 
     if (error) {
       console.log(error);
@@ -94,8 +95,12 @@ export const setMeetupRSVP = async (
           meetup_id: meetupId,
           user_uid: userProfileData?.id,
           user_metadata: userProfileData,
+          meta: {
+            transport,
+            meal,
+            avatar_url: userProfileData?.google?.avatar_url,
+          },
           rsvp,
-          transport,
         },
       ])
       .select("*");
