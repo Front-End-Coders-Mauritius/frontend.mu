@@ -113,10 +113,13 @@ const transportOptions = [
 
 const transportSelection = shallowRef(transportOptions[1])
 
-// Menu items
-const items = [
-  { name: 'Cancel my RSVP', href: '#' },
-]
+// RSVP values
+const rsvp_meta = computed(() => {
+  return {
+    food: foodSelection.value.name,
+    transport: transportSelection.value.name
+  }
+})
 
 </script>
 
@@ -379,7 +382,7 @@ const items = [
   </div>
 </template>
 
-<style>
+<style lang="postcss">
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
