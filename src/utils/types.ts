@@ -31,3 +31,9 @@ export type RSVPMetaObject = {
   meal: Meal;
   avatar_url: string;
 };
+
+export interface MeetupAttendees {
+  meetup_id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+}

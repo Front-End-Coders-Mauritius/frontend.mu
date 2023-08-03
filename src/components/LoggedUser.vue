@@ -34,7 +34,7 @@ const fetchSession = async () => {
         return;
       }
     } else {
-      if (!userProfileData.avatar_url) {
+      if (!userProfileData.avatar_url || !userProfileData.full_name) {
         await supabase
           .from("profiles")
           .update({
