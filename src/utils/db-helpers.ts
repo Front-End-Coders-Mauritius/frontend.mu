@@ -85,7 +85,7 @@ export const setMeetupRSVP = async (
       return null;
     }
 
-    return { data };
+    return data;
   } else {
     // if user has not RSVP'd, create a new RSVP
     const { data, error } = await supabase
@@ -110,6 +110,6 @@ export const setMeetupRSVP = async (
       return null;
     }
 
-    return { data };
+    return data;
   }
 };

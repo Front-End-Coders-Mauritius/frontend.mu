@@ -65,28 +65,29 @@ const rsvp_loading = ref(false);
 const rsvp_success = ref(false);
 const rsvpToMeetup = async () => {
   rsvp_loading.value = true
-  const { data, error } = await setMeetupRSVP(props.meetupId, true, 'bus')
-  if (error) {
-    console.log(error)
-  } else {
+  try {
+    const data = await setMeetupRSVP(props.meetupId, true, 'bus')
     console.log(data)
     console.log('success!')
     if (data[0].rsvp) {
       rsvp_success.value = true
     }
+  } catch (error) {
+    console.log(error)
   }
+
   rsvp_loading.value = false
   await getRsvpStatus()
 }
 
 const unRsvpToMeetup = async () => {
   rsvp_loading.value = true
-  const { data, error } = await setMeetupRSVP(props.meetupId, false, '')
-  if (error) {
+  try {
+    const data = await setMeetupRSVP(props.meetupId, false, '')
+  } catch (error) {
     console.log(error)
-  } else {
-    console.log(data)
   }
+
   rsvp_loading.value = false
   await getRsvpStatus()
 }
