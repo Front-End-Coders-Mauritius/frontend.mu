@@ -18,5 +18,10 @@ export interface User {
   veg: boolean | null;
   phone: string | null;
   created_at: string;
+  avatar_url: string | null;
   google?: GoogleInfo;
 }
+
+export type Transport = "car" | "bus" | "need a ride";
+
+export type Meal = "nonveg" | "veg" | "not-eating";

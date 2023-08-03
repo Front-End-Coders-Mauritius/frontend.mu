@@ -34,6 +34,15 @@ const fetchSession = async () => {
         return;
       }
     } else {
+      if (!userProfileData.avatar_url) {
+        await supabase
+          .from("profiles")
+          .update({
+            avatar_url: data.session.user.user_metadata.avatar_url,
+          })
+          .eq("id", userProfileData.id);
+      }
+
       return;
     }
   }
@@ -45,7 +54,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <button class="ml-4 flex px-3 py-2 text-sm font-medium rounded-full shadow-lg bg-white/90 shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10" v-if="!$isUserLoggedIn" @click="oAuthLogin">
+  <button
+    class="ml-4 flex px-3 py-2 text-sm font-medium rounded-full shadow-lg bg-white/90 shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
+    v-if="!$isUserLoggedIn"
+    @click="oAuthLogin"
+  >
     Log In
   </button>
   <div v-else class="flex">
@@ -59,12 +72,16 @@ onMounted(() => {
         v-bind:alt="$session?.user.user_metadata.name"
       />
     </a>
-    <button class="hidden ml-4 md:flex px-3 py-2 text-sm font-medium rounded-full shadow-lg bg-white/90 shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10" @click="oAuthLogout">Log Out</button>
+    <button
+      class="hidden ml-4 md:flex px-3 py-2 text-sm font-medium rounded-full shadow-lg bg-white/90 shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
+      @click="oAuthLogout"
+    >
+      Log Out
+    </button>
   </div>
 </template>
 
 <style>
-
 .user-avatar {
   @apply ml-4 w-9 h-9 rounded-full overflow-hidden;
 }
