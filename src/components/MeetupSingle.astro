@@ -11,7 +11,7 @@ import { getPhotos, photoAlbumSource } from "../utils/api";
 import { random, vTransitionName } from "../utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import UserData from "./UserData.vue";
-import RsvpToMeetup from "../pages/user/components/RsvpToMeetup.vue";
+import RsvpComponent from "../pages/user/components/rsvp-component.vue";
 
 const props = Astro.props;
 
@@ -96,7 +96,7 @@ const getRelatedPhotoSource = (album: string) => {
                         "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
                       ]}
                     >
-                      upcoming
+                      hapenning soon
                     </p>
                   </div>
                 )
@@ -106,36 +106,37 @@ const getRelatedPhotoSource = (album: string) => {
               >
                 Topic
               </div>
-              <h1
-                class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                style={vTransitionName(
-                  "session-title",
-                  props.getCurrentEvent.id
-                )}
-              >
-                {props.getCurrentEvent?.title}
-              </h1>
+              <div class="justify-between items-center flex">
+                <h1
+                  class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
+                  style={vTransitionName(
+                    "session-title",
+                    props.getCurrentEvent.id
+                  )}
+                >
+                  {props.getCurrentEvent?.title}
+                </h1>
+
+                {
+                  isUpcoming() && (
+                    <RsvpComponent
+                      meetup-id={props.getCurrentEvent.id.toString()}
+                      meetup={props.getCurrentEvent}
+                      client:only
+                    />
+                  )
+                }
+              </div>
 
               <div class="grid md:grid-cols-2">
                 <SessionList sessions={props.getCurrentEvent.sessions} />
 
                 <!-- Internal RSVP Button -->
-
-                {
-                  isUpcoming() ? (
-                    <RsvpToMeetup
-                      meetup-id={props.getCurrentEvent.id.toString()}
-                      meetup={props.getCurrentEvent}
-                      client:only
-                    />
-                  ) : (
-                    <MeetupGallery
-                      currentAlbum={currentAlbum}
-                      source={photoAlbumSource}
-                      animationSpeed={4000}
-                    />
-                  )
-                }
+                <MeetupGallery
+                  currentAlbum={currentAlbum}
+                  source={photoAlbumSource}
+                  animationSpeed={4000}
+                />
               </div>
 
               <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
