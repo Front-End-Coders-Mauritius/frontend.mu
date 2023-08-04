@@ -5,7 +5,17 @@ import type { User, RSVPMetaObject, MeetupAttendees } from "./types";
 /* User Profile Functions */
 
 export const getUserProfile = async () => {
-  const { data: profile, error } = await supabase.from("profiles").select("*");
+  const { data, error: sessionError } = await supabase.auth.getSession();
+
+  if (sessionError) {
+    console.log(sessionError);
+    return null;
+  }
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", data?.session?.user?.id);
 
   if (error) {
     console.log(error);
