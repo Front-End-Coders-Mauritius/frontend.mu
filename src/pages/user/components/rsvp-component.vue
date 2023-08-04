@@ -401,7 +401,7 @@ const rsvp_meta = computed(() => {
                   </template>
                   <button type="button"
                     class="mt-3 inline-flex w-full justify-center rounded-full text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
-                    @click="open = false">Hide ticket</button>
+                    @click="open = false">Close</button>
                 </div>
               </DialogPanel>
             </TransitionChild>
