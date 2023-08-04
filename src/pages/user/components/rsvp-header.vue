@@ -11,9 +11,9 @@ defineProps<{
 </script>
 
 <template>
-    <div class="isolate flex -space-x-2 overflow-hidden" :class="[rsvp_loading && 'opacity-50']">
+    <div class="isolate flex -space-x-2" :class="[rsvp_loading && 'opacity-50']">
         <img class="relative z-30 inline-block h-16 w-16 rounded-full ring-2 ring-white" :src="avatar_url" alt="" />
-        <div class="text-slate-600 dark:text-slate-700 h-16 w-16">
+        <div class="text-slate-600 dark:text-slate-100 h-16 w-16">
             <svg class="w-full h-full" viewBox="0 0 1030 1031" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_114_30)">
                     <path

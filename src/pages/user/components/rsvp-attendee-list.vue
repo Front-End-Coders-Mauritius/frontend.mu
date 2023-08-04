@@ -47,13 +47,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="contain text-white py-8">
+  <div class="contain text-verse-500 py-8">
 
     <div class="flex flex-col py-8  gap-4 [--bar-height:15px]">
       <h2 class="text-2xl font-bold">
         Attendees <span v-if="attendeeList">({{ attendeeList.length }})</span>
       </h2>
-      <div class="w-full bg-white/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
+      <div class="w-full bg-verse-500/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
         <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`">
 
         </div>
@@ -61,37 +61,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="flex flex-wrap gap-8 justify-center">
-      <div v-for="(attendee, index) in attendeeList" :key="'attendee-' + index">
-        <div class="flex flex-col gap-4 justify-center">
-          <div v-if="attendee.avatar_url">
-            <img :src="attendee.avatar_url" alt="" class="rounded-full mx-auto">
-          </div>
-          <div class="font-bold">
-            {{ attendee.full_name }}
-          </div>
-        </div>
-      </div>
-      <div v-for="(attendee, index) in attendeeList" :key="'attendee-' + index">
-        <div class="flex flex-col gap-4 justify-center">
-          <div v-if="attendee.avatar_url">
-            <img :src="attendee.avatar_url" alt="" class="rounded-full mx-auto">
-          </div>
-          <div class="font-bold">
-            {{ attendee.full_name }}
-          </div>
-        </div>
-      </div>
-      <div v-for="(attendee, index) in attendeeList" :key="'attendee-' + index">
-        <div class="flex flex-col gap-4 justify-center">
-          <div v-if="attendee.avatar_url">
-            <img :src="attendee.avatar_url" alt="" class="rounded-full mx-auto">
-          </div>
-          <div class="font-bold">
-            {{ attendee.full_name }}
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-wrap gap-8">
       <div v-for="(attendee, index) in attendeeList" :key="'attendee-' + index">
         <div class="flex flex-col gap-4 justify-center">
           <div v-if="attendee.avatar_url">

@@ -170,39 +170,41 @@ const rsvp_meta = computed(() => {
               leave-from="opacity-100 translate-y-0 sm:scale-100"
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
               <DialogPanel
-                class="relative transform overflow-hidden transition-all duration-200 rounded-lg border border-white/10 bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl shadow-black sm:my-8 sm:w-full sm:max-w-2xl sm:px-6 sm:py-6"
+                class="relative transform overflow-hidden transition-all duration-200 rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black sm:my-8 sm:w-full sm:max-w-2xl sm:px-6 sm:py-6"
                 :class="[rsvp_is_attending && 'ring-green-400/50 ring-1']">
                 <div class="w-full text-center flex justify-between ">
-                  <DialogTitle as="h3" class="text-lg font-semibold leading-6 text-gray-100">
-                    {{ rsvp_is_attending ? 'Booking confirmed' :
+                  <DialogTitle as="h3" class="text-lg dark:text-white font-semibold leading-6 pb-6">
+                    {{ rsvp_is_attending ? 'Your reservation details' :
                       `Hey ${$session.user.user_metadata.full_name.split(' ')[0]}, let's
                     get you booked in` }}
 
                   </DialogTitle>
                 </div>
 
-                <div class="grid grid-cols-4 border my-4 bg-white rounded-xl">
+                <div
+                  class="grid grid-cols-4 border bg-white dark:border-white/10 dark:bg-slate-800 dark:text-gray-300 rounded-xl">
 
                   <div class="grid grid-cols-1 col-span-4">
                     <!-- Details -->
                     <div class="p-8">
                       <div class="flex justify-between relative">
-                        <DialogTitle as="h3" class="text-sm font-semibold leading-6 text-gray-900 uppercase">
-                          {{ rsvp_is_attending ? 'Details' : 'Confirm your details' }}
-                        </DialogTitle>
+                        <!-- <DialogTitle v-if="!rsvp_is_attending" as="h3"
+                          class="text-sm pb-6 font-semibold leading-6 text-gray-900 uppercase">
+                          {{ rsvp_is_attending ? 'Your reservation details' : 'Confirm your details' }}
+                        </DialogTitle> -->
                         <rsvp-header class="absolute top-0 right-0" :rsvp_success="rsvp_success"
                           :avatar_url="$session.user.user_metadata.avatar_url" :rsvp_loading="rsvp_loading" />
                       </div>
 
                       <!-- Fields -->
-                      <dl class="flex flex-wrap gap-6 pt-8 font-bold ">
+                      <dl class="flex flex-wrap gap-6 font-bold ">
 
                         <div class="flex w-full flex-none gap-x-4 ">
                           <dt class="flex-none">
                             <span class="sr-only">Name</span>
-                            <IconUserAvatar class="h-6 w-6 text-gray-800" aria-hidden="true" />
+                            <IconUserAvatar class="h-6 w-6" aria-hidden="true" />
                           </dt>
-                          <dd class="pt-0 leading-6 text-gray-800">
+                          <dd class="pt-0 leading-6">
                             {{ $session.user.user_metadata.full_name }}
                           </dd>
                         </div>
@@ -211,16 +213,16 @@ const rsvp_meta = computed(() => {
                         <div class="flex w-full flex-none gap-x-4 ">
                           <dt class="flex-none">
                             <span class="sr-only">Phone</span>
-                            <IconEmail class="h-6 w-6 text-gray-800" aria-hidden="true" />
+                            <IconEmail class="h-6 w-6" aria-hidden="true" />
                           </dt>
-                          <dd class="pt-0 leading-6 text-gray-800">
+                          <dd class="pt-0 leading-6">
                             {{ $session.user.user_metadata.email || 'Not set' }}
                           </dd>
                           <dt class="flex-none">
                             <span class="sr-only">Phone</span>
-                            <IconPhone class="h-6 w-6 text-gray-800" aria-hidden="true" />
+                            <IconPhone class="h-6 w-6" aria-hidden="true" />
                           </dt>
-                          <dd class="pt-0 leading-6 text-gray-800">
+                          <dd class="pt-0 leading-6">
                             {{ $session.user.user_metadata.phone || 'Not set' }}
                           </dd>
                         </div>
@@ -228,9 +230,9 @@ const rsvp_meta = computed(() => {
                         <div class="flex w-full flex-none gap-x-4">
                           <dt class="flex-none">
                             <span class="sr-only">Meetup date</span>
-                            <CalendarDaysIcon class="h-6 w-6 text-gray-800" aria-hidden="true" />
+                            <CalendarDaysIcon class="h-6 w-6" aria-hidden="true" />
                           </dt>
-                          <dd class="pt-0 flex gap-1 leading-6 text-gray-800">
+                          <dd class="pt-0 flex gap-1 leading-6">
                             <time :datetime="props.meetup.Date">{{ formatDate(props.meetup.Date) }} </time>
                             <span class="font-normal">
                               at
@@ -243,10 +245,10 @@ const rsvp_meta = computed(() => {
                             <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">Food preference</span>
-                                <component :is="foodSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                                <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
 
                               </dt>
-                              <dd class="pt-0 leading-6 text-gray-800">
+                              <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="foodSelection">
                                   <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-3 gap-3">
@@ -275,10 +277,9 @@ const rsvp_meta = computed(() => {
                             <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">How are you getting there?</span>
-                                <component :is="transportSelection.icon" class="h-6 w-6 text-gray-500"
-                                  aria-hidden="true" />
+                                <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
-                              <dd class="pt-0 leading-6 text-gray-800">
+                              <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="transportSelection">
                                   <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-4 gap-3">
@@ -307,10 +308,9 @@ const rsvp_meta = computed(() => {
                             <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">Occupation</span>
-                                <component :is="identifyAsSelection.icon" class="h-6 w-6 text-gray-500"
-                                  aria-hidden="true" />
+                                <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
-                              <dd class="pt-0 leading-6 text-gray-800 flex flex-wrap gap-4">
+                              <dd class="pt-0 leading-6 flex flex-wrap gap-4">
                                 <RadioGroup v-model="identifyAsSelection">
                                   <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-5 gap-3">
@@ -339,16 +339,15 @@ const rsvp_meta = computed(() => {
                             <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">Show on site</span>
-                                <IconPublic class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                                <IconPublic class="h-6 w-6" aria-hidden="true" />
                               </dt>
-                              <dd class="pt-0 leading-6 text-gray-800 flex items-center gap-4">
+                              <dd class="pt-0 leading-6 flex items-center gap-4">
                                 <input v-model="showMeAsAttending" id="show-as-attending" name="show-as-attending"
                                   type="checkbox" tabindex
                                   class="peer hidden h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
 
                                 <div>
-                                  Show
-                                  my RSVP on the website
+                                  Show my RSVP on the website
                                 </div>
 
                                 <label for="show-as-attending"
@@ -361,25 +360,23 @@ const rsvp_meta = computed(() => {
                             <div class="grid grid-cols-2 gap-4">
                               <!-- Meal -->
                               <div class="flex gap-2">
-                                <component :is="foodSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                                <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 {{ rsvp_meta.meal }}
                               </div>
 
                               <div class="flex gap-2">
-                                <component :is="transportSelection.icon" class="h-6 w-6 text-gray-500"
-                                  aria-hidden="true" />
+                                <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 {{ rsvp_meta.transport }}
                               </div>
 
 
                               <div class="flex gap-2">
-                                <component :is="identifyAsSelection.icon" class="h-6 w-6 text-gray-500"
-                                  aria-hidden="true" />
+                                <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 {{ rsvp_meta.identifyAs }}
                               </div>
 
                               <div class="flex gap-2" v-if="rsvp_meta.showMeAsAttending">
-                                <IconPublic class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                                <IconPublic class="h-6 w-6" aria-hidden="true" />
                                 Visible
                               </div>
 
@@ -393,9 +390,9 @@ const rsvp_meta = computed(() => {
                 </div>
                 <div class="mt-8 sm:mt-6 sm:flex sm:flex-row-reverse">
                   <template v-if="rsvp_is_attending">
-                    <div
+                    <!-- <div
                       class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">
-                      You're attending !</div>
+                      You're attending !</div> -->
                   </template>
                   <template v-else>
                     <button type="button"
@@ -403,8 +400,8 @@ const rsvp_meta = computed(() => {
                       :disabled="rsvp_loading" @click="rsvpToMeetup()">Confirm</button>
                   </template>
                   <button type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-md bg-transparent dark:ring-none px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
-                    @click="open = false">Close</button>
+                    class="mt-3 inline-flex w-full justify-center rounded-full text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
+                    @click="open = false">Hide ticket</button>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -435,7 +432,7 @@ const rsvp_meta = computed(() => {
             </div>
             <div v-else>
               <button @click="open = true"
-                class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700 dark:bg-white hover:bg-verse-600 hover: shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
+                class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700 dark:bg-white hover:bg-verse-600 hover:shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
                 <!-- Logo -->
                 <div class="text-verse-100 dark:text-slate-700 w-8 h-8 mr-2">
                   <svg class="w-full h-full" viewBox="0 0 1030 1031" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -494,4 +491,5 @@ button:disabled {
   transform: scale(0.8);
   transform-origin: left center;
   opacity: 0;
-}</style>
+}
+</style>
