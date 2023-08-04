@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { userProfile } from "../store/userStore";
-import type { User, Transport, Meal } from "./types";
+import type { User, RSVPMetaObject, MeetupAttendees } from "./types";
 
 /* User Profile Functions */
 
@@ -56,8 +56,8 @@ export const getMeetupRSVPStatus = async (
 export const setMeetupRSVP = async (
   meetupId: string,
   rsvp: boolean,
-  transport: Transport,
-  meal: Meal
+  meta: RSVPMetaObject,
+  allowOnSite: boolean
 ) => {
   const userProfileData = userProfile.get();
 
@@ -95,12 +95,9 @@ export const setMeetupRSVP = async (
           meetup_id: meetupId,
           user_uid: userProfileData?.id,
           user_metadata: userProfileData,
-          meta: {
-            transport,
-            meal,
-            avatar_url: userProfileData?.google?.avatar_url,
-          },
+          meta,
           rsvp,
+          showOnSite: allowOnSite,
         },
       ])
       .select("*");
@@ -112,4 +109,21 @@ export const setMeetupRSVP = async (
 
     return data;
   }
+};
+
+const getMeetupAttendees = async (
+  meetupId: string
+): Promise<MeetupAttendees[] | null> => {
+  const { data, error } = await supabase
+    .rpc("get_rsvp_list", {
+      meetup_id: meetupId,
+    })
+    .select("*");
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data;
 };

@@ -34,11 +34,12 @@ const fetchSession = async () => {
         return;
       }
     } else {
-      if (!userProfileData.avatar_url) {
+      if (!userProfileData.avatar_url || !userProfileData.full_name) {
         await supabase
           .from("profiles")
           .update({
             avatar_url: data.session.user.user_metadata.avatar_url,
+            full_name: data.session.user.user_metadata.name,
           })
           .eq("id", userProfileData.id);
       }
