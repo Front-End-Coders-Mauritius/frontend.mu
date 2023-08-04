@@ -127,3 +127,18 @@ const getMeetupAttendees = async (
 
   return data;
 };
+
+const getMeetupAttendeesCount = async (meetupId: string): Promise<any> => {
+  const { data, error } = await supabase
+    .rpc("get_rsvp_list_count", {
+      meetup_id: meetupId,
+    })
+    .single<{ cnt: number }>();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data?.cnt;
+};
