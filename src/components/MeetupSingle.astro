@@ -75,7 +75,7 @@ const getRelatedPhotoSource = (album: string) => {
                 class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"
               >
               </div>
-              <IconDots class="w-[400px] xl:w-[600px] opacity-5 saturate-0" />
+              <!-- <IconDots class="w-[400px] xl:w-[600px] opacity-5 saturate-0" /> -->
             </div>
           </div>
 
@@ -117,6 +117,20 @@ const getRelatedPhotoSource = (album: string) => {
                   {props.getCurrentEvent?.title}
                 </h1>
 
+                <!-- {
+                  isUpcoming() && (
+                    <RsvpComponent
+                      meetup-id={props.getCurrentEvent.id.toString()}
+                      meetup={props.getCurrentEvent}
+                      client:only
+                    />
+                  )
+                } -->
+              </div>
+
+              <div class="grid md:grid-cols-2">
+                <SessionList sessions={props.getCurrentEvent.sessions} />
+
                 {
                   isUpcoming() && (
                     <RsvpComponent
@@ -126,10 +140,6 @@ const getRelatedPhotoSource = (album: string) => {
                     />
                   )
                 }
-              </div>
-
-              <div class="grid md:grid-cols-2">
-                <SessionList sessions={props.getCurrentEvent.sessions} />
 
                 <!-- Internal RSVP Button -->
                 <MeetupGallery

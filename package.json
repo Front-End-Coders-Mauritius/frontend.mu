@@ -43,6 +43,7 @@
     "@iconify-json/material-symbols": "^1.1.53",
     "@iconify-json/mdi": "^1.1.53",
     "@iconify-json/ph": "^1.1.5",
+    "@iconify-json/radix-icons": "^1.1.10",
     "@iconify-json/solar": "^1.1.1",
     "@iconify-json/system-uicons": "^1.1.8",
     "@tailwindcss/aspect-ratio": "^0.4.2",
