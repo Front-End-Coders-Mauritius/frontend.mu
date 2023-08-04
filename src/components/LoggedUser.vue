@@ -35,10 +35,38 @@ const fetchSession = async () => {
       }
     } else {
       if (!userProfileData.avatar_url || !userProfileData.full_name) {
+        const avatarFile = await fetch(
+          data.session.user.user_metadata.avatar_url
+        ).then((r) => r.blob());
+
+        let avatar_url: string | null = null;
+
+        const { data: bucketResponse, error: bucketError } =
+          await supabase.storage
+            .from("user_avatar")
+            .upload(`public/${userProfileData.id}.png`, avatarFile, {
+              cacheControl: "3600",
+              upsert: false,
+            });
+
+        if (bucketError) {
+          console.log(bucketError);
+        }
+
+        if (bucketResponse) {
+          const { data: public_url } = supabase.storage
+            .from("user_avatar")
+            .getPublicUrl(`public/${userProfileData.id}.png`);
+
+          avatar_url = public_url?.publicUrl;
+        }
+
         await supabase
           .from("profiles")
           .update({
-            avatar_url: data.session.user.user_metadata.avatar_url,
+            avatar_url: avatar_url
+              ? avatar_url
+              : data.session.user.user_metadata.avatar_url,
             full_name: data.session.user.user_metadata.name,
           })
           .eq("id", userProfileData.id);
