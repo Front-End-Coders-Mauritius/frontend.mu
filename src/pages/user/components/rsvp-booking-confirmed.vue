@@ -4,6 +4,7 @@ import IconCheckmark from "~icons/material-symbols/check-circle"
 defineProps<{
   avatar_url: string;
   rsvp_loading: boolean;
+  rsvp_is_attending: boolean;
 }>()
 
 

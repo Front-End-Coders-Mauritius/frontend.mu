@@ -170,10 +170,14 @@ const rsvp_meta = computed(() => {
               leave-from="opacity-100 translate-y-0 sm:scale-100"
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
               <DialogPanel
-                class="relative transform overflow-hidden rounded-lg border border-white/10 bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl shadow-black transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:px-6 sm:py-6">
+                class="relative transform overflow-hidden transition-all duration-200 rounded-lg border border-white/10 bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl shadow-black sm:my-8 sm:w-full sm:max-w-2xl sm:px-6 sm:py-6"
+                :class="[rsvp_is_attending && 'ring-green-400/50 ring-1']">
                 <div class="w-full text-center flex justify-between ">
                   <DialogTitle as="h3" class="text-lg font-semibold leading-6 text-gray-100">
-                    Hey {{ $session.user.user_metadata.full_name.split(' ')[0] }}, let's get you booked in
+                    {{ rsvp_is_attending ? 'Booking confirmed' :
+                      `Hey ${$session.user.user_metadata.full_name.split(' ')[0]}, let's
+                    get you booked in` }}
+
                   </DialogTitle>
                 </div>
 
@@ -184,7 +188,7 @@ const rsvp_meta = computed(() => {
                     <div class="p-8">
                       <div class="flex justify-between relative">
                         <DialogTitle as="h3" class="text-sm font-semibold leading-6 text-gray-900 uppercase">
-                          Confirm your details
+                          {{ rsvp_is_attending ? 'Details' : 'Confirm your details' }}
                         </DialogTitle>
                         <rsvp-header class="absolute top-0 right-0" :rsvp_success="rsvp_success"
                           :avatar_url="$session.user.user_metadata.avatar_url" :rsvp_loading="rsvp_loading" />
@@ -234,123 +238,155 @@ const rsvp_meta = computed(() => {
                             </span>
                           </dd>
                         </div>
+                        <Transition name="slide-fade" mode="out-in">
+                          <div class="flex flex-col gap-6" v-if="!rsvp_is_attending">
+                            <div class="flex w-full items-center flex-none gap-x-4">
+                              <dt class="flex-none">
+                                <span class="sr-only">Food preference</span>
+                                <component :is="foodSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
 
-                        <div class="flex w-full items-center flex-none gap-x-4">
-                          <dt class="flex-none">
-                            <span class="sr-only">Food preference</span>
-                            <component :is="foodSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
-
-                          </dt>
-                          <dd class="pt-0 leading-6 text-gray-800">
-                            <RadioGroup v-model="foodSelection">
-                              <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                              <div class="grid grid-cols-3 gap-3">
-                                <RadioGroupOption as="template" v-for="option in foodOptions" :key="option.name"
-                                  :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
-                                  <div :class="[
-                                    option.allowed ?
-                                      'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                                    active ? 'ring-2 ring-green-600' : '',
-                                    checked ? 'bg-green-50 transition-all duration-100 text-green-500 ring-green-500 ring-2' : 'shadow bg-white',
-                                    'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
-                                  ]">
-                                    <RadioGroupLabel as="div"
-                                      class="flex select-none flex-col items-center justify-center gap-2">
-                                      <div class="px-2">
-                                        {{ option.name }}
+                              </dt>
+                              <dd class="pt-0 leading-6 text-gray-800">
+                                <RadioGroup v-model="foodSelection">
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
+                                  <div class="grid grid-cols-3 gap-3">
+                                    <RadioGroupOption as="template" v-for="option in foodOptions" :key="option.name"
+                                      :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
+                                      <div :class="[
+                                        option.allowed ?
+                                          'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
+                                        active ? 'ring-2 ring-green-600' : '',
+                                        checked ? 'bg-green-50 transition-all duration-100 text-green-500 ring-green-500 ring-2' : 'shadow bg-white',
+                                        'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
+                                      ]">
+                                        <RadioGroupLabel as="div"
+                                          class="flex select-none flex-col items-center justify-center gap-2">
+                                          <div class="px-2">
+                                            {{ option.name }}
+                                          </div>
+                                        </RadioGroupLabel>
                                       </div>
-                                    </RadioGroupLabel>
+                                    </RadioGroupOption>
                                   </div>
-                                </RadioGroupOption>
-                              </div>
-                            </RadioGroup>
-                          </dd>
-                        </div>
-
-                        <div class="flex w-full items-center flex-none gap-x-4">
-                          <dt class="flex-none">
-                            <span class="sr-only">How are you getting there?</span>
-                            <component :is="transportSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
-                          </dt>
-                          <dd class="pt-0 leading-6 text-gray-800">
-                            <RadioGroup v-model="transportSelection">
-                              <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                              <div class="grid grid-cols-4 gap-3">
-                                <RadioGroupOption as="template" v-for="option in transportOptions" :key="option.name"
-                                  :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
-                                  <div :class="[
-                                    option.allowed ?
-                                      'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                                    active ? 'ring-2 ring-green-600' : '',
-                                    checked ? 'bg-green-50 transition-all duration-100 ring-green-500  text-green-500 ring-2' : 'shadow bg-white',
-                                    'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
-                                  ]">
-                                    <RadioGroupLabel as="div"
-                                      class="flex select-none flex-col items-center justify-center gap-2">
-                                      <div class="px-2">
-                                        {{ option.name }}
-                                      </div>
-                                    </RadioGroupLabel>
-                                  </div>
-                                </RadioGroupOption>
-                              </div>
-                            </RadioGroup>
-                          </dd>
-                        </div>
-
-                        <div class="flex w-full items-center flex-none gap-x-4">
-                          <dt class="flex-none">
-                            <span class="sr-only">Occupation</span>
-                            <component :is="identifyAsSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
-                          </dt>
-                          <dd class="pt-0 leading-6 text-gray-800 flex flex-wrap gap-4">
-                            <RadioGroup v-model="identifyAsSelection">
-                              <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                              <div class="grid grid-cols-5 gap-3">
-                                <RadioGroupOption as="template" v-for="option in identifyAsOptions" :key="option.name"
-                                  :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
-                                  <div :class="[
-                                    option.allowed ?
-                                      'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                                    active ? 'ring-2 ring-green-600' : '',
-                                    checked ? 'bg-green-50 transition-all duration-100 ring-green-500  text-green-500 ring-2' : 'shadow bg-white',
-                                    'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
-                                  ]">
-                                    <RadioGroupLabel as="div"
-                                      class="flex select-none flex-col items-center justify-center gap-2">
-                                      <div class="px-2">
-                                        {{ option.name }}
-                                      </div>
-                                    </RadioGroupLabel>
-                                  </div>
-                                </RadioGroupOption>
-                              </div>
-                            </RadioGroup>
-                          </dd>
-                        </div>
-
-                        <div class="flex w-full items-center flex-none gap-x-4">
-                          <dt class="flex-none">
-                            <span class="sr-only">Show on site</span>
-                            <IconPublic class="h-6 w-6 text-gray-500" aria-hidden="true" />
-                          </dt>
-                          <dd class="pt-0 leading-6 text-gray-800 flex items-center gap-4">
-                            <input v-model="showMeAsAttending" id="show-as-attending" name="show-as-attending"
-                              type="checkbox" tabindex
-                              class="peer hidden h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-
-                            <div>
-                              Show
-                              my RSVP on the website
+                                </RadioGroup>
+                              </dd>
                             </div>
 
-                            <label for="show-as-attending"
-                              class="transition-all duration-100 peer-checked:ring-green-500 peer-checked:ring-2 rounded-md peer-checked:text-green-500 inset-0 shadow-md peer-checked:bg-green-50 select-none text-slate-900 font-bold cursor-pointer py-1 px-4">OK</label>
+                            <div class="flex w-full items-center flex-none gap-x-4">
+                              <dt class="flex-none">
+                                <span class="sr-only">How are you getting there?</span>
+                                <component :is="transportSelection.icon" class="h-6 w-6 text-gray-500"
+                                  aria-hidden="true" />
+                              </dt>
+                              <dd class="pt-0 leading-6 text-gray-800">
+                                <RadioGroup v-model="transportSelection">
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
+                                  <div class="grid grid-cols-4 gap-3">
+                                    <RadioGroupOption as="template" v-for="option in transportOptions" :key="option.name"
+                                      :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
+                                      <div :class="[
+                                        option.allowed ?
+                                          'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
+                                        active ? 'ring-2 ring-green-600' : '',
+                                        checked ? 'bg-green-50 transition-all duration-100 ring-green-500  text-green-500 ring-2' : 'shadow bg-white',
+                                        'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
+                                      ]">
+                                        <RadioGroupLabel as="div"
+                                          class="flex select-none flex-col items-center justify-center gap-2">
+                                          <div class="px-2">
+                                            {{ option.name }}
+                                          </div>
+                                        </RadioGroupLabel>
+                                      </div>
+                                    </RadioGroupOption>
+                                  </div>
+                                </RadioGroup>
+                              </dd>
+                            </div>
+
+                            <div class="flex w-full items-center flex-none gap-x-4">
+                              <dt class="flex-none">
+                                <span class="sr-only">Occupation</span>
+                                <component :is="identifyAsSelection.icon" class="h-6 w-6 text-gray-500"
+                                  aria-hidden="true" />
+                              </dt>
+                              <dd class="pt-0 leading-6 text-gray-800 flex flex-wrap gap-4">
+                                <RadioGroup v-model="identifyAsSelection">
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
+                                  <div class="grid grid-cols-5 gap-3">
+                                    <RadioGroupOption as="template" v-for="option in identifyAsOptions" :key="option.name"
+                                      :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
+                                      <div :class="[
+                                        option.allowed ?
+                                          'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
+                                        active ? 'ring-2 ring-green-600' : '',
+                                        checked ? 'bg-green-50 transition-all duration-100 ring-green-500  text-green-500 ring-2' : 'shadow bg-white',
+                                        'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
+                                      ]">
+                                        <RadioGroupLabel as="div"
+                                          class="flex select-none flex-col items-center justify-center gap-2">
+                                          <div class="px-2">
+                                            {{ option.name }}
+                                          </div>
+                                        </RadioGroupLabel>
+                                      </div>
+                                    </RadioGroupOption>
+                                  </div>
+                                </RadioGroup>
+                              </dd>
+                            </div>
+
+                            <div class="flex w-full items-center flex-none gap-x-4">
+                              <dt class="flex-none">
+                                <span class="sr-only">Show on site</span>
+                                <IconPublic class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                              </dt>
+                              <dd class="pt-0 leading-6 text-gray-800 flex items-center gap-4">
+                                <input v-model="showMeAsAttending" id="show-as-attending" name="show-as-attending"
+                                  type="checkbox" tabindex
+                                  class="peer hidden h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+
+                                <div>
+                                  Show
+                                  my RSVP on the website
+                                </div>
+
+                                <label for="show-as-attending"
+                                  class="transition-all duration-100 peer-checked:ring-green-500 peer-checked:ring-2 rounded-md peer-checked:text-green-500 inset-0 shadow-md peer-checked:bg-green-50 select-none text-slate-900 font-bold cursor-pointer py-1 px-4">OK</label>
+                              </dd>
+                            </div>
+                          </div>
+                          <div class="flex flex-col gap-6" v-else>
+
+                            <div class="grid grid-cols-2 gap-4">
+                              <!-- Meal -->
+                              <div class="flex gap-2">
+                                <component :is="foodSelection.icon" class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                                {{ rsvp_meta.meal }}
+                              </div>
+
+                              <div class="flex gap-2">
+                                <component :is="transportSelection.icon" class="h-6 w-6 text-gray-500"
+                                  aria-hidden="true" />
+                                {{ rsvp_meta.transport }}
+                              </div>
 
 
-                          </dd>
-                        </div>
+                              <div class="flex gap-2">
+                                <component :is="identifyAsSelection.icon" class="h-6 w-6 text-gray-500"
+                                  aria-hidden="true" />
+                                {{ rsvp_meta.identifyAs }}
+                              </div>
 
+                              <div class="flex gap-2" v-if="rsvp_meta.showMeAsAttending">
+                                <IconPublic class="h-6 w-6 text-gray-500" aria-hidden="true" />
+                                Visible
+                              </div>
+
+                            </div>
+                          </div>
+
+                        </Transition>
                       </dl>
                     </div>
                   </div>
@@ -362,13 +398,12 @@ const rsvp_meta = computed(() => {
                       You're attending !</div>
                   </template>
                   <template v-else>
-
                     <button type="button"
-                      class="inline-flex w-full justify-center rounded-md dark:bg-slate-100 px-3 py-2 text-sm font-semibold text-white dark:text-slate-900 shadow-sm hover:bg-slate-500 sm:ml-3 sm:w-auto"
+                      class="inline-flex w-full justify-center rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-200 sm:ml-3 sm:w-auto"
                       :disabled="rsvp_loading" @click="rsvpToMeetup()">Confirm</button>
                   </template>
                   <button type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-transparent dark:text-white dark:ring-none px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-transparent dark:ring-none px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
                     @click="open = false">Close</button>
                 </div>
               </DialogPanel>
@@ -394,12 +429,13 @@ const rsvp_meta = computed(() => {
             <div v-if="rsvp_is_attending">
               <!-- Attending -->
               <rsvp-booking-confirmed @open="open = true" @cancel-rsvp="unRsvpToMeetup()"
-                :avatar_url="$session.user.user_metadata.avatar_url" :rsvp_loading="rsvp_loading" />
+                :avatar_url="$session.user.user_metadata.avatar_url" :rsvp_loading="rsvp_loading"
+                :rsvp_is_attending="rsvp_is_attending" />
 
             </div>
             <div v-else>
               <button @click="open = true"
-                class="button-generic bg-verse-700 dark:bg-white hover:bg-verse-600 hover: shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
+                class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700 dark:bg-white hover:bg-verse-600 hover: shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
                 <!-- Logo -->
                 <div class="text-verse-100 dark:text-slate-700 w-8 h-8 mr-2">
                   <svg class="w-full h-full" viewBox="0 0 1030 1031" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -421,7 +457,9 @@ const rsvp_meta = computed(() => {
         </div>
       </div>
       <div v-else>
-        <button class="button-generic bg-verse-700" @click="oAuthLogin()">
+        <button
+          class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700"
+          @click="oAuthLogin()">
           <div class="flex gap-2 items-center">
             <IconLogin />
             <span>Login to RSVP</span>
@@ -443,9 +481,17 @@ button:disabled {
   @apply px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm;
 }
 
-.background-gradient {
-  border-radius: 31.027px;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  background: radial-gradient(197.11% 83.87% at 52.94% 33.11%, rgba(0, 0, 0, 0.00) 0%, rgba(0, 227, 214, 0.20) 100%), linear-gradient(270deg, #141025 0%, #0E023E 100%);
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
 }
-</style>
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: scale(0.8);
+  transform-origin: left center;
+  opacity: 0;
+}</style>
