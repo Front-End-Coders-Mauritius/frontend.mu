@@ -111,7 +111,7 @@ export const setMeetupRSVP = async (
   }
 };
 
-const getMeetupAttendees = async (
+export const getMeetupAttendees = async (
   meetupId: string
 ): Promise<MeetupAttendees[] | null> => {
   const { data, error } = await supabase
