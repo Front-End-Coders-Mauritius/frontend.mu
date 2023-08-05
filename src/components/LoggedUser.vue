@@ -8,6 +8,7 @@ import { getUserProfile } from "../utils/db-helpers";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
+const $userProfile = useStore(userProfile);
 
 const fetchSession = async () => {
   const { data, error } = await supabase.auth.getSession();
@@ -19,10 +20,13 @@ const fetchSession = async () => {
   }
 
   if (data && data.session) {
+    console.log(data.session);
     currentUser.set(data.session);
     isUserLoggedIn.set(true);
 
     const userProfileData = userProfile.get();
+
+    console.log(userProfileData);
 
     if (!userProfileData) {
       const profile = await getUserProfile();
@@ -35,41 +39,22 @@ const fetchSession = async () => {
       }
     } else {
       if (!userProfileData.avatar_url || !userProfileData.full_name) {
-        const avatarFile = await fetch(
-          data.session.user.user_metadata.avatar_url
-        ).then((r) => r.blob());
-
-        let avatar_url: string | null = null;
-
-        const { data: bucketResponse, error: bucketError } =
-          await supabase.storage
-            .from("user_avatar")
-            .upload(`public/${userProfileData.id}.png`, avatarFile, {
-              cacheControl: "3600",
-              upsert: false,
-            });
-
-        if (bucketError) {
-          console.log(bucketError);
+        const { data: functionData, error: functionError } =
+          await supabase.functions.invoke("handle-new-user", {
+            body: {
+              id: userProfileData.id,
+              full_name: data.session.user.user_metadata.full_name,
+              avatar_url: data.session.user.user_metadata.avatar_url,
+            },
+          });
+        const profile = await getUserProfile();
+        if (profile) {
+          userProfile.set({
+            ...profile,
+            google: data.session.user.user_metadata,
+          });
+          return;
         }
-
-        if (bucketResponse) {
-          const { data: public_url } = supabase.storage
-            .from("user_avatar")
-            .getPublicUrl(`public/${userProfileData.id}.png`);
-
-          avatar_url = public_url?.publicUrl;
-        }
-
-        await supabase
-          .from("profiles")
-          .update({
-            avatar_url: avatar_url
-              ? avatar_url
-              : data.session.user.user_metadata.avatar_url,
-            full_name: data.session.user.user_metadata.name,
-          })
-          .eq("id", userProfileData.id);
       }
 
       return;
@@ -97,7 +82,11 @@ onMounted(() => {
       class="user-avatar"
     >
       <img
-        v-bind:src="$session?.user.user_metadata.avatar_url"
+        v-bind:src="
+          $userProfile
+            ? $userProfile?.avatar_url
+            : $session?.user.user_metadata.avatar_url
+        "
         v-bind:alt="$session?.user.user_metadata.name"
       />
     </a>
