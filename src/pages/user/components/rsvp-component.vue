@@ -37,6 +37,7 @@ import IconDesigner from "~icons/ph/paint-brush-duotone"
 import IconHr from "~icons/mdi/briefcase-account"
 
 import RsvpBookingConfirmed from './rsvp-booking-confirmed.vue'
+import RsvpRadioItem from './rsvp-radio-item.vue'
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
@@ -107,9 +108,9 @@ const open = ref(false)
 
 // Food Preferences
 const foodOptions = [
-  { allowed: true, name: 'Veg', icon: IconVegan },
-  { allowed: true, name: 'Non/Veg', icon: IconChicken },
-  { allowed: true, name: 'None', icon: IconNoFood }
+  { value: 'veg', name: 'Veg', icon: IconVegan },
+  { value: 'non/veg', name: 'Non/Veg', icon: IconChicken },
+  { value: 'none', name: 'None', icon: IconNoFood }
 ]
 
 const foodSelection = shallowRef(foodOptions[1])
@@ -117,36 +118,39 @@ const foodSelection = shallowRef(foodOptions[1])
 // Transport Preferences
 
 const transportOptions = [
-  { allowed: true, name: 'Bus', icon: IconBus },
-  { allowed: true, name: 'Car', icon: IconCar },
-  { allowed: true, name: 'Need a ride', icon: IconRide },
-  { allowed: true, name: 'Other', icon: IconBroom },
+  { value: 'bus', name: 'Bus', icon: IconBus },
+  { value: 'car', name: 'Car', icon: IconCar },
+  { value: 'need_a_ride', name: 'Need a ride', icon: IconRide },
+  { value: 'other', name: 'Other', icon: IconBroom },
 ]
 
 const transportSelection = shallowRef(transportOptions[1])
 
 // Identify as
 const identifyAsOptions = [
-  { allowed: true, name: 'Developer', icon: IconDeveloper },
-  { allowed: true, name: 'Student', icon: IconStudent },
-  { allowed: true, name: 'Manager', icon: IconManager },
-  { allowed: true, name: 'Designer', icon: IconDesigner },
-  { allowed: true, name: 'Hr', icon: IconHr },
+  { value: 'developer', name: 'Developer', icon: IconDeveloper },
+  { value: 'student', name: 'Student', icon: IconStudent },
+  { value: 'manager', name: 'Manager', icon: IconManager },
+  { value: 'designer', name: 'Designer', icon: IconDesigner },
+  { value: 'hr', name: 'Hr', icon: IconHr },
 ]
 
 const identifyAsSelection = shallowRef(identifyAsOptions[0])
 
 // Show me as attending
-
-const showMeAsAttending = ref(true)
+const showMeAsAttendingOptions = [
+  { value: 'true', name: 'Public', icon: IconPublic },
+  { value: 'false', name: 'Hide', icon: IconNoFood },
+]
+const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
 
 // RSVP values
 const rsvp_meta = computed(() => {
   return {
-    meal: foodSelection.value.name,
-    transport: transportSelection.value.name,
-    identifyAs: identifyAsSelection.value.name,
-    showMeAsAttending: showMeAsAttending.value
+    meal: foodSelection.value.value,
+    transport: transportSelection.value.value,
+    identifyAs: identifyAsSelection.value.value,
+    showMeAsAttending: showMeAsAttendingSelection.value.value
   }
 })
 
@@ -170,30 +174,31 @@ const rsvp_meta = computed(() => {
               leave-from="opacity-100 translate-y-0 sm:scale-100"
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
               <DialogPanel
-                class="relative transform overflow-hidden transition-all duration-200 rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black sm:my-8 sm:w-full sm:max-w-2xl sm:px-6 sm:py-6"
-                :class="[rsvp_is_attending && 'ring-green-400/50 ring-1']">
-                <div class="w-full text-center flex justify-between ">
-                  <DialogTitle as="h3" class="text-lg dark:text-white font-semibold leading-6 pb-6">
+                class="relative transform overflow-hidden transition-all duration-200 rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black/50 sm:my-8 sm:w-full sm:max-w-2xl sm:px-8 sm:py-6"
+                :class="[rsvp_is_attending && ' ']">
+                <div class="w-full text-center flex justify-between items-center relative ">
+                  <DialogTitle as="h3" class="text-lg dark:text-white font-semibold leading-6">
                     {{ rsvp_is_attending ? 'Your reservation details' :
                       `Hey ${$session.user.user_metadata.full_name.split(' ')[0]}, let's
                     get you booked in` }}
 
                   </DialogTitle>
+
+                  <rsvp-header class=" " :rsvp_success="rsvp_success" :avatar_url="$session.user.user_metadata.avatar_url"
+                    :rsvp_loading="rsvp_loading" />
                 </div>
 
-                <div
-                  class="grid grid-cols-4 border bg-white dark:border-white/10 dark:bg-slate-800 dark:text-gray-300 rounded-xl">
+                <div class="grid grid-cols-4 dark:text-gray-300 rounded-xl">
 
                   <div class="grid grid-cols-1 col-span-4">
                     <!-- Details -->
-                    <div class="p-8">
+                    <div class="pt-8">
                       <div class="flex justify-between relative">
                         <!-- <DialogTitle v-if="!rsvp_is_attending" as="h3"
                           class="text-sm pb-6 font-semibold leading-6 text-gray-900 uppercase">
                           {{ rsvp_is_attending ? 'Your reservation details' : 'Confirm your details' }}
                         </DialogTitle> -->
-                        <rsvp-header class="absolute top-0 right-0" :rsvp_success="rsvp_success"
-                          :avatar_url="$session.user.user_metadata.avatar_url" :rsvp_loading="rsvp_loading" />
+
                       </div>
 
                       <!-- Fields -->
@@ -251,24 +256,8 @@ const rsvp_meta = computed(() => {
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="foodSelection">
                                   <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                                  <div class="grid grid-cols-3 gap-3">
-                                    <RadioGroupOption as="template" v-for="option in foodOptions" :key="option.name"
-                                      :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
-                                      <div :class="[
-                                        option.allowed ?
-                                          'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                                        active ? 'ring-2 ring-green-600' : '',
-                                        checked ? 'bg-green-50 transition-all duration-100 text-green-500 ring-green-500 ring-2' : 'shadow bg-white',
-                                        'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
-                                      ]">
-                                        <RadioGroupLabel as="div"
-                                          class="flex select-none flex-col items-center justify-center gap-2">
-                                          <div class="px-2">
-                                            {{ option.name }}
-                                          </div>
-                                        </RadioGroupLabel>
-                                      </div>
-                                    </RadioGroupOption>
+                                  <div class="grid grid-cols-3 gap-6">
+                                    <rsvp-radio-item :options="foodOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
@@ -282,24 +271,8 @@ const rsvp_meta = computed(() => {
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="transportSelection">
                                   <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                                  <div class="grid grid-cols-4 gap-3">
-                                    <RadioGroupOption as="template" v-for="option in transportOptions" :key="option.name"
-                                      :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
-                                      <div :class="[
-                                        option.allowed ?
-                                          'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                                        active ? 'ring-2 ring-green-600' : '',
-                                        checked ? 'bg-green-50 transition-all duration-100 ring-green-500  text-green-500 ring-2' : 'shadow bg-white',
-                                        'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
-                                      ]">
-                                        <RadioGroupLabel as="div"
-                                          class="flex select-none flex-col items-center justify-center gap-2">
-                                          <div class="px-2">
-                                            {{ option.name }}
-                                          </div>
-                                        </RadioGroupLabel>
-                                      </div>
-                                    </RadioGroupOption>
+                                  <div class="grid grid-cols-4 gap-6">
+                                    <rsvp-radio-item :options="transportOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
@@ -313,24 +286,9 @@ const rsvp_meta = computed(() => {
                               <dd class="pt-0 leading-6 flex flex-wrap gap-4">
                                 <RadioGroup v-model="identifyAsSelection">
                                   <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                                  <div class="grid grid-cols-5 gap-3">
-                                    <RadioGroupOption as="template" v-for="option in identifyAsOptions" :key="option.name"
-                                      :value="option" :disabled="!option.allowed" v-slot="{ active, checked }">
-                                      <div :class="[
-                                        option.allowed ?
-                                          'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                                        active ? 'ring-2 ring-green-600' : '',
-                                        checked ? 'bg-green-50 transition-all duration-100 ring-green-500  text-green-500 ring-2' : 'shadow bg-white',
-                                        'flex items-center justify-center rounded-md py-1 px-2 text-sm font-semibold sm:flex-1'
-                                      ]">
-                                        <RadioGroupLabel as="div"
-                                          class="flex select-none flex-col items-center justify-center gap-2">
-                                          <div class="px-2">
-                                            {{ option.name }}
-                                          </div>
-                                        </RadioGroupLabel>
-                                      </div>
-                                    </RadioGroupOption>
+                                  <div class="grid grid-cols-5 gap-6">
+                                    <rsvp-radio-item :options="identifyAsOptions" />
+
                                   </div>
                                 </RadioGroup>
                               </dd>
@@ -339,19 +297,22 @@ const rsvp_meta = computed(() => {
                             <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">Show on site</span>
-                                <IconPublic class="h-6 w-6" aria-hidden="true" />
+                                <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
                               <dd class="pt-0 leading-6 flex items-center gap-4">
-                                <input v-model="showMeAsAttending" id="show-as-attending" name="show-as-attending"
-                                  type="checkbox" tabindex
-                                  class="peer hidden h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
 
                                 <div>
                                   Show my RSVP on the website
                                 </div>
 
-                                <label for="show-as-attending"
-                                  class="transition-all duration-100 peer-checked:ring-green-500 peer-checked:ring-2 rounded-md peer-checked:text-green-500 inset-0 shadow-md peer-checked:bg-green-50 select-none text-slate-900 font-bold cursor-pointer py-1 px-4">OK</label>
+                                <RadioGroup v-model="showMeAsAttendingSelection">
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
+                                  <div class="grid grid-cols-2 gap-6">
+                                    <rsvp-radio-item :options="showMeAsAttendingOptions" />
+
+                                  </div>
+                                </RadioGroup>
+
                               </dd>
                             </div>
                           </div>
@@ -361,25 +322,24 @@ const rsvp_meta = computed(() => {
                               <!-- Meal -->
                               <div class="flex gap-2">
                                 <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ rsvp_meta.meal }}
+                                {{ foodSelection.name }}
                               </div>
 
                               <div class="flex gap-2">
                                 <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ rsvp_meta.transport }}
+                                {{ transportSelection.name }}
                               </div>
 
 
                               <div class="flex gap-2">
                                 <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ rsvp_meta.identifyAs }}
+                                {{ identifyAsSelection.name }}
                               </div>
 
-                              <div class="flex gap-2" v-if="rsvp_meta.showMeAsAttending">
-                                <IconPublic class="h-6 w-6" aria-hidden="true" />
-                                Visible
+                              <div class="flex gap-2">
+                                <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
+                                {{ showMeAsAttendingSelection.name }}
                               </div>
-
                             </div>
                           </div>
 
@@ -388,7 +348,7 @@ const rsvp_meta = computed(() => {
                     </div>
                   </div>
                 </div>
-                <div class="mt-8 sm:mt-6 sm:flex sm:flex-row-reverse">
+                <div class="pt-6 sm:flex justify-between sm:flex-row-reverse">
                   <template v-if="rsvp_is_attending">
                     <!-- <div
                       class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">
@@ -396,11 +356,11 @@ const rsvp_meta = computed(() => {
                   </template>
                   <template v-else>
                     <button type="button"
-                      class="inline-flex w-full justify-center rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-200 sm:ml-3 sm:w-auto"
+                      class="inline-flex w-full justify-center rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 px-3 py-2 text-sm font-semibold dark:text-slate-900 shadow-sm dark:hover:bg-slate-200 sm:ml-3 sm:w-auto"
                       :disabled="rsvp_loading" @click="rsvpToMeetup()">Confirm</button>
                   </template>
                   <button type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-full text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
+                    class="mt-3 inline-flex w-full justify-center rounded-md dark:text-white ring-1 dark:ring-slate-500 dark:hover:bg-slate-100/5 bg-transparent text-slate-900 ring-slate-900 dark:bg-transparent px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
                     @click="open = false">Close</button>
                 </div>
               </DialogPanel>
