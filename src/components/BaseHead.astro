@@ -6,19 +6,18 @@ import "../styles/tailwind.css";
 import "../styles/theme-color.css";
 // import "../styles/view-transitions.css";
 import VercelAnalytics from "./VercelAnalytics.astro";
-import { ViewTransitions } from 'astro:transitions';
-
+import { ViewTransitions } from "astro:transitions";
 
 export interface Props {
-	title: string;
-	description: string;
-	image?: string;
+  title: string;
+  description: string;
+  image?: string;
 }
 
 const {
-	title,
-	description,
-	image = "https://vercel-og-next.vercel.app/api/fec-home",
+  title,
+  description,
+  image = "https://vercel-og-next.vercel.app/api/fec-home",
 } = Astro.props;
 ---
 
@@ -47,27 +46,27 @@ const {
 <link rel="stylesheet" href="/font/iosevka.css" />
 
 <script is:inline>
-	const tod = new Date().getHours();
-	const todHue = tod * 15;
-	// insert hue in dom
-	document.documentElement.style.setProperty("--brand-hue", todHue);
+  // const tod = new Date().getHours();
+  // const todHue = tod * 15;
+  // // insert hue in dom
+  // document.documentElement.style.setProperty("--brand-hue", todHue);
 </script>
 
 <!-- This prevents the white flash when navigating around the website if dark mode is chosen -->
 <script>
-	const setDarkMode = () => {
-	  if (localStorage["vueuse-color-scheme"] !== 'light') {
-		document.body.setAttribute('color-scheme', 'dark');
-	  } else {
-		document.body.setAttribute('color-scheme', 'light');		
-	  }
-	};
-  
-	// Runs on initial navigation
-	setDarkMode();
-	// Runs on view transitions navigation
-	document.addEventListener('astro:beforeload', setDarkMode);
-  </script>
+  const setDarkMode = () => {
+    if (localStorage["vueuse-color-scheme"] !== "light") {
+      document.body.setAttribute("color-scheme", "dark");
+    } else {
+      document.body.setAttribute("color-scheme", "light");
+    }
+  };
+
+  // Runs on initial navigation
+  setDarkMode();
+  // Runs on view transitions navigation
+  document.addEventListener("astro:beforeload", setDarkMode);
+</script>
 
 <VercelAnalytics />
 

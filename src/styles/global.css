@@ -16,12 +16,12 @@
 
 html {
   /* These values can be overriden by specifying different custom properties on the body using JavaScript. */
-  --brand-hue: 30;
-  --brand-saturation: 78%;
-  --brand-lightness: 50%;
+  --brand-hue: 222;
+  --brand-saturation: 80%;
+  --brand-lightness: 0%;
 
-  --light-threshold: 5%;
-  --dark-threshold: 0%;
+  --light-threshold: 13%;
+  --dark-threshold: 30%;
 
   --home-tagline: hsl(var(--brand-hue),
       10%,
