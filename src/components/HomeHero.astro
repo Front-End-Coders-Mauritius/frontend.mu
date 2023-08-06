@@ -15,13 +15,15 @@ import UserData from "./UserData.vue";
             class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3"
           >
             <h1
-              class="accent uppercase text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-7xl"
+              class="font-heading dark:text-white font-thin text-4xl leading-tight sm:text-5xl lg:text-5xl xl:text-7xl"
             >
-              Frontend Coders Mauritius
+              Frontend Coders<br />
+              <span
+                class="accent font-bold uppercase sm:text-4xl lg:text-4xl xl:text-6xl inline-block"
+                >Mauritius</span
+              >
             </h1>
-            <p
-              class="text-md md:text-lg text-slate-800 dark:text-slate-300 font-mono font-bold"
-            >
+            <p class="text-md md:text-lg dark:text-gray-300">
               Front-End Coders Mauritius is a community around front-end
               development based in Mauritius. We also organise monthly meetups
               free for anyone interested to attend.
@@ -117,31 +119,6 @@ import UserData from "./UserData.vue";
     opacity: 1;
     transition: all 2s ease-in-out;
     animation: glow 4s ease-out infinite alternate;
-  }
-
-  .spotlight {
-    position: relative;
-  }
-
-  .spotlight::before {
-    content: attr(data-text);
-    position: absolute;
-    background: linear-gradient(
-      to right,
-      #ea2839 0,
-      #1a206d 33.3%,
-      #ffd500 66.6%,
-      #00a551 100%
-    );
-    background-clip: text;
-    color: transparent;
-    background-size: 100% 90%;
-    clip-path: ellipse(50px 50px at -2.54% -9.25%);
-  }
-
-  .spotlight:hover::before {
-    animation: swing 2s ease-out infinite;
-    animation-direction: alternate;
   }
 
   .btn-meetup {
