@@ -25,6 +25,28 @@ const links: TMenu = {
   about: {
     title: "About",
     href: "/about",
+    children: [
+      {
+        title: "FAQ",
+        href: "/faq",
+        class: "",
+      },
+      {
+        title: "WhatsApp",
+        href: "https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q",
+        class: "",
+      },
+      {
+        title: "Instagram",
+        href: "https://www.instagram.com/frontendcoders/",
+        class: "",
+      },
+      {
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/company/frontendcoders",
+        class: "",
+      },
+    ],
   },
   meetups: {
     title: "Meetups",
@@ -45,42 +67,16 @@ const links: TMenu = {
     href: "https://github.com/Front-End-Coders-Mauritius",
     class: "hidden md:block",
   },
-  community: {
-    title: "Community",
-    href: "/community",
-    children: [
-      {
-        title: "Discord",
-        href: "https://discord.gg/2YcJfXk",
-        class: "discord-link",
-      },
-      {
-        title: "WhatsApp",
-        href: "https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q",
-        class: "whatsapp-link",
-      },
-      {
-        title: "Instagram",
-        href: "https://www.instagram.com/frontendcoders/",
-        class: "instagram-link",
-      },
-      {
-        title: "LinkedIn",
-        href: "https://www.linkedin.com/company/frontendcoders",
-        class: "linkedin-link",
-      },
-    ],
-  },
 };
 ---
 
 <div
-  class="menu-wrapper flex justify-between contain sticky top-0 z-30 h-32 items-center"
+  class="menu-wrapper w-full flex justify-between contain sticky top-0 z-30 h-32 items-center"
 >
-  <div class="megamenu theme-light">
-    <div class="wrapper">
-      <div class="megamenu-brand">
-        <a href="/">
+  <div class="megamenu theme-light w-full">
+    <div class="flex justify-between items-center">
+      <div class="flex">
+        <a href="/" class="flex gap-2">
           <LogoFec class="megamenu-brand__icon w-10" />
           <span
             class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"
@@ -90,94 +86,65 @@ const links: TMenu = {
         </a>
       </div>
       <nav>
-        <ul class="nav-links">
-          <li class="nav-link nav-link-dropdown">
-            <a class="nav-link-text" href="#">Community</a>
-            <div class="menu-dropdown">
-              <div
-                class="menu-dropdown-item menu-dropdown-community theme-dark"
-              >
-                <ul class="community-links">
-                  <li class="community-link discord-link">
-                    <a href="#"
-                      ><span class="community-link-text">Discord</span
-                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
-                    >
-                  </li>
-                  <li class="community-link whatsapp-link">
-                    <a href="#"
-                      ><span class="community-link-text">WhatsApp</span
-                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
-                    >
-                  </li>
-                  <li class="community-link instagram-link">
-                    <a href="#"
-                      ><span class="community-link-text">Instagram</span
-                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
-                    >
-                  </li>
-                  <li class="community-link linkedin-link">
-                    <a href="#"
-                      ><span class="community-link-text">LinkedIn</span
-                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
-                    >
-                  </li>
-                  <li class="community-link github-link">
-                    <a href="#"
-                      ><span class="community-link-text">Github</span
-                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-
+        <ul class="nav-links flex gap-4 font-medium font-heading">
           {
             Object.keys(links).map((item) => (
               <li
                 class:list={[
                   links[item].children && "nav-link-dropdown",
-                  "nav-link",
+                  "nav-link dark:text-white",
                 ]}
               >
-                <a class="nav-link-text" href={links[item].href}>
-                  {links[item].title}
-
-                  {!!links[item].href.includes("https") && (
-                    <ExternalLinkIcon
-                      height="1em"
-                      style="display: inline; vertical-align: text-bottom;"
-                    />
-                  )}
+                <a
+                  class="nav-link-text  flex items-center"
+                  href={links[item].href}
+                  target={
+                    !!links[item].href.includes("https") ? "_blank" : "_self"
+                  }
+                >
                   {currentPath === links[item].href && (
                     <span
                       style="view-transition-name: menubar"
-                      class="absolute bottom-0 left-0 right-0 h-1 bg-verse-500 dark:bg-verse-400 menu-border-transition"
+                      class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-slate-900 dark:bg-slate-100"
                     />
+                  )}
+
+                  <span class="relative z-20  p-2">{links[item].title}</span>
+
+                  {!!links[item].href.includes("https") && (
+                    <ExternalLinkIcon height="1em" />
                   )}
                 </a>
 
-                {/* Dropdown */}
                 {links[item].children && (
-                  <div class="menu-dropdown">
-                    <div class="menu-dropdown-item menu-dropdown-community theme-dark">
-                      <ul class="community-links">
-                        {links[item].children?.map((submenu) => (
-                          <li class:list={[submenu.class, "community-link"]}>
-                            <a href={submenu.href}>
-                              <>
-                                <div class="flex gap-2">
-                                  {submenu.title}
+                  <div class="menu-dropdown p-3 bg-white rounded-md text-black">
+                    <div class="menu-dropdown-item  theme-dark">
+                      <ul class="flex flex-col gap-2">
+                        {links[item].children?.map((submenu) => {
+                          return (
+                            <li class:list={[submenu.class]}>
+                              <a
+                                href={submenu.href}
+                                target={
+                                  !!submenu.href.includes("https")
+                                    ? "_blank"
+                                    : "_self"
+                                }
+                                class="hover:bg-slate-100 rounded-md block p-2"
+                              >
+                                <>
+                                  <div class="flex gap-2">
+                                    {submenu.title}
 
-                                  {!!submenu.href.includes("https") && (
-                                    <ExternalLinkIcon />
-                                  )}
-                                </div>
-                              </>
-                            </a>
-                          </li>
-                        ))}
+                                    {!!submenu.href.includes("https") && (
+                                      <ExternalLinkIcon />
+                                    )}
+                                  </div>
+                                </>
+                              </a>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -186,8 +153,11 @@ const links: TMenu = {
             ))
           }
         </ul>
-        <slot name="dock-right" />
       </nav>
+
+      <div class="flex items-center gap-2">
+        <slot name="dock-right" />
+      </div>
       <!-- <MainMenu />
     <ToggleTheme client:load /> -->
     </div>
@@ -252,227 +222,43 @@ document.addEventListener("astro:beforeload", makeHeaderSticky);
   }
 
   .intersect .megamenu {
-    background: rgb(228 227 227 / 72%);
+    padding:4px 7px; 
+    border-radius: 24px; 
     /* outline: 1px solid rgba(255,255,255,0.18); */
     box-shadow: 0px 0px 2px var(--color-verse-500);
-    backdrop-filter: blur( 24px );
+    backdrop-filter: blur(24px);
   }
 
 
-  body[color-scheme="dark"] .intersect .megamenu {
-    background: rgb(16 16 16 / 25%) ;
-  }
 
-  
+  nav {
 
-  /* .theme-light {
-    background: rgba(255,255,255,0);
-    box-shadow: 0px 0px 0px rgba(255,149,5,0.1);
-    border: 1px solid transparent;
-    backdrop-filter: blur( 0px );
-  }
+    .nav-links {
+        .nav-link {
+          position: relative;
+            &:hover {
+                .menu-dropdown {
+                  display: block;
+                  opacity: 1;
+                  clip-path: circle(100%);
+                  transform: translateY(0px);
+                  padding-top:7px;
+                  transform-origin:  left -100px;
+              }              
+            }       
 
-  .theme-dark {
-    background: rgb(228 227 227 / 72%);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: 0px 0px 2px var(--color-verse-500);
-    backdrop-filter: blur( 14.5px );
-  } */
-
-  body[color-scheme="dark"] .theme-dark {
-    background: rgb(16 16 16 / 25%) ;
-  }
-
-    .megamenu {
-        width: 80vw;
-        height: 3.5rem; 
-        transition: all .5s ease;
-        margin-top: 10px;
-        position:relative;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 20;
-        -webkit-backdrop-filter: blur(24px);
-        border-radius: 50px;
-
-        .wrapper {
-            height: 100%;
-            width: 100%;
-            padding: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .megamenu-brand {
-              padding-left: 3px;
-
-              a{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                .megamenu-brand__icon {
-                  margin-right: 10px;
-                }
-              }
-              
-              
-
-            }
-
-            nav {
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                /* margin-top: 5px; */
-
-                .nav-links {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    position: relative;
-
-                    .nav-link {
-                      position: relative;
-                      margin: 0 1px;
-                      /* transition: all 0.3s ease-in-out; */
-                      border-radius: 50px;
-                      font-weight: 500;
-
-                        .nav-link-text {
-                          font-size: 1.1rem;
-                          color: var(--color-verse-0);
-                          padding: 5px 15px;
-                          display:block;
-                          font-weight: 600;
-                        }
-
-                        &:hover {
-                          background-color: rgba(0,0,0,0.1);
-
-                          .nav-link-text {
-                            /* color: var(--color-verse-500); */
-                          }
-
-                           .menu-dropdown {
-                              display: block;
-                              opacity: 1;
-                              clip-path: circle(100%);
-                          }
-                          
-                        }
-                    
-
-                        .menu-dropdown {
-                          position: absolute;
-                          left: 50%;
-                          transform: translateX(-50%);
-                          background-color: transparent;
-                          padding-top: 19px;
-                          clip-path: circle(2% at 41% 0%);
-                          opacity: 0;
-                          transition: 0.2s ease;
-
-                          .menu-dropdown-item{
-
-                          }
-                         
-                        }
-
-                        .menu-dropdown-community {
-                            padding: 15px 10px;
-                            border-radius: 5px;
-                            color: white;
-
-                            .community-links {
-                              display:flex;
-                              flex-direction: column;
-                              align-items: flex-start;
-                              justify-content: center;
-
-                              .community-link {
-                                width: 100%;
-                                border-radius: 50px;
-                                padding: 8px 15px;
-                                margin-bottom: 2px;
-                                cursor: pointer;
-
-                                a {
-                                  display: flex;
-                                  align-items: center;
-                                  justify-content: space-between;
-
-                                  span{
-                                    display: inline-block;
-                                    margin-right: 8px;
-                                  }
-                                }
-
-                                &:last-child {
-                                  margin-bottom: 0;
-                                }
-
-                            }
-                            }
-
-                        }
-                    }
-
-                    .nav-link-dropdown{
-                      padding-right: 19px;
-                        
-                    }
-
-                   .nav-link-dropdown:hover:after {
-                    background: var(--color-verse-500);
-                    transform: rotate(-50deg);
-                    transition: 0.2s ease;
-                   }
-
-                   .nav-link-dropdown:hover:before {
-                    background: var(--color-verse-500);
-                    transform: rotate(48deg);
-                    transition: 0.2s ease;
-                   }
-
-                   .nav-link-dropdown:not(:hover):after {
-                    transition: 0.2s ease;
-                   }
-
-                   .nav-link-dropdown:not(:hover):before {
-                    transition: 0.2s ease;
-                   }
-
-
-                    .nav-link-dropdown:after {
-                      position: absolute;
-                      top: 50%;
-                      right: 4px;
-                      content: "";
-                      width: 8px;
-                      height: 2px;
-                      background: var(--color-verse-300);
-                      border-radius: 30px;
-                      transform: rotate(45deg);
-
-                    }
-
-                    .nav-link-dropdown:before {
-                      position: absolute;
-                      top: 50%;
-                      right: 8px;
-                      content: "";
-                      width: 8px;
-                      height: 2px;
-                      background: var(--color-verse-300);
-                      border-radius: 30px;
-                      transform: rotate(-50deg);
-                        
-                    }
-                }
+            .menu-dropdown {
+              position: absolute;
+              left:0;
+              top:100%;
+              clip-path: circle(0%);
+              /* left: 50%; */
+              opacity: 0;
+              transform: translateY(-5px);
+              transition: 0.2s ease;
             }
         }
     }
+}
 
 </style>
