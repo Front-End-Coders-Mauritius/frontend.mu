@@ -13,6 +13,7 @@ import MeetupSonspor from "./MeetupSonspor.astro";
 import UserData from "./UserData.vue";
 import RsvpComponent from "../pages/user/components/rsvp-component.vue";
 import RsvpAttendeeList from "../pages/user/components/rsvp-attendee-list.vue";
+import BaseHeading from "./base/BaseHeading.astro";
 
 const props = Astro.props;
 
@@ -107,26 +108,19 @@ const getRelatedPhotoSource = (album: string) => {
               >
                 Topic
               </div>
-              <div class="justify-between items-center flex">
-                <h1
+
+              <div
+                style={vTransitionName(
+                  "session-title",
+                  props.getCurrentEvent.id
+                )}
+              >
+                <BaseHeading
+                  level={1}
                   class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                  style={vTransitionName(
-                    "session-title",
-                    props.getCurrentEvent.id
-                  )}
                 >
                   {props.getCurrentEvent?.title}
-                </h1>
-
-                <!-- {
-                  isUpcoming() && (
-                    <RsvpComponent
-                      meetup-id={props.getCurrentEvent.id.toString()}
-                      meetup={props.getCurrentEvent}
-                      client:only
-                    />
-                  )
-                } -->
+                </BaseHeading>
               </div>
 
               <div class="grid md:grid-cols-2">
