@@ -1,0 +1,264 @@
+---
+import LogoFec from "../components/LogoFec.astro";
+import ToggleTheme from "../components/toggle-theme.vue";
+import MainMenu from "./MainMenu.astro";
+import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+
+import ExternalLinkIcon from "~icons/carbon/launch";
+
+// get current route astro
+const currentPath = Astro.url.pathname;
+
+interface TMenuItem {
+  title: string;
+  href: string;
+  class?: string;
+  children?: TMenuItem[];
+}
+
+interface TMenu {
+  [key: string]: TMenuItem;
+}
+
+// Object of all the links
+const links: TMenu = {
+  about: {
+    title: "About",
+    href: "/about",
+    children: [
+      {
+        title: "FAQ",
+        href: "/faq",
+        class: "",
+      },
+      {
+        title: "WhatsApp",
+        href: "https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q",
+        class: "",
+      },
+      {
+        title: "Instagram",
+        href: "https://www.instagram.com/frontendcoders/",
+        class: "",
+      },
+      {
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/company/frontendcoders",
+        class: "",
+      },
+    ],
+  },
+  meetups: {
+    title: "Meetups",
+    href: "/meetups",
+  },
+  team: {
+    title: "Team",
+    href: "/team",
+    class: "hidden md:block",
+  },
+  sponsors: {
+    title: "Sponsors",
+    href: "/sponsors",
+    class: "hidden md:block",
+  },
+  github: {
+    title: "Github",
+    href: "https://github.com/Front-End-Coders-Mauritius",
+    class: "hidden md:block",
+  },
+};
+---
+
+<div
+  class="menu-wrapper w-full flex justify-between contain sticky top-0 z-30 h-32 items-center"
+>
+  <div class="megamenu theme-light w-full">
+    <div class="flex justify-between items-center">
+      <div class="flex">
+        <a href="/" class="flex gap-2">
+          <LogoFec class="megamenu-brand__icon w-10" />
+          <span
+            class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"
+          >
+            frontend.mu
+          </span>
+        </a>
+      </div>
+      <nav>
+        <ul class="nav-links flex gap-4 font-medium font-heading">
+          {
+            Object.keys(links).map((item) => (
+              <li
+                class:list={[
+                  links[item].children && "nav-link-dropdown",
+                  "nav-link dark:text-white",
+                ]}
+              >
+                <a
+                  class="nav-link-text  flex items-center"
+                  href={links[item].href}
+                  target={
+                    !!links[item].href.includes("https") ? "_blank" : "_self"
+                  }
+                >
+                  {currentPath === links[item].href && (
+                    <span
+                      style="view-transition-name: menubar"
+                      class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-slate-900 dark:bg-slate-100"
+                    />
+                  )}
+
+                  <span class="relative z-20  p-2">{links[item].title}</span>
+
+                  {!!links[item].href.includes("https") && (
+                    <ExternalLinkIcon height="1em" />
+                  )}
+                </a>
+
+                {links[item].children && (
+                  <div class="menu-dropdown p-3 bg-white rounded-md text-black">
+                    <div class="menu-dropdown-item  theme-dark">
+                      <ul class="flex flex-col gap-2">
+                        {links[item].children?.map((submenu) => {
+                          return (
+                            <li class:list={[submenu.class]}>
+                              <a
+                                href={submenu.href}
+                                target={
+                                  !!submenu.href.includes("https")
+                                    ? "_blank"
+                                    : "_self"
+                                }
+                                class="hover:bg-slate-100 rounded-md block p-2"
+                              >
+                                <>
+                                  <div class="flex gap-2">
+                                    {submenu.title}
+
+                                    {!!submenu.href.includes("https") && (
+                                      <ExternalLinkIcon />
+                                    )}
+                                  </div>
+                                </>
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <slot name="dock-right" />
+      </div>
+      <!-- <MainMenu />
+    <ToggleTheme client:load /> -->
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+function makeHeaderSticky() {
+  const header = document.querySelector(".menu-wrapper");
+  if (!header) return;
+
+  // Function to be called when the intersection changes
+  function handleIntersection(entries) {
+    entries.forEach((entry) => {
+      if (!header) return;
+      if (entry.isIntersecting) {
+        header.classList.remove("intersect");
+        console.log("intersecting");
+      } else {
+        header.classList.add("intersect");
+        console.log("not intersecting");
+      }
+    });
+  }
+
+  // Options for the IntersectionObserver
+  const options = {
+    root: null, // Use the viewport as the root
+    rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
+    threshold: 0, // Trigger the callback when even one pixel is visible
+  };
+
+  // Create the IntersectionObserver
+  const observer = new IntersectionObserver(handleIntersection, options);
+
+  // Target element that you want to observe
+  const target = document.querySelector("#sticky-observer");
+
+  if (!target) return;
+
+  // Start observing the target element
+  observer.observe(target);
+}
+
+// Call the function to make the .header class sticky
+// makeHeaderSticky();
+
+document.addEventListener("DOMContentLoaded", makeHeaderSticky);
+
+document.addEventListener("astro:beforeload", makeHeaderSticky);
+</script>
+
+<style lang="postcss">
+  .menu-wrapper {
+    transition: all 0.2s ease-out;
+  }
+  .megamenu{
+    transition: all 0.2s ease-out;
+  }
+  .intersect {
+    @apply h-16;
+  }
+
+  .intersect .megamenu {
+    padding:4px 7px; 
+    border-radius: 24px; 
+    /* outline: 1px solid rgba(255,255,255,0.18); */
+    box-shadow: 0px 0px 2px var(--color-verse-500);
+    backdrop-filter: blur(24px);
+  }
+
+
+
+  nav {
+
+    .nav-links {
+        .nav-link {
+          position: relative;
+            &:hover {
+                .menu-dropdown {
+                  display: block;
+                  opacity: 1;
+                  clip-path: circle(100%);
+                  transform: translateY(0px);
+                  padding-top:7px;
+                  transform-origin:  left -100px;
+              }              
+            }       
+
+            .menu-dropdown {
+              position: absolute;
+              left:0;
+              top:100%;
+              clip-path: circle(0%);
+              /* left: 50%; */
+              opacity: 0;
+              transform: translateY(-5px);
+              transition: 0.2s ease;
+            }
+        }
+    }
+}
+
+</style>
