@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, shallowRef } from 'vue'
+import { ref, computed, onMounted, shallowRef, watch } from 'vue'
 import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser } from "../../../store/userStore";
 import { setMeetupRSVP, getMeetupRSVPStatus } from "../../../utils/db-helpers";
@@ -155,23 +155,38 @@ const rsvp_meta = computed(() => {
 
 const currentStep = ref(1)
 
+const direction = ref(1)
+
 function goToPrevStep() {
   if (currentStep.value === 1) {
     currentStep.value = 4
+    direction.value = -1
     return
   }
 
   currentStep.value -= 1
+  direction.value = +1
+
 }
 
 function goToNextStep() {
   if (currentStep.value === 4) {
     currentStep.value = 1
+    direction.value = -1
     return
   }
 
   currentStep.value += 1
+  direction.value = +1
 }
+
+watch(() => direction.value,
+() => {
+  document.documentElement.style.setProperty(
+    '--slide-vertical-direction',
+    direction.value
+  )
+})
 </script>
 
 <template>
@@ -192,7 +207,7 @@ function goToNextStep() {
               leave-from="opacity-100 translate-y-0 sm:scale-100"
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
               <DialogPanel
-                class="relative h-full md:h-auto w-full transform overflow-hidden transition-all duration-200 md:rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black/50 sm:my-8 sm:w-full sm:max-w-2xl sm:px-8 sm:py-6"
+                class="relative h-screen grid grid-rows-[2rem_1fr] md:block md:h-auto w-full transform overflow-hidden transition-all duration-200 md:rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black/50 sm:my-8 sm:w-full sm:max-w-2xl sm:px-8 sm:py-6"
                 :class="[rsvp_is_attending && ' ']">
                 <div class="w-full text-center flex justify-between items-center relative ">
                   <DialogTitle as="h3" class="text-lg dark:text-white font-semibold leading-6">
@@ -208,7 +223,7 @@ function goToNextStep() {
 
                 <div data-mobile
                   :class="!rsvp_is_attending ? 'grid-cols-[auto_1fr]' : 'grid-cols-1'"
-                  class="grid grid-rows-[1fr_auto] h-[90%] md:hidden">
+                  class="grid grid-rows-[1fr_auto] md:hidden">
 
                   <ul v-show="!rsvp_is_attending" class="steps steps-vertical">
                     <li :class="{ 'step-primary': currentStep >= 1 }" class="step"></li>
@@ -307,7 +322,7 @@ function goToNextStep() {
                       
                       <Transition name="slide-fade" mode="out-in">
                         <div v-if="!rsvp_is_attending" class="grid grid-rows-[1fr_auto] items-center gap-6 h-full pr-1">
-                          <Transition name="slide-fade" mode="out-in">
+                          <Transition name="slide-vertical" mode="out-in">
                             <div v-if="currentStep === 1" data-food class="grid w-full items-center">
                               <dt class="grid gap-2 py-4">
                                 <span class="text-xl text-slate-500 font-normal mb-4">What's your food preference?</span>
@@ -361,7 +376,7 @@ function goToNextStep() {
                                 <div class="join join-vertical w-full">
                                   <RadioGroup v-model="identifyAsSelection">
                                     <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                                    <div class="grid gap-y-4">
+                                    <div class="grid gap-y-[14px] overflowy-y-hidden">
                                       <rsvp-radio-item :options="identifyAsOptions" />
                                     </div>
                                   </RadioGroup>
@@ -647,7 +662,7 @@ function goToNextStep() {
   </div>
 </template>
 
-<style lang="postcss">
+<style lang="scss">
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -669,6 +684,28 @@ button:disabled {
 .slide-fade-leave-to {
   transform: scale(0.8);
   transform-origin: left center;
+  opacity: 0;
+}
+
+:root {
+  --slide-vertical-direction: 1;
+}
+
+.slide-vertical-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-vertical-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-vertical-enter-from{
+  transform: translateY(0);
+  opacity: 0;
+}
+
+.slide-vertical-leave-to {
+  transform: translateY(calc(var(--slide-vertical-direction) * -100px));
   opacity: 0;
 }
 </style>
