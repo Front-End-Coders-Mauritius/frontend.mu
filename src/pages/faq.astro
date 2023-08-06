@@ -2,6 +2,7 @@
 import Layout from "../layouts/LayoutHome.astro";
 import { getCollection } from "astro:content";
 import FaqRenderer from "../components/FaqRenderer.astro";
+import BaseHeading from "../components/base/BaseHeading.astro";
 
 const faqEntries = await getCollection("faqs");
 const title = "FAQ";
@@ -12,11 +13,7 @@ const description = "Frequently asked questions";
   <div class="">
     <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">
       <div class="mx-auto max-w-4xl text-center">
-        <h2
-          class="text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl leading-10 tracking-tight text-gray-900"
-        >
-          Frequently asked questions
-        </h2>
+        <BaseHeading>Frequently asked questions</BaseHeading>
         <p class="mx-auto mt-6 max-w-2xl text-base leading-7 text-gray-600">
           Have a different question and can’t find the answer you’re looking
           for? <a
@@ -28,7 +25,7 @@ const description = "Frequently asked questions";
           </a> and someone might be able to help you!
         </p>
       </div>
-      <main class="border bg-white shadow-md overflow-hidden  mt-8 rounded-lg">
+      <main class="border bg-white shadow-md overflow-hidden mt-8 rounded-lg">
         <section class="grid grid-cols-1 divide-y">
           {faqEntries.map((faqEntry) => <FaqRenderer faqEntry={faqEntry} />)}
         </section>

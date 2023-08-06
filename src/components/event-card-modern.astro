@@ -1,6 +1,9 @@
 ---
-import { MapPinIcon, UsersIcon } from "@heroicons/vue/20/solid";
-import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+
+import IconLocation from "~icons/carbon/location"
+import IconArrowUpRight from "~icons/carbon/arrow-up-right"
+import IconCalendar from "~icons/carbon/calendar"
+import IconGroup from "~icons/carbon/group"
 import { format } from "date-fns";
 
 interface Meetup {
@@ -55,7 +58,7 @@ const isUpcoming = () => {
               "inline-flex rounded-lg p-[0.35rem] md:p-3 font-mono text-sm font-medium items-center",
             ]}
           >
-            <CalendarIcon class="mr-2 h-6 w-6" />
+            <IconCalendar class="mr-2 h-6 w-6" />
             <span>{format(new Date(event.Date), "YYY dd MMM")}</span>
           </span>
         </div>
@@ -79,7 +82,7 @@ const isUpcoming = () => {
       {
         event.Venue && (
           <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500">
-            <MapPinIcon
+            <IconLocation
               class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
               aria-hidden="true"
             />
@@ -96,7 +99,7 @@ const isUpcoming = () => {
         {
           event.Attendees && (
             <div class="flex items-center" title="Attendees">
-              <UsersIcon
+              <IconGroup
                 class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
                 aria-hidden="true"
               />

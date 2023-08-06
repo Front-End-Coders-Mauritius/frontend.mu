@@ -1,6 +1,7 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import LogoFec from "../components/LogoFec.astro";
+import UserData from "./UserData.vue";
 ---
 
 <div class="homepage-container -mt-32 pt-16 md:pt-0">
@@ -11,10 +12,18 @@ import LogoFec from "../components/LogoFec.astro";
           class="relative z-20 mx-auto flex flex-col-reverse md:flex-row h-full justify-center"
         >
           <div
-            class="flex flex-col justify-center  text-center md:text-left gap-10 md:w-2/3"
+            class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3"
           >
-            <h1 class="accent uppercase text-4xl font-extrabold xl:leading-tight sm:text-5xl lg:text-5xl xl:text-7xl" >Frontend Coders Mauritius</h1>
-            <p class="text-md md:text-lg text-slate-800 dark:text-slate-300 font-mono font-bold">
+            <h1
+              class="font-heading dark:text-white font-thin text-4xl leading-tight sm:text-5xl lg:text-5xl xl:text-7xl"
+            >
+              Frontend Coders<br />
+              <span
+                class="accent font-bold uppercase sm:text-4xl lg:text-4xl xl:text-6xl inline-block"
+                >Mauritius</span
+              >
+            </h1>
+            <p class="text-md md:text-lg dark:text-gray-300">
               Front-End Coders Mauritius is a community around front-end
               development based in Mauritius. We also organise monthly meetups
               free for anyone interested to attend.
@@ -112,31 +121,6 @@ import LogoFec from "../components/LogoFec.astro";
     animation: glow 4s ease-out infinite alternate;
   }
 
-  .spotlight {
-    position: relative;
-  }
-
-  .spotlight::before {
-    content: attr(data-text);
-    position: absolute;
-    background: linear-gradient(
-      to right,
-      #ea2839 0,
-      #1a206d 33.3%,
-      #ffd500 66.6%,
-      #00a551 100%
-    );
-    background-clip: text;
-    color: transparent;
-    background-size: 100% 90%;
-    clip-path: ellipse(50px 50px at -2.54% -9.25%);
-  }
-
-  .spotlight:hover::before {
-    animation: swing 2s ease-out infinite;
-    animation-direction: alternate;
-  }
-
   .btn-meetup {
     background-color: var(--home-gradient-dark);
   }
@@ -170,29 +154,29 @@ import LogoFec from "../components/LogoFec.astro";
   }
 
   .accent {
-  background: linear-gradient(
-    135deg,
-    hsl(13, 100%, 52%) 10%,
-    hsl(230, 100%, 70%) 50%,
-    hsl(13, 100%, 52%) 80%,
-    hsl(53, 100%, 69%) 90%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-size: 400% 400%;
-  animation: gradient-animation 12s ease infinite;
-}
+    background: linear-gradient(
+      135deg,
+      hsl(13, 100%, 52%) 10%,
+      hsl(230, 100%, 70%) 50%,
+      hsl(13, 100%, 52%) 80%,
+      hsl(53, 100%, 69%) 90%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: 400% 400%;
+    animation: gradient-animation 12s ease infinite;
+  }
 
-@keyframes gradient-animation {
-  0% {
-    background-position: 0% 50%;
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 </style>
