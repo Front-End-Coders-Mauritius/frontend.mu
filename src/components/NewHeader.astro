@@ -5,11 +5,11 @@ import LoggedUser from "./LoggedUser.vue";
 import MainMenu from "./MegaMenu.astro";
 ---
 
-<div class="flex justify-between contain sticky top-0 z-30 h-32 items-center">
-  <MainMenu>
-    <ToggleTheme slot="dark-mode-toggle" client:load />
-    <LoggedUser slot="dark-mode-toggle" client:load />
-  </MainMenu>
+<MainMenu>
+  <ToggleTheme slot="dock-right" client:load />
+  <LoggedUser slot="dock-right" client:load />
+</MainMenu>
+<div id="sticky-observer" class="bg-transparent z-0 h-4 w-full top-32 relative">
 </div>
 
 <script>

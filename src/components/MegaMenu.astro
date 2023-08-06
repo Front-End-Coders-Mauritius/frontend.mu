@@ -2,86 +2,270 @@
 import LogoFec from "../components/LogoFec.astro";
 import ToggleTheme from "../components/toggle-theme.vue";
 import MainMenu from "./MainMenu.astro";
-import {
-  CalendarIcon,
-  ArrowTrendingUpIcon,
-} from '@heroicons/vue/24/outline'
+import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+
+import ExternalLinkIcon from "~icons/carbon/launch";
+
+// get current route astro
+const currentPath = Astro.url.pathname;
+
+interface TMenuItem {
+  title: string;
+  href: string;
+  class?: string;
+  children?: TMenuItem[];
+}
+
+interface TMenu {
+  [key: string]: TMenuItem;
+}
+
+// Object of all the links
+const links: TMenu = {
+  about: {
+    title: "About",
+    href: "/about",
+  },
+  meetups: {
+    title: "Meetups",
+    href: "/meetups",
+  },
+  team: {
+    title: "Team",
+    href: "/team",
+    class: "hidden md:block",
+  },
+  sponsors: {
+    title: "Sponsors",
+    href: "/sponsors",
+    class: "hidden md:block",
+  },
+  github: {
+    title: "Github",
+    href: "https://github.com/Front-End-Coders-Mauritius",
+    class: "hidden md:block",
+  },
+  community: {
+    title: "Community",
+    href: "/community",
+    children: [
+      {
+        title: "Discord",
+        href: "https://discord.gg/2YcJfXk",
+        class: "discord-link",
+      },
+      {
+        title: "WhatsApp",
+        href: "https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q",
+        class: "whatsapp-link",
+      },
+      {
+        title: "Instagram",
+        href: "https://www.instagram.com/frontendcoders/",
+        class: "instagram-link",
+      },
+      {
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/company/frontendcoders",
+        class: "linkedin-link",
+      },
+    ],
+  },
+};
 ---
 
-<div class="megamenu theme-light">
+<div
+  class="menu-wrapper flex justify-between contain sticky top-0 z-30 h-32 items-center"
+>
+  <div class="megamenu theme-light">
     <div class="wrapper">
       <div class="megamenu-brand">
         <a href="/">
-        <LogoFec class="megamenu-brand__icon w-10" />
-        <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"  >
+          <LogoFec class="megamenu-brand__icon w-10" />
+          <span
+            class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"
+          >
             frontend.mu
-        </span>
-      </a>
+          </span>
+        </a>
       </div>
-        <nav>
-            <ul class="nav-links" >
-              <li class="nav-link">
-                <a class="nav-link-text" href="/about" >About</a>
-              </li>
-              <li class="nav-link">
-                <a class="nav-link-text" href="/meetups">Meetups</a>
-              </li>
-              <li class="nav-link nav-link-dropdown">
-                <a class="nav-link-text" href="#">Community</a>
-                <div class="menu-dropdown">
+      <nav>
+        <ul class="nav-links">
+          <li class="nav-link nav-link-dropdown">
+            <a class="nav-link-text" href="#">Community</a>
+            <div class="menu-dropdown">
+              <div
+                class="menu-dropdown-item menu-dropdown-community theme-dark"
+              >
+                <ul class="community-links">
+                  <li class="community-link discord-link">
+                    <a href="#"
+                      ><span class="community-link-text">Discord</span
+                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
+                    >
+                  </li>
+                  <li class="community-link whatsapp-link">
+                    <a href="#"
+                      ><span class="community-link-text">WhatsApp</span
+                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
+                    >
+                  </li>
+                  <li class="community-link instagram-link">
+                    <a href="#"
+                      ><span class="community-link-text">Instagram</span
+                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
+                    >
+                  </li>
+                  <li class="community-link linkedin-link">
+                    <a href="#"
+                      ><span class="community-link-text">LinkedIn</span
+                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
+                    >
+                  </li>
+                  <li class="community-link github-link">
+                    <a href="#"
+                      ><span class="community-link-text">Github</span
+                      ><ArrowTrendingUpIcon class="h-6 w-6" /></a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          {
+            Object.keys(links).map((item) => (
+              <li
+                class:list={[
+                  links[item].children && "nav-link-dropdown",
+                  "nav-link",
+                ]}
+              >
+                <a class="nav-link-text" href={links[item].href}>
+                  {links[item].title}
+
+                  {!!links[item].href.includes("https") && (
+                    <ExternalLinkIcon
+                      height="1em"
+                      style="display: inline; vertical-align: text-bottom;"
+                    />
+                  )}
+                  {currentPath === links[item].href && (
+                    <span
+                      style="view-transition-name: menubar"
+                      class="absolute bottom-0 left-0 right-0 h-1 bg-verse-500 dark:bg-verse-400 menu-border-transition"
+                    />
+                  )}
+                </a>
+
+                {/* Dropdown */}
+                {links[item].children && (
+                  <div class="menu-dropdown">
                     <div class="menu-dropdown-item menu-dropdown-community theme-dark">
-                      <ul class="community-links" >
-                        <li class="community-link discord-link"><a href="#"><span class="community-link-text">Discord</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
-                        <li class="community-link whatsapp-link"><a href="#"><span class="community-link-text">WhatsApp</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
-                        <li class="community-link instagram-link"><a href="#"><span class="community-link-text">Instagram</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
-                        <li class="community-link linkedin-link"><a href="#"><span class="community-link-text">LinkedIn</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
-                        <li class="community-link github-link"><a href="#"><span class="community-link-text">Github</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
+                      <ul class="community-links">
+                        {links[item].children?.map((submenu) => (
+                          <li class:list={[submenu.class, "community-link"]}>
+                            <a href={submenu.href}>
+                              <>
+                                <div class="flex gap-2">
+                                  {submenu.title}
+
+                                  {!!submenu.href.includes("https") && (
+                                    <ExternalLinkIcon />
+                                  )}
+                                </div>
+                              </>
+                            </a>
+                          </li>
+                        ))}
                       </ul>
+                    </div>
                   </div>
+                )}
               </li>
-              <li class="nav-link">
-                <a class="nav-link-text" href="#">Events</a>
-              </li>
-              <li class="nav-link" >
-                <a class="nav-link-text" href="#">Sponsors</a>
-              </li>
-              <li class="nav-link">
-                <a class="nav-link-text" href="#">FAQ</a>
-              </li>
-              <!-- <li>
-                <a class="nav-link" href="#">Attend A Meetup</a>
-              </li>
-              <li>
-                <a class="nav-link" href="#">Sponsor A Meetup</a>
-              </li> -->
-              <slot name="dark-mode-toggle" />
-            </ul>
-          </nav>
-    </div>
-    <!-- <MainMenu />
+            ))
+          }
+        </ul>
+        <slot name="dock-right" />
+      </nav>
+      <!-- <MainMenu />
     <ToggleTheme client:load /> -->
+    </div>
+  </div>
 </div>
 
-<script>
-  window.addEventListener("scroll", function(e){
-    console.log(this.window.pageYOffset);
-    let nav = document.getElementsByClassName("megamenu")[0];
-    let yoffset = this.window.pageYOffset;
-    if(yoffset > 78) {
-      nav.classList.remove(".theme-light");
-      nav.classList.add("theme-dark");
-      // console.log("adding dark");
-    }else {
-      nav.classList.remove("theme-dark");
-      nav.classList.add("theme-light");
-      // console.log("adding light");
-    }
-  });
+<script is:inline>
+function makeHeaderSticky() {
+  const header = document.querySelector(".menu-wrapper");
+  if (!header) return;
+
+  // Function to be called when the intersection changes
+  function handleIntersection(entries) {
+    entries.forEach((entry) => {
+      if (!header) return;
+      if (entry.isIntersecting) {
+        header.classList.remove("intersect");
+        console.log("intersecting");
+      } else {
+        header.classList.add("intersect");
+        console.log("not intersecting");
+      }
+    });
+  }
+
+  // Options for the IntersectionObserver
+  const options = {
+    root: null, // Use the viewport as the root
+    rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
+    threshold: 0, // Trigger the callback when even one pixel is visible
+  };
+
+  // Create the IntersectionObserver
+  const observer = new IntersectionObserver(handleIntersection, options);
+
+  // Target element that you want to observe
+  const target = document.querySelector("#sticky-observer");
+
+  if (!target) return;
+
+  // Start observing the target element
+  observer.observe(target);
+}
+
+// Call the function to make the .header class sticky
+// makeHeaderSticky();
+
+document.addEventListener("DOMContentLoaded", makeHeaderSticky);
+
+document.addEventListener("astro:beforeload", makeHeaderSticky);
 </script>
 
 <style lang="postcss">
+  .menu-wrapper {
+    transition: all 0.2s ease-out;
+  }
+  .megamenu{
+    transition: all 0.2s ease-out;
+  }
+  .intersect {
+    @apply h-16;
+  }
 
-  .theme-light {
+  .intersect .megamenu {
+    background: rgb(228 227 227 / 72%);
+    /* outline: 1px solid rgba(255,255,255,0.18); */
+    box-shadow: 0px 0px 2px var(--color-verse-500);
+    backdrop-filter: blur( 24px );
+  }
+
+
+  body[color-scheme="dark"] .intersect .megamenu {
+    background: rgb(16 16 16 / 25%) ;
+  }
+
+  
+
+  /* .theme-light {
     background: rgba(255,255,255,0);
     box-shadow: 0px 0px 0px rgba(255,149,5,0.1);
     border: 1px solid transparent;
@@ -93,7 +277,7 @@ import {
     border: 1px solid rgba(255,255,255,0.18);
     box-shadow: 0px 0px 2px var(--color-verse-500);
     backdrop-filter: blur( 14.5px );
-  }
+  } */
 
   body[color-scheme="dark"] .theme-dark {
     background: rgb(16 16 16 / 25%) ;
@@ -108,7 +292,7 @@ import {
         left: 50%;
         transform: translateX(-50%);
         z-index: 20;
-        -webkit-backdrop-filter: blur( 4.5px );
+        -webkit-backdrop-filter: blur(24px);
         border-radius: 50px;
 
         .wrapper {
@@ -229,71 +413,7 @@ import {
                                   margin-bottom: 0;
                                 }
 
-                                &:hover {
-                                  &.discord-link {
-                                    background-color: 	hsla(235, 87%, 65%, 0.167);
-
-                                    svg{
-                                      color: 	hsl(235, 86%, 65%);
-                                    }
-
-                                    .community-link-text{
-                                      color: 	hsl(235, 86%, 65%);
-                                    }
-                                  }
-                                
-
-                                &.github-link{
-                                  background-color: 	hsla(0, 0%, 20%, 0.167);
-
-                                  svg{
-                                    color: 	hsl(0, 0%, 20%);
-                                  }
-
-                                  .community-link-text{
-                                    color: 	hsl(0, 0%, 20%);
-                                  }
-                                }
-
-                                &.whatsapp-link{
-                                  background-color: hsl(142, 70%,20%, 0.167);
-
-                                  svg{
-                                    color: 	hsl(142, 70%, 49%);
-                                  }
-
-                                  .community-link-text{
-                                    color: 	hsl(142, 70%, 49%);
-                                  }
-                                }
-
-                                &.instagram-link{
-                                  background-color: hsl(319, 71%, 49%, 0.167);
-
-                                  svg{
-                                    color: 	hsl(319, 71%, 49%);
-                                  }
-
-                                  .community-link-text{
-                                    color: 	hsl(319, 71%, 49%);
-                                  }
-                                }
-
-                                &.linkedin-link{
-                                  background-color: 	hsl(198, 100%, 35%, 0.167);
-
-                                  svg{
-                                    color: 		hsl(198, 100%, 35%);
-                                  }
-
-                                  .community-link-text{
-                                    color: 		hsl(198, 100%, 35%);
-                                  }
-                                }
-
-                              }
-
-                              }
+                            }
                             }
 
                         }
@@ -356,4 +476,3 @@ import {
     }
 
 </style>
-
