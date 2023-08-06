@@ -11,34 +11,23 @@ const $isUserLoggedIn = useStore(isUserLoggedIn);
 const $userProfile = useStore(userProfile);
 
 const fetchSession = async () => {
-  const { data, error } = await supabase.auth.getSession();
+  try {
+    const { data, error } = await supabase.auth.getSession();
 
-  if (error) {
-    console.log(error);
-    currentUser.set(null);
-    isUserLoggedIn.set(false);
-  }
+    if (error) throw error;
 
-  if (data && data.session) {
-    console.log(data.session);
-    currentUser.set(data.session);
-    isUserLoggedIn.set(true);
+    if (data && data.session) {
+      console.log(data.session);
+      currentUser.set(data.session);
+      isUserLoggedIn.set(true);
 
-    const userProfileData = userProfile.get();
+      const userProfileData = userProfile.get();
 
-    console.log(userProfileData);
+      console.log(userProfileData);
 
-    if (!userProfileData) {
-      const profile = await getUserProfile();
-      if (profile) {
-        userProfile.set({
-          ...profile,
-          google: data.session.user.user_metadata,
-        });
-        return;
-      }
-    } else {
-      if (!userProfileData.avatar_url || !userProfileData.full_name) {
+      if (!userProfileData) {
+        await updateUserProfile(data.session.user.user_metadata);
+      } else if (!userProfileData.avatar_url || !userProfileData.full_name) {
         const { data: functionData, error: functionError } =
           await supabase.functions.invoke("handle-new-user", {
             body: {
@@ -47,18 +36,28 @@ const fetchSession = async () => {
               avatar_url: data.session.user.user_metadata.avatar_url,
             },
           });
-        const profile = await getUserProfile();
-        if (profile) {
-          userProfile.set({
-            ...profile,
-            google: data.session.user.user_metadata,
-          });
-          return;
-        }
-      }
+        if (functionError) throw functionError;
 
-      return;
+        await updateUserProfile(data.session.user.user_metadata);
+      }
+    } else {
+      currentUser.set(null);
+      isUserLoggedIn.set(false);
     }
+  } catch (error) {
+    console.error(error);
+    currentUser.set(null);
+    isUserLoggedIn.set(false);
+  }
+};
+
+const updateUserProfile = async (userMetadata) => {
+  const profile = await getUserProfile();
+  if (profile) {
+    userProfile.set({
+      ...profile,
+      google: userMetadata,
+    });
   }
 };
 
