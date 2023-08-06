@@ -86,12 +86,15 @@ const links: TMenu = {
         </a>
       </div>
       <nav>
-        <ul class="nav-links flex gap-4 font-medium font-heading">
+        <ul
+          class="nav-links text-sm md:text-sm lg:text-base flex gap-4 font-medium font-heading"
+        >
           {
             Object.keys(links).map((item) => (
               <li
                 class:list={[
                   links[item].children && "nav-link-dropdown",
+                  links[item].class,
                   "nav-link dark:text-white",
                 ]}
               >
