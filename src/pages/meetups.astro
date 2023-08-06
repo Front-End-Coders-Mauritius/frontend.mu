@@ -4,6 +4,7 @@ import DetailedEventCard from "../components/DetailedEventCard.astro";
 import { loadEvents } from "../utils/api";
 import EventCardModernDetailed from "../components/event-card-modern-detailed.astro";
 import { Meetup } from "../components/HomeLatestMeetup.astro";
+import BaseHeading from "../components/base/BaseHeading.astro";
 
 interface Response {
   data: Meetup[];
@@ -33,11 +34,7 @@ const description = "A list of all meetups we've held";
       <div class="past-events-container pb-4 md:pb-16">
         <div class="contain mx-auto">
           <div class="py-4 flex flex-col gap-2">
-            <h1
-              class="text-4xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 sm:text-5xl md:text-4xl"
-            >
-              Our meetups
-            </h1>
+            <BaseHeading level="1">All meetups</BaseHeading>
             <p class="text-verse-900">
               Over the years, we've organized a lot of meetups. Here's a list of
               all of them.
@@ -97,6 +94,6 @@ const description = "A list of all meetups we've held";
   }
 
   .page-all-meetups {
-	/* background: linear-gradient(180deg, var(--color-brand-100) 0%, #FFFFFF 5%);   */
+    /* background: linear-gradient(180deg, var(--color-brand-100) 0%, #FFFFFF 5%);   */
   }
 </style>

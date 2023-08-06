@@ -9,7 +9,9 @@ module.exports = {
 	theme: {
 		fontFamily: {
 			mono: ['Electrolize', 'Courier New', 'monospace'],
-			// sans: ['sans-serif'],
+			opensans: ['"Open Sans"', 'sans-serif'],
+
+			heading: ["'JetBrains Mono', monospace", 'monospace'],
 		},
 		screens: {
 			'sm': '640px',
@@ -76,7 +78,7 @@ module.exports = {
 			fontFamily: {
 				iosevka: ['Iosevka Term Bold', 'sans-serif'],
 			},
-			
+
 		},
 	},
 	plugins: [
