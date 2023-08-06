@@ -105,7 +105,7 @@ const links: TMenu = {
                     !!links[item].href.includes("https") ? "_blank" : "_self"
                   }
                 >
-                  {currentPath === links[item].href && (
+                  {currentPath.includes(links[item].href) && (
                     <span
                       style="view-transition-name: menubar"
                       class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-slate-900 dark:bg-slate-100"
@@ -178,10 +178,8 @@ function makeHeaderSticky() {
       if (!header) return;
       if (entry.isIntersecting) {
         header.classList.remove("intersect");
-        console.log("intersecting");
       } else {
         header.classList.add("intersect");
-        console.log("not intersecting");
       }
     });
   }
@@ -227,12 +225,9 @@ document.addEventListener("astro:beforeload", makeHeaderSticky);
   .intersect .megamenu {
     padding:4px 7px; 
     border-radius: 24px; 
-    /* outline: 1px solid rgba(255,255,255,0.18); */
     box-shadow: 0px 0px 2px var(--color-verse-500);
     backdrop-filter: blur(24px);
   }
-
-
 
   nav {
 
