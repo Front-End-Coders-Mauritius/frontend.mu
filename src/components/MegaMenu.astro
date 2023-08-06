@@ -8,7 +8,7 @@ import {
 } from '@heroicons/vue/24/outline'
 ---
 
-<div class="megamenu">
+<div class="megamenu theme-light">
     <div class="wrapper">
       <div class="megamenu-brand">
         <a href="/">
@@ -29,7 +29,7 @@ import {
               <li class="nav-link nav-link-dropdown">
                 <a class="nav-link-text" href="#">Community</a>
                 <div class="menu-dropdown">
-                    <div class="menu-dropdown-item menu-dropdown-community">
+                    <div class="menu-dropdown-item menu-dropdown-community theme-dark">
                       <ul class="community-links" >
                         <li class="community-link discord-link"><a href="#"><span class="community-link-text">Discord</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
                         <li class="community-link whatsapp-link"><a href="#"><span class="community-link-text">WhatsApp</span><ArrowTrendingUpIcon class="h-6 w-6"/></a></li>
@@ -63,29 +63,53 @@ import {
 </div>
 
 <script>
-//   const logo = document.getElementById("logo");
-//   logo.addEventListener("contextmenu", (e) => {
-//     e.preventDefault();
-//     window.location.href = "/branding";
-//   });
+  window.addEventListener("scroll", function(e){
+    console.log(this.window.pageYOffset);
+    let nav = document.getElementsByClassName("megamenu")[0];
+    let yoffset = this.window.pageYOffset;
+    if(yoffset > 78) {
+      nav.classList.remove(".theme-light");
+      nav.classList.add("theme-dark");
+      // console.log("adding dark");
+    }else {
+      nav.classList.remove("theme-dark");
+      nav.classList.add("theme-light");
+      // console.log("adding light");
+    }
+  });
 </script>
 
 <style lang="postcss">
+
+  .theme-light {
+    background: rgba(255,255,255,0);
+    box-shadow: 0px 0px 0px rgba(255,149,5,0.1);
+    border: 1px solid transparent;
+    backdrop-filter: blur( 0px );
+  }
+
+  .theme-dark {
+    background: rgb(228 227 227 / 72%);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0px 0px 2px var(--color-verse-500);
+    backdrop-filter: blur( 14.5px );
+  }
+
+  body[color-scheme="dark"] .theme-dark {
+    background: rgb(16 16 16 / 25%) ;
+  }
+
     .megamenu {
         width: 80vw;
         height: 3.5rem; 
-        transition: background-color .2s ease;
+        transition: all .5s ease;
         margin-top: 10px;
         position:relative;
         left: 50%;
         transform: translateX(-50%);
         z-index: 20;
-        background: rgba( 255, 255, 255, 0.1 );
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        backdrop-filter: blur( 14.5px );
         -webkit-backdrop-filter: blur( 4.5px );
         border-radius: 50px;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
 
         .wrapper {
             height: 100%;
@@ -174,8 +198,8 @@ import {
 
                         .menu-dropdown-community {
                             padding: 15px 10px;
-                            background: white;
                             border-radius: 5px;
+                            color: white;
 
                             .community-links {
                               display:flex;
@@ -188,6 +212,7 @@ import {
                                 border-radius: 50px;
                                 padding: 8px 15px;
                                 margin-bottom: 2px;
+                                cursor: pointer;
 
                                 a {
                                   display: flex;
