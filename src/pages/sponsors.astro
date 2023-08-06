@@ -7,8 +7,8 @@ const description = "";
 
 <Layout title={title} description={description}>
   <div class="contain">
-    <div class="bg-brand-0">
-      <div class="lg:py-18">
+    <div>
+      <div class="py-16">
         <div class="space-y-8 sm:space-y-12">
           <div class="space-y-5 text-center sm:mx-auto sm:space-y-4">
             <h2
@@ -37,14 +37,14 @@ const description = "";
                   </div>
                   <ul
                     role="list"
-                    class="grid grid-cols-1 mx-auto mt-6 gap-x-4 gap-y-2 sm:grid-cols-3 md:gap-x-6 lg:gap-x-8 lg:gap-y-12 xl:grid-cols-3"
+                    class="grid grid-cols-1 mx-auto mt-6 gap-x-4 gap-y-2 sm:grid-cols-2 md:gap-x-6 lg:gap-x-8 lg:gap-y-12"
                   >
                     {sponsorType.sponsors.map((sponsor, index) => (
-                      <li class="pt-4 w-96">
+                      <li class="pt-4">
                         <a
                           target="_blank"
                           href={sponsor.sponsorUrl}
-                          class="relative flex flex-col items-center justify-center gap-2 p-6 mt-4 transition-all bg-white border-t-8 border-blue-500 border-solid shadow-md md:mt-0 rounded-xl group hover:shadow-lg"
+                          class="relative flex flex-col items-center justify-center gap-2 p-6 mt-4 transition-all bg-white border-t-8 border-brand-500 border-solid shadow-md md:mt-0 rounded-xl group hover:shadow-lg"
                         >
                           <img
                             v-if="sponsor.logo"

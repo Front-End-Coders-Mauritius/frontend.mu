@@ -72,7 +72,7 @@ const tiltOptions = {
 
 <template>
   <div
-       class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 bg-brand-100 px-0">
+       class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 bg-slate-100 px-0">
     <div
          class="latest-events-wrapper mx-auto px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-5xl">
       <div

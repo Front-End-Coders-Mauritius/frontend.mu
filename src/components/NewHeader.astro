@@ -1,18 +1,23 @@
 ---
 import LogoFec from "../components/LogoFec.astro";
 import ToggleTheme from "../components/toggle-theme.vue";
+import LoggedUser from "./LoggedUser.vue";
 import MainMenu from "./MainMenu.astro";
 ---
 
-<div class="flex justify-between contain">
+<div class="flex justify-between contain relative z-30">
   <div class="flex justify-start logo-image">
-    <a href="/" class="flex items-center justify-center gap-1 md:gap-2">
+    <a
+      href="/"
+      class="flex items-center justify-center gap-1 md:gap-2"
+      id="logo"
+    >
       <h1 class="sr-only">Front-end Coders Mauritius</h1>
       <LogoFec class="w-12" />
       <span
         class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"
       >
-        Front-End Coders
+        frontend.mu
       </span>
     </a>
   </div>
@@ -21,5 +26,14 @@ import MainMenu from "./MainMenu.astro";
   >
     <MainMenu />
     <ToggleTheme client:load />
+    <LoggedUser client:load />
   </div>
 </div>
+
+<script>
+  const logo = document.getElementById("logo");
+  logo?.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    window.location.href = "/branding";
+  });
+</script>

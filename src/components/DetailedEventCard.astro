@@ -1,21 +1,19 @@
 ---
 const { event } = Astro.props;
-import { MapPinIcon, UsersIcon } from "@heroicons/vue/20/solid";
-
-import {
-  CalendarIcon,
-  ArrowTrendingUpIcon,
-} from '@heroicons/vue/24/outline'
+import IconLocation from "~icons/carbon/location"
+import IconArrowUpRight from "~icons/carbon/arrow-up-right"
+import IconCalendar from "~icons/carbon/calendar"
+import IconGroup from "~icons/carbon/group"
 ---
 
 <div
-  class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-brand-0 p-6 shadow-md transition-all hover:shadow-lg"
+  class="mt-4 md:mt-0 relative rounded-xl flex flex-col gap-2 group bg-white p-6 shadow-md transition-all hover:shadow-lg"
 >
   {
     event.Date && (
       <div class=" ">
-        <span class="inline-flex rounded-lg p-3 ring-4 ring-brand-50 bg-brand-100 text-brand-900 ">
-          <CalendarIcon class="mr-2 h-6 w-6" />
+        <span class="inline-flex rounded-lg p-3 ring-4 ring-brand-50 bg-slate-100 text-brand-900 ">
+          <IconCalendar class="mr-2 h-6 w-6" />
           <span>{event.Date}</span>
         </span>
       </div>
@@ -35,7 +33,7 @@ import {
       <div
         class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
       >
-        <UsersIcon
+        <IconGroup
           class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
           aria-hidden="true"
         />
@@ -52,7 +50,7 @@ import {
       {
         event.Venue ? (
           <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500">
-            <MapPinIcon
+            <IconLocation
               class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
               aria-hidden="true"
             />
@@ -75,6 +73,6 @@ import {
     class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-verse-500"
     aria-hidden="true"
   >
-    <ArrowTrendingUpIcon class="h-6 w-6" />
+    <IconArrowUpRight class="h-6 w-6" />
   </span>
 </div>

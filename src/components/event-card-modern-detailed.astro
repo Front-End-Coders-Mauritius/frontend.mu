@@ -1,9 +1,14 @@
 ---
-import { MapPinIcon, UsersIcon } from "@heroicons/vue/20/solid";
-import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+
+import IconLocation from "~icons/carbon/location"
+import IconArrowUpRight from "~icons/carbon/arrow-up-right"
+import IconCalendar from "~icons/carbon/calendar"
+import IconGroup from "~icons/solar/users-group-rounded-bold"
+
 import { format } from "date-fns";
 import { getPhotos, photoAlbumSource } from "../utils/api";
 import CardAlbum from "./CardAlbum.astro";
+import { vTransitionName } from "../utils/helpers";
 
 interface Meetup {
   id: string;
@@ -40,7 +45,7 @@ const isUpcoming = () => {
   return verifyValue;
 };
 const hasAlbum = () => {
-  return Boolean(event?.album.toString() === "null");
+  return Boolean(event && event.album && event?.album.toString() === "null");
 };
 const albumsPhotos = await getPhotos();
 
@@ -70,9 +75,9 @@ let currentAlbum = fetchAlbumDetails();
 <div
   class:list={[
     event?.album ? "col-span-2" : "md:col-span-1 col-span-2",
-    "group in-card bg-brand-0 border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
+    "group in-card bg-white dark:bg-slate-700/10 dark:border-white/10 border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
   ]}
-  title={hasAlbum ? "has album" : "no album"}
+  title={hasAlbum() ? "has album" : "no album"}
 >
   <div
     class="flex flex-col md:flex-row justify-between w-full  transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"
@@ -89,7 +94,7 @@ let currentAlbum = fetchAlbumDetails();
                 "flex font-mono text-sm font-medium items-center",
               ]}
             >
-              <CalendarIcon class="mr-2 h-6 w-6" />
+              <IconCalendar class="mr-2 h-6 w-6" />
               <span>{format(new Date(event.Date), "dd MMM yyyy")}</span>
             </span>
           </div>
@@ -103,6 +108,7 @@ let currentAlbum = fetchAlbumDetails();
         <a
           href={`meetup/${event.id}`}
           class="w-[300px] md:w-96 focus:outline-none"
+          style={vTransitionName('session-title',event.id)}
         >
           <span class="absolute inset-0" aria-hidden="true"></span>
           {event?.title}
@@ -113,7 +119,7 @@ let currentAlbum = fetchAlbumDetails();
         {
           event.Venue && (
             <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
-              <MapPinIcon
+              <IconLocation
                 class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
                 aria-hidden="true"
               />
@@ -130,7 +136,7 @@ let currentAlbum = fetchAlbumDetails();
           {
             event.Attendees && (
               <div class="flex items-center" title="Attendees">
-                <UsersIcon
+                <IconGroup
                   class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
                   aria-hidden="true"
                 />

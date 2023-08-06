@@ -72,5 +72,5 @@ html,
 }
 
 .app-container {
-  @apply bg-brand-100 grid place-items-center;
+  @apply bg-slate-100 grid place-items-center;
 }

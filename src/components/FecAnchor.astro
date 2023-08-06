@@ -15,10 +15,10 @@ const props = Astro.props;
   /* From uiverse.io */
   .fancy {
     background-color: transparent;
-    border: 2px solid #000;
+    /* border: 2px solid #000; */
     border-radius: 0;
     box-sizing: border-box;
-    color: #fff;
+    /* color: #fff; */
     cursor: pointer;
     display: inline-block;
     float: right;
@@ -35,19 +35,20 @@ const props = Astro.props;
     transition: all 0.3s ease-in-out;
     user-select: none;
     font-size: 13px;
+    @apply border-verse-900 border-2 text-verse-0;
   }
-
   .fancy::before {
     content: " ";
     width: 1.5625rem;
     height: 2px;
-    background: black;
+    /* background: black; */
     top: 50%;
     left: 1.5em;
     position: absolute;
     transform: translateY(-50%);
     transform-origin: center;
     transition: background 0.3s linear, width 0.3s linear;
+    @apply bg-verse-900;
   }
 
   .fancy .text {
@@ -59,7 +60,8 @@ const props = Astro.props;
     transition: all 0.3s ease-in-out;
     text-transform: uppercase;
     text-decoration: none;
-    color: black;
+    /* color: black; */
+    @apply text-verse-900;
   }
 
   .fancy .top-key {
@@ -68,8 +70,9 @@ const props = Astro.props;
     top: -2px;
     left: 0.625rem;
     position: absolute;
-    background: white;
+    /* background: white; */
     transition: width 0.5s ease-out, left 0.3s ease-out;
+    @apply bg-brand-0;
   }
 
   .fancy .bottom-key-1 {
@@ -78,8 +81,9 @@ const props = Astro.props;
     right: 1.875rem;
     bottom: -2px;
     position: absolute;
-    background: white;
+    /* background: white; */
     transition: width 0.5s ease-out, right 0.3s ease-out;
+    @apply bg-brand-0;
   }
 
   .fancy .bottom-key-2 {
@@ -88,23 +92,27 @@ const props = Astro.props;
     right: 0.625rem;
     bottom: -2px;
     position: absolute;
-    background: white;
+    /* background: white; */
     transition: width 0.5s ease-out, right 0.3s ease-out;
+    @apply bg-brand-0;
   }
 
   .fancy:hover {
-    color: white;
+    /* color: white; */
     background: black;
+    @apply text-verse-900;
   }
 
   .fancy:hover::before {
     width: 0.9375rem;
     background: white;
+    /* @apply bg-verse-0; */
   }
 
   .fancy:hover .text {
     color: white;
     padding-left: 1.5em;
+    /* @apply text-verse-0; */
   }
 
   .fancy:hover .top-key {

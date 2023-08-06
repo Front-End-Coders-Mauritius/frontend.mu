@@ -2,15 +2,15 @@
 import SocialCard from "./SocialCard.astro";
 import IconDiscord from "./icons/icon-discord.astro"
 import IconGithub from "./icons/icon-github.astro"
-import IconFacebook from "./icons/icon-facebook.astro"
-import IconFacebookGroup from "./icons/icon-facebook-group.astro"
+import IconWhatsapp from "./icons/IconWhatsappCommunity.astro"
 import IconTwitter from "./icons/icon-twitter.astro"
 import IconInstagram from "./icons/icon-instagram.astro"
 import IconLinkedin from "./icons/icon-linkedin.astro"
 
+
 ---
 
-<div class="bg-brand-950">
+<div class="bg-slate-950 dark:bg-slate-800">
     <div
     class="max-w-6xl mx-auto py-24 grid gap-8 grid-rows-4 grid-cols-0 md:grid-cols-2 md:grid-rows-none px-8 md:px-16"
     >
@@ -38,14 +38,13 @@ import IconLinkedin from "./icons/icon-linkedin.astro"
     </SocialCard>
 
     <SocialCard
-        href="https://www.facebook.com/groups/frontendcodersmu"
-        class="bg-[#4267B2] text-sm md:text-normal"
+        href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
+        class="bg-[#25D366] text-sm md:text-normal"
     >
-        <p slot="tagline">Facebook Group</p>
-        <p slot="description">Our legacy presence on Facebook.</p>
+        <p slot="tagline">Whatsapp Community</p>
+        <p slot="description">Join this community to stay informed about our events</p>
         
-        <IconFacebookGroup class="w-14 md:w-16 p-2" slot="icon"/>
-        
+        <IconWhatsapp class="w-14 md:w-16 p-2" slot="icon"/>
     </SocialCard>
 
     <SocialCard
