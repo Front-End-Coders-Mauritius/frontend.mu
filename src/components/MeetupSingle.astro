@@ -7,10 +7,11 @@ import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/20/solid";
 import { getPhotos, photoAlbumSource } from "../utils/api";
 import { random, vTransitionName } from "../utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
+import UserData from "./UserData.vue";
+import BaseHeading from "./base/BaseHeading.astro";
 
 const props = Astro.props;
 
@@ -105,12 +106,19 @@ const getRelatedPhotoSource = (album: string) => {
               >
                 Topic
               </div>
-              <h1
-                class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                style={vTransitionName('session-title', props.getCurrentEvent.id)}
+              <div
+                style={vTransitionName(
+                  "session-title",
+                  props.getCurrentEvent.id
+                )}
               >
-                {props.getCurrentEvent?.title}
-              </h1>
+                <BaseHeading
+                  level={1}
+                  class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
+                >
+                  {props.getCurrentEvent?.title}
+                </BaseHeading>
+              </div>
 
               <div class="grid md:grid-cols-2">
                 <SessionList sessions={props.getCurrentEvent.sessions} />

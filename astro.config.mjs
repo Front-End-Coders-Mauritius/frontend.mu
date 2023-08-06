@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import image from "@astrojs/image";
+import Icons from 'unplugin-icons/vite'
 
 import vue from "@astrojs/vue";
 
@@ -23,6 +24,12 @@ export default defineConfig({
         process.env.VERCEL_ANALYTICS_ID
       ),
     },
+    plugins: [
+      Icons({
+        compiler: 'vue3',
+        autoInstall: true
+      }),
+    ],
   },
   experimental: {
     viewTransitions: true

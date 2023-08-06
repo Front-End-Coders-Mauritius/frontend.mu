@@ -1,5 +1,5 @@
 ---
-import { Image } from '@astrojs/image/components';
+import { Image } from "@astrojs/image/components";
 import IconDots from "./icons/icon-dots.astro";
 import FecAnchor from "./FecAnchor.astro";
 import IconFacebook from "./icons/icon-facebook.astro";
@@ -8,8 +8,9 @@ import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import EventsList from "./EventsList.astro";
 import LogoSpiral from "./LogoSpiral.astro";
-import { getGithubUrl } from '../utils/fns';
-import { vTransitionName } from '../utils/helpers';
+import { getGithubUrl } from "../utils/fns";
+import { vTransitionName } from "../utils/helpers";
+import BaseHeading from "./base/BaseHeading.astro";
 
 const props = Astro.props;
 const speaker_photo = getGithubUrl(props.speaker.person.github_account);
@@ -30,12 +31,16 @@ const speaker_photo = getGithubUrl(props.speaker.person.github_account);
               <div>
                 <!-- Content area -->
                 <div>
-                  <h1                    
-                    style={vTransitionName("speaker-name", props.speaker.person.name )}
-                    class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
+                  <div
+                    style={vTransitionName(
+                      "speaker-name",
+                      props.speaker.person.name
+                    )}
                   >
-                    {props.speaker.person.name}
-                  </h1>
+                    <BaseHeading level={1} weight="bold">
+                      {props.speaker.person.name}
+                    </BaseHeading>
+                  </div>
 
                   <EventsList sessions={props.speaker.sessions} />
                 </div>
@@ -167,8 +172,11 @@ const speaker_photo = getGithubUrl(props.speaker.person.github_account);
               <div class="flex-grow relative">
                 <div class="w-full">
                   <Image
-                    class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"                    
-                    style={vTransitionName("speaker-avatar", props.speaker.person.name)}
+                    class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
+                    style={vTransitionName(
+                      "speaker-avatar",
+                      props.speaker.person.name
+                    )}
                     src={speaker_photo}
                     alt={props.speaker.person.name}
                     title={props.speaker.person.name}

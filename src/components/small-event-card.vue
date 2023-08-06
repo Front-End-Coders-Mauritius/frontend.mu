@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { MapPinIcon, UsersIcon } from '@heroicons/vue/20/solid'
-import {
-  CalendarIcon,
-  ArrowTrendingUpIcon,
-} from '@heroicons/vue/24/outline'
+
+import IconLocation from "~icons/carbon/location"
+import IconArrowUpRight from "~icons/carbon/arrow-up-right"
+import IconCalendar from "~icons/carbon/calendar"
+import IconGroup from "~icons/solar/users-group-rounded-bold"
+
 import { PropType } from 'vue';
 
 interface Meetup {
@@ -55,7 +56,9 @@ const isUpcoming = (currentEventDate: string) => {
             : 'bg-green-50 text-green-600 font-bold dark:bg-slate-900/10'
         "
       >
-        <CalendarIcon class="mr-2 h-6 w-6" />
+        <div class="mr-2 h-6 w-6">
+          <IconCalendar />
+        </div>
         <span>{{ new Date(event.Date).toDateString() }}</span>
       </span>
     </div>
@@ -73,7 +76,7 @@ const isUpcoming = (currentEventDate: string) => {
         <div
           class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500"
         >
-          <UsersIcon
+          <IconGroup
             class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
             aria-hidden="true"
           />
@@ -86,7 +89,7 @@ const isUpcoming = (currentEventDate: string) => {
           v-if="event.Venue"
           class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium text-gray-500"
         >
-          <MapPinIcon
+          <IconLocation
             class="ml-[-1px] mr-1.5 h-4 w-4 flex-shrink-0 truncate text-gray-500"
             aria-hidden="true"
           />
@@ -99,7 +102,7 @@ const isUpcoming = (currentEventDate: string) => {
       class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-verse-500"
       aria-hidden="true"
     >
-      <ArrowTrendingUpIcon class="h-6 w-6" />
+      <IconArrowUpRight class="h-6 w-6" />
     </span>
   </div>
 </template>
