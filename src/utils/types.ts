@@ -15,7 +15,8 @@ export interface User {
   full_name: string | null;
   email: string;
   current_occupation: string | null;
-  veg: boolean | null;
+  meal: string | null;
+  transport: string | null;
   phone: string | null;
   created_at: string;
   avatar_url: string | null;

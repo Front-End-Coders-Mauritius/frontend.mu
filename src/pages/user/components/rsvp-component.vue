@@ -2,19 +2,15 @@
 import { ref, computed, onMounted, shallowRef } from 'vue'
 import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser, userProfile } from "../../../store/userStore";
-import { setMeetupRSVP, getMeetupRSVPStatus } from "../../../utils/db-helpers";
+
+import { getUserProfile, setMeetupRSVP, getMeetupRSVPStatus } from "../../../utils/db-helpers";
 import { oAuthLogin } from '../../../utils/auth-helpers';
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { RadioGroup, RadioGroupLabel } from '@headlessui/vue'
 import { formatDate } from '../../../utils/helpers'
-import IconTicket from "~icons/carbon/ticket"
 import IconUserAvatar from "~icons/carbon/user-avatar"
 import CalendarDaysIcon from "~icons/carbon/calendar"
-import IconForkAndKnife from "~icons/emojione-monotone/fork-and-knife"
-import IconRight from "~icons/solar/double-alt-arrow-right-linear"
-import IconLeft from "~icons/solar/double-alt-arrow-left-linear"
-import IconFood from "~icons/fluent/food-pizza-20-regular"
+
 import IconChicken from "~icons/icon-park-twotone/chicken"
 import IconVegan from "~icons/iconoir/vegan"
 import IconBus from "~icons/mdi/bus-side"
@@ -23,7 +19,7 @@ import IconBroom from "~icons/game-icons/magic-broom"
 import IconRide from "~icons/ic/round-thumb-up-off-alt"
 import IconNoFood from "~icons/radix-icons/component-none"
 import RsvpHeader from './rsvp-header.vue'
-import IconArrowDown from "~icons/material-symbols/keyboard-arrow-down"
+
 import IconLoading from "~icons/eos-icons/three-dots-loading"
 import IconLogin from "~icons/solar/login-2-broken"
 import IconPhone from "~icons/material-symbols/phone-android-outline-rounded"
@@ -53,6 +49,18 @@ const props = defineProps({
   }
 })
 
+const profile = ref({
+  id: '',
+  full_name: '',
+  email: '',
+  current_occupation: '',
+  meal: '',
+  transport: '',
+  phone: '',
+  created_at: '',
+  avatar_url: '',
+});
+
 // Get RSVP Status
 const rsvp_check_loading = ref(false);
 const rsvp_is_attending = ref(false);
@@ -60,8 +68,8 @@ const rsvp_is_attending = ref(false);
 const getRsvpStatus = async () => {
   rsvp_check_loading.value = true
   const status = await getMeetupRSVPStatus(props.meetupId)
+  console.log(status)
   if (status) {
-    console.log(status)
     rsvp_is_attending.value = true
   } else {
     rsvp_is_attending.value = false
@@ -69,18 +77,17 @@ const getRsvpStatus = async () => {
   rsvp_check_loading.value = false
 }
 
-onMounted(async () => {
-  getRsvpStatus()
-})
-
-// Update RSVP Status
+// Loaders
 const rsvp_loading = ref(false);
 const rsvp_success = ref(false);
+
+// Update RSVP Status
+
 const rsvpToMeetup = async () => {
   rsvp_loading.value = true
   try {
-    const data = await setMeetupRSVP(props.meetupId, true, 'bus')
-    if (data[0].rsvp) {
+    const data = await setMeetupRSVP(props.meetupId, true, rsvp_meta.value, showMeAsAttendingSelection.value.value)
+    if (data?.rsvp) {
       rsvp_success.value = true
     }
   } catch (error) {
@@ -103,7 +110,6 @@ const unRsvpToMeetup = async () => {
 }
 
 // Modal
-
 const open = ref(false)
 
 // Food Preferences
@@ -144,13 +150,43 @@ const showMeAsAttendingOptions = [
 ]
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
 
+onMounted(async () => {
+  // if ($isUserLoggedIn.value) {
+  console.log('user is logged in');
+  await getRsvpStatus()
+
+  // Retrieve user profile
+  rsvp_check_loading.value = true
+  getUserProfile().then((data) => {
+    rsvp_check_loading.value = false
+    profile.value = data
+
+    // Set RSVP values
+    let found = foodOptions.find((option) => {
+      return option.value === data.meal
+    });
+
+    console.log(found);
+    foodSelection.value = found
+
+    transportSelection.value = transportOptions.find((option) => {
+      return option.value === data.transport
+    });
+
+    identifyAsSelection.value = identifyAsOptions.find((option) => {
+      return option.value === data.current_occupation
+    });
+  });
+  // }
+})
+
+
 // RSVP values
 const rsvp_meta = computed(() => {
   return {
     meal: foodSelection.value.value,
     transport: transportSelection.value.value,
-    identifyAs: identifyAsSelection.value.value,
-    showMeAsAttending: showMeAsAttendingSelection.value.value
+    current_occupation: identifyAsSelection.value.value,
   }
 })
 
@@ -158,6 +194,10 @@ const rsvp_meta = computed(() => {
 
 <template>
   <div class="flex justify-center items-center">
+
+    <!-- <pre class="text-white">
+      {{ $session }}
+    </pre> -->
     <!-- Modal Stuff -->
     <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="relative z-10" @close="open = false">
@@ -210,7 +250,7 @@ const rsvp_meta = computed(() => {
                             <IconUserAvatar class="h-6 w-6" aria-hidden="true" />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            {{ $session.user.user_metadata.full_name }}
+                            {{ profile.full_name }}
                           </dd>
                         </div>
 
@@ -221,14 +261,14 @@ const rsvp_meta = computed(() => {
                             <IconEmail class="h-6 w-6" aria-hidden="true" />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            {{ $session.user.user_metadata.email || 'Not set' }}
+                            {{ profile.email || 'Not set' }}
                           </dd>
                           <dt class="flex-none">
                             <span class="sr-only">Phone</span>
                             <IconPhone class="h-6 w-6" aria-hidden="true" />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            {{ $session.user.user_metadata.phone || 'Not set' }}
+                            {{ profile.phone || 'Not set' }}
                           </dd>
                         </div>
 
@@ -247,6 +287,7 @@ const rsvp_meta = computed(() => {
                         </div>
                         <Transition name="slide-fade" mode="out-in">
                           <div class="flex flex-col gap-6" v-if="!rsvp_is_attending">
+
                             <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">Food preference</span>
