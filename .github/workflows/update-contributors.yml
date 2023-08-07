@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # Change 'main' to your default branch name if it's different
+      - feature/automatic-contributors
 
   pull_request:
     types:
