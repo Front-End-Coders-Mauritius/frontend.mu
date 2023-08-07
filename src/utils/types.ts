@@ -10,6 +10,16 @@ export interface GoogleInfo {
   sub: string;
 }
 
+export interface IRSVPStatus {
+  created_at: string;
+  id: string;
+  meetup_id: string;
+  meta: RSVPMetaObject;
+  rsvp: Boolean;
+  showOnSite: Boolean;
+  user_metadata: User;
+}
+
 export interface User {
   id: string;
   full_name: string | null;
@@ -31,6 +41,7 @@ export type RSVPMetaObject = {
   transport: Transport;
   meal: Meal;
   avatar_url: string;
+  current_occupation: string;
 };
 
 export interface MeetupAttendees {

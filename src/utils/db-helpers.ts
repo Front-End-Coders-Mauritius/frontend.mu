@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { userProfile } from "../store/userStore";
-import type { User, RSVPMetaObject, MeetupAttendees } from "./types";
+import type { User, RSVPMetaObject, MeetupAttendees, IRSVPStatus } from "./types";
 
 /* User Profile Functions */
 
@@ -45,7 +45,7 @@ export const updateUserProfile = async (profile: Partial<User>) => {
 
 export const getMeetupRSVPStatus = async (
   meetupId: string
-): Promise<boolean> => {
+): Promise<IRSVPStatus | null> => {
   const userProfileData = userProfile.get();
 
   const { data, error } = await supabase
@@ -57,10 +57,10 @@ export const getMeetupRSVPStatus = async (
 
   if (error) {
     console.log(error);
-    return false;
+    return null;
   }
 
-  return data && data.rsvp;
+  return data;
 };
 
 export const setMeetupRSVP = async (
@@ -88,11 +88,20 @@ export const setMeetupRSVP = async (
     const { data, error } = await supabase
       .from("meetup_rsvp")
       .update({
+        user_metadata: userProfileData,
         meta,
         rsvp,
         showOnSite: allowOnSite,
       })
       .eq("id", existingRSVP[0].id);
+
+    console.log('sending the following')
+    console.log({
+      user_metadata: userProfileData,
+      meta,
+      rsvp,
+      showOnSite: allowOnSite,
+    })
 
     if (error) {
       console.log(error);

@@ -67,19 +67,18 @@ const profile = ref({
   avatar_url: '',
 });
 
+const currentRSVPStatus = ref(false)
+
 // Get RSVP Status
 const rsvp_check_loading = ref(false);
 const rsvp_is_attending = ref(false);
 
 const getRsvpStatus = async () => {
   rsvp_check_loading.value = true
-  const status = await getMeetupRSVPStatus(props.meetupId)
-  console.log(status)
-  if (status) {
-    rsvp_is_attending.value = true
-  } else {
-    rsvp_is_attending.value = false
-  }
+  const data = await getMeetupRSVPStatus(props.meetupId)
+  currentRSVPStatus.value = data
+  console.log(data);
+  rsvp_is_attending.value = !!data.rsvp
   rsvp_check_loading.value = false
 }
 
@@ -157,8 +156,7 @@ const showMeAsAttendingOptions = [
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
 
 onMounted(async () => {
-  // if ($isUserLoggedIn.value) {
-  console.log('user is logged in');
+
   await getRsvpStatus()
 
   // Retrieve user profile
@@ -167,21 +165,37 @@ onMounted(async () => {
     rsvp_check_loading.value = false
     profile.value = data
 
-    // Set RSVP values
-    let found = foodOptions.find((option) => {
-      return option.value === data.meal
+    let dataCarrier;
+
+    // If user has already RSVP'd
+    if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
+      // trying to restore rsvp values
+      console.log('trying to restore rsvp values');
+      dataCarrier = currentRSVPStatus.value.meta
+      console.log(currentRSVPStatus.value)
+
+      showMeAsAttendingSelection.value = showMeAsAttendingOptions.find((option) => {
+        return option.value === currentRSVPStatus.value.showOnSite.toString()
+      });
+
+    } else {
+      dataCarrier = data
+    }
+
+    console.log(currentRSVPStatus.value)
+
+    foodSelection.value = foodOptions.find((option) => {
+      return option.value === dataCarrier.meal
     });
 
-    console.log(found);
-    foodSelection.value = found
-
     transportSelection.value = transportOptions.find((option) => {
-      return option.value === data.transport
+      return option.value === dataCarrier.transport
     });
 
     identifyAsSelection.value = identifyAsOptions.find((option) => {
-      return option.value === data.current_occupation
+      return option.value === dataCarrier.current_occupation
     });
+
   });
   // }
 })
@@ -268,6 +282,13 @@ watch(() => direction.value,
                     :avatar_url="$session.user.user_metadata.avatar_url" :rsvp_loading="rsvp_loading" />
                 </div>
 
+                <!-- <pre class="text-white">
+                                    {{ profile }}
+                                  </pre>
+                <pre class="text-white">
+                                    {{ profile }}
+                                  </pre> -->
+
                 <div data-mobile :class="!rsvp_is_attending ? 'grid-cols-[auto_1fr]' : 'grid-cols-1'"
                   class="grid grid-rows-[1fr_auto] md:hidden">
 
@@ -353,7 +374,6 @@ watch(() => direction.value,
                             <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
                             {{ transportSelection.name }}
                           </div>
-
 
                           <div class="flex gap-4">
                             <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
