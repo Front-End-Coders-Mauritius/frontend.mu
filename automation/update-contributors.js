@@ -5,7 +5,7 @@ const owner = 'Front-End-Coders-Mauritius';
 const repo = 'frontendmu-astro';
 const branch = 'feature/automatic-contributors'; // Replace with the default branch of your repository
 
-const contributorsFile = 'contributors.json';
+const contributorsFile = './src/data/contributors.json';
 
 async function updateContributors() {
     try {
