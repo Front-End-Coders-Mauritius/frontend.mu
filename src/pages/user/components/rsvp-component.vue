@@ -25,8 +25,6 @@ import IconRide from "~icons/ic/round-thumb-up-off-alt"
 import IconNoFood from "~icons/radix-icons/component-none"
 import RsvpHeader from './rsvp-header.vue'
 
-import IconLoading from "~icons/eos-icons/three-dots-loading"
-import IconLogin from "~icons/solar/login-2-broken"
 import IconPhone from "~icons/material-symbols/phone-android-outline-rounded"
 import IconEmail from "~icons/material-symbols/mail-outline-rounded"
 import IconPublic from "~icons/material-symbols/public"
@@ -37,7 +35,6 @@ import IconManager from "~icons/material-symbols/person-celebrate-rounded"
 import IconDesigner from "~icons/ph/paint-brush-duotone"
 import IconHr from "~icons/mdi/briefcase-account"
 
-import RsvpBookingConfirmed from './rsvp-booking-confirmed.vue'
 import RsvpRadioItem from './rsvp-radio-item.vue'
 import RsvpButton from './RsvpButton.vue'
 
@@ -272,9 +269,11 @@ watch(() => direction.value,
                 :class="[rsvp_is_attending && ' ']">
                 <div class="w-full text-center flex justify-between items-center relative ">
                   <DialogTitle as="h3" class="text-lg dark:text-white font-semibold leading-6">
-                    {{ rsvp_is_attending ? 'Your reservation details' :
-                      `Hey ${$session.user.user_metadata.full_name.split(' ')[0]}, let's
-                    get you booked in` }}
+                    {{
+                      rsvp_is_attending ?
+                      'Your reservation details' :
+                      `Hey ${$session.user.user_metadata.full_name.split(' ')[0]}, let's get you booked in`
+                    }}
 
                   </DialogTitle>
 
@@ -422,7 +421,7 @@ watch(() => direction.value,
 
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="transportSelection">
-                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
+                                  <RadioGroupLabel class="sr-only">Transport</RadioGroupLabel>
                                   <div class="grid gap-y-4">
                                     <rsvp-radio-item :options="transportOptions" />
                                   </div>
@@ -629,23 +628,24 @@ watch(() => direction.value,
                               <!-- Meal -->
                               <div class="flex gap-2">
                                 <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ foodSelection.name }}
+                                Meal Preference: {{ foodSelection.name }}
+
                               </div>
 
                               <div class="flex gap-2">
                                 <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ transportSelection.name }}
+                                Vehicle: {{ transportSelection.name }}
                               </div>
 
 
                               <div class="flex gap-2">
                                 <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ identifyAsSelection.name }}
+                                Current Occupation: {{ identifyAsSelection.name }}
                               </div>
 
                               <div class="flex gap-2">
                                 <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
-                                {{ showMeAsAttendingSelection.name }}
+                                Visibility on website: {{ showMeAsAttendingSelection.name }}
                               </div>
                             </div>
                           </div>

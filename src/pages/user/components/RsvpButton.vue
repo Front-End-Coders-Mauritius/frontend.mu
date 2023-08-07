@@ -31,10 +31,9 @@ defineProps<{
         <div v-if="$isUserLoggedIn">
             <div v-if="rsvp_check_loading">
                 <div
-                    class="relative inline-flex items-center rounded-l-md bg-white px-8 py-4 text-lg font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
+                    class="relative inline-flex items-center rounded-md bg-white px-8 py-4 text-lg font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
                     <IconLoading class="mr-4" />
                     <span class="dark:text-verse-700 text-green-600 uppercase">loading...</span>
-
                 </div>
             </div>
             <div v-else>
