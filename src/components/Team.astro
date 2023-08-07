@@ -60,6 +60,18 @@ const people = [
     imageUrl: "https://github.com/houzyk.png",
     id: "5c47169a-5073-47c8-8fc7-efbd4fe82e0d",
   },
+  {
+    name: "Noor Joomun",
+    role: "Collaborator",
+    imageUrl: "https://github.com/joomun.png",
+    id: "",
+  },
+  {
+    name: "Dereck Lam Hon Wah",
+    role: "Collaborator",
+    imageUrl: "https://github.com/derecklhw.png",
+    id: "",
+  }
 ];
 
 const speakers = await loadSpeakers();
@@ -87,7 +99,7 @@ const speakers = await loadSpeakers();
           {
             people.map((person) => (
               <li>
-                <a class="space-y-4" href={`/speaker/${person.id}`}>
+                {person.id ? <a class="space-y-4" href={`/speaker/${person.id}`}>
                   <Image
                     class="mx-auto h-20 w-20 rounded-lg border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48"
                     src={person.imageUrl}
@@ -103,7 +115,25 @@ const speakers = await loadSpeakers();
                       <p class="text-verse-600">{person.role}</p>
                     </div>
                   </div>
-                </a>
+                </a> : 
+                <div class="space-y-4">
+                  <Image
+                    class="mx-auto h-20 w-20 rounded-lg border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48"
+                    src={person.imageUrl}
+                    alt={person.name}
+                    title={person.name}
+                    width={300}
+                    height={300}
+                  />
+
+                  <div class="space-y-2">
+                    <div class="text-xs font-medium lg:text-lg text-center">
+                      <h3 class="text-verse-0">{person.name}</h3>
+                      <p class="text-verse-600">{person.role}</p>
+                    </div>
+                  </div>
+                </div>
+              }
               </li>
             ))
           }
