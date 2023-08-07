@@ -75,7 +75,7 @@ const getRsvpStatus = async () => {
   const data = await getMeetupRSVPStatus(props.meetupId)
   currentRSVPStatus.value = data
   console.log(data);
-  rsvp_is_attending.value = !!data.rsvp
+  rsvp_is_attending.value = data ? !!data && !!data.rsvp : false
   rsvp_check_loading.value = false
 }
 
