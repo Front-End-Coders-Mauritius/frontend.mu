@@ -87,7 +87,11 @@ export const setMeetupRSVP = async (
   if (existingRSVP[0]) {
     const { data, error } = await supabase
       .from("meetup_rsvp")
-      .update({ rsvp })
+      .update({
+        meta,
+        rsvp,
+        showOnSite: allowOnSite,
+      })
       .eq("id", existingRSVP[0].id);
 
     if (error) {
