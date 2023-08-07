@@ -6,7 +6,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "update-contributors": "node ./automation/update-contributors.js"
   },
   "dependencies": {
     "@astrojs/image": "^0.14.0",
