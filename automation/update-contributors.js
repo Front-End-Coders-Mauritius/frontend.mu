@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const owner = 'Front-End-Coders-Mauritius';
 const repo = 'frontendmu-astro';
-const branch = 'feature/automatic-contributors'; // Replace with the default branch of your repository
+const branch = 'main'; // Replace with the default branch of your repository
 
 const contributorsFile = './src/data/contributors.json';
 
