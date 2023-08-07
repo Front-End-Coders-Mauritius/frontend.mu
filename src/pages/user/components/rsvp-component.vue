@@ -4,15 +4,10 @@ import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser, userProfile } from "../../../store/userStore";
 
 import { getUserProfile, setMeetupRSVP, getMeetupRSVPStatus } from "../../../utils/db-helpers";
-import { isUserLoggedIn, currentUser } from "../../../store/userStore";
-import { setMeetupRSVP, getMeetupRSVPStatus } from "../../../utils/db-helpers";
 import { oAuthLogin } from '../../../utils/auth-helpers';
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { RadioGroup, RadioGroupLabel } from '@headlessui/vue'
 import { formatDate } from '../../../utils/helpers'
-
-import IconUserAvatar from "~icons/carbon/user-avatar"
-import CalendarDaysIcon from "~icons/carbon/calendar"
 
 import IconUserAvatar from "~icons/carbon/user-avatar"
 import CalendarDaysIcon from "~icons/carbon/calendar"
@@ -762,4 +757,5 @@ button:disabled {
 .slide-vertical-leave-to {
   transform: translateY(calc(var(--slide-vertical-direction) * -100px));
   opacity: 0;
-}</style>
+}
+</style>
