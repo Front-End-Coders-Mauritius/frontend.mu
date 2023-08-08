@@ -105,7 +105,7 @@ const links: TMenu = {
                     !!links[item].href.includes("https") ? "_blank" : "_self"
                   }
                 >
-                  {currentPath === links[item].href && (
+                  {currentPath.includes(links[item].href) && (
                     <span
                       style="view-transition-name: menubar"
                       class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-slate-900 dark:bg-slate-100"
