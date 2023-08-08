@@ -20,11 +20,7 @@ Make a copy of .env.example and rename it to .env.development on your local mach
 If not, the application will fail to start
 
 ```
+cp .env.example .env.development
 
 ```
-
-```
-
-```
-
 ## Feel free to contribute :D
