@@ -62,9 +62,15 @@ const {
   document.addEventListener("astro:beforeload", setDarkMode);
 </script>
 
-<VercelAnalytics />
+{
+  import.meta.env.MODE === "production" && (
+    <>
+      <VercelAnalytics />
+      <script is:inline defer src="/_vercel/insights/script.js" />
+    </>
+  )
+}
 
-<script is:inline defer src="/_vercel/insights/script.js"></script>
 <!-- <script>
 	import '../utils//navigation.js'
 </script> -->
