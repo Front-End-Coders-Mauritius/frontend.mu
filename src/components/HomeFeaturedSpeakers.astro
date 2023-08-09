@@ -51,15 +51,15 @@ const isCenter = (index, length) => {
 
               <div class="speaker-details-background inset-0 space-y-2 absolute text-center top-0 left-0 flex flex-col justify-end">
                 <div class="p-2 md:p-10 speaker-details md:opacity-0 flex flex-col items-center md:gap-2">
-                  <p class="text-slate-200 text-xs md:text-2xl block">
+                  <p class=" text-verse-200 text-xs md:text-2xl block">
                     @{person.github_account}
                   </p>
-                  <h3 class="text-slate-100 font-extrabold text-sm md:text-4xl block">
+                  <h3 class=" text-verse-100 font-extrabold text-sm md:text-4xl block">
                     {person.name}
                   </h3>
                   <a
                     href={`/speaker/${person.id}`}
-                    class="p-1text-verse-500  md:text-white  text-sm md:text-base hidden md:block bg-white/20 text-center rounded-md font-bold w-24"
+                    class="p-1 text-verse-500  md:text-white  text-sm md:text-base hidden md:block bg-white/20 text-center rounded-md font-bold w-24"
                   >
                     List talks
                   </a>
@@ -77,16 +77,16 @@ const isCenter = (index, length) => {
 
 <script is:inline>
 document.querySelectorAll(".single-photo").forEach(function (element) {
-    element.addEventListener("click", function () {
-        if (!this.classList.contains("active")) {
-            // remove all active classes
-            var actives = document.querySelectorAll(".active");
-            [].forEach.call(actives, function (elem) {
-                elem.classList.remove("active");
-            });
-        }
-        this.classList.toggle("active");
-    });
+  element.addEventListener("click", function () {
+    if (!this.classList.contains("active")) {
+      // remove all active classes
+      var actives = document.querySelectorAll(".active");
+      [].forEach.call(actives, function (elem) {
+        elem.classList.remove("active");
+      });
+    }
+    this.classList.toggle("active");
+  });
 });
 </script>
 

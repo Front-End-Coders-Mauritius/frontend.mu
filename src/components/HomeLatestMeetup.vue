@@ -71,7 +71,7 @@ const tiltOptions = {
 </script>
 
 <template>
-  <div class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 bg-slate-100 px-0">
+  <div class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 bg-verse-100 px-0">
     <div class="latest-events-wrapper mx-auto px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-5xl">
       <div class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-5xl">
         <h2 class="text-center text-black md:text-left">Upcoming meetups</h2>

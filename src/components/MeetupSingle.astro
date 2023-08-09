@@ -102,7 +102,7 @@ const getRelatedPhotoSource = (album: string) => {
                 )
               }
               <div
-                class="text-base uppercase text-verse-900 dark:text-slate-200 font-semibold"
+                class="text-base uppercase text-verse-900 dark:text-verse-200 font-semibold"
               >
                 Topic
               </div>
@@ -138,9 +138,9 @@ const getRelatedPhotoSource = (album: string) => {
               >
                 {
                   props.getCurrentEvent.Date && (
-                    <div class="border-t-2 border-verse-100 pt-6">
+                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
                       <dt class="text-base font-medium text-verse-500">Date</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                         {new Date(props.getCurrentEvent.Date).toDateString()}
                       </dd>
                     </div>
@@ -148,11 +148,11 @@ const getRelatedPhotoSource = (album: string) => {
                 }
                 {
                   props.getCurrentEvent.Venue && (
-                    <div class="border-t-2 border-verse-100 pt-4 md:pt-6">
+                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">
                         Venue
                       </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                         {props.getCurrentEvent.Venue}
                       </dd>
                     </div>
@@ -160,9 +160,9 @@ const getRelatedPhotoSource = (album: string) => {
                 }
                 {
                   props.getCurrentEvent.Time && (
-                    <div class="border-t-2 border-verse-100 pt-4 md:pt-6">
+                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">Time</dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                         {props.getCurrentEvent.Time}
                       </dd>
                     </div>
@@ -170,11 +170,11 @@ const getRelatedPhotoSource = (album: string) => {
                 }
                 {
                   props.getCurrentEvent.Location && (
-                    <div class="border-t-2 border-verse-100 pt-4 md:pt-6">
+                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
                       <dt class="text-base font-medium text-verse-500">
                         Location
                       </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                         {props.getCurrentEvent.Location}
                       </dd>
                     </div>
@@ -182,11 +182,14 @@ const getRelatedPhotoSource = (album: string) => {
                 }
                 {
                   props.getCurrentEvent.Attendees && (
-                    <div v-if="" class="border-t-2 border-verse-100 pt-6">
+                    <div
+                      v-if=""
+                      class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6"
+                    >
                       <dt class="text-base font-medium text-verse-500">
                         Seats Limit
                       </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                         {props.getCurrentEvent.Attendees}
                       </dd>
                     </div>
@@ -232,7 +235,9 @@ const getRelatedPhotoSource = (album: string) => {
                 </script>
 
                 <!-- Share Buttons -->
-                <div class="border-y-2 border-verse-100 pt-4 md:pt-6">
+                <div
+                  class="border-y-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6"
+                >
                   <dt class="text-base font-medium text-verse-500">Share</dt>
                   <div class="flex gap-8 py-4">
                     <button
@@ -284,8 +289,8 @@ const getRelatedPhotoSource = (album: string) => {
                 <!-- RSVP Button -->
                 {
                   isUpcoming() && (
-                    <div class="md:border-t-2 border-verse-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
+                    <div class="md:border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
+                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                         {props.getCurrentEvent.rsvplink && (
                           <FecAnchor href={props.getCurrentEvent.rsvplink}>
                             Book my seat

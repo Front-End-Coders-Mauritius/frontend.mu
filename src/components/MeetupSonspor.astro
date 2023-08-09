@@ -13,7 +13,7 @@ let sponsorTypeMap = {
   {
     props.sponsors && props.sponsors.length > 0 && (
       <>
-        <div class="text-base uppercase text-verse-900 dark:text-slate-200 font-semibold mb-4">
+        <div class="text-base uppercase text-verse-900 dark:text-verse-200 font-semibold mb-4">
           Sponsor(s)
         </div>
         <div class="flex flex-col md:flex-row justify-start items-start gap-2 md:gap-4">
@@ -21,8 +21,8 @@ let sponsorTypeMap = {
             <div
               class:list={[
                 sponsor.Sponsor_id.darkbg
-                  ? "bg-slate-900/90 text-slate-100"
-                  : "bg-white text-slate-800",
+                  ? "bg-verse-900/90 text-verse-100"
+                  : "bg-white text-verse-800",
                 "p-4 items-center shadow-md rounded-lg flex flex-wrap justify-center gap-4 text-xs",
               ]}
             >
