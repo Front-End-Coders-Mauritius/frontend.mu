@@ -1,9 +1,8 @@
 ---
-
-import IconLocation from "~icons/carbon/location"
-import IconArrowUpRight from "~icons/carbon/arrow-up-right"
-import IconCalendar from "~icons/carbon/calendar"
-import IconGroup from "~icons/solar/users-group-rounded-bold"
+import IconLocation from "~icons/carbon/location";
+import IconArrowUpRight from "~icons/carbon/arrow-up-right";
+import IconCalendar from "~icons/carbon/calendar";
+import IconGroup from "~icons/solar/users-group-rounded-bold";
 
 import { format } from "date-fns";
 import { getPhotos, photoAlbumSource } from "../utils/api";
@@ -80,7 +79,7 @@ let currentAlbum = fetchAlbumDetails();
   title={hasAlbum() ? "has album" : "no album"}
 >
   <div
-    class="flex flex-col md:flex-row justify-between w-full  transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"
+    class="flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-verse-400"
   >
     <div class="relative flex flex-col p-4 gap-2">
       <!-- Date -->
@@ -108,7 +107,7 @@ let currentAlbum = fetchAlbumDetails();
         <a
           href={`meetup/${event.id}`}
           class="w-[300px] md:w-96 focus:outline-none"
-          style={vTransitionName('session-title',event.id)}
+          style={vTransitionName("session-title", event.id)}
         >
           <span class="absolute inset-0" aria-hidden="true"></span>
           {event?.title}
