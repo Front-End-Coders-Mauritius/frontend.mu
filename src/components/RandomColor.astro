@@ -2,18 +2,6 @@
 import PainBucketIcon from "~icons/game-icons/paint-bucket";
 ---
 
-<div class="hidden lg:block px-4">
-  <div
-    title="Press CTRL + Space to get a new color"
-    class="random-color-icon w-8 h-8 text-verse-500 dark:text-verse-300 dark:hover:text-verse-200 hover:text-verse-400 transition-colors duration-200 select-none cursor-pointer"
-    onclick="
-    randomColor()
-    "
-  >
-    <PainBucketIcon class="w-8 h-8" />
-  </div>
-</div>
-
 <script is:inline>
 // Random color
 function randomColor() {
@@ -33,3 +21,13 @@ document.addEventListener("keydown", (event) => {
     }
 });
 </script>
+
+<div class="hidden lg:block px-4">
+  <div
+    title="Press CTRL + Space to get a new color"
+    class="random-color-icon w-8 h-8 text-verse-500 dark:text-verse-300 dark:hover:text-verse-200 hover:text-verse-400 transition-colors duration-200 select-none cursor-pointer"
+    onclick="randomColor()"
+  >
+    <PainBucketIcon class="w-8 h-8" />
+  </div>
+</div>
