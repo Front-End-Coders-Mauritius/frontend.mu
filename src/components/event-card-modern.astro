@@ -52,7 +52,7 @@ const isUpcoming = () => {
             title={isUpcoming() ? "Upcoming" : "Past"}
             class:list={[
               isUpcoming()
-                ? "bg-gray-50 text-gray-700 dark:bg-transparent text-verse-500 dark:font-bold"
+                ? "bg-gray-50 text-gray-700 dark:bg-transparent text-verse-500 dark:text-verse-400  dark:font-bold"
                 : "bg-green-50 text-green-600 font-bold",
               "inline-flex rounded-lg p-[0.35rem] md:p-3 font-mono text-sm font-medium items-center",
             ]}
@@ -66,7 +66,7 @@ const isUpcoming = () => {
 
     <!-- Title -->
     <h3
-      class="leading-2 text-xl font-semibold flex-1 py-2 text-verse-0 group-hover:text-verse-500 dark:group-hover:text-verse-100"
+      class="leading-2 text-xl font-semibold flex-1 py-2 text-verse-500 dark:text-verse-400 group-hover:text-verse-500 dark:group-hover:text-verse-100"
     >
       <a
         href={`meetup/${event.id}`}

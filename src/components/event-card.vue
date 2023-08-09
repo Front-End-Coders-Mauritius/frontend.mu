@@ -20,6 +20,7 @@ interface Meetup {
   Time: string;
   images?: [];
   gallery?: [];
+  seats_available: number
 }
 
 const props = defineProps({
@@ -58,7 +59,7 @@ const tiltOptions = {
         class="w-32 z-0 transition-all hidden md:block select-none top-0 saturate-100 opacity-100 overflow-hidden" />
       <!-- <div class="w-64 top-0 h-64 z-10 bg-gradient-to-t from-white to-transparent absolute">&nbsp;</div> -->
 
-      <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-0">
+      <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-600 dark:text-verse-300">
         <a :href="`meetup/${props.event.id}`" class="w-[300px] md:w-96 focus:outline-none">
           <span class="absolute inset-0" aria-hidden="true" />
           {{ event?.title }}
@@ -76,10 +77,10 @@ const tiltOptions = {
 
         <div class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500 dark:text-gray-100">
           <IconGroup class="mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500 dark:text-gray-100" aria-hidden="true" />
-          <div v-if="event?.Attendees !== 0" class="line-clamp-1 md:line-clamp-0">
+          <div v-if="event && (event?.Attendees !== 0)" class="line-clamp-1 md:line-clamp-0">
             Attendees {{ event?.Attendees }}
           </div>
-          <div v-else>Seats: {{ event?.Attendees }}</div>
+          <div v-else>Seats: {{ event?.seats_available }}</div>
         </div>
 
         <div v-if="props.event.Venue"

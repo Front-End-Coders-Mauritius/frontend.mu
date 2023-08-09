@@ -1,5 +1,6 @@
 ---
 import sponsors from "../data/sponsors.js";
+import { vTransitionName } from "../utils/helpers";
 import HeaderLink from "./HeaderLink.astro";
 ---
 
@@ -10,9 +11,7 @@ import HeaderLink from "./HeaderLink.astro";
         <div
           class="relative z-20 mx-auto grid grid-cols-1 gap-8 md:flex-row h-full justify-center max-w-6xl px-12"
         >
-          <div
-            class="flex flex-col justify-center text-center gap-10"
-          >
+          <div class="flex flex-col justify-center text-center gap-10">
             <h1
               class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
             >
@@ -22,7 +21,9 @@ import HeaderLink from "./HeaderLink.astro";
               >
             </h1>
             <!-- <flip-book class="mt-[-16%] md:mt-[-12%]" /> -->
-            <p class="text-md md:text-lg text-black dark:text-slate-300 font-mono font-bold">
+            <p
+              class="text-md md:text-lg text-black dark:text-slate-300 font-mono font-bold"
+            >
               We're lucky to have sponsors support our community. If you're
               interested in sponsoring us, please reach out to us <a
                 href="mailto:hello@frontend.mu"
@@ -47,14 +48,17 @@ import HeaderLink from "./HeaderLink.astro";
                     title={sponsor.description}
                     target="_blank"
                     href={sponsor.sponsorUrl}
-                    class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-between items-center flex-col gap-4 group bg-white dark:bg-white/50 dark:backdrop-blur-sm p-6 shadow-md transition-all hover:shadow-lg"
+                    class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-between items-center flex-col gap-4 group bg-white dark:bg-verse-200 dark:backdrop-blur-sm p-6 shadow-md transition-all hover:shadow-lg"
                   >
                     <div>
-                      <span class="text-2xl font-bold text-center w-full block dark:text-white">{sponsor.name}</span>
+                      <span class="text-2xl font-bold text-center w-full block dark:text-verse-900">
+                        {sponsor.name}
+                      </span>
                     </div>
                     <img
                       src={`/img/sponsors/${sponsor.logo}`}
                       alt={sponsor.description}
+                      style={vTransitionName("sponsor-name", sponsor.name)}
                     />
                     <div
                       v-if="sponsor.description"

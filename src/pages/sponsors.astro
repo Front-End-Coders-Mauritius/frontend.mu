@@ -2,6 +2,7 @@
 import BaseHeading from "../components/base/BaseHeading.astro";
 import sponsorTypes from "../data/sponsors.js";
 import Layout from "../layouts/LayoutCustom.astro";
+import { vTransitionName } from "../utils/helpers";
 const title = "Our sponsors";
 const description = "";
 ---
@@ -13,7 +14,7 @@ const description = "";
         <div class="space-y-8 sm:space-y-12">
           <div class="space-y-5 text-center sm:mx-auto sm:space-y-4">
             <BaseHeading>Sponsors</BaseHeading>
-            <p class="text-xl text-gray-500">
+            <p class="text-xl text-verse-600 dark:text-verse-200">
               We're lucky to have sponsors support our community. If you're
               interested in sponsoring us, please reach out to the organizers <a
                 href="mailto:hello@frontend.mu"
@@ -26,10 +27,10 @@ const description = "";
               sponsorTypes.map((sponsorType) => (
                 <div class="flex flex-col">
                   <div class="space-y-5 sm:mx-auto sm:space-y-2 ">
-                    <h3 class="text-3xl font-bold tracking-tight text-center md:text-left sm:text-4xl sm:tracking-tight text-verse-0">
+                    <h3 class="text-3xl font-bold tracking-tight text-center md:text-left sm:text-4xl sm:tracking-tight text-verse-500 dark:text-verse-200">
                       {sponsorType.title}
                     </h3>
-                    <p class="max-w-2xl text-xl text-gray-500">
+                    <p class="max-w-2xl text-xl text-verse-600 dark:text-verse-200">
                       {sponsorType.description}
                     </p>
                   </div>
@@ -48,6 +49,10 @@ const description = "";
                             v-if="sponsor.logo"
                             class="w-48 h-auto"
                             src={`/img/sponsors/${sponsor.logo}`}
+                            style={vTransitionName(
+                              "sponsor-name",
+                              sponsor.name
+                            )}
                           />
                           <div v-else>
                             <span class="text-2xl font-bold">
