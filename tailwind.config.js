@@ -57,7 +57,7 @@ module.exports = {
 					900: 'var(--color-brand-900)',
 					950: 'var(--color-brand-950)',
 				},
-				verse: {
+				oldverse: {
 					0: 'var(--color-verse-0)',
 					50: 'var(--color-verse-50)',
 					100: 'var(--color-verse-100)',
@@ -70,6 +70,20 @@ module.exports = {
 					800: 'var(--color-verse-800)',
 					900: 'var(--color-verse-900)',
 					950: 'var(--color-verse-950)',
+				},
+				verse: {
+					0: 'var(--color-primary-0)',
+					50: 'var(--color-primary-50)',
+					100: 'var(--color-primary-100)',
+					200: 'var(--color-primary-200)',
+					300: 'var(--color-primary-300)',
+					400: 'var(--color-primary-400)',
+					500: 'var(--color-primary-500)',
+					600: 'var(--color-primary-600)',
+					700: 'var(--color-primary-700)',
+					800: 'var(--color-primary-800)',
+					900: 'var(--color-primary-900)',
+					950: 'var(--color-primary-950)',
 				},
 				custom: {
 					background_primary: 'var(--background-primary)',
