@@ -58,18 +58,18 @@ body {
   --color-verse-950: hsl(var(--brand-hue), 10%, calc(5% - var(--light-threshold)));
 
 
-  --color-primary-0: 255 255 255;
-  --color-primary-50: 223 47% 97%;
-  --color-primary-100: 223 44% 94%;
-  --color-primary-200: 215 41% 86%;
-  --color-primary-300: 216 43% 74%;
-  --color-primary-400: 214 41% 60%;
-  --color-primary-500: 214 39% 45%;
-  --color-primary-600: 216 43% 39%;
-  --color-primary-700: 217 43% 32%;
-  --color-primary-800: 216 40% 27%;
-  --color-primary-900: 217 36% 24%;
-  --color-primary-950: 219 36% 16%;
+  --color-primary-0: var(--brand-hue) 255 255;
+  --color-primary-50: var(--brand-hue) 47% 97%;
+  --color-primary-100: var(--brand-hue) 44% 94%;
+  --color-primary-200: var(--brand-hue) 41% 86%;
+  --color-primary-300: var(--brand-hue) 43% 74%;
+  --color-primary-400: var(--brand-hue) 41% 60%;
+  --color-primary-500: var(--brand-hue) 39% 45%;
+  --color-primary-600: var(--brand-hue) 43% 39%;
+  --color-primary-700: var(--brand-hue) 43% 32%;
+  --color-primary-800: var(--brand-hue) 40% 27%;
+  --color-primary-900: var(--brand-hue) 36% 24%;
+  --color-primary-950: var(--brand-hue) 36% 16%;
   
 }
 

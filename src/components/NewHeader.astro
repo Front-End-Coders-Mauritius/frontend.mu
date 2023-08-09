@@ -1,11 +1,13 @@
 ---
 import LogoFec from "../components/LogoFec.astro";
 import ToggleTheme from "../components/toggle-theme.vue";
+import RandomColor from "../components/RandomColor.astro";
 import LoggedUser from "./LoggedUser.vue";
 import MainMenu from "./MegaMenu.astro";
 ---
 
 <MainMenu>
+  <RandomColor slot="dock-right" client:load />
   <ToggleTheme slot="dock-right" client:load />
   <LoggedUser slot="dock-right" client:load />
 </MainMenu>
