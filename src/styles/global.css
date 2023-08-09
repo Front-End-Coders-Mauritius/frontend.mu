@@ -16,7 +16,7 @@
 
 html {
   /* These values can be overriden by specifying different custom properties on the body using JavaScript. */
-  --brand-hue: 160;
+  --brand-hue: 223;
   --brand-saturation: 80%;
   --brand-lightness: 0%;
 
