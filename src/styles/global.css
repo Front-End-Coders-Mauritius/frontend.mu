@@ -101,17 +101,18 @@ body[color-scheme="dark"] {
   --color-verse-950: hsl(var(--brand-hue),7%, calc((var(--dark-threshold)) + 40%));
 
   --color-primary-0: hsl(223, 50%, 100%);
-  --color-primary-50: hsl(223, 47%, 97%);
-  --color-primary-100: hsl(227, 44%, 94%);
-  --color-primary-200: hsl(221, 41%, 86%);
-  --color-primary-300: hsl(219, 43%, 74%);
-  --color-primary-400: hsl(219, 42%, 60%);
-  --color-primary-500: hsl(219, 39%, 45%);
-  --color-primary-600: hsl(220, 43%, 39%);
-  --color-primary-700: hsl(221, 43%, 32%);
-  --color-primary-800: hsl(222, 40%, 27%);
+  --color-primary-50: #fff0f2;
+  --color-primary-100:#ffe3e6;
+  --color-primary-200:#ffcbd3;
+  --color-primary-300:#ffa0b0;
+  --color-primary-400:#ff6b87;
+  --color-primary-500:#fc2754;
+  --color-primary-600:#ea144c;
+  --color-primary-700:#c60a40;
+  --color-primary-800:#a50c3c;
   --color-primary-900: hsl(222, 36%, 24%);
-  --color-primary-950: hsl(226, 36%, 16%);
+  --color-primary-950:#4f021b;
+
 }
 
 /* body[color-scheme="dark"] .bg-white {

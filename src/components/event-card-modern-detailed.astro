@@ -89,7 +89,9 @@ let currentAlbum = fetchAlbumDetails();
             <span
               title={isUpcoming() ? "Upcoming" : "Past"}
               class:list={[
-                isUpcoming() ? "text-verse-900" : "text-green-600 font-bold",
+                isUpcoming()
+                  ? "text-verse-900 dark:text-verse-300"
+                  : "text-green-600 font-bold",
                 "flex font-mono text-sm font-medium items-center",
               ]}
             >
@@ -117,9 +119,9 @@ let currentAlbum = fetchAlbumDetails();
       <div class="flex gap-4 pr-4 border-gray-100">
         {
           event.Venue && (
-            <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
+            <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-verse-600 dark:text-verse-200">
               <IconLocation
-                class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-verse-600 dark:text-verse-200"
                 aria-hidden="true"
               />
               <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
@@ -130,13 +132,13 @@ let currentAlbum = fetchAlbumDetails();
         }
 
         <div
-          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
+          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-verse-600 dark:text-verse-200"
         >
           {
             event.Attendees && (
               <div class="flex items-center" title="Attendees">
                 <IconGroup
-                  class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                  class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-verse-600 dark:text-verse-200"
                   aria-hidden="true"
                 />
                 <div class="pt-[2px] line-clamp-1 md:line-clamp-0">

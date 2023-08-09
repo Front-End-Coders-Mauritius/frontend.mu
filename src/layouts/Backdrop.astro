@@ -1,13 +1,14 @@
 ---
 import BackgroundShapes from "../components/BackgroundShapes.astro";
-
 ---
 
-<div class="bg-slate-100 dark:bg-slate-900 relative min-h-[100dvh]">
-    <div class="relative z-0">
-        <BackgroundShapes />
-    </div>
-    <div class="relative z-10  min-h-[100dvh]">
-        <slot />
-    </div>
+<div
+  class="bg-slate-100 dark:bg-verse-950 backdrop-brightness-200 relative min-h-[100dvh]"
+>
+  <div class="relative z-0">
+    <BackgroundShapes />
+  </div>
+  <div class="relative z-10 min-h-[100dvh]">
+    <slot />
+  </div>
 </div>

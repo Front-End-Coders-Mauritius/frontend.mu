@@ -1,84 +1,79 @@
 ---
 import SocialCard from "./SocialCard.astro";
-import IconDiscord from "./icons/icon-discord.astro"
-import IconGithub from "./icons/icon-github.astro"
-import IconWhatsapp from "./icons/IconWhatsappCommunity.astro"
-import IconTwitter from "./icons/icon-twitter.astro"
-import IconInstagram from "./icons/icon-instagram.astro"
-import IconLinkedin from "./icons/icon-linkedin.astro"
-
-
+import IconDiscord from "./icons/icon-discord.astro";
+import IconGithub from "./icons/icon-github.astro";
+import IconWhatsapp from "./icons/IconWhatsappCommunity.astro";
+import IconTwitter from "./icons/icon-twitter.astro";
+import IconInstagram from "./icons/icon-instagram.astro";
+import IconLinkedin from "./icons/icon-linkedin.astro";
 ---
 
-<div class="bg-slate-950 dark:bg-slate-800">
-    <div
+<div class="bg-verse-950 dark:bg-verse-800">
+  <div
     class="max-w-6xl mx-auto py-24 grid gap-8 grid-rows-4 grid-cols-0 md:grid-cols-2 md:grid-rows-none px-8 md:px-16"
-    >
+  >
     <SocialCard
-        href="https://discord.gg/WxXW9Jvv6k"
-        class="bg-[#5865f2] text-sm md:text-normal"
+      href="https://discord.gg/WxXW9Jvv6k"
+      class="bg-[#5865f2] text-sm md:text-normal"
     >
-        <p slot="tagline">Discord</p>
-        <p slot="description">Join the community, ask questions, livestream, chill!
-        </p>
-        
-        <IconDiscord class="w-14 md:w-16" slot="icon"/>
-        
+      <p slot="tagline">Discord</p>
+      <p slot="description">
+        Join the community, ask questions, livestream, chill!
+      </p>
+
+      <IconDiscord class="w-14 md:w-16" slot="icon" />
     </SocialCard>
 
     <SocialCard
-        href="https://github.com/Front-End-Coders-Mauritius"
-        class="bg-[#333] text-sm md:text-normal"
+      href="https://github.com/Front-End-Coders-Mauritius"
+      class="bg-[#333] text-sm md:text-normal"
     >
-        <p slot="tagline">GitHub</p>
-        <p slot="description">The home of FEC projects</p>
-        
-        <IconGithub class="w-12 md:w-16" slot="icon"/>
-        
+      <p slot="tagline">GitHub</p>
+      <p slot="description">The home of FEC projects</p>
+
+      <IconGithub class="w-12 md:w-16" slot="icon" />
     </SocialCard>
 
     <SocialCard
-        href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
-        class="bg-[#25D366] text-sm md:text-normal"
+      href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
+      class="bg-[#25D366] text-sm md:text-normal"
     >
-        <p slot="tagline">Whatsapp Community</p>
-        <p slot="description">Join this community to stay informed about our events</p>
-        
-        <IconWhatsapp class="w-14 md:w-16 p-2" slot="icon"/>
+      <p slot="tagline">Whatsapp Community</p>
+      <p slot="description">
+        Join this community to stay informed about our events
+      </p>
+
+      <IconWhatsapp class="w-14 md:w-16 p-2" slot="icon" />
     </SocialCard>
 
     <SocialCard
-        href="https://twitter.com/frontendmu"
-        class="bg-[#1DA1F2] text-sm md:text-normal"
+      href="https://twitter.com/frontendmu"
+      class="bg-[#1DA1F2] text-sm md:text-normal"
     >
-        <p slot="tagline">Twitter</p>
-        <p slot="description">Short-form updates from us.</p>
-        
-        <IconTwitter class="w-14 md:w-16 p-2" slot="icon"/>
-        
+      <p slot="tagline">Twitter</p>
+      <p slot="description">Short-form updates from us.</p>
+
+      <IconTwitter class="w-14 md:w-16 p-2" slot="icon" />
     </SocialCard>
 
     <SocialCard
-        href="https://instagram.com/frontend.mu"
-        class="bg-[#d6249f] text-sm md:text-normal"
+      href="https://instagram.com/frontend.mu"
+      class="bg-[#d6249f] text-sm md:text-normal"
     >
-        <p slot="tagline">Instagram</p>
-        <p slot="description">Pictures of frontend coders.</p>
-        
-        <IconInstagram class="w-14 md:w-16 p-2" slot="icon"/>
-        
+      <p slot="tagline">Instagram</p>
+      <p slot="description">Pictures of frontend coders.</p>
+
+      <IconInstagram class="w-14 md:w-16 p-2" slot="icon" />
     </SocialCard>
 
     <SocialCard
-        href="https://www.linkedin.com/company/81846464/admin/"
-        class="bg-[#007db1] text-sm md:text-normal"
+      href="https://www.linkedin.com/company/81846464/admin/"
+      class="bg-[#007db1] text-sm md:text-normal"
     >
-        <p slot="tagline">LinkedIn Page</p>
-        <p slot="description">For those who don't use facebook and discord
-        </p>
-        
-        <IconLinkedin class="w-14 md:w-16" slot="icon"/>
-        
+      <p slot="tagline">LinkedIn Page</p>
+      <p slot="description">For those who don't use facebook and discord</p>
+
+      <IconLinkedin class="w-14 md:w-16" slot="icon" />
     </SocialCard>
-    </div>
+  </div>
 </div>
