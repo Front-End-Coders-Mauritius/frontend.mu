@@ -28,7 +28,7 @@ const seatsTakenPercentage = computed(() => {
 })
 
 const showAsFrom = computed(() => {
-  const threshold = 30
+  const threshold = 0
   if (seatsTakenPercentage.value && seatsTakenPercentage.value > threshold) {
     return true
   }
@@ -53,7 +53,7 @@ onMounted(async () => {
       <h2 class="text-2xl font-bold">
         Attendees <span v-if="attendeeList">({{ attendeeList.length }})</span>
       </h2>
-      <div class="w-full bg-verse-500/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
+      <div class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
         <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`">
 
         </div>

@@ -198,8 +198,6 @@ onMounted(async () => {
       dataCarrier = data;
     }
 
-    console.log(currentRSVPStatus.value);
-
     foodSelection.value = dataCarrier.meal
       ? foodOptions.find((option) => {
           return option.value === dataCarrier.meal;
@@ -273,7 +271,7 @@ watch(
       {{ $session }}
     </pre> -->
     <!-- Modal Stuff -->
-    <TransitionRoot as="template" :show="open">
+      <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="relative z-10" @close="open = false">
         <TransitionChild
           as="template"
@@ -453,7 +451,7 @@ watch(
 
                         <div class="grid gap-y-6 auto-rows-min">
                           <!-- Meal -->
-                          <div class="flex gap-4">
+                          <div class="flex gap-4" v-if="foodSelection">
                             <component
                               :is="foodSelection.icon"
                               class="h-6 w-6"
@@ -462,7 +460,7 @@ watch(
                             {{ foodSelection.name }}
                           </div>
 
-                          <div class="flex gap-4">
+                          <div class="flex gap-4" v-if="transportSelection">
                             <component
                               :is="transportSelection.icon"
                               class="h-6 w-6"
@@ -471,7 +469,7 @@ watch(
                             {{ transportSelection.name }}
                           </div>
 
-                          <div class="flex gap-4">
+                          <div class="flex gap-4" v-if="identifyAsSelection">
                             <component
                               :is="identifyAsSelection.icon"
                               class="h-6 w-6"
@@ -480,7 +478,7 @@ watch(
                             {{ identifyAsSelection.name }}
                           </div>
 
-                          <div class="flex gap-4">
+                          <div class="flex gap-4" v-if="showMeAsAttendingSelection">
                             <component
                               :is="showMeAsAttendingSelection.icon"
                               class="h-6 w-6"
@@ -508,7 +506,7 @@ watch(
                                   >What's your food preference?</span
                                 >
 
-                                <span class="flex items-center gap-2 text-lg">
+                                <span class="flex items-center gap-2 text-lg"  v-if="foodSelection">
                                   <component
                                     :is="foodSelection.icon"
                                     class="h-6 w-6"
@@ -541,7 +539,7 @@ watch(
                                   >How are you getting there?</span
                                 >
 
-                                <span class="flex items-center gap-2 text-lg">
+                                <span class="flex items-center gap-2 text-lg"  v-if="transportSelection">
                                   <component
                                     :is="transportSelection.icon"
                                     class="h-6 w-6"
@@ -575,7 +573,7 @@ watch(
                                   class="text-xl text-slate-500 font-normal mb-4"
                                   >What is your occupation?</span
                                 >
-                                <span class="flex items-center gap-2 text-lg">
+                                <span class="flex items-center gap-2 text-lg" v-if="identifyAsSelection">
                                   <component
                                     :is="identifyAsSelection.icon"
                                     class="h-6 w-6"
@@ -608,7 +606,7 @@ watch(
                               data-show
                               class="grid w-full gap-y-4 items-center"
                             >
-                              <dt class="flex gap-2 justify-center">
+                              <dt class="flex gap-2 justify-center" v-if="showMeAsAttendingSelection">
                                 <span class="sr-only">Show on site</span>
                                 <component
                                   :is="showMeAsAttendingSelection.icon"
@@ -798,7 +796,7 @@ watch(
                             <div
                               class="flex w-full items-center flex-none gap-x-4"
                             >
-                              <dt class="flex-none">
+                              <dt class="flex-none" v-if="identifyAsSelection">
                                 <span class="sr-only">Occupation</span>
                                 <component
                                   :is="identifyAsSelection.icon"
@@ -823,7 +821,7 @@ watch(
                             <div
                               class="flex w-full items-center flex-none gap-x-4"
                             >
-                              <dt class="flex-none">
+                              <dt class="flex-none" v-if="showMeAsAttendingSelection">
                                 <span class="sr-only">Show on site</span>
                                 <component
                                   :is="showMeAsAttendingSelection.icon"
@@ -854,7 +852,7 @@ watch(
                           <div class="flex flex-col gap-6" v-else>
                             <div class="grid grid-cols-2 gap-4">
                               <!-- Meal -->
-                              <div class="flex gap-2">
+                              <div class="flex gap-2" v-if="foodSelection">
                                 <component
                                   :is="foodSelection.icon"
                                   class="h-6 w-6"
@@ -863,7 +861,7 @@ watch(
                                 Meal Preference: {{ foodSelection.name }}
                               </div>
 
-                              <div class="flex gap-2">
+                              <div class="flex gap-2" v-if="transportSelection">
                                 <component
                                   :is="transportSelection.icon"
                                   class="h-6 w-6"
@@ -872,7 +870,7 @@ watch(
                                 Vehicle: {{ transportSelection.name }}
                               </div>
 
-                              <div class="flex gap-2">
+                              <div class="flex gap-2" v-if="identifyAsSelection">
                                 <component
                                   :is="identifyAsSelection.icon"
                                   class="h-6 w-6"
@@ -882,7 +880,7 @@ watch(
                                 {{ identifyAsSelection.name }}
                               </div>
 
-                              <div class="flex gap-2">
+                              <div class="flex gap-2" v-if="showMeAsAttendingSelection">
                                 <component
                                   :is="showMeAsAttendingSelection.icon"
                                   class="h-6 w-6"

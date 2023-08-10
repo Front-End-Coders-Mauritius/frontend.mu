@@ -13,12 +13,17 @@ defineProps({
             name: string
             value: boolean
         }[]>,
+    },
+    returnValueOnly: {
+        required: false,
+        type: Boolean,
+        default: false
     }
 })
 </script>
 
 <template>
-    <RadioGroupOption as="template" v-for="option in options" :key="option.name" :value="option"
+    <RadioGroupOption as="template" v-for="option in options" :key="option.name" :value="returnValueOnly ? option.value : option"
         v-slot="{ active, checked }">
         <div :class="[
             active ? '' : '',

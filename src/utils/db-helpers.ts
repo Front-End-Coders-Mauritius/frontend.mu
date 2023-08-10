@@ -31,14 +31,15 @@ export const updateUserProfile = async (profile: Partial<User>) => {
   const { data, error } = await supabase
     .from("profiles")
     .update(profile)
-    .eq("id", userProfileData?.id);
+    .eq("id", userProfileData?.id)
+    .select("*")
 
   if (error) {
     console.log(error);
     return null;
   }
 
-  return data;
+  return data[0];
 };
 
 /* Meetup RSVP Functions */

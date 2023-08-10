@@ -303,7 +303,7 @@ const getRelatedPhotoSource = (album: string) => {
         <div class="contain">
           <RsvpAttendeeList
             client:only
-            seatCapacity={props.getCurrentEvent.Attendees}
+            seatCapacity={props.getCurrentEvent.seats_available}
             meetupId={props.routeId}
           />
         </div>
