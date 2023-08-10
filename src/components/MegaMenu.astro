@@ -1,9 +1,5 @@
 ---
 import LogoFec from "../components/LogoFec.astro";
-import ToggleTheme from "../components/toggle-theme.vue";
-import MainMenu from "./MainMenu.astro";
-import { CalendarIcon, ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
-
 import ExternalLinkIcon from "~icons/carbon/launch";
 
 // get current route astro
@@ -76,10 +72,10 @@ const links: TMenu = {
   <div class="megamenu theme-light w-full">
     <div class="flex justify-between items-center">
       <div class="flex">
-        <a href="/" class="flex gap-2">
-          <LogoFec class="megamenu-brand__icon w-10" />
+        <a href="/" class="flex gap-2 text-verse-500 dark:text-verse-200">
+          <LogoFec class="w-10" />
           <span
-            class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl text-verse-500 md:block"
+            class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl md:block"
           >
             frontend.mu
           </span>
@@ -95,7 +91,10 @@ const links: TMenu = {
                 class:list={[
                   links[item].children && "nav-link-dropdown",
                   links[item].class,
-                  "nav-link dark:text-white",
+                  currentPath.includes(links[item].href)
+                    ? "dark:text-white"
+                    : "text-verse-700 dark:text-verse-300",
+                  "nav-link",
                 ]}
               >
                 <a
@@ -108,7 +107,7 @@ const links: TMenu = {
                   {currentPath.includes(links[item].href) && (
                     <span
                       style="view-transition-name: menubar"
-                      class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-slate-900 dark:bg-slate-100"
+                      class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-verse-700 dark:bg-verse-100"
                     />
                   )}
 
@@ -133,7 +132,7 @@ const links: TMenu = {
                                     ? "_blank"
                                     : "_self"
                                 }
-                                class="hover:bg-slate-100 rounded-md block p-2"
+                                class="hover:bg-verse-100 rounded-md block p-2"
                               >
                                 <>
                                   <div class="flex gap-2">
@@ -178,10 +177,10 @@ function makeHeaderSticky() {
       if (!header) return;
       if (entry.isIntersecting) {
         header.classList.remove("intersect");
-        console.log("intersecting");
+        // console.log("intersecting");
       } else {
         header.classList.add("intersect");
-        console.log("not intersecting");
+        // console.log("not intersecting");
       }
     });
   }

@@ -71,45 +71,35 @@ const tiltOptions = {
 </script>
 
 <template>
-  <div
-       class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 bg-slate-100 px-0">
-    <div
-         class="latest-events-wrapper mx-auto px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-5xl">
-      <div
-           class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-5xl">
+  <div class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 bg-verse-100 px-0">
+    <div class="latest-events-wrapper mx-auto px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-5xl">
+      <div class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-5xl">
         <h2 class="text-center text-black md:text-left">Upcoming meetups</h2>
       </div>
 
       <!-- <Tilt :options="tiltOptions"> -->
 
-      <div
-           class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">
-        <template
-                  v-for="(event, eventID) in (upcomingData as any)"
-                  :key="eventID">
+      <div class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">
+        <template v-for="(event, eventID) in (upcomingData as any)" :key="eventID">
           <event-card :event="event" />
         </template>
       </div>
 
       <!-- </Tilt> -->
 
-      <div
-           class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-4xl">
+      <div class="py-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:py-8 md:text-4xl">
         <h2 class="text-center text-black md:text-left">Recent meetups</h2>
       </div>
 
       <div class="sm:grid sm:grid-cols-2 gap-8 px-4 md:px-0">
-        <template
-                  v-for="(event, eventID) in (filteredData as any)"
-                  :key="eventID">
+        <template v-for="(event, eventID) in (filteredData as any)" :key="eventID">
           <small-event-card :event="event" />
         </template>
       </div>
 
       <div class="flex h-32 items-center justify-center">
-        <a
-           href='/meetups'
-           class="text-md w-48 rounded-md bg-brand-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl">
+        <a href='/meetups'
+          class="text-md w-48 rounded-md bg-verse-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl">
           View all meetups
         </a>
       </div>

@@ -30,6 +30,7 @@
   "devDependencies": {
     "@astrojs/vue": "^2.2.1",
     "@iconify-json/carbon": "^1.1.19",
+    "@iconify-json/game-icons": "^1.1.2",
     "@iconify-json/ph": "^1.1.6",
     "@iconify-json/solar": "^1.1.2",
     "@iconify-json/system-uicons": "^1.1.9",

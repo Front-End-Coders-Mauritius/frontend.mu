@@ -1,9 +1,8 @@
 ---
-
-import IconLocation from "~icons/carbon/location"
-import IconArrowUpRight from "~icons/carbon/arrow-up-right"
-import IconCalendar from "~icons/carbon/calendar"
-import IconGroup from "~icons/solar/users-group-rounded-bold"
+import IconLocation from "~icons/carbon/location";
+import IconArrowUpRight from "~icons/carbon/arrow-up-right";
+import IconCalendar from "~icons/carbon/calendar";
+import IconGroup from "~icons/solar/users-group-rounded-bold";
 
 import { format } from "date-fns";
 import { getPhotos, photoAlbumSource } from "../utils/api";
@@ -75,12 +74,12 @@ let currentAlbum = fetchAlbumDetails();
 <div
   class:list={[
     event?.album ? "col-span-2" : "md:col-span-1 col-span-2",
-    "group in-card bg-white dark:bg-slate-700/10 dark:border-white/10 border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
+    "group in-card bg-white dark:bg-verse-700/30 dark:backdrop-blur-sm dark:border-white/10 border-2 border-verse-50 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300",
   ]}
   title={hasAlbum() ? "has album" : "no album"}
 >
   <div
-    class="flex flex-col md:flex-row justify-between w-full  transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-brand-400"
+    class="flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-verse-400"
   >
     <div class="relative flex flex-col p-4 gap-2">
       <!-- Date -->
@@ -90,7 +89,9 @@ let currentAlbum = fetchAlbumDetails();
             <span
               title={isUpcoming() ? "Upcoming" : "Past"}
               class:list={[
-                isUpcoming() ? "text-verse-900" : "text-green-600 font-bold",
+                isUpcoming()
+                  ? "text-verse-900 dark:text-verse-300"
+                  : "text-green-600 font-bold",
                 "flex font-mono text-sm font-medium items-center",
               ]}
             >
@@ -103,12 +104,12 @@ let currentAlbum = fetchAlbumDetails();
 
       <!-- Title -->
       <h3
-        class="leading-2 text-2xl font-semibold flex-1 py-2 text-verse-0 group-hover[.in-card]:text-verse-500"
+        class="leading-2 text-2xl font-semibold flex-1 py-2 text-verse-500 dark:text-verse-400 group-hover[.in-card]:text-verse-500"
       >
         <a
           href={`meetup/${event.id}`}
           class="w-[300px] md:w-96 focus:outline-none"
-          style={vTransitionName('session-title',event.id)}
+          style={vTransitionName("session-title", event.id)}
         >
           <span class="absolute inset-0" aria-hidden="true"></span>
           {event?.title}
@@ -118,9 +119,9 @@ let currentAlbum = fetchAlbumDetails();
       <div class="flex gap-4 pr-4 border-gray-100">
         {
           event.Venue && (
-            <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500">
+            <div class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-verse-600 dark:text-verse-200">
               <IconLocation
-                class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-verse-600 dark:text-verse-200"
                 aria-hidden="true"
               />
               <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
@@ -131,13 +132,13 @@ let currentAlbum = fetchAlbumDetails();
         }
 
         <div
-          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-gray-500"
+          class="flex gap-1 md:gap-0 items-center justify-start text-base font-medium leading-3 md:leading-5 text-verse-600 dark:text-verse-200"
         >
           {
             event.Attendees && (
               <div class="flex items-center" title="Attendees">
                 <IconGroup
-                  class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-gray-500"
+                  class="mr-1.5 h-[15px] w-[15px] flex-shrink-0 truncate text-verse-600 dark:text-verse-200"
                   aria-hidden="true"
                 />
                 <div class="pt-[2px] line-clamp-1 md:line-clamp-0">
