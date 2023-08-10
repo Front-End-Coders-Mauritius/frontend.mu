@@ -40,6 +40,8 @@ const initialCopy = ref(null);
 
 const isBusy = ref(false);
 
+const savedSuccesfully = ref(false);
+
 onMounted(() => {
   if ($isUserLoggedIn) {
     isBusy.value = true;
@@ -90,9 +92,10 @@ function extractValues(profile) {
 
 const updateProfile = () => {
   updateUserProfile(
-    extractValues(profile.value)
+    profile.value
   ).then((data) => {
     profile.value = data
+    savedSuccesfully.value = true;
   })
 }
 
@@ -212,7 +215,9 @@ const isDirty = computed(() => {
                   <div class="">
                     <button type="button"
                       class="inline-flex w-full justify-center rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 px-5 py-3 text-sm font-semibold dark:text-slate-900 shadow-sm dark:hover:bg-slate-200"
-                      :disabled="isBusy" @click="updateProfile()">Save changes</button>
+                      :disabled="isBusy" @click="updateProfile()">
+                        {{ savedSuccesfully ? 'Saved!' : 'Save changes' }}
+                    </button>
                   </div>
                 </div>
 
