@@ -46,7 +46,6 @@ onMounted(() => {
   if ($isUserLoggedIn) {
     isBusy.value = true;
     getUserProfile().then((data) => {
-      console.log(data);
       isBusy.value = false;
       profile.value = data
       initialCopy.value = { ...data }

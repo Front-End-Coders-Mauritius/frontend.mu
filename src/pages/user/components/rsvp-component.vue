@@ -88,7 +88,6 @@ const getRsvpStatus = async () => {
   rsvp_check_loading.value = true;
   const data = await getMeetupRSVPStatus(props.meetupId);
   currentRSVPStatus.value = data;
-  console.log(data);
   rsvp_is_attending.value = data ? !!data && !!data.rsvp : false;
   rsvp_check_loading.value = false;
 };
@@ -121,7 +120,7 @@ const rsvpToMeetup = async () => {
 const unRsvpToMeetup = async () => {
   rsvp_loading.value = true;
   try {
-    await setMeetupRSVP(props.meetupId, false, "");
+    await setMeetupRSVP(props.meetupId, false);
   } catch (error) {
     console.log(error);
   }
@@ -185,9 +184,7 @@ onMounted(async () => {
     // If user has already RSVP'd
     if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
       // trying to restore rsvp values
-      console.log("trying to restore rsvp values");
       dataCarrier = currentRSVPStatus.value.meta;
-      console.log(currentRSVPStatus.value);
 
       showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
         (option) => {

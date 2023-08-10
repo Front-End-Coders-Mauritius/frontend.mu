@@ -39,7 +39,7 @@ onMounted(async () => {
   if ($isUserLoggedIn) {
     attendeeList.value = await getMeetupAttendees(props.meetupId)
   } else {
-    console.log('user is not logged in')
+    console.error('You are not logged in')
   }
 })
 
