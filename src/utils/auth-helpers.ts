@@ -1,11 +1,11 @@
 import { supabase } from "./supabase";
-import { isUserLoggedIn, currentUser } from "../store/userStore";
+import { isUserLoggedIn, currentUser, userProfile } from "../store/userStore";
 
 export const oAuthLogin = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: window.location.origin,
+      redirectTo: window.location.origin + window.location.pathname,
     },
   });
 
@@ -25,4 +25,5 @@ export const oAuthLogout = async () => {
 
   currentUser.set(null);
   isUserLoggedIn.set(false);
+  userProfile.set(null);
 };

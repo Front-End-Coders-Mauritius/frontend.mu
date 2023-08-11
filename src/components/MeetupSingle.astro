@@ -11,6 +11,8 @@ import { getPhotos, photoAlbumSource } from "../utils/api";
 import { random, vTransitionName } from "../utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import UserData from "./UserData.vue";
+import RsvpComponent from "../pages/user/components/rsvp-component.vue";
+import RsvpAttendeeList from "../pages/user/components/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
 
 const props = Astro.props;
@@ -75,7 +77,7 @@ const getRelatedPhotoSource = (album: string) => {
                 class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"
               >
               </div>
-              <IconDots class="w-[400px] xl:w-[600px] opacity-5 saturate-0" />
+              <!-- <IconDots class="w-[400px] xl:w-[600px] opacity-5 saturate-0" /> -->
             </div>
           </div>
 
@@ -96,7 +98,7 @@ const getRelatedPhotoSource = (album: string) => {
                         "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
                       ]}
                     >
-                      upcoming
+                      hapenning soon
                     </p>
                   </div>
                 )
@@ -106,6 +108,7 @@ const getRelatedPhotoSource = (album: string) => {
               >
                 Topic
               </div>
+
               <div
                 style={vTransitionName(
                   "session-title",
@@ -122,6 +125,18 @@ const getRelatedPhotoSource = (album: string) => {
 
               <div class="grid md:grid-cols-2">
                 <SessionList sessions={props.getCurrentEvent.sessions} />
+
+                {
+                  isUpcoming() && (
+                    <RsvpComponent
+                      meetup-id={props.getCurrentEvent.id.toString()}
+                      meetup={props.getCurrentEvent}
+                      client:only
+                    />
+                  )
+                }
+
+                <!-- Internal RSVP Button -->
                 <MeetupGallery
                   currentAlbum={currentAlbum}
                   source={photoAlbumSource}
@@ -285,24 +300,17 @@ const getRelatedPhotoSource = (album: string) => {
                     </div>
                   </dd>
                 </div>
-
-                <!-- RSVP Button -->
-                {
-                  isUpcoming() && (
-                    <div class="md:border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                        {props.getCurrentEvent.rsvplink && (
-                          <FecAnchor href={props.getCurrentEvent.rsvplink}>
-                            Book my seat
-                          </FecAnchor>
-                        )}
-                      </dd>
-                    </div>
-                  )
-                }
               </dl>
             </div>
           </div>
+        </div>
+
+        <div class="contain">
+          <RsvpAttendeeList
+            client:only
+            seatCapacity={props.getCurrentEvent.seats_available}
+            meetupId={props.routeId}
+          />
         </div>
 
         <MeetupAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />

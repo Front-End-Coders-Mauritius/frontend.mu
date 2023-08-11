@@ -10,13 +10,42 @@ export interface GoogleInfo {
   sub: string;
 }
 
+export interface IRSVPStatus {
+  created_at: string;
+  id: string;
+  meetup_id: string;
+  meta: RSVPMetaObject;
+  rsvp: Boolean;
+  showOnSite: Boolean;
+  user_metadata: User;
+}
+
 export interface User {
   id: string;
   full_name: string | null;
   email: string;
   current_occupation: string | null;
-  veg: boolean | null;
+  meal: string | null;
+  transport: string | null;
   phone: string | null;
   created_at: string;
+  avatar_url: string | null;
   google?: GoogleInfo;
+}
+
+export type Transport = "car" | "bus" | "need a ride";
+
+export type Meal = "nonveg" | "veg" | "not-eating";
+
+export type RSVPMetaObject = {
+  transport: Transport;
+  meal: Meal;
+  avatar_url: string;
+  current_occupation: string;
+};
+
+export interface MeetupAttendees {
+  meetup_id: string;
+  full_name: string | null;
+  avatar_url: string | null;
 }
