@@ -5,14 +5,14 @@ import {
   isUserLoggedIn,
   currentUser,
   userProfile,
-} from "../../../store/userStore";
+} from "@store/userStore";
 
 import {
   getUserProfile,
   setMeetupRSVP,
   getMeetupRSVPStatus,
-} from "../../../utils/db-helpers";
-import { oAuthLogin } from "../../../utils/auth-helpers";
+} from "@utils/db-helpers";
+import { oAuthLogin } from "@utils/auth-helpers";
 import {
   Dialog,
   DialogPanel,
@@ -21,7 +21,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
-import { formatDate } from "../../../utils/helpers";
+import { formatDate } from "@utils/helpers";
 
 import IconUserAvatar from "~icons/carbon/user-avatar";
 import CalendarDaysIcon from "~icons/carbon/calendar";
@@ -56,14 +56,10 @@ const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
 
 const props = defineProps({
-  meetupId: {
-    type: String,
-    required: true,
-  },
   meetup: {
     type: Object,
     required: true,
-  },
+  }
 });
 
 const profile = ref({
@@ -86,7 +82,7 @@ const rsvp_is_attending = ref(false);
 
 const getRsvpStatus = async () => {
   rsvp_check_loading.value = true;
-  const data = await getMeetupRSVPStatus(props.meetupId);
+  const data = await getMeetupRSVPStatus(props.meetup.id);
   currentRSVPStatus.value = data;
   rsvp_is_attending.value = data ? !!data && !!data.rsvp : false;
   rsvp_check_loading.value = false;
@@ -102,7 +98,7 @@ const rsvpToMeetup = async () => {
   rsvp_loading.value = true;
   try {
     const data = await setMeetupRSVP(
-      props.meetupId,
+      props.meetup.id,
       true,
       rsvp_meta.value,
       showMeAsAttendingSelection.value.value
@@ -120,7 +116,7 @@ const rsvpToMeetup = async () => {
 const unRsvpToMeetup = async () => {
   rsvp_loading.value = true;
   try {
-    await setMeetupRSVP(props.meetupId, false);
+    await setMeetupRSVP(props.meetup.id, false);
   } catch (error) {
     console.log(error);
   }

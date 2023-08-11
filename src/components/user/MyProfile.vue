@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, ref, shallowRef, computed } from 'vue'
 import { useStore } from "@nanostores/vue";
-import { isUserLoggedIn, currentUser, userProfile } from "../../../store/userStore";
-import { oAuthLogin, oAuthLogout } from "../../../utils/auth-helpers";
-import { getUserProfile, updateUserProfile } from "../../../utils/db-helpers";
+import { isUserLoggedIn, currentUser, userProfile } from "@store/userStore";
+import { oAuthLogin, oAuthLogout } from "@utils/auth-helpers";
+import { getUserProfile, updateUserProfile } from "@utils/db-helpers";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import IconFood from "~icons/fluent/food-pizza-20-regular"
 import IconChicken from "~icons/icon-park-twotone/chicken"

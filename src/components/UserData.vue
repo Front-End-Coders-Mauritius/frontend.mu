@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStore } from "@nanostores/vue";
-import { currentUser } from "../store/userStore";
+import { currentUser } from "@store/userStore";
 
 const $session = useStore(currentUser);
 </script>

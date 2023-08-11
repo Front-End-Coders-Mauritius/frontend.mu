@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { onMounted, ref, Ref, computed } from 'vue'
 import { useStore } from "@nanostores/vue";
-import { isUserLoggedIn, currentUser } from "../../../store/userStore";
-import { getMeetupAttendees } from "../../../utils/db-helpers";
-import type { MeetupAttendees } from "../../../utils/types";
+import { isUserLoggedIn, currentUser } from "@store/userStore";
+import { getMeetupAttendees } from "@utils/db-helpers";
+import type { MeetupAttendees } from "@utils/types";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
@@ -47,7 +47,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="contain text-verse-500 py-8">
+  <div class="contain text-verse-500 dark:text-verse-200 py-8">
 
     <div class="flex flex-col py-8  gap-4 [--bar-height:15px]">
       <h2 class="text-2xl font-bold">
@@ -67,7 +67,7 @@ onMounted(async () => {
           <div v-if="attendee.avatar_url">
             <img :src="attendee.avatar_url" alt="" class="rounded-full mx-auto">
           </div>
-          <div class="font-bold">
+          <div class="font-bold w-[150px] text-center truncate">
             {{ attendee.full_name }}
           </div>
         </div>

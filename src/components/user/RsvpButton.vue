@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStore } from "@nanostores/vue";
-import { isUserLoggedIn, currentUser, userProfile } from "../../../store/userStore";
+import { isUserLoggedIn, currentUser, userProfile } from "@store/userStore";
 
 
 import IconLoading from "~icons/eos-icons/three-dots-loading"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useStore } from "@nanostores/vue";
-import { supabase } from "../utils/supabase";
-import { isUserLoggedIn, currentUser, userProfile } from "../store/userStore";
-import { oAuthLogin, oAuthLogout } from "../utils/auth-helpers";
-import { getUserProfile } from "../utils/db-helpers";
+import { supabase } from "@utils/supabase";
+import { isUserLoggedIn, currentUser, userProfile } from "@store/userStore";
+import { oAuthLogin, oAuthLogout } from "@utils/auth-helpers";
+import { getUserProfile } from "@utils/db-helpers";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
