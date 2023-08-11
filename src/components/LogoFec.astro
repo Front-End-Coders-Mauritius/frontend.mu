@@ -1,12 +1,22 @@
 ---
-
-const props = Astro.props
-
+const props = Astro.props;
 ---
-<div class:list={[props.class, 'text-verse-500']}>
-  <svg  width="100%"  viewBox="0 0 876 875" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M860.531 437.446C860.531 670.711 671.358 859.812 437.996 859.812C204.635 859.812 15.461 670.711 15.461 437.446C15.461 204.182 204.635 15.0801 437.996 15.0801C671.358 15.0801 860.531 204.182 860.531 437.446Z" stroke="currentColor" stroke-width="30"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M367.465 176.049H458.133L345.931 440.435L345.907 440.492L243.953 682.966H153.312L367.465 176.049ZM511.002 230.04L722.787 441.878L340.608 633.855L389.574 517.196L587.487 423.5L476.465 310.902L511.002 230.04Z" fill="currentColor"/>
-    </svg>
-    
+
+<div class:list={[props.class, "text-verse-500 dark:text-verse-400 "]}>
+  <svg
+    width="100%"
+    viewBox="0 0 876 875"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M860.531 437.446C860.531 670.711 671.358 859.812 437.996 859.812C204.635 859.812 15.461 670.711 15.461 437.446C15.461 204.182 204.635 15.0801 437.996 15.0801C671.358 15.0801 860.531 204.182 860.531 437.446Z"
+      stroke="currentColor"
+      stroke-width="30"></path>
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M367.465 176.049H458.133L345.931 440.435L345.907 440.492L243.953 682.966H153.312L367.465 176.049ZM511.002 230.04L722.787 441.878L340.608 633.855L389.574 517.196L587.487 423.5L476.465 310.902L511.002 230.04Z"
+      fill="currentColor"></path>
+  </svg>
 </div>

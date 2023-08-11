@@ -15,7 +15,7 @@ import UserData from "./UserData.vue";
             class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3"
           >
             <h1
-              class="font-heading dark:text-white font-thin text-4xl leading-tight sm:text-5xl lg:text-5xl xl:text-7xl"
+              class="font-heading dark:text-white font-black text-4xl leading-tight sm:text-5xl lg:text-5xl xl:text-7xl"
             >
               Frontend Coders<br />
               <span
@@ -31,7 +31,7 @@ import UserData from "./UserData.vue";
             <div class="grid place-items-center md:place-items-start">
               <HeaderLink
                 href="/meetups"
-                class="btn-meetup text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
+                class="bg-verse-500 hover:bg-verse-600 transition-colors duration-200 text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
               >
                 View all meetups
               </HeaderLink>
@@ -53,7 +53,7 @@ import UserData from "./UserData.vue";
 
 <style scoped>
   .homepage-container {
-    /* background-color: var(--color-brand-950); */
+    /* background-color: var(--color-verse-950); */
   }
   .image-container {
     position: relative;
@@ -122,7 +122,7 @@ import UserData from "./UserData.vue";
   }
 
   .btn-meetup {
-    background-color: var(--home-gradient-dark);
+    /* background-color: var(--home-gradient-dark); */
   }
 
   @keyframes swing {

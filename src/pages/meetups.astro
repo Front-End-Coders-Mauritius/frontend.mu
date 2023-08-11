@@ -34,8 +34,8 @@ const description = "A list of all meetups we've held";
       <div class="past-events-container pb-4 md:pb-16">
         <div class="contain mx-auto">
           <div class="py-4 flex flex-col gap-2">
-            <BaseHeading level="1">All meetups</BaseHeading>
-            <p class="text-verse-900">
+            <BaseHeading :level={1}>All meetups</BaseHeading>
+            <p class="text-verse-700 dark:text-verse-300">
               Over the years, we've organized a lot of meetups. Here's a list of
               all of them.
             </p>
@@ -91,9 +91,5 @@ const description = "A list of all meetups we've held";
   .grid-container {
     display: grid;
     /* grid-template-columns: repeat(auto-fill, minmax(var(--minmax), 1fr)); */
-  }
-
-  .page-all-meetups {
-    /* background: linear-gradient(180deg, var(--color-brand-100) 0%, #FFFFFF 5%);   */
   }
 </style>

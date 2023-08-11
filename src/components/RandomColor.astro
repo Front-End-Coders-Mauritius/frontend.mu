@@ -1,0 +1,33 @@
+---
+import PainBucketIcon from "~icons/game-icons/paint-bucket";
+---
+
+<script is:inline>
+// Random color
+function randomColor() {
+    const randomHue = Math.floor(Math.random() * 360);
+    // insert hue in dom
+    document.documentElement.style.setProperty("--brand-hue", randomHue);
+}
+
+// execute randomColor when ctrl + spacebar is pressed and no form is focused
+document.addEventListener("keydown", (event) => {
+    if (
+        event.code === "Space" &&
+        event.ctrlKey &&
+        !event.target.closest("form")
+    ) {
+        randomColor();
+    }
+});
+</script>
+
+<div class="hidden lg:block px-4">
+  <div
+    title="Press CTRL + Space to get a new color"
+    class="random-color-icon w-8 h-8 text-verse-500 dark:text-verse-300 dark:hover:text-verse-200 hover:text-verse-400 transition-colors duration-200 select-none cursor-pointer"
+    onclick="randomColor()"
+  >
+    <PainBucketIcon class="w-8 h-8" />
+  </div>
+</div>

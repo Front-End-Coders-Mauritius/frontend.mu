@@ -1,9 +1,9 @@
 ---
 const { event } = Astro.props;
-import IconLocation from "~icons/carbon/location"
-import IconArrowUpRight from "~icons/carbon/arrow-up-right"
-import IconCalendar from "~icons/carbon/calendar"
-import IconGroup from "~icons/carbon/group"
+import IconLocation from "~icons/carbon/location";
+import IconArrowUpRight from "~icons/carbon/arrow-up-right";
+import IconCalendar from "~icons/carbon/calendar";
+import IconGroup from "~icons/carbon/group";
 ---
 
 <div
@@ -12,7 +12,7 @@ import IconGroup from "~icons/carbon/group"
   {
     event.Date && (
       <div class=" ">
-        <span class="inline-flex rounded-lg p-3 ring-4 ring-brand-50 bg-slate-100 text-brand-900 ">
+        <span class="inline-flex rounded-lg p-3 ring-4 ring-verse-50 bg-verse-100 text-verse-900 ">
           <IconCalendar class="mr-2 h-6 w-6" />
           <span>{event.Date}</span>
         </span>
@@ -20,7 +20,9 @@ import IconGroup from "~icons/carbon/group"
     )
   }
   <div class="flex flex-col gap-4 md:gap-0">
-    <h3 class="leading-2 text-xl md:text-2xl font-medium py-2 text-verse-0">
+    <h3
+      class="leading-2 text-xl md:text-2xl font-medium py-2 text-verse-500 dark:text-verse-200"
+    >
       {event?.title}
       <a
         href={`/meetup/${event?.id}`}
