@@ -12,7 +12,7 @@ defineProps<{
 
 <template>
   <div
-    class="bg-white dark:bg-slate-900 border-slate-900/10 dark:border-slate-100/10 border w-64 rounded-md shadow-xl dark:shadow-black"
+    class="bg-white mx-auto md:mx-0 dark:bg-slate-900 border-slate-900/10 dark:border-slate-100/10 border w-64 rounded-md shadow-xl dark:shadow-black"
     :class="[rsvp_loading && 'blur-sm']">
     <div class="flex flex-col gap-4 p-8">
       <div class="flex justify-center">

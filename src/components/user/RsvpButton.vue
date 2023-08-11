@@ -27,11 +27,11 @@ defineProps<{
 </script>
 
 <template>
-    <div class="text-verse-100 font-medium">
+    <div class="text-verse-100 font-medium py-16 w-full md:w-auto">
         <div v-if="$isUserLoggedIn">
             <div v-if="rsvp_check_loading">
                 <div
-                    class="relative inline-flex items-center rounded-md bg-white px-8 py-4 text-lg font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
+                    class="relative w-full text-center md:w-auto inline-flex justify-center items-center rounded-md bg-white px-8 py-4 text-lg font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
                     <IconLoading class="mr-4" />
                     <span class="dark:text-verse-700 text-green-600 uppercase">loading...</span>
                 </div>
@@ -47,7 +47,7 @@ defineProps<{
                     </div>
                     <div v-else>
                         <button @click="$emit('open')"
-                            class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700 dark:bg-white hover:bg-verse-600 hover:shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
+                            class="px-8 py-4 w-full md:w-auto rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700 dark:bg-white hover:bg-verse-600 hover:shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
                             <!-- Logo -->
                             <div class="text-verse-100 dark:text-slate-700 w-8 h-8 mr-2">
                                 <svg class="w-full h-full" viewBox="0 0 1030 1031" fill="none"

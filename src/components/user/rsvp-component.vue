@@ -187,6 +187,8 @@ onMounted(async () => {
           return option.value === currentRSVPStatus.value.showOnSite.toString();
         }
       );
+
+      profile.value.phone = currentRSVPStatus.value.phone;
     } else {
       dataCarrier = data;
     }
@@ -218,6 +220,7 @@ const rsvp_meta = computed(() => {
     meal: foodSelection.value.value,
     transport: transportSelection.value.value,
     current_occupation: identifyAsSelection.value.value,
+    phone: profile.value.phone,
   };
 });
 
@@ -261,7 +264,7 @@ watch(
 <template>
   <div class="flex justify-center items-center">
     <!-- <pre class="text-white">
-      {{ $session }}
+      {{ profile }}
     </pre> -->
     <!-- Modal Stuff -->
       <TransitionRoot as="template" :show="open">
@@ -294,11 +297,11 @@ watch(
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel
-                class="relative h-screen grid grid-rows-[2rem_1fr] md:block md:h-auto w-full transform overflow-hidden transition-all duration-200 md:rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black/50 sm:my-8 sm:w-full sm:max-w-2xl sm:px-8 sm:py-6"
+                class="relative min-h-[60vh] md:min-h-[auto] grid-rows-[2rem_1fr] flex flex-col md:block md:h-auto w-full transform overflow-hidden transition-all duration-200 md:rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black/50 sm:my-8 sm:w-full sm:max-w-2xl sm:px-8 sm:py-6"
                 :class="[rsvp_is_attending && ' ']"
               >
                 <div
-                  class="w-full text-center flex justify-between items-center relative"
+                  class="w-full text-center flex flex-col md:flex-row gap-4 justify-between items-center relative "
                 >
                   <DialogTitle
                     as="h3"
@@ -311,6 +314,8 @@ watch(
                             $session.user.user_metadata.full_name.split(" ")[0]
                           }, let's get you booked in`
                     }}
+
+                    <span v-if="rsvp_is_attending" class="ml-2 bg-green-500 text-xs p-1 rounded-md text-green-800 font-black uppercase">ATTENDING</span>
                   </DialogTitle>
 
                   <rsvp-header
@@ -336,7 +341,7 @@ watch(
                   "
                   class="grid grid-rows-[1fr_auto] md:hidden"
                 >
-                  <ul v-show="!rsvp_is_attending" class="steps steps-vertical">
+                  <ul v-show="!rsvp_is_attending" class="steps steps-vertical [--p: var(--color-verse-300)]">
                     <li
                       :class="{ 'step-primary': currentStep >= 1 }"
                       class="step"
@@ -358,15 +363,19 @@ watch(
                   <div class="grid">
                     <dl
                       :class="{
-                        'grid-rows-[auto_1fr_auto]': rsvp_is_attending,
+                        '': rsvp_is_attending,
                       }"
                       class="grid gap-y-4 font-bold text-slate-300"
                     >
+                      
+
                       <div
                         v-show="rsvp_is_attending"
-                        class="grid grid-cols-[1.5rem_1fr] flex-none gap-x-4"
+                        class="flex flex-col gap-4 py-16"
                       >
-                        <dt class="flex">
+                        <div class="grid gap-y-6 auto-rows-min">
+                          <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
+                            <dt class="flex">
                           <span class="sr-only">Name</span>
                           <IconUserAvatar class="h-6 w-6" aria-hidden="true" />
                         </dt>
@@ -374,13 +383,7 @@ watch(
                         <dd class="pt-0 leading-6">
                           {{ $session.user.user_metadata.full_name }}
                         </dd>
-                      </div>
-
-                      <div
-                        v-show="rsvp_is_attending"
-                        class="grid gap-y-10 my-auto auto-rows-min"
-                      >
-                        <div class="grid gap-y-6 auto-rows-min">
+                          </div>
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
                             <dt class="flex">
                               <span class="sr-only">Phone</span>
@@ -395,7 +398,7 @@ watch(
                           </div>
 
                           <div
-                            class="grid grid-cols-[1.5rem_1fr] w-full gap-x-4"
+                            class="grid grid-cols-[1.5rem_1fr] items-center w-full gap-x-4"
                           >
                             <dt class="flex">
                               <span class="sr-only">Phone</span>
@@ -403,9 +406,12 @@ watch(
                             </dt>
 
                             <dd class="pt-0 leading-6">
-                              {{
+                              <!-- {{
                                 $session.user.user_metadata.phone || "Not set"
-                              }}
+                              }} -->
+                              <input type="number" v-model="profile.phone" name="phone" id="phone" autocomplete="phone"
+                        class="flex-1  border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
+                        placeholder="57654321" />
                             </dd>
                           </div>
 
@@ -482,10 +488,10 @@ watch(
                         </div>
                       </div>
 
-                      <Transition name="slide-fade" mode="out-in">
+                      <Transition name="slide-fade" mode="in-out">
                         <div
                           v-if="!rsvp_is_attending"
-                          class="grid grid-rows-[1fr_auto] items-center gap-6 h-full pr-1"
+                          class="grid grid-rows-[1fr_auto] px-16 items-center gap-6 h-full"
                         >
                           <Transition name="slide-vertical" mode="out-in">
                             <div
@@ -493,19 +499,19 @@ watch(
                               data-food
                               class="grid w-full items-center"
                             >
-                              <dt class="grid gap-2 py-4">
+                              <dt class="grid gap-2 justify-center py-4">
                                 <span
-                                  class="text-xl text-slate-500 font-normal mb-4"
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
                                   >What's your food preference?</span
                                 >
 
-                                <span class="flex items-center gap-2 text-lg"  v-if="foodSelection">
+                                <span class="flex mx-auto gap-2 text-lg"  v-if="foodSelection">
                                   <component
                                     :is="foodSelection.icon"
-                                    class="h-6 w-6"
+                                    class="h-16 w-16"
                                     aria-hidden="true"
                                   />
-                                  <span>{{ foodSelection.name }}</span>
+                                  <!-- <span>{{ foodSelection.name }}</span> -->
                                 </span>
                               </dt>
 
@@ -528,17 +534,17 @@ watch(
                             >
                               <dt class="grid gap-2 py-4">
                                 <span
-                                  class="text-xl text-slate-500 font-normal mb-4"
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
                                   >How are you getting there?</span
                                 >
 
-                                <span class="flex items-center gap-2 text-lg"  v-if="transportSelection">
+                                <span class="flex mx-auto items-center gap-2 text-lg"  v-if="transportSelection">
                                   <component
                                     :is="transportSelection.icon"
-                                    class="h-6 w-6"
+                                    class="h-16 w-16"
                                     aria-hidden="true"
                                   />
-                                  <span>{{ transportSelection.name }}</span>
+                                  <!-- <span>{{ transportSelection.name }}</span> -->
                                 </span>
                               </dt>
 
@@ -563,16 +569,16 @@ watch(
                             >
                               <dt class="grid gap-2 py-4">
                                 <span
-                                  class="text-xl text-slate-500 font-normal mb-4"
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
                                   >What is your occupation?</span
                                 >
-                                <span class="flex items-center gap-2 text-lg" v-if="identifyAsSelection">
+                                <span class="flex mx-auto items-center gap-2 text-lg" v-if="identifyAsSelection">
                                   <component
                                     :is="identifyAsSelection.icon"
-                                    class="h-6 w-6"
+                                    class="h-16 w-16"
                                     aria-hidden="true"
                                   />
-                                  <span>{{ identifyAsSelection.name }}</span>
+                                  <!-- <span>{{ identifyAsSelection.name }}</span> -->
                                 </span>
                               </dt>
 
@@ -629,19 +635,19 @@ watch(
                             </div>
                           </Transition>
 
-                          <div class="grid justify-center h-20 w-full">
+                          <div class="grid justify-center pb-16 w-full">
                             <div class="join gap-2">
                               <button
                                 class="btn join-item"
                                 @click="goToPrevStep"
                               >
-                                <IconUp />
+                                <IconUp class="text-verse-500 w-8 h-8" />
                               </button>
                               <button
                                 class="btn join-item"
                                 @click="goToNextStep"
                               >
-                                <IconDown></IconDown>
+                                <IconDown class="text-verse-500 w-8 h-8" />
                               </button>
                             </div>
                           </div>
@@ -651,27 +657,30 @@ watch(
                   </div>
 
                   <div
-                    class="grid md:hidden justify-normal items-center w-full col-span-2"
+                    class="grid grid-cols-4 justify-between gap-4 md:hidden items-center w-full col-span-2"
                   >
+                    <button
+                      type="button"
+                      class="inline-flex w-full justify-center text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-4 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
+                      @click="open = false"
+                    >
+                      Close
+                    </button>
+
+                    <div></div>
+
                     <button
                       v-if="!rsvp_is_attending"
                       type="button"
-                      class="inline-flex w-full justify-center rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-200 sm:ml-3 sm:w-auto"
+                      class="col-span-2 inline-flex w-full justify-center rounded-md bg-slate-100 dark:bg-verse-500 dark:text-white px-3 py-4 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-200 sm:ml-3 sm:w-auto"
                       :disabled="rsvp_loading"
                       @click="rsvpToMeetup()"
                     >
                       Confirm
                     </button>
-
-                    <button
-                      type="button"
-                      class="mt-3 inline-flex w-full justify-center rounded-full text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
-                      @click="open = false"
-                    >
-                      Close
-                    </button>
                   </div>
                 </div>
+                <!-- Mobile End -->
 
                 <div
                   class="hidden md:grid grid-cols-4 dark:text-gray-300 rounded-xl"
@@ -694,7 +703,7 @@ watch(
                           </dd>
                         </div>
 
-                        <div class="flex w-full flex-none gap-x-4">
+                        <div class="flex w-full flex-none items-center gap-x-4">
                           <dt class="flex-none">
                             <span class="sr-only">Phone</span>
                             <IconEmail class="h-6 w-6" aria-hidden="true" />
@@ -707,7 +716,10 @@ watch(
                             <IconPhone class="h-6 w-6" aria-hidden="true" />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            {{ profile.phone || "Not set" }}
+                            <!-- {{ profile.phone || "Not set" }} -->
+                            <input type="number" v-model="profile.phone" name="phone" id="phone" autocomplete="phone"
+                        class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                        placeholder="57654321" :disabled="rsvp_is_attending" />
                           </dd>
                         </div>
 
