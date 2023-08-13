@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 
-const BASE_URL = new URL(import.meta.env.SITE);
-const SITE_URL = BASE_URL.origin;
+import { SITE_URL } from "../../config";
 
 // list of all available api routes
 // SITEURL/api/entry.json
