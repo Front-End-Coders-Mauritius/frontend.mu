@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { loadEvents } from "@utils/api";
 
-import { SITE_URL } from "../../config";
 import { Meetup } from "../../components/HomeLatestMeetup.astro";
 
 // matches api response as on 13 aug 2023
@@ -47,7 +46,7 @@ const getSessionsDetails = (sessions: Data["sessions"]) => {
   })) || [];
 }
 
-const meetups = response.data.reduce((acc, event) => {
+const meetups = (SITE_URL: string) => response.data.reduce((acc, event) => {
   const year = new Date(event.Date).getFullYear();
 
   if (!acc[year]) {
@@ -83,10 +82,11 @@ const meetups = response.data.reduce((acc, event) => {
 // topics -> [] of { title, speaker, github_account }
 // sponsors -> [] of { name, url }
 // live_url
-export const get: APIRoute = async () => {
+export const get: APIRoute = async ({ request }) => {
+  const SITE_URL = new URL(request.url).origin;
   return ({
     body: JSON.stringify({
-      ...meetups
+      ...meetups(SITE_URL)
     })
   });
 }
