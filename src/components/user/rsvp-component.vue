@@ -94,7 +94,7 @@ const rsvp_success = ref(false);
 const rsvpToMeetup = async () => {
   rsvp_loading.value = true;
   try {
-    const { phone } = meta;
+    const { phone } = rsvp_meta.value;
 
     if (phone) {
       // update user profile
