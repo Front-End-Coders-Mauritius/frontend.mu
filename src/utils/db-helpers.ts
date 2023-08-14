@@ -1,6 +1,11 @@
 import { supabase } from "./supabase";
 import { userProfile } from "../store/userStore";
-import type { User, RSVPMetaObject, MeetupAttendees, IRSVPStatus } from "./types";
+import type {
+  User,
+  RSVPMetaObject,
+  MeetupAttendees,
+  IRSVPStatus,
+} from "./types";
 
 /* User Profile Functions */
 
@@ -32,7 +37,7 @@ export const updateUserProfile = async (profile: Partial<User>) => {
     .from("profiles")
     .update(profile)
     .eq("id", userProfileData?.id)
-    .select("*")
+    .select("*");
 
   if (error) {
     console.log(error);
@@ -96,13 +101,13 @@ export const setMeetupRSVP = async (
       })
       .eq("id", existingRSVP[0].id);
 
-    console.log('sending the following')
+    console.log("sending the following");
     console.log({
       user_metadata: userProfileData,
       meta,
       rsvp,
       showOnSite: allowOnSite,
-    })
+    });
 
     if (error) {
       console.log(error);
