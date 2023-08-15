@@ -7,6 +7,7 @@ import IconLoading from "~icons/eos-icons/three-dots-loading"
 import IconLogin from "~icons/solar/login-2-broken"
 
 import RsvpBookingConfirmed from './rsvp-booking-confirmed.vue'
+import PrettyButton from "@components/PrettyButton.vue";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
@@ -46,9 +47,8 @@ defineProps<{
 
                     </div>
                     <div v-else>
-                        <button @click="$emit('open')"
-                            class="px-8 py-4 w-full md:w-auto rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700 dark:bg-white hover:bg-verse-600 hover:shadow-lg dark:hover:shadow-white/10 hover:shadow-black/10  hover:dark:bg-verse-100 transition-all duration-100">
-                            <!-- Logo -->
+                        <PrettyButton word="RSVP" 
+                            @click="$emit('open')">
                             <div class="text-verse-100 dark:text-slate-700 w-8 h-8 mr-2">
                                 <svg class="w-full h-full" viewBox="0 0 1030 1031" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -63,8 +63,7 @@ defineProps<{
                                 </svg>
 
                             </div>
-                            <span class="dark:text-slate-900 text-verse-100">Book my seat</span>
-                        </button>
+                        </PrettyButton>
                     </div>
                 </Transition>
             </div>
