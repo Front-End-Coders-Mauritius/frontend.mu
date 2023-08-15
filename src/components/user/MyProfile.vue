@@ -108,17 +108,17 @@ const isDirty = computed(() => {
 <template>
   <div class="contain py-32">
     <Transition>
-      <div class="flex w-full items-center justify-center" v-if="isBusy">
+      <div class="flex flex-wrap w-full items-center justify-center" v-if="isBusy">
         <div class="dark:text-white py-64">
           Loading your profile...
         </div>
       </div>
       <div class="divide-y divide-white/5 dark:text-white" v-else>
-        <template v-if="profile">
+        <template v-if="$isUserLoggedIn">
           <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10  md:grid-cols-3">
             <div>
               <h2 class="text-xl font-semibold leading-7">Personal Information</h2>
-              <p class="mt-1 text-lg leading-6 text-gray-400">Minimum information required to maintain a profile on
+              <p class="mt-1 text-lg leading-6 text-verse-500 dark:text-verse-200">Minimum information required to maintain a profile on
                 frontend.mu.</p>
             </div>
 
@@ -167,7 +167,7 @@ const isDirty = computed(() => {
           <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10  py-16 md:grid-cols-3">
             <div>
               <h2 class="text-xl font-semibold leading-7">RSVP details</h2>
-              <p class="mt-1 text-lg leading-6 text-gray-400">We will use these details to prefill your Meetup RSVP whenever
+              <p class="mt-1 text-lg leading-6 text-verse-500 dark:text-verse-200">We will use these details to prefill your Meetup RSVP whenever
                 you decide to attend an upcoming meetup.</p>
             </div>
 
@@ -178,7 +178,7 @@ const isDirty = computed(() => {
                   <div class="mt-2">
                     <RadioGroup v-model="profile.meal">
                       <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                      <div class="grid grid-cols-3 gap-6">
+                      <div class="grid md:grid-cols-3 gap-6">
                         <rsvp-radio-item :return-value-only="true" :options="foodOptions" />
                       </div>
                     </RadioGroup>
@@ -190,7 +190,7 @@ const isDirty = computed(() => {
                   <div class="mt-2">
                     <RadioGroup v-model="profile.transport">
                       <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                      <div class="grid grid-cols-4 gap-6">
+                      <div class="grid md:grid-cols-4 gap-6">
                         <rsvp-radio-item :return-value-only="true" :options="transportOptions" />
                       </div>
                     </RadioGroup>
@@ -202,7 +202,7 @@ const isDirty = computed(() => {
                   <div class="mt-2">
                     <RadioGroup v-model="profile.current_occupation">
                       <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
-                      <div class="grid grid-cols-5 gap-6">
+                      <div class="grid md:grid-cols-5 gap-6">
                         <rsvp-radio-item :return-value-only="true" :options="identifyAsOptions" />
 
                       </div>
@@ -230,7 +230,7 @@ const isDirty = computed(() => {
           <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
             <div>
               <h2 class="text-xl font-semibold leading-7">Authentication provider</h2>
-              <p class="mt-1 text-lg leading-6 text-gray-400">You've signed up on frontend.mu using this provider.</p>
+              <p class="mt-1 text-lg leading-6 text-verse-500 dark:text-verse-200">You've signed up on frontend.mu using this provider.</p>
             </div>
 
             <form class="md:col-span-2">
@@ -262,6 +262,21 @@ const isDirty = computed(() => {
             </form>
           </div>
 
+        </template>
+        <template v-else>
+          <div class="grid place-items-center gap-16">
+            <div class="text-[50px]">
+              You are not logged in.
+            </div>
+            <button
+                class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
+                @click="oAuthLogin()">
+                <div class="flex gap-2 items-center">
+                    <IconLogin />
+                    <span>Login to RSVP</span>
+                </div>
+            </button>
+          </div>
         </template>
 
       </div>
