@@ -1,16 +1,13 @@
 <script setup>
 import { ref, computed, onMounted, shallowRef, watch } from "vue";
 import { useStore } from "@nanostores/vue";
-import {
-  isUserLoggedIn,
-  currentUser,
-  userProfile,
-} from "@store/userStore";
+import { isUserLoggedIn, currentUser, userProfile } from "@store/userStore";
 
 import {
   getUserProfile,
   setMeetupRSVP,
   getMeetupRSVPStatus,
+  updateUserProfile,
 } from "@utils/db-helpers";
 import { oAuthLogin } from "@utils/auth-helpers";
 import {
@@ -59,7 +56,7 @@ const props = defineProps({
   meetup: {
     type: Object,
     required: true,
-  }
+  },
 });
 
 const profile = ref({
@@ -97,6 +94,13 @@ const rsvp_success = ref(false);
 const rsvpToMeetup = async () => {
   rsvp_loading.value = true;
   try {
+    const { phone } = rsvp_meta.value;
+
+    if (phone) {
+      // update user profile
+      await updateUserProfile({ phone });
+    }
+
     const data = await setMeetupRSVP(
       props.meetup.id,
       true,
@@ -267,7 +271,7 @@ watch(
       {{ profile }}
     </pre> -->
     <!-- Modal Stuff -->
-      <TransitionRoot as="template" :show="open">
+    <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="relative z-10" @close="open = false">
         <TransitionChild
           as="template"
@@ -301,7 +305,7 @@ watch(
                 :class="[rsvp_is_attending && ' ']"
               >
                 <div
-                  class="w-full text-center flex flex-col md:flex-row gap-4 justify-between items-center relative "
+                  class="w-full text-center flex flex-col md:flex-row gap-4 justify-between items-center relative"
                 >
                   <DialogTitle
                     as="h3"
@@ -315,7 +319,11 @@ watch(
                           }, let's get you booked in`
                     }}
 
-                    <span v-if="rsvp_is_attending" class="ml-2 bg-green-500 text-xs p-1 rounded-md text-green-800 font-black uppercase">ATTENDING</span>
+                    <span
+                      v-if="rsvp_is_attending"
+                      class="ml-2 bg-green-500 text-xs p-1 rounded-md text-green-800 font-black uppercase"
+                      >ATTENDING</span
+                    >
                   </DialogTitle>
 
                   <rsvp-header
@@ -341,7 +349,10 @@ watch(
                   "
                   class="grid grid-rows-[1fr_auto] md:hidden"
                 >
-                  <ul v-show="!rsvp_is_attending" class="steps steps-vertical [--p: var(--color-verse-300)]">
+                  <ul
+                    v-show="!rsvp_is_attending"
+                    class="steps steps-vertical [--p: var(--color-verse-300)]"
+                  >
                     <li
                       :class="{ 'step-primary': currentStep >= 1 }"
                       class="step"
@@ -367,8 +378,6 @@ watch(
                       }"
                       class="grid gap-y-4 font-bold text-slate-300"
                     >
-                      
-
                       <div
                         v-show="rsvp_is_attending"
                         class="flex flex-col gap-4 py-16"
@@ -376,13 +385,16 @@ watch(
                         <div class="grid gap-y-6 auto-rows-min">
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
                             <dt class="flex">
-                          <span class="sr-only">Name</span>
-                          <IconUserAvatar class="h-6 w-6" aria-hidden="true" />
-                        </dt>
+                              <span class="sr-only">Name</span>
+                              <IconUserAvatar
+                                class="h-6 w-6"
+                                aria-hidden="true"
+                              />
+                            </dt>
 
-                        <dd class="pt-0 leading-6">
-                          {{ $session.user.user_metadata.full_name }}
-                        </dd>
+                            <dd class="pt-0 leading-6">
+                              {{ $session.user.user_metadata.full_name }}
+                            </dd>
                           </div>
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
                             <dt class="flex">
@@ -409,9 +421,17 @@ watch(
                               <!-- {{
                                 $session.user.user_metadata.phone || "Not set"
                               }} -->
-                              <input type="number" v-model="profile.phone" name="phone" id="phone" autocomplete="phone"
-                        class="flex-1  border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
-                        placeholder="57654321" />
+                              <input
+                                type="number"
+                                v-model="profile.phone"
+                                name="phone"
+                                id="phone"
+                                autocomplete="phone"
+                                class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
+                                placeholder="57654321"
+                                pattern="(\+230\s?)?(5[0-9]{7}|[0-9]{7})"
+                                required
+                              />
                             </dd>
                           </div>
 
@@ -477,7 +497,10 @@ watch(
                             {{ identifyAsSelection.name }}
                           </div>
 
-                          <div class="flex gap-4" v-if="showMeAsAttendingSelection">
+                          <div
+                            class="flex gap-4"
+                            v-if="showMeAsAttendingSelection"
+                          >
                             <component
                               :is="showMeAsAttendingSelection.icon"
                               class="h-6 w-6"
@@ -505,7 +528,10 @@ watch(
                                   >What's your food preference?</span
                                 >
 
-                                <span class="flex mx-auto gap-2 text-lg"  v-if="foodSelection">
+                                <span
+                                  class="flex mx-auto gap-2 text-lg"
+                                  v-if="foodSelection"
+                                >
                                   <component
                                     :is="foodSelection.icon"
                                     class="h-16 w-16"
@@ -538,7 +564,10 @@ watch(
                                   >How are you getting there?</span
                                 >
 
-                                <span class="flex mx-auto items-center gap-2 text-lg"  v-if="transportSelection">
+                                <span
+                                  class="flex mx-auto items-center gap-2 text-lg"
+                                  v-if="transportSelection"
+                                >
                                   <component
                                     :is="transportSelection.icon"
                                     class="h-16 w-16"
@@ -572,7 +601,10 @@ watch(
                                   class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
                                   >What is your occupation?</span
                                 >
-                                <span class="flex mx-auto items-center gap-2 text-lg" v-if="identifyAsSelection">
+                                <span
+                                  class="flex mx-auto items-center gap-2 text-lg"
+                                  v-if="identifyAsSelection"
+                                >
                                   <component
                                     :is="identifyAsSelection.icon"
                                     class="h-16 w-16"
@@ -605,7 +637,10 @@ watch(
                               data-show
                               class="grid w-full gap-y-4 items-center"
                             >
-                              <dt class="flex gap-2 justify-center" v-if="showMeAsAttendingSelection">
+                              <dt
+                                class="flex gap-2 justify-center"
+                                v-if="showMeAsAttendingSelection"
+                              >
                                 <span class="sr-only">Show on site</span>
                                 <component
                                   :is="showMeAsAttendingSelection.icon"
@@ -717,9 +752,18 @@ watch(
                           </dt>
                           <dd class="pt-0 leading-6">
                             <!-- {{ profile.phone || "Not set" }} -->
-                            <input type="number" v-model="profile.phone" name="phone" id="phone" autocomplete="phone"
-                        class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
-                        placeholder="57654321" :disabled="rsvp_is_attending" />
+                            <input
+                              type="number"
+                              v-model="profile.phone"
+                              name="phone"
+                              id="phone"
+                              autocomplete="phone"
+                              class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                              placeholder="57654321"
+                              pattern="(\+230\s?)?(5[0-9]{7}|[0-9]{7})"
+                              :disabled="rsvp_is_attending"
+                              required
+                            />
                           </dd>
                         </div>
 
@@ -826,7 +870,10 @@ watch(
                             <div
                               class="flex w-full items-center flex-none gap-x-4"
                             >
-                              <dt class="flex-none" v-if="showMeAsAttendingSelection">
+                              <dt
+                                class="flex-none"
+                                v-if="showMeAsAttendingSelection"
+                              >
                                 <span class="sr-only">Show on site</span>
                                 <component
                                   :is="showMeAsAttendingSelection.icon"
@@ -875,7 +922,10 @@ watch(
                                 Vehicle: {{ transportSelection.name }}
                               </div>
 
-                              <div class="flex gap-2" v-if="identifyAsSelection">
+                              <div
+                                class="flex gap-2"
+                                v-if="identifyAsSelection"
+                              >
                                 <component
                                   :is="identifyAsSelection.icon"
                                   class="h-6 w-6"
@@ -885,7 +935,10 @@ watch(
                                 {{ identifyAsSelection.name }}
                               </div>
 
-                              <div class="flex gap-2" v-if="showMeAsAttendingSelection">
+                              <div
+                                class="flex gap-2"
+                                v-if="showMeAsAttendingSelection"
+                              >
                                 <component
                                   :is="showMeAsAttendingSelection.icon"
                                   class="h-6 w-6"
