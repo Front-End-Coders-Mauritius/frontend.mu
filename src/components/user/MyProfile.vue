@@ -43,7 +43,8 @@ const isBusy = ref(false);
 const savedSuccesfully = ref(false);
 
 onMounted(() => {
-  if ($isUserLoggedIn) {
+  if ($isUserLoggedIn.value) {
+    console.log('proceeding')
     isBusy.value = true;
     getUserProfile().then((data) => {
       isBusy.value = false;
@@ -272,7 +273,6 @@ const isDirty = computed(() => {
                 class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
                 @click="oAuthLogin()">
                 <div class="flex gap-2 items-center">
-                    <IconLogin />
                     <span>Login to RSVP</span>
                 </div>
             </button>

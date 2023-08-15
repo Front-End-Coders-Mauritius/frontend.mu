@@ -36,11 +36,11 @@ const showAsFrom = computed(() => {
 })
 
 onMounted(async () => {
-  if ($isUserLoggedIn) {
-    attendeeList.value = await getMeetupAttendees(props.meetupId)
-  } else {
-    console.error('You are not logged in')
-  }
+  attendeeList.value = await getMeetupAttendees(props.meetupId)
+  // if ($isUserLoggedIn.value) {
+  // } else {
+  //   console.error('You are not logged in')
+  // }
 })
 
 
@@ -49,15 +49,18 @@ onMounted(async () => {
 <template>
   <div class="contain text-verse-500 dark:text-verse-200 py-8">
 
+
     <div class="flex flex-col py-8  gap-4 [--bar-height:15px]">
       <h2 class="text-2xl font-bold">
         Attendees <span v-if="attendeeList">({{ attendeeList.length }})</span>
       </h2>
-      <div class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
-        <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`">
+      <div >      
+        <div  class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
+          <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`">
+
+          </div>
 
         </div>
-
       </div>
     </div>
 
@@ -73,5 +76,6 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
   </div>
 </template>

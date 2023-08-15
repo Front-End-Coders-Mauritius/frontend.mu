@@ -78,11 +78,13 @@ const rsvp_check_loading = ref(false);
 const rsvp_is_attending = ref(false);
 
 const getRsvpStatus = async () => {
-  rsvp_check_loading.value = true;
-  const data = await getMeetupRSVPStatus(props.meetup.id);
-  currentRSVPStatus.value = data;
-  rsvp_is_attending.value = data ? !!data && !!data.rsvp : false;
-  rsvp_check_loading.value = false;
+  if ($isUserLoggedIn.value) {   
+    rsvp_check_loading.value = true;
+    const data = await getMeetupRSVPStatus(props.meetup.id);
+    currentRSVPStatus.value = data;
+    rsvp_is_attending.value = data ? !!data && !!data.rsvp : false;
+    rsvp_check_loading.value = false;
+  }
 };
 
 // Loaders
@@ -194,55 +196,14 @@ const showMeAsAttendingOptions = [
 ];
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
 
-onMounted(async () => {
-  await getRsvpStatus();
-
-  // Retrieve user profile
-  rsvp_check_loading.value = true;
-  getUserProfile().then((data) => {
-    rsvp_check_loading.value = false;
-    profile.value = data;
-
-    let dataCarrier;
-
-    // If user has already RSVP'd
-    if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
-      // trying to restore rsvp values
-      dataCarrier = currentRSVPStatus.value.meta;
-
-      showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
-        (option) => {
-          return option.value === currentRSVPStatus.value.showOnSite.toString();
-        }
-      );
-
-      if (currentRSVPStatus.value.phone) {
-        profile.value.phone = currentRSVPStatus.value.phone;
-      }
-    } else {
-      dataCarrier = data;
-    }
-
-    foodSelection.value = dataCarrier.meal
-      ? foodOptions.find((option) => {
-          return option.value === dataCarrier.meal;
-        })
-      : foodOptions[1];
-
-    transportSelection.value = dataCarrier.transport
-      ? transportOptions.find((option) => {
-          return option.value === dataCarrier.transport;
-        })
-      : transportOptions[1];
-
-    identifyAsSelection.value = dataCarrier.current_occupation
-      ? identifyAsOptions.find((option) => {
-          return option.value === dataCarrier.current_occupation;
-        })
-      : identifyAsOptions[0];
-  });
-  // }
-});
+// onMounted(async () => {
+//   if (!$isUserLoggedIn.value) {
+//     return false;
+//   }
+  
+  
+//   // }
+// });
 
 // RSVP values
 const rsvp_meta = computed(() => {
@@ -301,6 +262,59 @@ watch(
 watch(rsvp_meta, (newVal, oldVal) => {
   validateForm(newVal)
 })
+
+watch($isUserLoggedIn, async (newVal, oldVal) => {
+  // only proceed when user logged in check is true
+  if (newVal) {
+    await getRsvpStatus();
+
+    // Retrieve user profile
+    rsvp_check_loading.value = true;
+
+    getUserProfile().then((data) => {
+      rsvp_check_loading.value = false;
+      profile.value = data;
+
+      let dataCarrier;
+
+      // If user has already RSVP'd
+      if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
+        // trying to restore rsvp values
+        dataCarrier = currentRSVPStatus.value.meta;
+
+        showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
+          (option) => {
+            return option.value === currentRSVPStatus.value.showOnSite.toString();
+          }
+        );
+
+        if (currentRSVPStatus.value.phone) {
+          profile.value.phone = currentRSVPStatus.value.phone;
+        }
+      } else {
+        dataCarrier = data;
+      }
+
+      foodSelection.value = dataCarrier.meal
+        ? foodOptions.find((option) => {
+            return option.value === dataCarrier.meal;
+          })
+        : foodOptions[1];
+
+      transportSelection.value = dataCarrier.transport
+        ? transportOptions.find((option) => {
+            return option.value === dataCarrier.transport;
+          })
+        : transportOptions[1];
+
+      identifyAsSelection.value = dataCarrier.current_occupation
+        ? identifyAsOptions.find((option) => {
+            return option.value === dataCarrier.current_occupation;
+          })
+        : identifyAsOptions[0];
+    });
+  }
+});
 
 </script>
 
@@ -419,11 +433,11 @@ watch(rsvp_meta, (newVal, oldVal) => {
                       :class="{
                         '': rsvp_is_attending,
                       }"
-                      class="grid gap-y-4 font-bold text-slate-300"
+                      class="grid gap-y-4 font-bold text-verse-500 dark:text-verse-300"
                     >
                       <div
                         v-show="rsvp_is_attending"
-                        class="flex flex-col gap-4 py-16"
+                        class="flex flex-col gap-4 p-8"
                       >
                         <div class="grid gap-y-6 auto-rows-min">
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
@@ -461,21 +475,8 @@ watch(rsvp_meta, (newVal, oldVal) => {
                               <IconPhone class="h-6 w-6" aria-hidden="true" />
                             </dt>
 
-                            <dd class="pt-0 leading-6">
-                              <!-- {{
-                                $session.user.user_metadata.phone || "Not set"
-xxxx                              }} -->
-                              
-                              <input
-                                type="number"
-                                v-model="profile.phone"
-                                name="phone"
-                                id="phone"
-                                autocomplete="phone"
-                                class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
-                                placeholder="Enter a phone number"
-                                required
-                              />
+                            <dd class="pt-0 leading-6">                       
+                              {{  profile.phone }}                
                             </dd>
                           </div>
 

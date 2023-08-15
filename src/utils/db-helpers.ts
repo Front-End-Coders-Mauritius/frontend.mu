@@ -85,7 +85,7 @@ export const setMeetupRSVP = async (
     .eq("user_uid", userProfileData?.id);
 
   if (existingRSVPError) {
-    console.log(existingRSVPError);
+    // console.log(existingRSVPError);
     return null;
   }
 
@@ -101,15 +101,7 @@ export const setMeetupRSVP = async (
       })
       .eq("id", existingRSVP[0].id);
 
-    console.log("sending the following");
-    console.log({
-      user_metadata: userProfileData,
-      meta,
-      rsvp,
-      showOnSite: allowOnSite,
-    });
-
-    if (error) {
+      if (error) {
       console.log(error);
       return null;
     }
