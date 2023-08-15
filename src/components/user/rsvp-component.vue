@@ -88,11 +88,35 @@ const getRsvpStatus = async () => {
 // Loaders
 const rsvp_loading = ref(false);
 const rsvp_success = ref(false);
+const form_errors = ref({})
+
+
+function validateForm(formValues) {
+  // Pattern (\+230\s?)?(5[0-9]{7}|[0-9]{7})
+  const phoneRegex = new RegExp(/(\+230\s?)?(5[0-9]{7}|[0-9]{7})/);
+
+  // validate phone number with regex
+  if (!phoneRegex.test(formValues.phone)) {
+    form_errors.value["phone"] = "Invalid phone number"
+    return false
+  } else {
+    delete form_errors.value["phone"]
+  }
+
+  return true
+}
 
 // Update RSVP Status
 
 const rsvpToMeetup = async () => {
   rsvp_loading.value = true;
+  const valid = validateForm(rsvp_meta.value)
+
+  if (!valid) {
+    rsvp_loading.value = false;
+    return false;
+  }
+
   try {
     const { phone } = rsvp_meta.value;
 
@@ -192,7 +216,9 @@ onMounted(async () => {
         }
       );
 
-      profile.value.phone = currentRSVPStatus.value.phone;
+      if (currentRSVPStatus.value.phone) {
+        profile.value.phone = currentRSVPStatus.value.phone;
+      }
     } else {
       dataCarrier = data;
     }
@@ -234,7 +260,7 @@ const direction = ref(1);
 
 function goToPrevStep() {
   if (currentStep.value === 1) {
-    currentStep.value = 4;
+    currentStep.value = 5;
     direction.value = -1;
     return;
   }
@@ -244,7 +270,15 @@ function goToPrevStep() {
 }
 
 function goToNextStep() {
-  if (currentStep.value === 4) {
+  // Validate phone number of step one
+  if (currentStep.value === 1) {
+    const valid = validateForm(rsvp_meta.value)
+
+    if (!valid) {
+      return false;
+    }
+  }
+  if (currentStep.value === 5) {
     currentStep.value = 1;
     direction.value = -1;
     return;
@@ -263,6 +297,11 @@ watch(
     );
   }
 );
+
+watch(rsvp_meta, (newVal, oldVal) => {
+  validateForm(newVal)
+})
+
 </script>
 
 <template>
@@ -288,7 +327,7 @@ watch(
         </TransitionChild>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div
+          <form
             class="flex h-screen md:min-h-full items-end justify-center md:p-4 text-center sm:items-center sm:p-0"
           >
             <TransitionChild
@@ -369,6 +408,10 @@ watch(
                       :class="{ 'step-primary': currentStep >= 4 }"
                       class="step"
                     ></li>
+                    <li
+                      :class="{ 'step-primary': currentStep >= 5 }"
+                      class="step"
+                    ></li>
                   </ul>
 
                   <div class="grid">
@@ -411,6 +454,7 @@ watch(
 
                           <div
                             class="grid grid-cols-[1.5rem_1fr] items-center w-full gap-x-4"
+              
                           >
                             <dt class="flex">
                               <span class="sr-only">Phone</span>
@@ -420,7 +464,8 @@ watch(
                             <dd class="pt-0 leading-6">
                               <!-- {{
                                 $session.user.user_metadata.phone || "Not set"
-                              }} -->
+xxxx                              }} -->
+                              
                               <input
                                 type="number"
                                 v-model="profile.phone"
@@ -428,8 +473,7 @@ watch(
                                 id="phone"
                                 autocomplete="phone"
                                 class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
-                                placeholder="57654321"
-                                pattern="(\+230\s?)?(5[0-9]{7}|[0-9]{7})"
+                                placeholder="Enter a phone number"
                                 required
                               />
                             </dd>
@@ -514,11 +558,62 @@ watch(
                       <Transition name="slide-fade" mode="in-out">
                         <div
                           v-if="!rsvp_is_attending"
-                          class="grid grid-rows-[1fr_auto] px-16 items-center gap-6 h-full"
+                          class="grid grid-rows-[1fr_auto] pr-8 items-center gap-6 h-full"
                         >
                           <Transition name="slide-vertical" mode="out-in">
                             <div
                               v-if="currentStep === 1"
+                              data-profile
+                              class="grid w-full items-center py-8"
+                            >
+                                <dt class="grid gap-2 justify-center py-4">
+                                  <span
+                                    class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
+                                    >Email</span
+                                  >
+                                  
+                                  <span
+                                    class="flex mx-auto gap-2 text-lg"
+                                    v-if="profile.email"
+                                  >
+      
+                                    <span>{{ profile.email }}</span>
+                                  </span>
+                                </dt>
+
+                                <dt class="grid gap-2 justify-center py-4">
+                                  <span
+                                    class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
+                                    >Phone number</span
+                                  >
+                                  
+                                  <input
+                                    type="text"
+                                    v-model="profile.phone"
+                                    name="phone"
+                                    id="phone"
+                                    autocomplete="phone"
+                                    class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                                    :class="[Object.keys(form_errors).includes('phone') && 'border-red-500']"                              
+                                    placeholder="Enter your phone number"
+                                    :disabled="rsvp_is_attending"
+                                    required
+                                  />
+                                  <p>
+                                    <span
+                                      v-if="Object.keys(form_errors).includes('phone')"
+                                      class="text-red-500 text-sm"
+                                    >
+                                      {{ form_errors.phone }}
+                                    </span>
+                                  </p>
+                                </dt>
+
+
+      
+                            </div>
+                            <div
+                              v-else-if="currentStep === 2"
                               data-food
                               class="grid w-full items-center"
                             >
@@ -554,7 +649,7 @@ watch(
                             </div>
 
                             <div
-                              v-else-if="currentStep === 2"
+                              v-else-if="currentStep === 3"
                               data-transport
                               class="grid w-full items-center"
                             >
@@ -592,7 +687,7 @@ watch(
                             </div>
 
                             <div
-                              v-else-if="currentStep === 3"
+                              v-else-if="currentStep === 4"
                               data-occupation
                               class="grid w-full items-center"
                             >
@@ -633,7 +728,7 @@ watch(
                             </div>
 
                             <div
-                              v-else-if="currentStep === 4"
+                              v-else-if="currentStep === 5"
                               data-show
                               class="grid w-full gap-y-4 items-center"
                             >
@@ -674,13 +769,13 @@ watch(
                             <div class="join gap-2">
                               <button
                                 class="btn join-item"
-                                @click="goToPrevStep"
+                                @click.prevent="goToPrevStep"
                               >
                                 <IconUp class="text-verse-500 w-8 h-8" />
                               </button>
                               <button
                                 class="btn join-item"
-                                @click="goToNextStep"
+                                @click.prevent="goToNextStep"
                               >
                                 <IconDown class="text-verse-500 w-8 h-8" />
                               </button>
@@ -697,7 +792,7 @@ watch(
                     <button
                       type="button"
                       class="inline-flex w-full justify-center text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-4 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
-                      @click="open = false"
+                      @click.prevent="open = false"
                     >
                       Close
                     </button>
@@ -709,7 +804,7 @@ watch(
                       type="button"
                       class="col-span-2 inline-flex w-full justify-center rounded-md bg-slate-100 dark:bg-verse-500 dark:text-white px-3 py-4 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-200 sm:ml-3 sm:w-auto"
                       :disabled="rsvp_loading"
-                      @click="rsvpToMeetup()"
+                      @click.prevent="rsvpToMeetup()"
                     >
                       Confirm
                     </button>
@@ -750,17 +845,17 @@ watch(
                             <span class="sr-only">Phone</span>
                             <IconPhone class="h-6 w-6" aria-hidden="true" />
                           </dt>
-                          <dd class="pt-0 leading-6">
+                          <dd class="pt-0 leading-6"                                         >
                             <!-- {{ profile.phone || "Not set" }} -->
                             <input
-                              type="number"
+                              type="text"
                               v-model="profile.phone"
                               name="phone"
                               id="phone"
                               autocomplete="phone"
                               class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
-                              placeholder="57654321"
-                              pattern="(\+230\s?)?(5[0-9]{7}|[0-9]{7})"
+                              :class="[Object.keys(form_errors).includes('phone') && 'border-red-500']"                              
+                              placeholder="Enter your phone number"
                               :disabled="rsvp_is_attending"
                               required
                             />
@@ -964,7 +1059,7 @@ watch(
                       type="button"
                       class="inline-flex w-full justify-center rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 px-3 py-2 text-sm font-semibold dark:text-slate-900 shadow-sm dark:hover:bg-slate-200 sm:ml-3 sm:w-auto"
                       :disabled="rsvp_loading"
-                      @click="rsvpToMeetup()"
+                      @click.prevent="rsvpToMeetup()"
                     >
                       Confirm
                     </button>
@@ -972,14 +1067,14 @@ watch(
                   <button
                     type="button"
                     class="mt-3 inline-flex w-full justify-center rounded-md dark:text-white ring-1 dark:ring-slate-500 dark:hover:bg-slate-100/5 bg-transparent text-slate-900 ring-slate-900 dark:bg-transparent px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
-                    @click="open = false"
+                    @click.prevent="open = false"
                   >
                     Close
                   </button>
                 </div>
               </DialogPanel>
             </TransitionChild>
-          </div>
+          </form>
         </div>
       </Dialog>
     </TransitionRoot>
