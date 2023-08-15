@@ -788,6 +788,7 @@ xxxx                              }} -->
 
                   <div
                     class="grid grid-cols-4 justify-between gap-4 md:hidden items-center w-full col-span-2"
+                    v-if="currentStep === 5"
                   >
                     <button
                       type="button"
