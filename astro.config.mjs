@@ -6,9 +6,16 @@ import Icons from 'unplugin-icons/vite'
 
 import vue from "@astrojs/vue";
 
+let site = "https://frontend.mu";
+
+// https://vercel.com/docs/concepts/projects/environment-variables/system-environment-variables
+if (process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development") {
+  site = `https://${process.env.VERCEL_URL}`;
+}
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://frontend.mu",
+  site,
   integrations: [
     mdx(),
     sitemap(),
