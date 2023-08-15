@@ -853,8 +853,8 @@ xxxx                              }} -->
                               name="phone"
                               id="phone"
                               autocomplete="phone"
-                              class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
-                              :class="[Object.keys(form_errors).includes('phone') && 'border-red-500']"                              
+                              class="flex-1 border-2  rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                              :class="[Object.keys(form_errors).includes('phone') ? 'border-red-500' : 'border-white/10']"                              
                               placeholder="Enter your phone number"
                               :disabled="rsvp_is_attending"
                               required
