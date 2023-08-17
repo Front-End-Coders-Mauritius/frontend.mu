@@ -53,6 +53,7 @@ import RsvpButton from "./RsvpButton.vue";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
+const $userProfile = useStore(userProfile);
 
 const props = defineProps({
   meetup: {
@@ -395,7 +396,7 @@ watchEffect(async (newVal) => {
                     :class="{ hidden: !rsvp_is_attending }"
                     class="md:flex"
                     :rsvp_success="rsvp_success"
-                    :avatar_url="$session.user.user_metadata.avatar_url"
+                    :avatar_url="$userProfile.avatar_url"
                     :rsvp_loading="rsvp_loading"
                   />
                 </div>
@@ -593,6 +594,10 @@ watchEffect(async (newVal) => {
                                     <span>{{ profile.email }}</span>
                                   </span>
                                 </dt>
+
+                                <div v-if="profile.full_name === ''">
+                                  You don't have a full name
+                                </div>
 
                                 <dt class="grid gap-2 justify-center py-4">
                                   <span
