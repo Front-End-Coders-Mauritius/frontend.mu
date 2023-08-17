@@ -2,11 +2,11 @@ import { supabase } from "./supabase";
 import { isUserLoggedIn, currentUser, userProfile } from "../store/userStore";
 import { Provider } from "@supabase/supabase-js";
 
-export const oAuthLogin = async (provider: Provider = 'google') => {
+export const oAuthLogin = async (provider: Provider = 'google', path = window.location.pathname) => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: window.location.origin + window.location.pathname,
+      redirectTo: window.location.origin + path,
     },
   });
 
