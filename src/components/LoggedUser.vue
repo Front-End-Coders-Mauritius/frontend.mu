@@ -30,7 +30,7 @@ const fetchSession = async () => {
         const { data: functionData, error: functionError } =
           await supabase.functions.invoke("handle-new-user", {
             body: {
-              id: userProfileData.id,
+              id: data.session.user.id,
               full_name: data.session.user.user_metadata.full_name,
               avatar_url: data.session.user.user_metadata.avatar_url,
             },
