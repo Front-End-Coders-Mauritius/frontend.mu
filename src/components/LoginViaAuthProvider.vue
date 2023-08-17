@@ -4,6 +4,13 @@ import LogosGitHubIcon from "~icons/logos/github-icon";
 
 import { oAuthLogin } from "@utils/auth-helpers";
 
+function getPathName() {
+  const url = new URL(window.location.href);
+  const searchParams = url.searchParams;
+  return searchParams.get("redirect_url") ?? ""
+}
+
+const redirectURL = getPathName()
 </script>
 
 
@@ -28,7 +35,7 @@ import { oAuthLogin } from "@utils/auth-helpers";
         class="btn"
         type="button"
         title="Are you sure? Are you a dev? We have GitHub.. yah know? 👀"
-        @click="oAuthLogin('google')">
+        @click="oAuthLogin('google', redirectURL)">
         <LogosGoogleIcon class="h-5 w-5" />
         <span>Continue with Google</span>
       </button>
@@ -37,7 +44,7 @@ import { oAuthLogin } from "@utils/auth-helpers";
         class="btn"
         type="button"
         title="Yeah that one is better! Don't use Google."
-        @click="oAuthLogin('github')">
+        @click="oAuthLogin('github', redirectURL)">
         <LogosGitHubIcon class="h-5 w-5" />
         <span>Continue with GitHub</span>
       </button>
