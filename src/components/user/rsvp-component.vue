@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed, onMounted, shallowRef, watch } from "vue";
+import { ref, computed, onMounted, shallowRef, watch, watchEffect } from "vue";
 import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser, userProfile } from "@store/userStore";
+import { onMount } from 'nanostores'
+
 
 import {
   getUserProfile,
@@ -80,7 +82,7 @@ const rsvp_is_attending = ref(false);
 const getRsvpStatus = async () => {
   if ($isUserLoggedIn.value) {   
     rsvp_check_loading.value = true;
-    const data = await getMeetupRSVPStatus(props.meetup.id);
+    const data = await getMeetupRSVPStatus(props.meetup.id, $session.value.user.id);
     currentRSVPStatus.value = data;
     rsvp_is_attending.value = data ? !!data && !!data.rsvp : false;
     rsvp_check_loading.value = false;
@@ -196,14 +198,70 @@ const showMeAsAttendingOptions = [
 ];
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
 
+async function fetchAttendingData() {
+  await getRsvpStatus();
+
+    // Retrieve user profile
+    rsvp_check_loading.value = true;
+
+    getUserProfile().then((data) => {
+      rsvp_check_loading.value = false;
+      profile.value = data;
+
+      let dataCarrier;
+
+      // If user has already RSVP'd
+      if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
+        // trying to restore rsvp values
+        dataCarrier = currentRSVPStatus.value.meta;
+
+        showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
+          (option) => {
+            return option.value === currentRSVPStatus.value.showOnSite.toString();
+          }
+        );
+
+        if (currentRSVPStatus.value.phone) {
+          profile.value.phone = currentRSVPStatus.value.phone;
+        }
+      } else {
+        dataCarrier = data;
+      }
+
+      foodSelection.value = dataCarrier.meal
+        ? foodOptions.find((option) => {
+            return option.value === dataCarrier.meal;
+          })
+        : foodOptions[1];
+
+      transportSelection.value = dataCarrier.transport
+        ? transportOptions.find((option) => {
+            return option.value === dataCarrier.transport;
+          })
+        : transportOptions[1];
+
+      identifyAsSelection.value = dataCarrier.current_occupation
+        ? identifyAsOptions.find((option) => {
+            return option.value === dataCarrier.current_occupation;
+          })
+        : identifyAsOptions[0];
+    });
+}
+
 // onMounted(async () => {
-//   if (!$isUserLoggedIn.value) {
-//     return false;
-//   }
+
+//   await fetchAttendingData();  
   
-  
-//   // }
 // });
+
+// onMount(isUserLoggedIn, () => {
+//   // Mount mode
+//   console.log('mounted')
+//   // return () => {
+//   //   console.log('disabled')
+//   //   // Disabled mode
+//   // }
+// })
 
 // RSVP values
 const rsvp_meta = computed(() => {
@@ -263,56 +321,10 @@ watch(rsvp_meta, (newVal, oldVal) => {
   validateForm(newVal)
 })
 
-watch($isUserLoggedIn, async (newVal, oldVal) => {
+watchEffect(async (newVal) => {
   // only proceed when user logged in check is true
-  if (newVal) {
-    await getRsvpStatus();
-
-    // Retrieve user profile
-    rsvp_check_loading.value = true;
-
-    getUserProfile().then((data) => {
-      rsvp_check_loading.value = false;
-      profile.value = data;
-
-      let dataCarrier;
-
-      // If user has already RSVP'd
-      if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
-        // trying to restore rsvp values
-        dataCarrier = currentRSVPStatus.value.meta;
-
-        showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
-          (option) => {
-            return option.value === currentRSVPStatus.value.showOnSite.toString();
-          }
-        );
-
-        if (currentRSVPStatus.value.phone) {
-          profile.value.phone = currentRSVPStatus.value.phone;
-        }
-      } else {
-        dataCarrier = data;
-      }
-
-      foodSelection.value = dataCarrier.meal
-        ? foodOptions.find((option) => {
-            return option.value === dataCarrier.meal;
-          })
-        : foodOptions[1];
-
-      transportSelection.value = dataCarrier.transport
-        ? transportOptions.find((option) => {
-            return option.value === dataCarrier.transport;
-          })
-        : transportOptions[1];
-
-      identifyAsSelection.value = dataCarrier.current_occupation
-        ? identifyAsOptions.find((option) => {
-            return option.value === dataCarrier.current_occupation;
-          })
-        : identifyAsOptions[0];
-    });
+  if ($isUserLoggedIn.value && $session.value) {
+    await fetchAttendingData();  
   }
 });
 
