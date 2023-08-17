@@ -25,6 +25,5 @@
         "src/layouts/*"
       ]
     },
-    "jsxImportSource": "react"
   }
 }
