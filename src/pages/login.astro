@@ -1,9 +1,21 @@
 ---
 import LayoutHome from "../layouts/LayoutHome.astro";
+
+import LoginViaAuthProvider from "@components/LoginViaAuthProvider.vue";
 ---
 
 <LayoutHome>
   <div class="mx-auto w-full max-w-3xl grid items-center text-center">
-    <h2>Dass wassup!</h2>
+    <h2
+      class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
+    >
+      <span
+        class="block font-sans text-black dark:text-verse-300 xl:inline capitalize font-mono"
+      >
+        Who are you?
+      </span>
+    </h2>
+
+    <LoginViaAuthProvider client:only />
   </div>
 </LayoutHome>

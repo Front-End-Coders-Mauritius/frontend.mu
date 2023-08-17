@@ -269,13 +269,14 @@ const isDirty = computed(() => {
             <div class="text-[50px]">
               You are not logged in.
             </div>
-            <button
-                class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
-                @click="oAuthLogin()">
-                <div class="flex gap-2 items-center">
-                    <span>Login to RSVP</span>
-                </div>
-            </button>
+            <a
+              class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
+              href="/login"
+            >
+              <div class="flex gap-2 items-center">
+                  <span>Login to RSVP</span>
+              </div>
+            </a>
           </div>
         </template>
 
