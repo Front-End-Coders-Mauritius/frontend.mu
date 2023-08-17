@@ -2,7 +2,7 @@
 import { onMounted, ref, Ref, computed } from 'vue'
 import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser } from "@store/userStore";
-import { getMeetupAttendees } from "@utils/db-helpers";
+import { getMeetupAttendees, getMeetupAttendeesCount } from "@utils/db-helpers";
 import type { MeetupAttendees } from "@utils/types";
 
 const $session = useStore(currentUser);
@@ -20,6 +20,7 @@ const props = defineProps({
 })
 
 const attendeeList: Ref<MeetupAttendees[] | null> = ref([])
+const attendeeCount = ref<number>(0)
 
 const seatsTakenPercentage = computed(() => {
   if (attendeeList.value) {
@@ -37,6 +38,7 @@ const showAsFrom = computed(() => {
 
 onMounted(async () => {
   attendeeList.value = await getMeetupAttendees(props.meetupId)
+  attendeeCount.value = await getMeetupAttendeesCount(props.meetupId)
   // if ($isUserLoggedIn.value) {
   // } else {
   //   console.error('You are not logged in')

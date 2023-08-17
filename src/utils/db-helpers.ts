@@ -146,10 +146,10 @@ export const getMeetupAttendees = async (
     return null;
   }
 
-  return data;
+  return data.filter(person => person.full_name && person.avatar_url);
 };
 
-const getMeetupAttendeesCount = async (meetupId: string): Promise<any> => {
+export const getMeetupAttendeesCount = async (meetupId: string): Promise<any> => {
   const { data, error } = await supabase
     .rpc("get_rsvp_list_count", {
       meetup_id: meetupId,
