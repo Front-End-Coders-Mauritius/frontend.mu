@@ -1,0 +1,25 @@
+---
+import { SITE_URL } from "../config";
+import BaseHeading from "./base/BaseHeading.astro";
+
+const [ teamResponse, meetupsResponse ] = await Promise.all([
+  "/api/team.json",
+  "/api/meetups.json"
+].map(slug => fetch(`${SITE_URL}${slug}`)));
+
+const { speakers, contributors } = await teamResponse.json();
+const meetups = await meetupsResponse.json();
+
+let numOfMeetups = 0,
+    numOfSpeakers = 0,
+    numOfContributors = 0;
+
+if (!!speakers) numOfSpeakers = speakers?.length || 0;
+
+if (!!contributors) numOfContributors = contributors?.length || 0;
+
+if (!!meetups) {
+  for (const meetupYear in meetups) numOfMeetups += (meetups?.[meetupYear]?.length || 0);
+}
+---
+
