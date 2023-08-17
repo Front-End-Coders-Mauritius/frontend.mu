@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import { userProfile } from "../store/userStore";
+import { userProfile, currentUser } from "../store/userStore";
 import type {
   User,
   RSVPMetaObject,
@@ -11,17 +11,17 @@ import type {
 
 export const getUserProfile = async () => {
   const { data, error: sessionError } = await supabase.auth.getSession();
-
+  
   if (sessionError) {
     console.log(sessionError);
     return null;
   }
-
+  
   const { data: profile, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", data?.session?.user?.id);
-
+  .from("profiles")
+  .select("*")
+  .eq("id", data?.session?.user?.id);
+  
   if (error) {
     console.log(error);
     return null;
@@ -31,12 +31,12 @@ export const getUserProfile = async () => {
 };
 
 export const updateUserProfile = async (profile: Partial<User>) => {
-  const userProfileData = userProfile.get();
+  const userId = userProfile.get()?.id ?? currentUser.get()?.user.id;
 
   const { data, error } = await supabase
     .from("profiles")
     .update(profile)
-    .eq("id", userProfileData?.id)
+    .eq("id", userId)
     .select("*");
 
   if (error) {
@@ -52,13 +52,13 @@ export const updateUserProfile = async (profile: Partial<User>) => {
 export const getMeetupRSVPStatus = async (
   meetupId: string
 ): Promise<IRSVPStatus | null> => {
-  const userProfileData = userProfile.get();
+  const userId = userProfile.get()?.id ?? currentUser.get()?.user.id;
 
   const { data, error } = await supabase
     .from("meetup_rsvp")
     .select("*")
     .eq("meetup_id", meetupId)
-    .eq("user_uid", userProfileData?.id)
+    .eq("user_uid", userId)
     .single();
 
   if (error) {

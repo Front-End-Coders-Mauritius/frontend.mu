@@ -15,9 +15,9 @@ const fetchSession = async () => {
     const { data, error } = await supabase.auth.getSession();
 
     if (error) throw error;
-
     if (data && data.session) {
       currentUser.set(data.session);
+      console.log(currentUser.get());
       isUserLoggedIn.set(true);
 
       const userProfileData = userProfile.get();
@@ -25,7 +25,7 @@ const fetchSession = async () => {
       // console.log(userProfileData);
 
       if (!userProfileData) {
-        await updateUserProfile(data.session.user.user_metadata);
+        await updateUserProfile(data.session.user);
       } else if (!userProfileData.avatar_url || !userProfileData.full_name) {
         const { data: functionData, error: functionError } =
           await supabase.functions.invoke("handle-new-user", {
@@ -37,7 +37,7 @@ const fetchSession = async () => {
           });
         if (functionError) throw functionError;
 
-        await updateUserProfile(data.session.user.user_metadata);
+        await updateUserProfile(data.session.user);
       }
     } else {
       currentUser.set(null);
@@ -51,6 +51,7 @@ const fetchSession = async () => {
 };
 
 const updateUserProfile = async (userMetadata) => {
+  // userProfile.set(userMetadata)
   const profile = await getUserProfile();
   if (profile) {
     userProfile.set({
