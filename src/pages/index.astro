@@ -5,6 +5,7 @@ import LayoutHome from "../layouts/LayoutHome.astro";
 import HomeLatestMeetup from "../components/HomeLatestMeetup.astro";
 import { loadEvents } from "@utils/api";
 import HomeFeaturedSpeakers from "../components/HomeFeaturedSpeakers.astro";
+import StatsCounter from "../components/StatsCounter.astro";
 
 
 let response = await loadEvents();
@@ -12,10 +13,12 @@ let response = await loadEvents();
 
 <LayoutHome>
 	<HomeHero />
-	
+
 	<HomeFeaturedSpeakers />
 
+  <StatsCounter />
+
 	<HomeLatestMeetup response={response} />
-	
+
 	<HomeSocialPresence />
 </LayoutHome>
