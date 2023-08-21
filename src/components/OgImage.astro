@@ -3,7 +3,7 @@ const { title, pageType, username = "Github" } = Astro.props;
 
 let imageUrl = "";
 if (pageType === "page") {
-  if (typeof title === 'undefined') {
+  if (typeof title === "undefined") {
     imageUrl = "https://vercel-og-next.vercel.app/api/fec-home";
   } else {
     imageUrl = "https://vercel-og-next.vercel.app/api/fec-page?title=" + title;

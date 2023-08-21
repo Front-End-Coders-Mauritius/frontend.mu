@@ -7,7 +7,15 @@ const directus = await getDirectusClient();
 // Events
 async function loadEventsUncached() {
   const events = await directus.items("Events").readByQuery({
-    fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sponsors.Sponsor_id.*.*"],
+    fields: [
+      "*.*",
+      "sessions.Events_id.*",
+      "sessions.Session_id.speakers.name",
+      "sessions.Session_id.title",
+      "sessions.Session_id.speakers.id",
+      "sessions.Session_id.speakers.github_account",
+      "sponsors.Sponsor_id.*.*",
+    ],
   });
 
   return events;
@@ -83,7 +91,8 @@ export async function getSpeaker(id: string | number) {
 }
 
 // Photo albums
-export const photoAlbumSource = "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
+export const photoAlbumSource =
+  "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
 async function loadPhotosUncached() {
   let albumsPhotos = await fetch(`${photoAlbumSource}index.json`);
   albumsPhotos = await albumsPhotos.json();

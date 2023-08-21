@@ -11,17 +11,17 @@ import type {
 
 export const getUserProfile = async () => {
   const { data, error: sessionError } = await supabase.auth.getSession();
-  
+
   if (sessionError) {
     console.log(sessionError);
     return null;
   }
-  
+
   const { data: profile, error } = await supabase
-  .from("profiles")
-  .select("*")
-  .eq("id", data?.session?.user?.id);
-  
+    .from("profiles")
+    .select("*")
+    .eq("id", data?.session?.user?.id);
+
   if (error) {
     console.log(error);
     return null;
@@ -101,7 +101,7 @@ export const setMeetupRSVP = async (
       })
       .eq("id", existingRSVP[0].id);
 
-      if (error) {
+    if (error) {
       console.log(error);
       return null;
     }
@@ -146,10 +146,12 @@ export const getMeetupAttendees = async (
     return null;
   }
 
-  return data.filter(person => person.full_name && person.avatar_url);
+  return data.filter((person) => person.full_name && person.avatar_url);
 };
 
-export const getMeetupAttendeesCount = async (meetupId: string): Promise<any> => {
+export const getMeetupAttendeesCount = async (
+  meetupId: string
+): Promise<any> => {
   const { data, error } = await supabase
     .rpc("get_rsvp_list_count", {
       meetup_id: meetupId,

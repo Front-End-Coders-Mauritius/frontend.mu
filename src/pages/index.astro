@@ -6,16 +6,15 @@ import HomeLatestMeetup from "../components/HomeLatestMeetup.astro";
 import { loadEvents } from "@utils/api";
 import HomeFeaturedSpeakers from "../components/HomeFeaturedSpeakers.astro";
 
-
 let response = await loadEvents();
 ---
 
 <LayoutHome>
-	<HomeHero />
-	
-	<HomeFeaturedSpeakers />
+  <HomeHero />
 
-	<HomeLatestMeetup response={response} />
-	
-	<HomeSocialPresence />
+  <HomeFeaturedSpeakers />
+
+  <HomeLatestMeetup response={response} />
+
+  <HomeSocialPresence />
 </LayoutHome>

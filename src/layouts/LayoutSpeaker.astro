@@ -5,26 +5,22 @@ import Footer from "../components/Footer.astro";
 import OgImage from "../components/OgImage.astro";
 import Backdrop from "./Backdrop.astro";
 
-const props = Astro.props
-
-
+const props = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={props.title} description={props.description} />
-		<OgImage pageType="speaker" username={props.username}/>
-	</head>
+  <head>
+    <BaseHead title={props.title} description={props.description} />
+    <OgImage pageType="speaker" username={props.username} />
+  </head>
 
-	<body>
-		<Backdrop>
-			<Header />
+  <body>
+    <Backdrop>
+      <Header />
 
+      <slot />
 
-			<slot />
-
-
-			<Footer />
-		</Backdrop>
-	</body>
+      <Footer />
+    </Backdrop>
+  </body>
 </html>
