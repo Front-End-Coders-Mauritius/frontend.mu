@@ -108,6 +108,14 @@ function validateForm(formValues) {
     delete form_errors.value["phone"]
   }
 
+    // validate full name
+  if (formValues.full_name === "") {
+    form_errors.value["full_name"] = "Invalid Full Name"
+    return false
+  } else {
+    delete form_errors.value["full_name"]
+  }
+
   return true
 }
 
@@ -123,11 +131,11 @@ const rsvpToMeetup = async () => {
   }
 
   try {
-    const { phone } = rsvp_meta.value;
+    const { phone, full_name } = rsvp_meta.value;
 
-    if (phone) {
+    if (phone || full_name) {
       // update user profile
-      await updateUserProfile({ phone });
+      await updateUserProfile({ phone, full_name });
     }
 
     const data = await setMeetupRSVP(
@@ -271,6 +279,7 @@ const rsvp_meta = computed(() => {
     transport: transportSelection.value.value,
     current_occupation: identifyAsSelection.value.value,
     phone: profile.value.phone,
+    full_name: profile.value.full_name,
   };
 });
 
@@ -463,7 +472,7 @@ watchEffect(async (newVal) => {
                             </dt>
 
                             <dd class="pt-0 leading-6">
-                              {{ $session.user.user_metadata.full_name }}
+                              {{ profile.full_name }}
                             </dd>
                           </div>
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
@@ -833,9 +842,12 @@ watchEffect(async (newVal) => {
                   <div class="grid grid-cols-1 col-span-4">
                     <!-- Details -->
                     <div class="pt-8">
+                      <!-- <pre>
+                        {{ profile }}
+                      </pre> -->
                       <!-- Fields -->
                       <dl class="flex flex-wrap gap-6 font-bold">
-                        <div class="flex w-full flex-none gap-x-4">
+                        <div class="flex w-full items-center flex-none gap-x-4">
                           <dt class="flex-none">
                             <span class="sr-only">Name</span>
                             <IconUserAvatar
@@ -844,15 +856,19 @@ watchEffect(async (newVal) => {
                             />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            {{ profile.full_name }}
-                          </dd>
-
-                          {{ profile.full_name }}
-
-                          <div v-if="profile.full_name === ''">
-                            You don't have a full name
-                          </div>
-                          
+                              <input
+                                type="text"
+                                v-model="profile.full_name"
+                                name="full_name"
+                                id="full_name"
+                                autocomplete="full_name"
+                                class="flex-1 border-2  rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                                :class="[Object.keys(form_errors).includes('full_name') ? 'border-red-500' : 'border-white/10']"                              
+                                placeholder="Enter your full name"
+                                :disabled="rsvp_is_attending"
+                                required
+                              />
+                          </dd>                         
 
                         </div>
 

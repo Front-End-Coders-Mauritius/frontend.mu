@@ -134,7 +134,7 @@ const links: TMenu = {
                 </a>
 
                 {links[item].children && (
-                  <div class="menu-dropdown p-3 bg-white rounded-md text-black">
+                  <div class="menu-dropdown px-2 pb-2 bg-white rounded-md text-black">
                     <div class="menu-dropdown-item  theme-dark">
                       <ul class="flex flex-col gap-2">
                         {links[item].children?.map((submenu) => {
@@ -150,11 +150,13 @@ const links: TMenu = {
                                 class="hover:bg-verse-100 rounded-md block p-2"
                               >
                                 <>
-                                  <div class="flex gap-2">
-                                    {submenu.title}
+                                  <div class="flex items-center gap-2">
+                                    <div class="whitespace-nowrap">
+                                      {submenu.title}
+                                      </div>
 
                                     {!!submenu.href.includes("https") && (
-                                      <ExternalLinkIcon />
+                                      <ExternalLinkIcon class="w-4 h-4" />
                                     )}
                                   </div>
                                 </>

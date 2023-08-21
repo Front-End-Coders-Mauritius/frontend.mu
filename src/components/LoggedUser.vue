@@ -17,7 +17,7 @@ const fetchSession = async () => {
     if (error) throw error;
     if (data && data.session) {
       currentUser.set(data.session);
-      console.log(currentUser.get());
+      // console.log(currentUser.get());
       isUserLoggedIn.set(true);
 
       const userProfileData = userProfile.get();
