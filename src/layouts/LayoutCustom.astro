@@ -6,20 +6,20 @@ import Sponsors from "../components/Sponsors.astro";
 import OgImage from "../components/OgImage.astro";
 import Backdrop from "./Backdrop.astro";
 
-const props = Astro.props
+const props = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={props.title} description={props.description} />
-		<OgImage pageType="page" title={props.title} />
-	</head>
+  <head>
+    <BaseHead title={props.title} description={props.description} />
+    <OgImage pageType="page" title={props.title} />
+  </head>
 
-	<body>
-		<Backdrop>
-			<Header />
+  <body>
+    <Backdrop>
+      <Header />
 
-			<slot />
-		</Backdrop>
-	</body>
+      <slot />
+    </Backdrop>
+  </body>
 </html>

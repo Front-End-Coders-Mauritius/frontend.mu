@@ -7,19 +7,19 @@ import { oAuthLogin } from "@utils/auth-helpers";
 function getPathName() {
   const url = new URL(window.location.href);
   const searchParams = url.searchParams;
-  return searchParams.get("redirect_url") ?? ""
+  return searchParams.get("redirect_url") ?? "";
 }
 
-const redirectURL = getPathName()
+const redirectURL = getPathName();
 </script>
-
 
 <template>
   <div
     class="grid justify-center gap-y-8 p-16 my-16 bg-verse-300 dark:bg-white/10 backdrop-blur-sm mx-auto rounded-xl text-white"
   >
     <h3 class="text-2xl text-verse-700 dark:text-verse-300 font-semibold">
-      Choose your preferred <br/> authentication provider
+      Choose your preferred <br />
+      authentication provider
     </h3>
 
     <!-- <div class="text-slate-400 text-lg max-w-sm">
@@ -34,7 +34,8 @@ const redirectURL = getPathName()
       <button
         class="btn bg-white"
         type="button"
-        @click="oAuthLogin('google', redirectURL)">
+        @click="oAuthLogin('google', redirectURL)"
+      >
         <LogosGoogleIcon class="h-5 w-5" />
         <span>Login with Google</span>
       </button>
@@ -45,7 +46,8 @@ const redirectURL = getPathName()
         type="button"
         disabled
         title="Yeah that one is better! Don't use Google."
-        @click="oAuthLogin('github', redirectURL)">
+        @click="oAuthLogin('github', redirectURL)"
+      >
         <LogosGitHubIcon class="h-5 w-5" />
         <span>Login with GitHub (coming soon)</span>
       </button>
@@ -53,6 +55,4 @@ const redirectURL = getPathName()
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

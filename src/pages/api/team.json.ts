@@ -1,4 +1,4 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 import { loadSpeakers } from "@utils/api";
 
@@ -10,13 +10,15 @@ import { people } from "../../components/TeamComponent.astro";
 
 const speakers = await loadSpeakers();
 
-
 export const get: APIRoute = async () => {
-  return ({
+  return {
     body: JSON.stringify({
       people,
-      speakers: speakers.data.map(({name, github_account}) => ({name, github_account})),
-      contributors
-    })
-  });
-}
+      speakers: speakers.data.map(({ name, github_account }) => ({
+        name,
+        github_account,
+      })),
+      contributors,
+    }),
+  };
+};

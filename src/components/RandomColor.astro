@@ -3,23 +3,23 @@ import PainBucketIcon from "~icons/game-icons/paint-bucket";
 ---
 
 <script is:inline>
-// Random color
-function randomColor() {
+  // Random color
+  function randomColor() {
     const randomHue = Math.floor(Math.random() * 360);
     // insert hue in dom
     document.documentElement.style.setProperty("--brand-hue", randomHue);
-}
+  }
 
-// execute randomColor when ctrl + spacebar is pressed and no form is focused
-document.addEventListener("keydown", (event) => {
+  // execute randomColor when ctrl + spacebar is pressed and no form is focused
+  document.addEventListener("keydown", (event) => {
     if (
-        event.code === "Space" &&
-        event.ctrlKey &&
-        !event.target.closest("form")
+      event.code === "Space" &&
+      event.ctrlKey &&
+      !event.target.closest("form")
     ) {
-        randomColor();
+      randomColor();
     }
-});
+  });
 </script>
 
 <div class="hidden lg:block px-4">
