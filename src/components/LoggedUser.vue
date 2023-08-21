@@ -73,7 +73,7 @@ onMounted(() => {
     Log In
   </button>
   <div v-else class="flex">
-    <a href="/user/me" v-bind:title="'Hello ' + $session?.user.user_metadata.name + '!'" class="user-avatar">
+    <a href="/user/me" v-bind:title="'Hello ' + $session?.user.user_metadata.name + '!'" class="user-avatar ml-4 w-9 h-9 rounded-full overflow-hidden">
       <img v-bind:src="$userProfile
         ? $userProfile?.avatar_url
         : $session?.user.user_metadata.avatar_url
@@ -86,9 +86,3 @@ onMounted(() => {
     </button>
   </div>
 </template>
-
-<style >
-.user-avatar {
-  @apply ml-4 w-9 h-9 rounded-full overflow-hidden;
-}
-</style>

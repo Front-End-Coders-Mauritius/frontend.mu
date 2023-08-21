@@ -595,10 +595,6 @@ watchEffect(async (newVal) => {
                                   </span>
                                 </dt>
 
-                                <div v-if="profile.full_name === ''">
-                                  You don't have a full name
-                                </div>
-
                                 <dt class="grid gap-2 justify-center py-4">
                                   <span
                                     class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
@@ -850,6 +846,14 @@ watchEffect(async (newVal) => {
                           <dd class="pt-0 leading-6">
                             {{ profile.full_name }}
                           </dd>
+
+                          {{ profile.full_name }}
+
+                          <div v-if="profile.full_name === ''">
+                            You don't have a full name
+                          </div>
+                          
+
                         </div>
 
                         <div class="flex w-full flex-none items-center gap-x-4">
