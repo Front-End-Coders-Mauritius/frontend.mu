@@ -5,17 +5,20 @@ import LoginViaAuthProvider from "@components/LoginViaAuthProvider.vue";
 ---
 
 <LayoutHome>
-  <div class="mx-auto w-full max-w-3xl grid items-center text-center">
-    <h2
-      class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
-    >
-      <span
-        class="block font-sans text-black dark:text-verse-300 xl:inline capitalize font-mono"
+  <div class="mx-auto w-full grid items-center text-center">
+    <div class="flex flex-col justify-around">
+      <div></div>
+      <h2
+        class="uppercase text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
       >
-        Who are you?
-      </span>
-    </h2>
+        <span
+          class="block font-sans text-black dark:text-verse-300 xl:inline capitalize font-mono"
+        >
+          Login
+        </span>
+      </h2>
 
-    <LoginViaAuthProvider client:only />
+      <LoginViaAuthProvider client:only />
+    </div>
   </div>
 </LayoutHome>

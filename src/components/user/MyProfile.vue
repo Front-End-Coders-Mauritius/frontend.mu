@@ -21,9 +21,6 @@ import IconDesigner from "~icons/ph/paint-brush-duotone"
 import IconHr from "~icons/mdi/briefcase-account"
 
 import RsvpRadioItem from './rsvp-radio-item.vue'
-
-const redirectUrl = window.location.pathname
-
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
 
@@ -105,6 +102,8 @@ const updateProfile = () => {
 const isDirty = computed(() => {
   return JSON.stringify(profile.value) !== JSON.stringify(initialCopy.value)
 })
+
+
 </script>
 
 <template>
@@ -270,14 +269,13 @@ const isDirty = computed(() => {
             <div class="text-[50px]">
               You are not logged in.
             </div>
-            <a
-              class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
-              :href="`/login?redirect_url=${redirectUrl}`"
-            >
-              <div class="flex gap-2 items-center">
-                  <span>Login to RSVP</span>
-              </div>
-            </a>
+            <button
+                class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
+                @click="oAuthLogin()">
+                <div class="flex gap-2 items-center">
+                    <span>Login to RSVP</span>
+                </div>
+            </button>
           </div>
         </template>
 

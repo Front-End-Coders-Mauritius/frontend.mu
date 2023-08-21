@@ -16,37 +16,38 @@ const redirectURL = getPathName()
 
 <template>
   <div
-    class="grid justify-center gap-y-8 mt-10 bg-slate-900 rounded-xl mx-4 px-4 py-16 text-white"
+    class="grid justify-center gap-y-8 p-16 my-16 bg-verse-300 dark:bg-white/10 backdrop-blur-sm mx-auto rounded-xl text-white"
   >
-    <h3 class="text-2xl font-semibold">
-      Pick your auth provider to continue.
+    <h3 class="text-2xl text-verse-700 dark:text-verse-300 font-semibold">
+      Choose your preferred <br/> authentication provider
     </h3>
 
-    <div class="text-slate-400 text-sm max-w-sm">
+    <!-- <div class="text-slate-400 text-lg max-w-sm">
       <p>
         We need you to be authenticated so that we can create a profile for
         you. This is necessary so that we can have food (probably pizza 🍕)
         for you.
       </p>
-    </div>
+    </div> -->
 
     <div class="grid max-w-sm w-full mx-auto gap-y-4">
       <button
-        class="btn"
+        class="btn bg-white"
         type="button"
-        title="Are you sure? Are you a dev? We have GitHub.. yah know? 👀"
         @click="oAuthLogin('google', redirectURL)">
         <LogosGoogleIcon class="h-5 w-5" />
-        <span>Continue with Google</span>
+        <span>Login with Google</span>
       </button>
+      <!-- title="Are you sure? Are you a dev? We have GitHub.. yah know? 👀" -->
 
       <button
-        class="btn"
+        class="btn disabled:bg-white/50 disabled:opacity-30 disabled:text-black disabled:cursor-not-allowed"
         type="button"
+        disabled
         title="Yeah that one is better! Don't use Google."
         @click="oAuthLogin('github', redirectURL)">
         <LogosGitHubIcon class="h-5 w-5" />
-        <span>Continue with GitHub</span>
+        <span>Login with GitHub (coming soon)</span>
       </button>
     </div>
   </div>
