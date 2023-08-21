@@ -22,8 +22,7 @@ defineProps<{
     oAuthLogin: () => Promise<void>;
 }>()
 
-// const open = defineModel<boolean>('open', { required: true })
-
+const redirectUrl = window.location.pathname
 </script>
 
 <template>
@@ -70,14 +69,15 @@ defineProps<{
             </div>
         </div>
         <div v-else>
-            <button
+            <a
                 class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm bg-verse-700"
-                @click="oAuthLogin()">
+                :href="`/login?redirect_url=${redirectUrl}`"
+            >
                 <div class="flex gap-2 items-center">
                     <IconLogin />
                     <span>Login to RSVP</span>
                 </div>
-            </button>
+            </a>
         </div>
 
     </div>
