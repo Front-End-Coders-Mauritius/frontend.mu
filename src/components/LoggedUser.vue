@@ -17,7 +17,7 @@ const fetchSession = async () => {
     if (error) throw error;
     if (data && data.session) {
       currentUser.set(data.session);
-      console.log(currentUser.get());
+      // console.log(currentUser.get());
       isUserLoggedIn.set(true);
 
       const userProfileData = userProfile.get();
@@ -30,7 +30,7 @@ const fetchSession = async () => {
         const { data: functionData, error: functionError } =
           await supabase.functions.invoke("handle-new-user", {
             body: {
-              id: userProfileData.id,
+              id: data.session.user.id,
               full_name: data.session.user.user_metadata.full_name,
               avatar_url: data.session.user.user_metadata.avatar_url,
             },
@@ -73,7 +73,7 @@ onMounted(() => {
     Log In
   </button>
   <div v-else class="flex">
-    <a href="/user/me" v-bind:title="'Hello ' + $session?.user.user_metadata.name + '!'" class="user-avatar">
+    <a href="/user/me" v-bind:title="'Hello ' + $session?.user.user_metadata.name + '!'" class="user-avatar ml-4 w-9 h-9 rounded-full overflow-hidden">
       <img v-bind:src="$userProfile
         ? $userProfile?.avatar_url
         : $session?.user.user_metadata.avatar_url
@@ -86,9 +86,3 @@ onMounted(() => {
     </button>
   </div>
 </template>
-
-<style >
-.user-avatar {
-  @apply ml-4 w-9 h-9 rounded-full overflow-hidden;
-}
-</style>
