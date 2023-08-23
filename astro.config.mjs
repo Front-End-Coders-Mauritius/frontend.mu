@@ -40,5 +40,8 @@ export default defineConfig({
   },
   experimental: {
     viewTransitions: true
+  },
+  build: {
+    
   }
 });
