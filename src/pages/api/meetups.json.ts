@@ -1,3 +1,4 @@
+export const prerender = true;
 import type { APIRoute } from 'astro';
 import { loadEvents } from "@utils/api";
 
