@@ -1,29 +1,21 @@
-import { log } from "astro/dist/core/logger/core";
-import { getDirectusClient } from "../../scripts/directus-client";
-import { Memoize } from "../../scripts/memoizer";
-
-const directus = await getDirectusClient();
+const { getDirectusClient } = require("./directus-client");
+const { Memoize } = require("./memoizer")
 
 // Events
 async function loadEventsUncached() {
+
+  const directus = await getDirectusClient();
+
   const events = await directus.items("Events").readByQuery({
-    fields: [
-      "*.*",
-      "sessions.Events_id.*",
-      "sessions.Session_id.speakers.name",
-      "sessions.Session_id.title",
-      "sessions.Session_id.speakers.id",
-      "sessions.Session_id.speakers.github_account",
-      "sponsors.Sponsor_id.*.*",
-    ],
+    fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sponsors.Sponsor_id.*.*"],
   });
 
   return events;
 }
 
-export const loadEvents = Memoize(loadEventsUncached);
+const loadEvents = Memoize(loadEventsUncached);
 
-export const getRelatedEvent = (events, eventId) => {
+const getRelatedEvent = (events, eventId) => {
   const listOfIds = events.data.map((event) => event.id);
 
   const eventIndex = listOfIds.indexOf(Number(eventId));
@@ -43,7 +35,7 @@ export const getRelatedEvent = (events, eventId) => {
 };
 
 // Event
-export async function getEvent(id: string | number) {
+async function getEvent(id) {
   const events = await loadEvents();
   let event = events.data.find((ev) => ev.id == id);
 
@@ -58,6 +50,7 @@ export async function getEvent(id: string | number) {
 
 // Speakers
 async function loadSpeakersUncached() {
+  const directus = await getDirectusClient();
   const speaker = await directus.items("Person").readByQuery({
     fields: ["*.*.*"],
   });
@@ -65,10 +58,10 @@ async function loadSpeakersUncached() {
   return speaker;
 }
 
-export const loadSpeakers = Memoize(loadSpeakersUncached);
+const loadSpeakers = Memoize(loadSpeakersUncached);
 
 // Speaker
-export async function getSpeaker(id: string | number) {
+async function getSpeaker(id) {
   const speakers = await loadSpeakers();
   const speaker = speakers.data.find((ev) => ev.id == id);
   const events = await loadEvents();
@@ -91,8 +84,7 @@ export async function getSpeaker(id: string | number) {
 }
 
 // Photo albums
-export const photoAlbumSource =
-  "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
+const photoAlbumSource = "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";
 async function loadPhotosUncached() {
   let albumsPhotos = await fetch(`${photoAlbumSource}index.json`);
   albumsPhotos = await albumsPhotos.json();
@@ -100,4 +92,14 @@ async function loadPhotosUncached() {
   return albumsPhotos;
 }
 
-export const getPhotos = Memoize(loadPhotosUncached);
+const getPhotos = Memoize(loadPhotosUncached);
+
+module.exports = {
+  loadEvents,
+  getRelatedEvent,
+  getEvent,
+  loadSpeakers,
+  getSpeaker,
+  photoAlbumSource,
+  getPhotos
+}
