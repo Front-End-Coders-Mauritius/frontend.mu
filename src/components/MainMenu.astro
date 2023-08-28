@@ -49,18 +49,15 @@ const links = {
             target={links[item].href.includes("https") ? "_blank" : "_self"}
           >
             {links[item].title}
-            {
-              !!links[item].href.includes("https") &&
+            {!!links[item].href.includes("https") && (
               <ExternalLinkIcon
                 height="1em"
                 style="display: inline; vertical-align: text-bottom;"
               />
-            }
-            {
-              currentPath === links[item].href && (
-                <span class="absolute bottom-0 left-0 right-0 h-1 bg-verse-500 dark:bg-verse-400 menu-border-transition"></span>
-              )
-            }
+            )}
+            {currentPath === links[item].href && (
+              <span class="absolute bottom-0 left-0 right-0 h-1 bg-verse-500 dark:bg-verse-400 menu-border-transition" />
+            )}
           </a>
         </li>
       ))

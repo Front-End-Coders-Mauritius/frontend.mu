@@ -2,7 +2,7 @@
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strictNullChecks": true,
     "types": ["unplugin-icons/types/astro", "vite/client"],
     "paths": {

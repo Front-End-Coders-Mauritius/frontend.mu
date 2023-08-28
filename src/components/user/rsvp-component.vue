@@ -2,8 +2,7 @@
 import { ref, computed, onMounted, shallowRef, watch, watchEffect } from "vue";
 import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser, userProfile } from "@store/userStore";
-import { onMount } from 'nanostores'
-
+import { onMount } from "nanostores";
 
 import {
   getUserProfile,
@@ -53,6 +52,7 @@ import RsvpButton from "./RsvpButton.vue";
 
 const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
+const $userProfile = useStore(userProfile);
 
 const props = defineProps({
   meetup: {
@@ -80,9 +80,12 @@ const rsvp_check_loading = ref(false);
 const rsvp_is_attending = ref(false);
 
 const getRsvpStatus = async () => {
-  if ($isUserLoggedIn.value) {   
+  if ($isUserLoggedIn.value) {
     rsvp_check_loading.value = true;
-    const data = await getMeetupRSVPStatus(props.meetup.id, $session.value.user.id);
+    const data = await getMeetupRSVPStatus(
+      props.meetup.id,
+      $session.value.user.id
+    );
     currentRSVPStatus.value = data;
     rsvp_is_attending.value = data ? !!data && !!data.rsvp : false;
     rsvp_check_loading.value = false;
@@ -92,8 +95,7 @@ const getRsvpStatus = async () => {
 // Loaders
 const rsvp_loading = ref(false);
 const rsvp_success = ref(false);
-const form_errors = ref({})
-
+const form_errors = ref({});
 
 function validateForm(formValues) {
   // Pattern (\+230\s?)?(5[0-9]{7}|[0-9]{7})
@@ -101,20 +103,28 @@ function validateForm(formValues) {
 
   // validate phone number with regex
   if (!phoneRegex.test(formValues.phone)) {
-    form_errors.value["phone"] = "Invalid phone number"
-    return false
+    form_errors.value["phone"] = "Invalid phone number";
+    return false;
   } else {
-    delete form_errors.value["phone"]
+    delete form_errors.value["phone"];
   }
 
-  return true
+  // validate full name
+  if (formValues.full_name === "") {
+    form_errors.value["full_name"] = "Invalid Full Name";
+    return false;
+  } else {
+    delete form_errors.value["full_name"];
+  }
+
+  return true;
 }
 
 // Update RSVP Status
 
 const rsvpToMeetup = async () => {
   rsvp_loading.value = true;
-  const valid = validateForm(rsvp_meta.value)
+  const valid = validateForm(rsvp_meta.value);
 
   if (!valid) {
     rsvp_loading.value = false;
@@ -122,11 +132,11 @@ const rsvpToMeetup = async () => {
   }
 
   try {
-    const { phone } = rsvp_meta.value;
+    const { phone, full_name } = rsvp_meta.value;
 
-    if (phone) {
+    if (phone || full_name) {
       // update user profile
-      await updateUserProfile({ phone });
+      await updateUserProfile({ phone, full_name });
     }
 
     const data = await setMeetupRSVP(
@@ -201,57 +211,57 @@ const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
 async function fetchAttendingData() {
   await getRsvpStatus();
 
-    // Retrieve user profile
-    rsvp_check_loading.value = true;
+  // Retrieve user profile
+  rsvp_check_loading.value = true;
 
-    getUserProfile().then((data) => {
-      rsvp_check_loading.value = false;
-      profile.value = data;
+  getUserProfile().then((data) => {
+    rsvp_check_loading.value = false;
+    profile.value = data;
 
-      let dataCarrier;
+    let dataCarrier;
 
-      // If user has already RSVP'd
-      if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
-        // trying to restore rsvp values
-        dataCarrier = currentRSVPStatus.value.meta;
+    // If user has already RSVP'd
+    if (currentRSVPStatus.value && currentRSVPStatus.value.meta !== "") {
+      // trying to restore rsvp values
+      dataCarrier = currentRSVPStatus.value.meta;
 
-        showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
-          (option) => {
-            return option.value === currentRSVPStatus.value.showOnSite.toString();
-          }
-        );
-
-        if (currentRSVPStatus.value.phone) {
-          profile.value.phone = currentRSVPStatus.value.phone;
+      showMeAsAttendingSelection.value = showMeAsAttendingOptions.find(
+        (option) => {
+          return option.value === currentRSVPStatus.value.showOnSite.toString();
         }
-      } else {
-        dataCarrier = data;
+      );
+
+      if (currentRSVPStatus.value.phone) {
+        profile.value.phone = currentRSVPStatus.value.phone;
       }
+    } else {
+      dataCarrier = data;
+    }
 
-      foodSelection.value = dataCarrier.meal
-        ? foodOptions.find((option) => {
-            return option.value === dataCarrier.meal;
-          })
-        : foodOptions[1];
+    foodSelection.value = dataCarrier.meal
+      ? foodOptions.find((option) => {
+          return option.value === dataCarrier.meal;
+        })
+      : foodOptions[1];
 
-      transportSelection.value = dataCarrier.transport
-        ? transportOptions.find((option) => {
-            return option.value === dataCarrier.transport;
-          })
-        : transportOptions[1];
+    transportSelection.value = dataCarrier.transport
+      ? transportOptions.find((option) => {
+          return option.value === dataCarrier.transport;
+        })
+      : transportOptions[1];
 
-      identifyAsSelection.value = dataCarrier.current_occupation
-        ? identifyAsOptions.find((option) => {
-            return option.value === dataCarrier.current_occupation;
-          })
-        : identifyAsOptions[0];
-    });
+    identifyAsSelection.value = dataCarrier.current_occupation
+      ? identifyAsOptions.find((option) => {
+          return option.value === dataCarrier.current_occupation;
+        })
+      : identifyAsOptions[0];
+  });
 }
 
 // onMounted(async () => {
 
-//   await fetchAttendingData();  
-  
+//   await fetchAttendingData();
+
 // });
 
 // onMount(isUserLoggedIn, () => {
@@ -270,6 +280,7 @@ const rsvp_meta = computed(() => {
     transport: transportSelection.value.value,
     current_occupation: identifyAsSelection.value.value,
     phone: profile.value.phone,
+    full_name: profile.value.full_name,
   };
 });
 
@@ -291,7 +302,7 @@ function goToPrevStep() {
 function goToNextStep() {
   // Validate phone number of step one
   if (currentStep.value === 1) {
-    const valid = validateForm(rsvp_meta.value)
+    const valid = validateForm(rsvp_meta.value);
 
     if (!valid) {
       return false;
@@ -318,16 +329,15 @@ watch(
 );
 
 watch(rsvp_meta, (newVal, oldVal) => {
-  validateForm(newVal)
-})
+  validateForm(newVal);
+});
 
 watchEffect(async (newVal) => {
   // only proceed when user logged in check is true
   if ($isUserLoggedIn.value && $session.value) {
-    await fetchAttendingData();  
+    await fetchAttendingData();
   }
 });
-
 </script>
 
 <template>
@@ -395,7 +405,7 @@ watchEffect(async (newVal) => {
                     :class="{ hidden: !rsvp_is_attending }"
                     class="md:flex"
                     :rsvp_success="rsvp_success"
-                    :avatar_url="$session.user.user_metadata.avatar_url"
+                    :avatar_url="$userProfile.avatar_url"
                     :rsvp_loading="rsvp_loading"
                   />
                 </div>
@@ -462,7 +472,7 @@ watchEffect(async (newVal) => {
                             </dt>
 
                             <dd class="pt-0 leading-6">
-                              {{ $session.user.user_metadata.full_name }}
+                              {{ profile.full_name }}
                             </dd>
                           </div>
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
@@ -480,15 +490,14 @@ watchEffect(async (newVal) => {
 
                           <div
                             class="grid grid-cols-[1.5rem_1fr] items-center w-full gap-x-4"
-              
                           >
                             <dt class="flex">
                               <span class="sr-only">Phone</span>
                               <IconPhone class="h-6 w-6" aria-hidden="true" />
                             </dt>
 
-                            <dd class="pt-0 leading-6">                       
-                              {{  profile.phone }}                
+                            <dd class="pt-0 leading-6">
+                              {{ profile.phone }}
                             </dd>
                           </div>
 
@@ -579,51 +588,53 @@ watchEffect(async (newVal) => {
                               data-profile
                               class="grid w-full items-center py-8"
                             >
-                                <dt class="grid gap-2 justify-center py-4">
+                              <dt class="grid gap-2 justify-center py-4">
+                                <span
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
+                                  >Email</span
+                                >
+
+                                <span
+                                  class="flex mx-auto gap-2 text-lg"
+                                  v-if="profile.email"
+                                >
+                                  <span>{{ profile.email }}</span>
+                                </span>
+                              </dt>
+
+                              <dt class="grid gap-2 justify-center py-4">
+                                <span
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
+                                  >Phone number</span
+                                >
+
+                                <input
+                                  type="text"
+                                  v-model="profile.phone"
+                                  name="phone"
+                                  id="phone"
+                                  autocomplete="phone"
+                                  class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                                  :class="[
+                                    Object.keys(form_errors).includes(
+                                      'phone'
+                                    ) && 'border-red-500',
+                                  ]"
+                                  placeholder="Enter your phone number"
+                                  :disabled="rsvp_is_attending"
+                                  required
+                                />
+                                <p>
                                   <span
-                                    class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                    >Email</span
+                                    v-if="
+                                      Object.keys(form_errors).includes('phone')
+                                    "
+                                    class="text-red-500 text-sm"
                                   >
-                                  
-                                  <span
-                                    class="flex mx-auto gap-2 text-lg"
-                                    v-if="profile.email"
-                                  >
-      
-                                    <span>{{ profile.email }}</span>
+                                    {{ form_errors.phone }}
                                   </span>
-                                </dt>
-
-                                <dt class="grid gap-2 justify-center py-4">
-                                  <span
-                                    class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                    >Phone number</span
-                                  >
-                                  
-                                  <input
-                                    type="text"
-                                    v-model="profile.phone"
-                                    name="phone"
-                                    id="phone"
-                                    autocomplete="phone"
-                                    class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
-                                    :class="[Object.keys(form_errors).includes('phone') && 'border-red-500']"                              
-                                    placeholder="Enter your phone number"
-                                    :disabled="rsvp_is_attending"
-                                    required
-                                  />
-                                  <p>
-                                    <span
-                                      v-if="Object.keys(form_errors).includes('phone')"
-                                      class="text-red-500 text-sm"
-                                    >
-                                      {{ form_errors.phone }}
-                                    </span>
-                                  </p>
-                                </dt>
-
-
-      
+                                </p>
+                              </dt>
                             </div>
                             <div
                               v-else-if="currentStep === 2"
@@ -832,9 +843,12 @@ watchEffect(async (newVal) => {
                   <div class="grid grid-cols-1 col-span-4">
                     <!-- Details -->
                     <div class="pt-8">
+                      <!-- <pre>
+                        {{ profile }}
+                      </pre> -->
                       <!-- Fields -->
                       <dl class="flex flex-wrap gap-6 font-bold">
-                        <div class="flex w-full flex-none gap-x-4">
+                        <div class="flex w-full items-center flex-none gap-x-4">
                           <dt class="flex-none">
                             <span class="sr-only">Name</span>
                             <IconUserAvatar
@@ -843,7 +857,22 @@ watchEffect(async (newVal) => {
                             />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            {{ profile.full_name }}
+                            <input
+                              type="text"
+                              v-model="profile.full_name"
+                              name="full_name"
+                              id="full_name"
+                              autocomplete="full_name"
+                              class="flex-1 border-2 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                              :class="[
+                                Object.keys(form_errors).includes('full_name')
+                                  ? 'border-red-500'
+                                  : 'border-white/10',
+                              ]"
+                              placeholder="Enter your full name"
+                              :disabled="rsvp_is_attending"
+                              required
+                            />
                           </dd>
                         </div>
 
@@ -859,7 +888,7 @@ watchEffect(async (newVal) => {
                             <span class="sr-only">Phone</span>
                             <IconPhone class="h-6 w-6" aria-hidden="true" />
                           </dt>
-                          <dd class="pt-0 leading-6"                                         >
+                          <dd class="pt-0 leading-6">
                             <!-- {{ profile.phone || "Not set" }} -->
                             <input
                               type="text"
@@ -867,8 +896,12 @@ watchEffect(async (newVal) => {
                               name="phone"
                               id="phone"
                               autocomplete="phone"
-                              class="flex-1 border-2  rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
-                              :class="[Object.keys(form_errors).includes('phone') ? 'border-red-500' : 'border-white/10']"                              
+                              class="flex-1 border-2 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
+                              :class="[
+                                Object.keys(form_errors).includes('phone')
+                                  ? 'border-red-500'
+                                  : 'border-white/10',
+                              ]"
                               placeholder="Enter your phone number"
                               :disabled="rsvp_is_attending"
                               required

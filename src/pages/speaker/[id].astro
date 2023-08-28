@@ -6,22 +6,24 @@ import { getSpeaker, loadSpeakers } from "@utils/api";
 const props = Astro.params;
 
 export async function getStaticPaths() {
-    const speakers = await loadSpeakers();
+  const speakers = await loadSpeakers();
 
-    return speakers.data.map((speaker) => {
-        return {
-            params: {
-                id: speaker.id.toString(),
-            },
-        };
-    });
+  return speakers.data.map((speaker) => {
+    return {
+      params: {
+        id: speaker.id.toString(),
+      },
+    };
+  });
 }
 
 const speaker = await getSpeaker(props.id);
 ---
 
-
-<LayoutSpeaker title={speaker.person.name} username={speaker.person.github_account} description="Speaker Profile">
-    <SpeakerSingle routeId={props.id} speaker={speaker}  />
+<LayoutSpeaker
+  title={speaker.person.name}
+  username={speaker.person.github_account}
+  description="Speaker Profile"
+>
+  <SpeakerSingle routeId={props.id} speaker={speaker} />
 </LayoutSpeaker>
-

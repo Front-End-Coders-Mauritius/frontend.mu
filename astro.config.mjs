@@ -8,7 +8,10 @@ import node from "@astrojs/node";
 let site = "https://frontend.mu";
 
 // https://vercel.com/docs/concepts/projects/environment-variables/system-environment-variables
-if (process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development") {
+if (
+  process.env.VERCEL_ENV === "preview" ||
+  process.env.VERCEL_ENV === "development"
+) {
   site = `https://${process.env.VERCEL_URL}`;
 }
 

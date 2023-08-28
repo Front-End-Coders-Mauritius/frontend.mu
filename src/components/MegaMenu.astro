@@ -134,7 +134,7 @@ const links: TMenu = {
                 </a>
 
                 {links[item].children && (
-                  <div class="menu-dropdown p-3 bg-white rounded-md text-black">
+                  <div class="menu-dropdown px-2 pb-2 bg-white rounded-md text-black">
                     <div class="menu-dropdown-item  theme-dark">
                       <ul class="flex flex-col gap-2">
                         {links[item].children?.map((submenu) => {
@@ -150,11 +150,13 @@ const links: TMenu = {
                                 class="hover:bg-verse-100 rounded-md block p-2"
                               >
                                 <>
-                                  <div class="flex gap-2">
-                                    {submenu.title}
+                                  <div class="flex items-center gap-2">
+                                    <div class="whitespace-nowrap">
+                                      {submenu.title}
+                                    </div>
 
                                     {!!submenu.href.includes("https") && (
-                                      <ExternalLinkIcon />
+                                      <ExternalLinkIcon class="w-4 h-4" />
                                     )}
                                   </div>
                                 </>
@@ -182,49 +184,49 @@ const links: TMenu = {
 </div>
 
 <script is:inline>
-function makeHeaderSticky() {
-  const header = document.querySelector(".menu-wrapper");
-  if (!header) return;
+  function makeHeaderSticky() {
+    const header = document.querySelector(".menu-wrapper");
+    if (!header) return;
 
-  // Function to be called when the intersection changes
-  function handleIntersection(entries) {
-    entries.forEach((entry) => {
-      if (!header) return;
-      if (entry.isIntersecting) {
-        header.classList.remove("intersect");
-        // console.log("intersecting");
-      } else {
-        header.classList.add("intersect");
-        // console.log("not intersecting");
-      }
-    });
+    // Function to be called when the intersection changes
+    function handleIntersection(entries) {
+      entries.forEach((entry) => {
+        if (!header) return;
+        if (entry.isIntersecting) {
+          header.classList.remove("intersect");
+          // console.log("intersecting");
+        } else {
+          header.classList.add("intersect");
+          // console.log("not intersecting");
+        }
+      });
+    }
+
+    // Options for the IntersectionObserver
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
+      threshold: 0, // Trigger the callback when even one pixel is visible
+    };
+
+    // Create the IntersectionObserver
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    // Target element that you want to observe
+    const target = document.querySelector("#sticky-observer");
+
+    if (!target) return;
+
+    // Start observing the target element
+    observer.observe(target);
   }
 
-  // Options for the IntersectionObserver
-  const options = {
-    root: null, // Use the viewport as the root
-    rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
-    threshold: 0, // Trigger the callback when even one pixel is visible
-  };
+  // Call the function to make the .header class sticky
+  // makeHeaderSticky();
 
-  // Create the IntersectionObserver
-  const observer = new IntersectionObserver(handleIntersection, options);
+  document.addEventListener("DOMContentLoaded", makeHeaderSticky);
 
-  // Target element that you want to observe
-  const target = document.querySelector("#sticky-observer");
-
-  if (!target) return;
-
-  // Start observing the target element
-  observer.observe(target);
-}
-
-// Call the function to make the .header class sticky
-// makeHeaderSticky();
-
-document.addEventListener("DOMContentLoaded", makeHeaderSticky);
-
-document.addEventListener("astro:beforeload", makeHeaderSticky);
+  document.addEventListener("astro:beforeload", makeHeaderSticky);
 </script>
 
 <style lang="postcss">

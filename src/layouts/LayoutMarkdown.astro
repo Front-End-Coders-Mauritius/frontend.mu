@@ -14,28 +14,27 @@ import Sponsors from "../components/Sponsors.astro";
 // 	};
 // }
 
-const {	title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 // const title = 'Front-End Coders Mauritius'
 // const description = 'Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.'
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title}  description={description}  />
-	</head>
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
 
-	<body>
-		<div>
-			<Header />
+  <body>
+    <div>
+      <Header />
 
-			<div class="prose max-w-5xl mx-auto py-10">
-				<slot />
-			</div>
+      <div class="prose max-w-5xl mx-auto py-10">
+        <slot />
+      </div>
 
-			<Sponsors />
+      <Sponsors />
 
-
-			<Footer />
-		</div>
-	</body>
+      <Footer />
+    </div>
+  </body>
 </html>

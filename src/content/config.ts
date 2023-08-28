@@ -6,4 +6,4 @@ const faqs = defineCollection({
   }),
 });
 
-export const collections = {faqs};
+export const collections = { faqs };

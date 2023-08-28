@@ -2,7 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 
 type Props = CollectionEntry<"event">["data"];
-const { title, description, Location, Venue, Date, Attendees, sessions } = Astro.props;
+const { title, description, Location, Venue, Date, Attendees, sessions } =
+  Astro.props;
 
 const getSpeakerData = () => {
   return sessions.map(({ Session_id }) => {
@@ -63,8 +64,19 @@ const schema = {
       url: "https://frontend.mu",
     },
   ],
-  keywords: ["Frontend", "Mauritius", "Meetup", "Frontend Developers", "Software Engineering", "VueJS", "ReactJs", "Technology", "Workshop", "Angular"],
+  keywords: [
+    "Frontend",
+    "Mauritius",
+    "Meetup",
+    "Frontend Developers",
+    "Software Engineering",
+    "VueJS",
+    "ReactJs",
+    "Technology",
+    "Workshop",
+    "Angular",
+  ],
 };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
