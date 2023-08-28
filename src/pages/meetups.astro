@@ -1,20 +1,12 @@
 ---
 import Layout from "../layouts/LayoutHome.astro";
-import DetailedEventCard from "../components/DetailedEventCard.astro";
-import { loadEvents } from "@utils/api";
+import eventsResponse from "src/data/meetups-raw.json";
 import EventCardModernDetailed from "../components/event-card-modern-detailed.astro";
-import { Meetup } from "../components/HomeLatestMeetup.astro";
 import BaseHeading from "../components/base/BaseHeading.astro";
-
-interface Response {
-  data: Meetup[];
-}
-
-let response: Response = await loadEvents();
 
 // group response by year and sort by reverse date
 
-const grouped = response.data.reduce((acc, event) => {
+const grouped = eventsResponse.data.reduce((acc, event) => {
   const year = new Date(event.Date).getFullYear();
   if (!acc[year]) {
     acc[year] = [];

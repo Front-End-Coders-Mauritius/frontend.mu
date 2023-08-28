@@ -4,3 +4,6 @@
 export const SITE_TITLE = "Front-End Coders Mauritius";
 export const SITE_DESCRIPTION =
   "Community of Front-End developers who share their passions for the web. Events, workshops and conferences occurs regularly.";
+
+export const photoAlbumSource =
+  "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/";

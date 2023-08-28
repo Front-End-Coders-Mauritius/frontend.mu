@@ -1,5 +1,5 @@
 ---
-import { loadSpeakers } from "@utils/api";
+import speakersResponse from "src/data/speakers-raw.json";
 import { Image } from "@astrojs/image/components";
 import { getGithubUrl } from "@utils/fns";
 import { vTransitionName } from "@utils/helpers";
@@ -56,15 +56,6 @@ export const people = [
     id: "",
   },
 ];
-
-interface Contributor {
-  username: string;
-  contributions: number;
-}
-
-const contributors: Contributor[] = Contributors;
-
-const speakers = await loadSpeakers();
 ---
 
 <div class="contain">
@@ -153,8 +144,8 @@ const speakers = await loadSpeakers();
           class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-5 md:gap-x-6 lg:gap-x-8"
         >
           {
-            speakers.data.map((person) => {
-              let speaker_photo = getGithubUrl(person.github_account);
+            speakersResponse.data.map((person) => {
+              let speaker_photo = getGithubUrl(person?.github_account || "");
 
               return (
                 <li>

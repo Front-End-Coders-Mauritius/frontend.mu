@@ -1,16 +1,14 @@
 ---
-import IconDots from "./icons/icon-dots.astro";
-import FecAnchor from "./FecAnchor.astro";
 import IconFacebook from "./icons/icon-facebook.astro";
 import IconTwitter from "./icons/icon-twitter.astro";
 import IconLinkedin from "./icons/icon-linkedin.astro";
 import MeetupAlbum from "./MeetupAlbum.astro";
 import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
-import { getPhotos, photoAlbumSource } from "@utils/api";
+import { photoAlbumSource } from "src/config";
+import photosResponse from"src/data/photos-raw.json"
 import { random, vTransitionName } from "@utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
-import UserData from "./UserData.vue";
 import RsvpComponent from "./user/rsvp-component.vue";
 import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
@@ -34,15 +32,13 @@ function isUpcoming() {
 }
 
 // Google Photos Album Section
-const albumsPhotos = await getPhotos();
-
 let maxAlbumLength = 0;
 
 function fetchAlbumDetails(albumName: string) {
   if (!albumName) return [];
 
-  if (albumsPhotos) {
-    const albumPhotosParsed = albumsPhotos[albumName];
+  if (photosResponse) {
+    const albumPhotosParsed = photosResponse[albumName];
     // check if array
     if (Array.isArray(albumPhotosParsed)) {
       maxAlbumLength = albumPhotosParsed.length;

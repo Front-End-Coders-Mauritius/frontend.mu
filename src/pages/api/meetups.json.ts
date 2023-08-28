@@ -1,37 +1,7 @@
 import type { APIRoute } from "astro";
-import { loadEvents } from "@utils/api";
+import eventsResponse from "src/data/meetups-raw.json";
 
-import { Meetup } from "../../components/HomeLatestMeetup.astro";
-
-// matches api response as on 13 aug 2023
-interface Data extends Omit<Meetup, "images"> {
-  sessions?: {
-    Session_id?: {
-      title?: string;
-      speakers?: {
-        name?: string;
-        github_account?: string;
-      };
-    };
-  }[];
-  sponsors?: {
-    Sponsor_id?: {
-      Name?: string;
-      Website?: string;
-    };
-  }[];
-  images?: {
-    imagename?: string;
-  }[];
-}
-
-interface Response {
-  data: Data[];
-}
-
-let response: Response = await loadEvents();
-
-const getSponsorDetails = (sponsors: Data["sponsors"]) => {
+const getSponsorDetails = (sponsors) => {
   return (
     sponsors?.map((sponsor) => ({
       name: sponsor?.Sponsor_id?.Name || "",
@@ -40,7 +10,7 @@ const getSponsorDetails = (sponsors: Data["sponsors"]) => {
   );
 };
 
-const getSessionsDetails = (sessions: Data["sessions"]) => {
+const getSessionsDetails = (sessions) => {
   return (
     sessions?.map((session) => ({
       title: session?.Session_id?.title || "",
@@ -51,7 +21,7 @@ const getSessionsDetails = (sessions: Data["sessions"]) => {
 };
 
 const meetups = (SITE_URL: string) =>
-  response.data.reduce((acc, event) => {
+  eventsResponse.data.reduce((acc, event) => {
     const year = new Date(event.Date).getFullYear();
 
     if (!acc[year]) {

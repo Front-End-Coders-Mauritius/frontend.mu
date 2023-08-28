@@ -3,10 +3,8 @@ import HomeHero from "../components/HomeHero.astro";
 import HomeSocialPresence from "../components/HomeSocialPresence.astro";
 import LayoutHome from "../layouts/LayoutHome.astro";
 import HomeLatestMeetup from "../components/HomeLatestMeetup.astro";
-import { loadEvents } from "@utils/api";
+import eventsResponse from "src/data/meetups-raw.json"
 import HomeFeaturedSpeakers from "../components/HomeFeaturedSpeakers.astro";
-
-let response = await loadEvents();
 ---
 
 <LayoutHome>
@@ -14,7 +12,7 @@ let response = await loadEvents();
 
   <HomeFeaturedSpeakers />
 
-  <HomeLatestMeetup response={response} />
+  <HomeLatestMeetup response={eventsResponse} />
 
   <HomeSocialPresence />
 </LayoutHome>
