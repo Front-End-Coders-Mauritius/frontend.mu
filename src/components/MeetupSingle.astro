@@ -25,6 +25,7 @@ const dateInPast = function (firstDate: Date, secondDate: Date) {
 };
 
 const accepting_rsvp = props.getCurrentEvent.accepting_rsvp;
+const rsvp_closing_date = props.getCurrentEvent.rsvp_closing_date;
 
 function isUpcoming() {
   const past = new Date(props.getCurrentEvent.Date);
@@ -130,11 +131,7 @@ const getRelatedPhotoSource = (album: string) => {
 
                 {
                   accepting_rsvp && (
-                    <RsvpComponent
-                      meetup-id={props.getCurrentEvent.id.toString()}
-                      meetup={props.getCurrentEvent}
-                      client:only
-                    />
+                    <RsvpComponent meetup={props.getCurrentEvent} client:only />
                   )
                 }
 
