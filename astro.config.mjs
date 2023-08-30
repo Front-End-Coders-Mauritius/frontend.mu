@@ -21,6 +21,9 @@ export default defineConfig({
     sitemap(),
     vue(),
   ],
+  image: {
+    domains: ["github.com", "githubusercontent.com"],
+  },
   vite: {
     resolve: {
       dedupe: ["vue"],
