@@ -6,7 +6,7 @@ import speakersResponse from "src/data/speakers-raw.json";
 // https://api.github.com/repos/Front-End-Coders-Mauritius/frontendmu-astro/contributors
 import contributors from "../../data/contributors.json";
 
-import { people } from "../../components/TeamComponent.astro";
+import { people } from "../../data/people";
 
 export const get: APIRoute = async () => {
   return {
