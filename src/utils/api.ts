@@ -1,4 +1,3 @@
-import { log } from "astro/dist/core/logger/core";
 import { getDirectusClient } from "../utils/directus-client";
 import { Memoize } from "../utils/memoizer";
 

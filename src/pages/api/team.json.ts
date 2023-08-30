@@ -6,7 +6,7 @@ import { loadSpeakers } from "@utils/api";
 // https://api.github.com/repos/Front-End-Coders-Mauritius/frontendmu-astro/contributors
 import contributors from "../../data/contributors.json";
 
-import { people } from "../../components/TeamComponent.astro";
+import { people } from "../../data/people";
 
 const speakers = await loadSpeakers();
 
