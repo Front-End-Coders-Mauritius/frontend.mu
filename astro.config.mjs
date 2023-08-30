@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import image from "@astrojs/image";
 import Icons from "unplugin-icons/vite";
 import vue from "@astrojs/vue";
 let site = "https://frontend.mu";
@@ -21,9 +20,6 @@ export default defineConfig({
     mdx(),
     sitemap(),
     vue(),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
   ],
   vite: {
     resolve: {
@@ -40,8 +36,5 @@ export default defineConfig({
         autoInstall: true,
       }),
     ],
-  },
-  experimental: {
-    viewTransitions: true,
-  },
+  }
 });
