@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 
-import speakersResponse from "@/data/speakers-raw.json";
+import speakersResponse from "@data/speakers-raw.json";
 
 // can replace this with list of contributors from
 // https://api.github.com/repos/Front-End-Coders-Mauritius/frontendmu-astro/contributors
