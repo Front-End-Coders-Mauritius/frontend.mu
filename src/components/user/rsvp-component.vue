@@ -73,6 +73,13 @@ const profile = ref({
   avatar_url: "",
 });
 
+const isRsvpClosed = computed(() => {
+  const now = new Date();
+  const closingDate = new Date(props.meetup.rsvp_closing_date);
+  console.log(closingDate, now, closingDate > now);
+  return closingDate > now;
+});
+
 const currentRSVPStatus = ref(false);
 
 // Get RSVP Status
@@ -240,20 +247,20 @@ async function fetchAttendingData() {
 
     foodSelection.value = dataCarrier.meal
       ? foodOptions.find((option) => {
-          return option.value === dataCarrier.meal;
-        })
+        return option.value === dataCarrier.meal;
+      })
       : foodOptions[1];
 
     transportSelection.value = dataCarrier.transport
       ? transportOptions.find((option) => {
-          return option.value === dataCarrier.transport;
-        })
+        return option.value === dataCarrier.transport;
+      })
       : transportOptions[1];
 
     identifyAsSelection.value = dataCarrier.current_occupation
       ? identifyAsOptions.find((option) => {
-          return option.value === dataCarrier.current_occupation;
-        })
+        return option.value === dataCarrier.current_occupation;
+      })
       : identifyAsOptions[0];
   });
 }
@@ -343,71 +350,41 @@ watchEffect(async (newVal) => {
 <template>
   <div class="flex justify-center items-center">
     <!-- <pre class="text-white">
-      {{ profile }}
+      {{ isRsvpClosed }}
     </pre> -->
     <!-- Modal Stuff -->
     <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="relative z-10" @close="open = false">
-        <TransitionChild
-          as="template"
-          enter="ease-out duration-300"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="ease-in duration-200"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
-          <div
-            class="fixed inset-0 bg-gray-900 backdrop-blur-sm bg-opacity-75 transition-opacity"
-          />
+        <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+          leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+          <div class="fixed inset-0 bg-gray-900 backdrop-blur-sm bg-opacity-75 transition-opacity" />
         </TransitionChild>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
-          <form
-            class="flex h-screen md:min-h-full items-end justify-center md:p-4 text-center sm:items-center sm:p-0"
-          >
-            <TransitionChild
-              as="template"
-              enter="ease-out duration-300"
+          <form class="flex h-screen md:min-h-full items-end justify-center md:p-4 text-center sm:items-center sm:p-0">
+            <TransitionChild as="template" enter="ease-out duration-300"
               enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enter-to="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
+              enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
               leave-from="opacity-100 translate-y-0 sm:scale-100"
-              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
               <DialogPanel
                 class="relative min-h-[60vh] md:min-h-[auto] grid-rows-[2rem_1fr] flex flex-col md:block md:h-auto w-full transform overflow-hidden transition-all duration-200 md:rounded-lg border border-white/10 bg-slate-200 dark:bg-slate-950/50 backdrop-blur-md px-4 pb-4 pt-5 text-left shadow-xl dark:shadow-black/50 sm:my-8 sm:w-full sm:max-w-2xl sm:px-8 sm:py-6"
-                :class="[rsvp_is_attending && ' ']"
-              >
-                <div
-                  class="w-full text-center flex flex-col md:flex-row gap-4 justify-between items-center relative"
-                >
-                  <DialogTitle
-                    as="h3"
-                    class="text-lg dark:text-white font-semibold leading-6"
-                  >
+                :class="[rsvp_is_attending && ' ']">
+                <div class="w-full text-center flex flex-col md:flex-row gap-4 justify-between items-center relative">
+                  <DialogTitle as="h3" class="text-lg dark:text-white font-semibold leading-6">
                     {{
                       rsvp_is_attending
-                        ? "Your reservation details"
-                        : `Hey ${
-                            $session.user.user_metadata.full_name.split(" ")[0]
-                          }, let's get you booked in`
+                      ? "Your reservation details"
+                      : `Hey ${$session.user.user_metadata.full_name.split(" ")[0]
+                        }, let's get you booked in`
                     }}
 
-                    <span
-                      v-if="rsvp_is_attending"
-                      class="ml-2 bg-green-500 text-xs p-1 rounded-md text-green-800 font-black uppercase"
-                      >ATTENDING</span
-                    >
+                    <span v-if="rsvp_is_attending"
+                      class="ml-2 bg-green-500 text-xs p-1 rounded-md text-green-800 font-black uppercase">ATTENDING</span>
                   </DialogTitle>
 
-                  <rsvp-header
-                    :class="{ hidden: !rsvp_is_attending }"
-                    class="md:flex"
-                    :rsvp_success="rsvp_success"
-                    :avatar_url="$userProfile.avatar_url"
-                    :rsvp_loading="rsvp_loading"
-                  />
+                  <rsvp-header :class="{ hidden: !rsvp_is_attending }" class="md:flex" :rsvp_success="rsvp_success"
+                    :avatar_url="$userProfile.avatar_url" :rsvp_loading="rsvp_loading" />
                 </div>
 
                 <!-- <pre class="text-white">
@@ -417,58 +394,26 @@ watchEffect(async (newVal) => {
                                     {{ profile }}
                                   </pre> -->
 
-                <div
-                  data-mobile
-                  :class="
-                    !rsvp_is_attending ? 'grid-cols-[auto_1fr]' : 'grid-cols-1'
-                  "
-                  class="grid grid-rows-[1fr_auto] md:hidden"
-                >
-                  <ul
-                    v-show="!rsvp_is_attending"
-                    class="steps steps-vertical [--p: var(--color-verse-300)]"
-                  >
-                    <li
-                      :class="{ 'step-primary': currentStep >= 1 }"
-                      class="step"
-                    ></li>
-                    <li
-                      :class="{ 'step-primary': currentStep >= 2 }"
-                      class="step"
-                    ></li>
-                    <li
-                      :class="{ 'step-primary': currentStep >= 3 }"
-                      class="step"
-                    ></li>
-                    <li
-                      :class="{ 'step-primary': currentStep >= 4 }"
-                      class="step"
-                    ></li>
-                    <li
-                      :class="{ 'step-primary': currentStep >= 5 }"
-                      class="step"
-                    ></li>
+                <div data-mobile :class="!rsvp_is_attending ? 'grid-cols-[auto_1fr]' : 'grid-cols-1'
+                  " class="grid grid-rows-[1fr_auto] md:hidden">
+                  <ul v-show="!rsvp_is_attending" class="steps steps-vertical [--p: var(--color-verse-300)]">
+                    <li :class="{ 'step-primary': currentStep >= 1 }" class="step"></li>
+                    <li :class="{ 'step-primary': currentStep >= 2 }" class="step"></li>
+                    <li :class="{ 'step-primary': currentStep >= 3 }" class="step"></li>
+                    <li :class="{ 'step-primary': currentStep >= 4 }" class="step"></li>
+                    <li :class="{ 'step-primary': currentStep >= 5 }" class="step"></li>
                   </ul>
 
                   <div class="grid">
-                    <dl
-                      :class="{
-                        '': rsvp_is_attending,
-                      }"
-                      class="grid gap-y-4 font-bold text-verse-500 dark:text-verse-300"
-                    >
-                      <div
-                        v-show="rsvp_is_attending"
-                        class="flex flex-col gap-4 p-8"
-                      >
+                    <dl :class="{
+                      '': rsvp_is_attending,
+                    }" class="grid gap-y-4 font-bold text-verse-500 dark:text-verse-300">
+                      <div v-show="rsvp_is_attending" class="flex flex-col gap-4 p-8">
                         <div class="grid gap-y-6 auto-rows-min">
                           <div class="grid grid-cols-[1.5rem_1fr] gap-x-4">
                             <dt class="flex">
                               <span class="sr-only">Name</span>
-                              <IconUserAvatar
-                                class="h-6 w-6"
-                                aria-hidden="true"
-                              />
+                              <IconUserAvatar class="h-6 w-6" aria-hidden="true" />
                             </dt>
 
                             <dd class="pt-0 leading-6">
@@ -488,9 +433,7 @@ watchEffect(async (newVal) => {
                             </dd>
                           </div>
 
-                          <div
-                            class="grid grid-cols-[1.5rem_1fr] items-center w-full gap-x-4"
-                          >
+                          <div class="grid grid-cols-[1.5rem_1fr] items-center w-full gap-x-4">
                             <dt class="flex">
                               <span class="sr-only">Phone</span>
                               <IconPhone class="h-6 w-6" aria-hidden="true" />
@@ -504,15 +447,11 @@ watchEffect(async (newVal) => {
                           <div class="flex w-full gap-4">
                             <dt class="flex">
                               <span class="sr-only">Meetup date</span>
-                              <CalendarDaysIcon
-                                class="h-6 w-6"
-                                aria-hidden="true"
-                              />
+                              <CalendarDaysIcon class="h-6 w-6" aria-hidden="true" />
                             </dt>
 
                             <dd class="pt-0 flex w-full gap-1 leading-6">
-                              <time :datetime="props.meetup.Date"
-                                >{{ formatDate(props.meetup.Date) }}
+                              <time :datetime="props.meetup.Date">{{ formatDate(props.meetup.Date) }}
                               </time>
                             </dd>
                           </div>
@@ -537,134 +476,75 @@ watchEffect(async (newVal) => {
                         <div class="grid gap-y-6 auto-rows-min">
                           <!-- Meal -->
                           <div class="flex gap-4" v-if="foodSelection">
-                            <component
-                              :is="foodSelection.icon"
-                              class="h-6 w-6"
-                              aria-hidden="true"
-                            />
+                            <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
                             {{ foodSelection.name }}
                           </div>
 
                           <div class="flex gap-4" v-if="transportSelection">
-                            <component
-                              :is="transportSelection.icon"
-                              class="h-6 w-6"
-                              aria-hidden="true"
-                            />
+                            <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
                             {{ transportSelection.name }}
                           </div>
 
                           <div class="flex gap-4" v-if="identifyAsSelection">
-                            <component
-                              :is="identifyAsSelection.icon"
-                              class="h-6 w-6"
-                              aria-hidden="true"
-                            />
+                            <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
                             {{ identifyAsSelection.name }}
                           </div>
 
-                          <div
-                            class="flex gap-4"
-                            v-if="showMeAsAttendingSelection"
-                          >
-                            <component
-                              :is="showMeAsAttendingSelection.icon"
-                              class="h-6 w-6"
-                              aria-hidden="true"
-                            />
+                          <div class="flex gap-4" v-if="showMeAsAttendingSelection">
+                            <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
                             {{ showMeAsAttendingSelection.name }}
                           </div>
                         </div>
                       </div>
 
                       <Transition name="slide-fade" mode="in-out">
-                        <div
-                          v-if="!rsvp_is_attending"
-                          class="grid grid-rows-[1fr_auto] pr-8 items-center gap-6 h-full"
-                        >
+                        <div v-if="!rsvp_is_attending" class="grid grid-rows-[1fr_auto] pr-8 items-center gap-6 h-full">
                           <Transition name="slide-vertical" mode="out-in">
-                            <div
-                              v-if="currentStep === 1"
-                              data-profile
-                              class="grid w-full items-center py-8"
-                            >
+                            <div v-if="currentStep === 1" data-profile class="grid w-full items-center py-8">
                               <dt class="grid gap-2 justify-center py-4">
                                 <span
-                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                  >Email</span
-                                >
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center">Email</span>
 
-                                <span
-                                  class="flex mx-auto gap-2 text-lg"
-                                  v-if="profile.email"
-                                >
+                                <span class="flex mx-auto gap-2 text-lg" v-if="profile.email">
                                   <span>{{ profile.email }}</span>
                                 </span>
                               </dt>
 
                               <dt class="grid gap-2 justify-center py-4">
                                 <span
-                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                  >Phone number</span
-                                >
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center">Phone
+                                  number</span>
 
-                                <input
-                                  type="text"
-                                  v-model="profile.phone"
-                                  name="phone"
-                                  id="phone"
-                                  autocomplete="phone"
+                                <input type="text" v-model="profile.phone" name="phone" id="phone" autocomplete="phone"
                                   class="flex-1 border-2 border-white/10 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
                                   :class="[
                                     Object.keys(form_errors).includes(
                                       'phone'
                                     ) && 'border-red-500',
-                                  ]"
-                                  placeholder="Enter your phone number"
-                                  :disabled="rsvp_is_attending"
-                                  required
-                                />
+                                  ]" placeholder="Enter your phone number" :disabled="rsvp_is_attending" required />
                                 <p>
-                                  <span
-                                    v-if="
-                                      Object.keys(form_errors).includes('phone')
-                                    "
-                                    class="text-red-500 text-sm"
-                                  >
+                                  <span v-if="Object.keys(form_errors).includes('phone')
+                                    " class="text-red-500 text-sm">
                                     {{ form_errors.phone }}
                                   </span>
                                 </p>
                               </dt>
                             </div>
-                            <div
-                              v-else-if="currentStep === 2"
-                              data-food
-                              class="grid w-full items-center"
-                            >
+                            <div v-else-if="currentStep === 2" data-food class="grid w-full items-center">
                               <dt class="grid gap-2 justify-center py-4">
                                 <span
-                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                  >What's your food preference?</span
-                                >
+                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center">What's
+                                  your food preference?</span>
 
-                                <span
-                                  class="flex mx-auto gap-2 text-lg"
-                                  v-if="foodSelection"
-                                >
-                                  <component
-                                    :is="foodSelection.icon"
-                                    class="h-16 w-16"
-                                    aria-hidden="true"
-                                  />
+                                <span class="flex mx-auto gap-2 text-lg" v-if="foodSelection">
+                                  <component :is="foodSelection.icon" class="h-16 w-16" aria-hidden="true" />
                                   <!-- <span>{{ foodSelection.name }}</span> -->
                                 </span>
                               </dt>
 
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="foodSelection">
-                                  <RadioGroupLabel class="sr-only"
-                                    >Choose a memory option</RadioGroupLabel
-                                  >
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid gap-y-4">
                                     <rsvp-radio-item :options="foodOptions" />
                                   </div>
@@ -672,63 +552,33 @@ watchEffect(async (newVal) => {
                               </dd>
                             </div>
 
-                            <div
-                              v-else-if="currentStep === 3"
-                              data-transport
-                              class="grid w-full items-center"
-                            >
+                            <div v-else-if="currentStep === 3" data-transport class="grid w-full items-center">
                               <dt class="grid gap-2 py-4">
-                                <span
-                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                  >How are you getting there?</span
-                                >
+                                <span class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center">How
+                                  are you getting there?</span>
 
-                                <span
-                                  class="flex mx-auto items-center gap-2 text-lg"
-                                  v-if="transportSelection"
-                                >
-                                  <component
-                                    :is="transportSelection.icon"
-                                    class="h-16 w-16"
-                                    aria-hidden="true"
-                                  />
+                                <span class="flex mx-auto items-center gap-2 text-lg" v-if="transportSelection">
+                                  <component :is="transportSelection.icon" class="h-16 w-16" aria-hidden="true" />
                                   <!-- <span>{{ transportSelection.name }}</span> -->
                                 </span>
                               </dt>
 
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="transportSelection">
-                                  <RadioGroupLabel class="sr-only"
-                                    >Transport</RadioGroupLabel
-                                  >
+                                  <RadioGroupLabel class="sr-only">Transport</RadioGroupLabel>
                                   <div class="grid gap-y-4">
-                                    <rsvp-radio-item
-                                      :options="transportOptions"
-                                    />
+                                    <rsvp-radio-item :options="transportOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
                             </div>
 
-                            <div
-                              v-else-if="currentStep === 4"
-                              data-occupation
-                              class="grid w-full items-center"
-                            >
+                            <div v-else-if="currentStep === 4" data-occupation class="grid w-full items-center">
                               <dt class="grid gap-2 py-4">
-                                <span
-                                  class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center"
-                                  >What is your occupation?</span
-                                >
-                                <span
-                                  class="flex mx-auto items-center gap-2 text-lg"
-                                  v-if="identifyAsSelection"
-                                >
-                                  <component
-                                    :is="identifyAsSelection.icon"
-                                    class="h-16 w-16"
-                                    aria-hidden="true"
-                                  />
+                                <span class="text-xl text-verse-500 dark:text-verse-200 font-normal mb-4 text-center">What
+                                  is your occupation?</span>
+                                <span class="flex mx-auto items-center gap-2 text-lg" v-if="identifyAsSelection">
+                                  <component :is="identifyAsSelection.icon" class="h-16 w-16" aria-hidden="true" />
                                   <!-- <span>{{ identifyAsSelection.name }}</span> -->
                                 </span>
                               </dt>
@@ -736,53 +586,28 @@ watchEffect(async (newVal) => {
                               <dd class="pt-0 leading-6">
                                 <div class="join join-vertical w-full">
                                   <RadioGroup v-model="identifyAsSelection">
-                                    <RadioGroupLabel class="sr-only"
-                                      >Choose a memory option</RadioGroupLabel
-                                    >
-                                    <div
-                                      class="grid gap-y-[14px] overflowy-y-hidden"
-                                    >
-                                      <rsvp-radio-item
-                                        :options="identifyAsOptions"
-                                      />
+                                    <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
+                                    <div class="grid gap-y-[14px] overflowy-y-hidden">
+                                      <rsvp-radio-item :options="identifyAsOptions" />
                                     </div>
                                   </RadioGroup>
                                 </div>
                               </dd>
                             </div>
 
-                            <div
-                              v-else-if="currentStep === 5"
-                              data-show
-                              class="grid w-full gap-y-4 items-center"
-                            >
-                              <dt
-                                class="flex gap-2 justify-center"
-                                v-if="showMeAsAttendingSelection"
-                              >
+                            <div v-else-if="currentStep === 5" data-show class="grid w-full gap-y-4 items-center">
+                              <dt class="flex gap-2 justify-center" v-if="showMeAsAttendingSelection">
                                 <span class="sr-only">Show on site</span>
-                                <component
-                                  :is="showMeAsAttendingSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
 
                                 <p>Show my RSVP on the website</p>
                               </dt>
 
-                              <dd
-                                class="pt-0 leading-6 flex w-full justify-center gap-4 text-center"
-                              >
-                                <RadioGroup
-                                  v-model="showMeAsAttendingSelection"
-                                >
-                                  <RadioGroupLabel class="sr-only"
-                                    >Choose a memory option</RadioGroupLabel
-                                  >
+                              <dd class="pt-0 leading-6 flex w-full justify-center gap-4 text-center">
+                                <RadioGroup v-model="showMeAsAttendingSelection">
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="flex w-full gap-4">
-                                    <rsvp-radio-item
-                                      :options="showMeAsAttendingOptions"
-                                    />
+                                    <rsvp-radio-item :options="showMeAsAttendingOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
@@ -791,16 +616,10 @@ watchEffect(async (newVal) => {
 
                           <div class="grid justify-center pb-16 w-full">
                             <div class="join gap-2">
-                              <button
-                                class="btn join-item"
-                                @click.prevent="goToPrevStep"
-                              >
+                              <button class="btn join-item" @click.prevent="goToPrevStep">
                                 <IconUp class="text-verse-500 w-8 h-8" />
                               </button>
-                              <button
-                                class="btn join-item"
-                                @click.prevent="goToNextStep"
-                              >
+                              <button class="btn join-item" @click.prevent="goToNextStep">
                                 <IconDown class="text-verse-500 w-8 h-8" />
                               </button>
                             </div>
@@ -810,36 +629,26 @@ watchEffect(async (newVal) => {
                     </dl>
                   </div>
 
-                  <div
-                    class="grid grid-cols-4 justify-between gap-4 md:hidden items-center w-full col-span-2"
-                    v-if="currentStep === 5"
-                  >
-                    <button
-                      type="button"
+                  <div class="grid grid-cols-4 justify-between gap-4 md:hidden items-center w-full col-span-2"
+                    v-if="currentStep === 5">
+                    <button type="button"
                       class="inline-flex w-full justify-center text-white dark:text-slate-950 bg-slate-700 dark:bg-slate-300 px-3 py-4 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
-                      @click.prevent="open = false"
-                    >
+                      @click.prevent="open = false">
                       Close
                     </button>
 
                     <div></div>
 
-                    <button
-                      v-if="!rsvp_is_attending"
-                      type="button"
+                    <button v-if="!rsvp_is_attending" type="button"
                       class="col-span-2 inline-flex w-full justify-center rounded-md bg-slate-100 dark:bg-verse-500 dark:text-white px-3 py-4 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-200 sm:ml-3 sm:w-auto"
-                      :disabled="rsvp_loading"
-                      @click.prevent="rsvpToMeetup()"
-                    >
+                      :disabled="rsvp_loading" @click.prevent="rsvpToMeetup()">
                       Confirm
                     </button>
                   </div>
                 </div>
                 <!-- Mobile End -->
 
-                <div
-                  class="hidden md:grid grid-cols-4 dark:text-gray-300 rounded-xl"
-                >
+                <div class="hidden md:grid grid-cols-4 dark:text-gray-300 rounded-xl">
                   <div class="grid grid-cols-1 col-span-4">
                     <!-- Details -->
                     <div class="pt-8">
@@ -851,28 +660,17 @@ watchEffect(async (newVal) => {
                         <div class="flex w-full items-center flex-none gap-x-4">
                           <dt class="flex-none">
                             <span class="sr-only">Name</span>
-                            <IconUserAvatar
-                              class="h-6 w-6"
-                              aria-hidden="true"
-                            />
+                            <IconUserAvatar class="h-6 w-6" aria-hidden="true" />
                           </dt>
                           <dd class="pt-0 leading-6">
-                            <input
-                              type="text"
-                              v-model="profile.full_name"
-                              name="full_name"
-                              id="full_name"
+                            <input type="text" v-model="profile.full_name" name="full_name" id="full_name"
                               autocomplete="full_name"
                               class="flex-1 border-2 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
                               :class="[
                                 Object.keys(form_errors).includes('full_name')
                                   ? 'border-red-500'
                                   : 'border-white/10',
-                              ]"
-                              placeholder="Enter your full name"
-                              :disabled="rsvp_is_attending"
-                              required
-                            />
+                              ]" placeholder="Enter your full name" :disabled="rsvp_is_attending" required />
                           </dd>
                         </div>
 
@@ -890,36 +688,23 @@ watchEffect(async (newVal) => {
                           </dt>
                           <dd class="pt-0 leading-6">
                             <!-- {{ profile.phone || "Not set" }} -->
-                            <input
-                              type="text"
-                              v-model="profile.phone"
-                              name="phone"
-                              id="phone"
-                              autocomplete="phone"
+                            <input type="text" v-model="profile.phone" name="phone" id="phone" autocomplete="phone"
                               class="flex-1 border-2 rounded-md bg-verse-500/10 py-1.5 pl-2 sm:text-lg sm:leading-6"
                               :class="[
                                 Object.keys(form_errors).includes('phone')
                                   ? 'border-red-500'
                                   : 'border-white/10',
-                              ]"
-                              placeholder="Enter your phone number"
-                              :disabled="rsvp_is_attending"
-                              required
-                            />
+                              ]" placeholder="Enter your phone number" :disabled="rsvp_is_attending" required />
                           </dd>
                         </div>
 
                         <div class="flex w-full flex-none gap-x-4">
                           <dt class="flex-none">
                             <span class="sr-only">Meetup date</span>
-                            <CalendarDaysIcon
-                              class="h-6 w-6"
-                              aria-hidden="true"
-                            />
+                            <CalendarDaysIcon class="h-6 w-6" aria-hidden="true" />
                           </dt>
                           <dd class="pt-0 flex gap-1 leading-6">
-                            <time :datetime="props.meetup.Date"
-                              >{{ formatDate(props.meetup.Date) }}
+                            <time :datetime="props.meetup.Date">{{ formatDate(props.meetup.Date) }}
                             </time>
                             <span class="font-normal">
                               at
@@ -930,26 +715,15 @@ watchEffect(async (newVal) => {
                           </dd>
                         </div>
                         <Transition name="slide-fade" mode="out-in">
-                          <div
-                            class="flex flex-col gap-6"
-                            v-if="!rsvp_is_attending"
-                          >
-                            <div
-                              class="flex w-full items-center flex-none gap-x-4"
-                            >
+                          <div class="flex flex-col gap-6" v-if="!rsvp_is_attending">
+                            <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
                                 <span class="sr-only">Food preference</span>
-                                <component
-                                  :is="foodSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="foodSelection">
-                                  <RadioGroupLabel class="sr-only"
-                                    >Choose a memory option</RadioGroupLabel
-                                  >
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-3 gap-6">
                                     <rsvp-radio-item :options="foodOptions" />
                                   </div>
@@ -957,87 +731,48 @@ watchEffect(async (newVal) => {
                               </dd>
                             </div>
 
-                            <div
-                              class="flex w-full items-center flex-none gap-x-4"
-                            >
+                            <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none">
-                                <span class="sr-only"
-                                  >How are you getting there?</span
-                                >
-                                <component
-                                  :is="transportSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <span class="sr-only">How are you getting there?</span>
+                                <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
                               <dd class="pt-0 leading-6">
                                 <RadioGroup v-model="transportSelection">
-                                  <RadioGroupLabel class="sr-only"
-                                    >Choose a memory option</RadioGroupLabel
-                                  >
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-4 gap-6">
-                                    <rsvp-radio-item
-                                      :options="transportOptions"
-                                    />
+                                    <rsvp-radio-item :options="transportOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
                             </div>
 
-                            <div
-                              class="flex w-full items-center flex-none gap-x-4"
-                            >
+                            <div class="flex w-full items-center flex-none gap-x-4">
                               <dt class="flex-none" v-if="identifyAsSelection">
                                 <span class="sr-only">Occupation</span>
-                                <component
-                                  :is="identifyAsSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
                               <dd class="pt-0 leading-6 flex flex-wrap gap-4">
                                 <RadioGroup v-model="identifyAsSelection">
-                                  <RadioGroupLabel class="sr-only"
-                                    >Choose a memory option</RadioGroupLabel
-                                  >
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-5 gap-6">
-                                    <rsvp-radio-item
-                                      :options="identifyAsOptions"
-                                    />
+                                    <rsvp-radio-item :options="identifyAsOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
                             </div>
 
-                            <div
-                              class="flex w-full items-center flex-none gap-x-4"
-                            >
-                              <dt
-                                class="flex-none"
-                                v-if="showMeAsAttendingSelection"
-                              >
+                            <div class="flex w-full items-center flex-none gap-x-4">
+                              <dt class="flex-none" v-if="showMeAsAttendingSelection">
                                 <span class="sr-only">Show on site</span>
-                                <component
-                                  :is="showMeAsAttendingSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
                               </dt>
-                              <dd
-                                class="pt-0 leading-6 flex items-center gap-4"
-                              >
+                              <dd class="pt-0 leading-6 flex items-center gap-4">
                                 <div>Show my RSVP on the website</div>
 
-                                <RadioGroup
-                                  v-model="showMeAsAttendingSelection"
-                                >
-                                  <RadioGroupLabel class="sr-only"
-                                    >Choose a memory option</RadioGroupLabel
-                                  >
+                                <RadioGroup v-model="showMeAsAttendingSelection">
+                                  <RadioGroupLabel class="sr-only">Choose a memory option</RadioGroupLabel>
                                   <div class="grid grid-cols-2 gap-6">
-                                    <rsvp-radio-item
-                                      :options="showMeAsAttendingOptions"
-                                    />
+                                    <rsvp-radio-item :options="showMeAsAttendingOptions" />
                                   </div>
                                 </RadioGroup>
                               </dd>
@@ -1047,45 +782,23 @@ watchEffect(async (newVal) => {
                             <div class="grid grid-cols-2 gap-4">
                               <!-- Meal -->
                               <div class="flex gap-2" v-if="foodSelection">
-                                <component
-                                  :is="foodSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <component :is="foodSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 Meal Preference: {{ foodSelection.name }}
                               </div>
 
                               <div class="flex gap-2" v-if="transportSelection">
-                                <component
-                                  :is="transportSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                                <component :is="transportSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 Vehicle: {{ transportSelection.name }}
                               </div>
 
-                              <div
-                                class="flex gap-2"
-                                v-if="identifyAsSelection"
-                              >
-                                <component
-                                  :is="identifyAsSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                              <div class="flex gap-2" v-if="identifyAsSelection">
+                                <component :is="identifyAsSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 Current Occupation:
                                 {{ identifyAsSelection.name }}
                               </div>
 
-                              <div
-                                class="flex gap-2"
-                                v-if="showMeAsAttendingSelection"
-                              >
-                                <component
-                                  :is="showMeAsAttendingSelection.icon"
-                                  class="h-6 w-6"
-                                  aria-hidden="true"
-                                />
+                              <div class="flex gap-2" v-if="showMeAsAttendingSelection">
+                                <component :is="showMeAsAttendingSelection.icon" class="h-6 w-6" aria-hidden="true" />
                                 Visibility on website:
                                 {{ showMeAsAttendingSelection.name }}
                               </div>
@@ -1097,25 +810,18 @@ watchEffect(async (newVal) => {
                   </div>
                 </div>
 
-                <div
-                  class="hidden pt-6 sm:flex justify-between sm:flex-row-reverse"
-                >
+                <div class="hidden pt-6 sm:flex justify-between sm:flex-row-reverse">
                   <template v-if="rsvp_is_attending"> </template>
                   <template v-else>
-                    <button
-                      type="button"
+                    <button type="button"
                       class="inline-flex w-full justify-center rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 px-3 py-2 text-sm font-semibold dark:text-slate-900 shadow-sm dark:hover:bg-slate-200 sm:ml-3 sm:w-auto"
-                      :disabled="rsvp_loading"
-                      @click.prevent="rsvpToMeetup()"
-                    >
+                      :disabled="rsvp_loading" @click.prevent="rsvpToMeetup()">
                       Confirm
                     </button>
                   </template>
-                  <button
-                    type="button"
+                  <button type="button"
                     class="mt-3 inline-flex w-full justify-center rounded-md dark:text-white ring-1 dark:ring-slate-500 dark:hover:bg-slate-100/5 bg-transparent text-slate-900 ring-slate-900 dark:bg-transparent px-3 py-2 text-sm font-semibold shadow-sm sm:mt-0 sm:w-auto"
-                    @click.prevent="open = false"
-                  >
+                    @click.prevent="open = false">
                     Close
                   </button>
                 </div>
@@ -1126,15 +832,9 @@ watchEffect(async (newVal) => {
       </Dialog>
     </TransitionRoot>
 
-    <RsvpButton
-      :rsvp_check_loading="rsvp_check_loading"
-      :rsvp_is_attending="rsvp_is_attending"
-      :profile="profile"
-      :rsvp_loading="rsvp_loading"
-      :unRsvpToMeetup="unRsvpToMeetup"
-      :oAuthLogin="oAuthLogin"
-      @open="open = true"
-    />
+    <RsvpButton :is_rsvp_closed="isRsvpClosed" :rsvp_check_loading="rsvp_check_loading"
+      :rsvp_is_attending="rsvp_is_attending" :profile="profile" :rsvp_loading="rsvp_loading"
+      :unRsvpToMeetup="unRsvpToMeetup" :oAuthLogin="oAuthLogin" @open="open = true" />
   </div>
 </template>
 
