@@ -1,12 +1,13 @@
 ---
 import SpeakerSingle from "@components/SpeakerSingle.astro";
 import LayoutSpeaker from "@layouts/LayoutSpeaker.astro";
-import { getSpeaker, loadSpeakers } from "@utils/api";
+import eventsResponse from "@data/meetups-raw.json";
+import speakersResponse from "@data/speakers-raw.json";
 
 const props = Astro.params;
 
 export async function getStaticPaths() {
-  const speakers = await loadSpeakers();
+  const speakers = speakersResponse;
 
   return speakers.data.map((speaker) => {
     return {
@@ -17,7 +18,27 @@ export async function getStaticPaths() {
   });
 }
 
-const speaker = await getSpeaker(props.id);
+const getSpeaker = (id: string | number) => {
+  const speaker = speakersResponse.data.find((ev) => ev.id == id);
+
+  if (speaker === null) {
+    console.error("cannot find speaker id: ", id);
+  }
+
+  // Get sessions of this speaker from the events
+  const allSessions = eventsResponse.data.map((event) => event.sessions).flat();
+  const speakerSession = allSessions.filter((session) => {
+    let session_speaker_id = session.Session_id.speakers.id;
+    return id === session_speaker_id;
+  });
+
+  return {
+    person: speaker,
+    sessions: speakerSession,
+  };
+};
+
+const speaker = getSpeaker(props.id);
 ---
 
 <LayoutSpeaker

@@ -1,14 +1,14 @@
 ---
-import { loadSpeakers } from "@utils/api";
+import speakersResponse from "@data/speakers-raw.json";
 import { Image } from "astro:assets";
 import { getGithubUrl } from "@utils/fns";
 import { vTransitionName } from "@utils/helpers";
 import BaseHeading from "./base/BaseHeading.astro";
 
-const speakers = await loadSpeakers();
-
 // select 5 random speakers
-const featuredSpeakers = speakers.data.filter((speaker) => speaker.featured);
+const featuredSpeakers = speakersResponse.data.filter(
+  (speaker) => speaker.featured
+);
 const isCenter = (index, length) => {
   return index === Math.floor(length / 2);
 };
@@ -29,7 +29,7 @@ const isCenter = (index, length) => {
     >
       {
         featuredSpeakers.map((person, index) => {
-          let speaker_photo = getGithubUrl(person.github_account);
+          const speaker_photo = getGithubUrl(person.github_account || "");
 
           return (
             <li

@@ -7,7 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "update-contributors": "node ./automation/update-contributors.js"
+    "update-contributors": "node ./automation/update-contributors.js",
+    "prebuild": "node ./scripts/pre-run",
+    "predev": "node ./scripts/pre-run"
   },
   "dependencies": {
     "@astrojs/mdx": "^1.0.0",

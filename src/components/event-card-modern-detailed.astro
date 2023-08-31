@@ -1,11 +1,11 @@
 ---
 import IconLocation from "~icons/carbon/location";
-import IconArrowUpRight from "~icons/carbon/arrow-up-right";
 import IconCalendar from "~icons/carbon/calendar";
 import IconGroup from "~icons/solar/users-group-rounded-bold";
 
 import { format } from "date-fns";
-import { getPhotos, photoAlbumSource } from "@utils/api";
+import { photoAlbumSource } from "src/config";
+import photosResponse from "@data/photos-raw.json";
 import CardAlbum from "./CardAlbum.astro";
 import { vTransitionName } from "@utils/helpers";
 
@@ -47,7 +47,6 @@ const isUpcoming = () => {
 const hasAlbum = () => {
   return Boolean(event && event.album && event?.album.toString() === "null");
 };
-const albumsPhotos = await getPhotos();
 
 let maxAlbumLength = 0;
 
@@ -55,8 +54,8 @@ function fetchAlbumDetails() {
   const albumName = event.album;
   if (!albumName) return [];
 
-  if (albumsPhotos) {
-    const albumPhotosParsed = albumsPhotos[albumName];
+  if (photosResponse) {
+    const albumPhotosParsed = photosResponse[albumName];
     // check if array
     if (Array.isArray(albumPhotosParsed)) {
       maxAlbumLength = albumPhotosParsed.length;

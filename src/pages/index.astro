@@ -3,10 +3,11 @@ import HomeHero from "../components/HomeHero.astro";
 import HomeSocialPresence from "../components/HomeSocialPresence.astro";
 import LayoutHome from "../layouts/LayoutHome.astro";
 import HomeLatestMeetup from "../components/HomeLatestMeetup.astro";
-import { loadEvents } from "@utils/api";
 import HomeFeaturedSpeakers from "../components/HomeFeaturedSpeakers.astro";
-
-let response = await loadEvents();
+import StatsCounter from "../components/StatsCounter.astro";
+import eventsResponse from "@data/meetups-raw.json";
+import speakers from "@data/speakers-raw.json";
+import contributors from "@data/contributors.json";
 ---
 
 <LayoutHome>
@@ -14,7 +15,13 @@ let response = await loadEvents();
 
   <HomeFeaturedSpeakers />
 
-  <HomeLatestMeetup response={response} />
+  <StatsCounter
+    numOfSpeakers={speakers.data.length || 0}
+    numOfMeetups={eventsResponse.data.length || 0}
+    numOfContributors={contributors.length || 0}
+  />
+
+  <HomeLatestMeetup response={eventsResponse} />
 
   <HomeSocialPresence />
 </LayoutHome>

@@ -1,14 +1,13 @@
 ---
 import LayoutSingleMeetup from "@layouts/LayoutSingleMeetup.astro";
 import MeetupSingle from "@components/MeetupSingle.astro";
-import { getEvent, loadEvents } from "@utils/api";
+import eventsResponse from "@data/meetups-raw.json";
 import EventJSONLD from "@components/EventJSONLD.astro";
 
 const props = Astro.params;
 
 export async function getStaticPaths() {
-  const events = await loadEvents();
-  return events.data.map((event) => {
+  return eventsResponse.data.map((event) => {
     return {
       params: {
         id: event.id.toString(),
@@ -16,7 +15,16 @@ export async function getStaticPaths() {
     };
   });
 }
-const meetup = await getEvent(props.id);
+const getEvent = (id: string | number) => {
+  let event = eventsResponse.data.find((ev) => ev.id == id);
+
+  if (event === null) {
+    console.error("cannot find event id: ", id);
+  }
+
+  return event;
+};
+const meetup = getEvent(props.id);
 ---
 
 <LayoutSingleMeetup title={meetup.title} description={meetup.description}>
