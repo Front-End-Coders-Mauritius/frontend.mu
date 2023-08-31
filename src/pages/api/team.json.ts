@@ -7,6 +7,11 @@ import speakersResponse from "@data/speakers-raw.json";
 import contributors from "../../data/contributors.json";
 
 import { people } from "../../data/people";
+<<<<<<< HEAD
+=======
+
+const speakers = await loadSpeakers();
+>>>>>>> main
 
 export const get: APIRoute = async () => {
   return {
