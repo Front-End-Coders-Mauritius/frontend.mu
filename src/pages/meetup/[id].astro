@@ -1,7 +1,7 @@
 ---
 import LayoutSingleMeetup from "@layouts/LayoutSingleMeetup.astro";
 import MeetupSingle from "@components/MeetupSingle.astro";
-import eventsResponse from "src/data/meetups-raw.json";
+import eventsResponse from "@data/meetups-raw.json";
 import EventJSONLD from "@components/EventJSONLD.astro";
 
 const props = Astro.params;
@@ -23,7 +23,7 @@ const getEvent = (id: string | number) => {
   }
 
   return event;
-}
+};
 const meetup = getEvent(props.id);
 ---
 

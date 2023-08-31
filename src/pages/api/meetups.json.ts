@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import eventsResponse from "src/data/meetups-raw.json";
+import eventsResponse from "@data/meetups-raw.json";
 
 const getSponsorDetails = (sponsors) => {
   return (
