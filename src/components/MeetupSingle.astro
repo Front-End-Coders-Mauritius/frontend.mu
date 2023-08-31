@@ -6,8 +6,8 @@ import MeetupAlbum from "./MeetupAlbum.astro";
 import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
 import { photoAlbumSource } from "src/config";
-import photosResponse from"src/data/photos-raw.json"
-import { random, vTransitionName } from "@utils/helpers";
+import photosResponse from"@data/photos-raw.json"
+import { vTransitionName } from "@utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import RsvpComponent from "./user/rsvp-component.vue";
 import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
@@ -55,11 +55,6 @@ function fetchAlbumDetails(albumName: string) {
 
 let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 
-const getRelatedPhotoSource = (album: string) => {
-  let albumList = fetchAlbumDetails(album) as string[];
-  let randomImage = random(albumList);
-  return `${photoAlbumSource}/${randomImage}`;
-};
 ---
 
 <div>
