@@ -29,7 +29,7 @@ const isCenter = (index, length) => {
     >
       {
         featuredSpeakers.map((person, index) => {
-          let speaker_photo = getGithubUrl(person.github_account || "");
+          const speaker_photo = getGithubUrl(person.github_account || "");
 
           return (
             <li

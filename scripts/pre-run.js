@@ -3,6 +3,7 @@ const { loadSpeakers, loadEvents, getPhotos } = require("./directus-dump");
 const fs = require("fs");
 
 const preBuild = async () => {
+  // keep sequential so as not to overload the server
   const speakers = await loadSpeakers();
   const meetups = await loadEvents();
   const photos = await getPhotos();
