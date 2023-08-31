@@ -4,11 +4,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "npm run pre-build && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "update-contributors": "node ./automation/update-contributors.js",
-    "pre-build": "node ./scripts/pre-build"
+    "prebuild": "node ./scripts/pre-run",
+    "predev": "node ./scripts/pre-run"
   },
   "dependencies": {
     "@astrojs/mdx": "^1.0.0",

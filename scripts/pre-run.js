@@ -1,4 +1,4 @@
-// any scripts occurring before astro build goes here
+// any scripts occurring before astro build or dev goes here
 const { loadSpeakers, loadEvents, getPhotos } = require("./directus-dump");
 const fs = require("fs");
 
