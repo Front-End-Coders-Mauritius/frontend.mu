@@ -6,7 +6,7 @@ import contributors from "@data/contributors.json";
 
 import { people } from "@data/people";
 
-export const get: APIRoute = async () => {
+export const GET: APIRoute = async () => {
   return {
     body: JSON.stringify({
       people,

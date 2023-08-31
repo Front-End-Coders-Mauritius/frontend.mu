@@ -33,7 +33,6 @@ export const getCleanedUpMeetupsData = (SITE_URL: string) =>
       venue: event?.Venue || "",
       time: event?.Time || "",
       date: event?.Date || "",
-      images: event?.images?.map((image) => image?.imagename || "") || [],
       number_of_attendees: event?.Attendees || 0,
       topics: getSessionsDetails(event?.sessions || []),
       sponsors: getSponsorDetails(event?.sponsors || []),
