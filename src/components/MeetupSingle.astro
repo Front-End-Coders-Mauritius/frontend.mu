@@ -6,7 +6,7 @@ import MeetupAlbum from "./MeetupAlbum.astro";
 import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
 import { photoAlbumSource } from "src/config";
-import photosResponse from"@data/photos-raw.json"
+import photosResponse from "@data/photos-raw.json";
 import { vTransitionName } from "@utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import RsvpComponent from "./user/rsvp-component.vue";
@@ -54,7 +54,6 @@ function fetchAlbumDetails(albumName: string) {
 }
 
 let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
-
 ---
 
 <div>

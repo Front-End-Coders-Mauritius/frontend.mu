@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { isUserLoggedIn, currentUser, userProfile } from "../store/userStore";
-import { Provider } from "@supabase/supabase-js";
+import type { Provider } from "@supabase/supabase-js";
 
 export const oAuthLogin = async (
   provider: Provider = "google",

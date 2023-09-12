@@ -74,10 +74,9 @@ const profile = ref({
 });
 
 const isRsvpClosed = computed(() => {
-  const now = new Date();
-  const closingDate = new Date(props.meetup.rsvp_closing_date);
-  console.log(closingDate, now, closingDate > now);
-  return closingDate > now;
+  const now = new Date().getTime();
+  const closingDate = new Date(props.meetup.rsvp_closing_date).getTime();
+  return !(now < closingDate)
 });
 
 const currentRSVPStatus = ref(false);
@@ -349,9 +348,6 @@ watchEffect(async (newVal) => {
 
 <template>
   <div class="flex justify-center items-center">
-    <!-- <pre class="text-white">
-      {{ isRsvpClosed }}
-    </pre> -->
     <!-- Modal Stuff -->
     <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="relative z-10" @close="open = false">
