@@ -48,31 +48,37 @@ const {
 </div>
 
 <script>
-  const onIntersect = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        let startNum = 0;
-        const finalNum = +entry.target.getAttribute("data-final-num");
+  function counterAnimation() {
+    const onIntersect = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          let startNum = 0;
+          const finalNum = +entry.target.getAttribute("data-final-num");
 
-        if (!!finalNum) {
-          let duration = Math.floor(700 / finalNum);
+          if (!!finalNum) {
+            let duration = Math.floor(700 / finalNum);
 
-          const counter = setInterval(() => {
-            startNum += 1;
-            entry.target.textContent = `${startNum}`;
+            const counter = setInterval(() => {
+              startNum += 1;
+              entry.target.textContent = `${startNum}`;
 
-            if (startNum === finalNum) clearInterval(counter);
-            observer.unobserve(entry.target);
-          }, duration);
+              if (startNum === finalNum) clearInterval(counter);
+              observer.unobserve(entry.target);
+            }, duration);
+          }
         }
-      }
-    });
-  };
+      });
+    };
 
-  const observor = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-  document
-    .querySelectorAll(".stat-num")
-    .forEach((statNum) => observor.observe(statNum));
+    const observor = new IntersectionObserver(onIntersect, { threshold: 0.5 });
+    document
+      .querySelectorAll(".stat-num")
+      .forEach((statNum) => observor.observe(statNum));
+  }
+
+  document.addEventListener("DOMContentLoaded", counterAnimation);
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", counterAnimation);
 </script>
 
 <style>
