@@ -184,49 +184,49 @@ const links: TMenu = {
 </div>
 
 <script is:inline>
-  function makeHeaderSticky() {
-    const header = document.querySelector(".menu-wrapper");
-    if (!header) return;
+function makeHeaderSticky() {
+  const header = document.querySelector(".menu-wrapper");
+  if (!header) return;
 
-    // Function to be called when the intersection changes
-    function handleIntersection(entries) {
-      entries.forEach((entry) => {
-        if (!header) return;
-        if (entry.isIntersecting) {
-          header.classList.remove("intersect");
-          // console.log("intersecting");
-        } else {
-          header.classList.add("intersect");
-          // console.log("not intersecting");
-        }
-      });
-    }
-
-    // Options for the IntersectionObserver
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
-      threshold: 0, // Trigger the callback when even one pixel is visible
-    };
-
-    // Create the IntersectionObserver
-    const observer = new IntersectionObserver(handleIntersection, options);
-
-    // Target element that you want to observe
-    const target = document.querySelector("#sticky-observer");
-
-    if (!target) return;
-
-    // Start observing the target element
-    observer.observe(target);
+  // Function to be called when the intersection changes
+  function handleIntersection(entries) {
+    entries.forEach((entry) => {
+      if (!header) return;
+      if (entry.isIntersecting) {
+        header.classList.remove("intersect");
+        // console.log("intersecting");
+      } else {
+        header.classList.add("intersect");
+        // console.log("not intersecting");
+      }
+    });
   }
 
-  // Call the function to make the .header class sticky
-  // makeHeaderSticky();
+  // Options for the IntersectionObserver
+  const options = {
+    root: null, // Use the viewport as the root
+    rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
+    threshold: 0, // Trigger the callback when even one pixel is visible
+  };
 
-  document.addEventListener("DOMContentLoaded", makeHeaderSticky);
+  // Create the IntersectionObserver
+  const observer = new IntersectionObserver(handleIntersection, options);
 
-  document.addEventListener("astro:beforeload", makeHeaderSticky);
+  // Target element that you want to observe
+  const target = document.querySelector("#sticky-observer");
+
+  if (!target) return;
+
+  // Start observing the target element
+  observer.observe(target);
+}
+
+// Call the function to make the .header class sticky
+// makeHeaderSticky();
+
+document.addEventListener("DOMContentLoaded", makeHeaderSticky);
+
+document.addEventListener("astro:after-swap", makeHeaderSticky);
 </script>
 
 <style lang="postcss">

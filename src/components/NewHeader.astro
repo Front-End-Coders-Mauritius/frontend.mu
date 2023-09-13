@@ -5,7 +5,7 @@ import LoggedUser from "./LoggedUser.vue";
 import MainMenu from "./MegaMenu.astro";
 ---
 
-<MainMenu>
+<MainMenu transition:persist>
   <RandomColor slot="dock-right" />
   <ToggleTheme slot="dock-right" client:only />
   <LoggedUser slot="dock-right" client:only />

@@ -57,9 +57,10 @@ const {
   };
 
   // Runs on initial navigation
-  setDarkMode();
+  // setDarkMode();
+  document.addEventListener("DOMContentLoaded", setDarkMode);
   // Runs on view transitions navigation
-  document.addEventListener("astro:beforeload", setDarkMode);
+  document.addEventListener("astro:after-swap", setDarkMode);
 </script>
 
 {
@@ -81,9 +82,5 @@ const {
   gtag("js", new Date());
   gtag("config", "G-D603241W7C");
 </script>
-
-<!-- <script>
-	import '../utils//navigation.js'
-</script> -->
 
 <ViewTransitions />
