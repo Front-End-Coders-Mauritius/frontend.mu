@@ -55,7 +55,7 @@ export const getMeetupRSVPStatus = async (
   const userId = userProfile.get()?.id ?? currentUser.get()?.user.id;
 
   const { data, error } = await supabase
-    .from("meetup_rsvp")
+    .from("safe_meetup_rsvp")
     .select("*")
     .eq("meetup_id", meetupId)
     .eq("user_uid", userId)

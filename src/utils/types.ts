@@ -11,13 +11,14 @@ export interface GoogleInfo {
 }
 
 export interface IRSVPStatus {
-  created_at: string;
-  id: string;
-  meetup_id: string;
-  meta: RSVPMetaObject;
+  created_at?: string;
+  id?: string;
+  meetup_id?: string;
+  meta?: RSVPMetaObject;
   rsvp: Boolean;
-  showOnSite: Boolean;
-  user_metadata: User;
+  showOnSite?: Boolean;
+  user_metadata?: User;
+  user_uid?: string;
 }
 
 export interface User {
