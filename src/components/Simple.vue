@@ -8,4 +8,4 @@ import { ref } from "vue";
 const x = ref(false);
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

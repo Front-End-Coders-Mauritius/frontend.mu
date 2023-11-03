@@ -834,7 +834,7 @@ watchEffect(async (newVal) => {
   </div>
 </template>
 
-<style lang="scss">
+<style>
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
