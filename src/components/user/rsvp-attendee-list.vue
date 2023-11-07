@@ -47,12 +47,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="contain text-verse-500 dark:text-verse-200 py-8">
+  <div v-if="attendeeList" class="contain text-verse-500 dark:text-verse-200 py-8">
     <div class="flex flex-col py-8 gap-4 [--bar-height:15px]">
       <h2
         class="group relative flex flex-col justify-center md:justify-start md:flex-row items-center gap-4 text-2xl font-bold cursor-pointer">
         Attendees
-        <span v-if="attendeeList"
+        <span
           class="bg-verse-200 aspect-square z-10 rounded-full inline-grid place-items-center text-verse-800 p-4 md:p-1 text-6xl md:text-xl shadow-sm shadow-black/40">{{
             attendeeCount }}</span>
         <span
