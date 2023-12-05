@@ -109,10 +109,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
                   props.getCurrentEvent.id,
                 )}
               >
-                <BaseHeading
-                  level={1}
-                  class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                >
+                <BaseHeading level={1} class="font-extrabold">
                   {props.getCurrentEvent?.title}
                 </BaseHeading>
               </div>
@@ -138,7 +135,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
             </div>
             <!-- Stats section -->
             <div class="mt-10">
-              <dl
+              <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
               >
                 {
@@ -254,19 +251,19 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
                   <div class="flex gap-8 py-4">
                     <button
                       class="hover:text-[#4267B2] text-verse-500 dark:text-verse-200"
-                      onclick="shareOnFacebook()"
+                      onclick="shareOnFacebook();"
                     >
                       <IconFacebook class="w-10 md:w-12" />
                     </button>
                     <button
                       class="hover:text-[#00acee] text-verse-500 dark:text-verse-200"
-                      onclick="shareOnTwitter()"
+                      onclick="shareOnTwitter();"
                     >
                       <IconTwitter class="w-10 md:w-12" />
                     </button>
                     <button
                       class="hover:text-[#007db1] text-verse-500 dark:text-verse-200"
-                      onclick="shareOnLinkedIn()"
+                      onclick="shareOnLinkedIn();"
                     >
                       <IconLinkedin class="w-10 md:w-12" />
                     </button>
@@ -279,9 +276,9 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
                       class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
                       type="text"
                       value={`https://frontend.mu/meetup/${props.routeId}/`}
-                      onclick="copy()"
+                      onclick="copy();"
                     />
-                    <div class="cursor-pointer" onclick="copy()">
+                    <div class="cursor-pointer" onclick="copy();">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5"
@@ -310,7 +307,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
                     </div>
                   )
                 }
-              </dl>
+              </div>
             </div>
           </div>
         </div>
