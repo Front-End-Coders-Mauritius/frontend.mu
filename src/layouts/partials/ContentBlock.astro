@@ -1,8 +1,14 @@
 ---
+interface Props { 
+    contain: boolean
+}
+
+const { contain = true } = Astro.props;
+
 
 ---
 
-<div class="contain">
+<div class:list={[contain ? 'contain' : '']}>
     <div class="py-12 lg:py-24">
         <slot />
     </div>
