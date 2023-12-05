@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/LayoutHome.astro";
+import BaseHeading from "../components/base/BaseHeading.astro";
+import ContentBlock from "@layouts/partials/ContentBlock.astro";
+
+const title = "About us";
+const description = "About us";
+---
+
+<Layout title={title} description={description}>
+  <ContentBlock>
+    <BaseHeading>About us</BaseHeading>
+    <div class="prose text-verse-600 dark:text-verse-300 py-4">
+      <p>
+        Front-End Coders Mauritius is a community around front-end development
+        based in Mauritius. We also organise monthly meetups free for anyone
+        interested to attend.
+      </p>
+
+      <p>
+        Do you want to know more? <a href="mailto:sandeep@ramgolam.com">
+          Get in touch with the organisers
+        </a>
+      </p>
+    </div>
+  </ContentBlock>
+</Layout>
