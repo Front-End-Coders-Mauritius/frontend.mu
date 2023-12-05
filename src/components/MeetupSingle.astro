@@ -14,6 +14,7 @@ import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
 import FecAnchor from "./FecAnchor.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
+import MeetupDock from "./MeetupDock.astro";
 
 const props = Astro.props;
 
@@ -61,6 +62,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 <div>
   <div data-title={props.getCurrentEvent.title}>
     <ContentBlock contain={false}>
+      <MeetupDock>hi</MeetupDock>
       <div class="contain">
         <div class="relative">
           <!-- Content area -->
@@ -109,7 +111,11 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 
             <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
           </div>
+        </div>
+      </div>
 
+      <div>
+        <div class="contain">
           <!-- Stats section -->
           <div class="mt-10">
             <div
