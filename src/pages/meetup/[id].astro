@@ -24,7 +24,10 @@ const getEvent = (id: string | number) => {
 
   return event;
 };
-const meetup = getEvent(props.id);
+const meetup = getEvent(props.id) ?? {
+  title: "Event not found",
+  description: "Event not found",
+};
 ---
 
 <LayoutSingleMeetup title={meetup.title} description={meetup.description}>
