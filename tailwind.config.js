@@ -10,7 +10,6 @@ module.exports = {
     fontFamily: {
       mono: ["Electrolize", "Courier New", "monospace"],
       opensans: ['"Open Sans"', "sans-serif"],
-
       heading: ["'JetBrains Mono', monospace", "monospace"],
     },
     screens: {
@@ -95,8 +94,8 @@ module.exports = {
     },
   },
   plugins: [
-    require("daisyui"),
     require("@tailwindcss/typography"),
+    require("daisyui"),
     // require("@tailwindcss/aspect-ratio"),
   ],
 
