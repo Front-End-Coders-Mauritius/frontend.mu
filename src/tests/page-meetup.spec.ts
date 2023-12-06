@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test('sandeep pages', async ({ page }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.getByText('All meetups').first().click();
-    await expect(page.locator('h1')).toContainText('All meetups');
+    await expect(page.locator('h1').first()).toContainText('All meetups');
     await expect(page.getByRole('link', { name: 'The CSS Meetup' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Vue / Tailwind / OpenData' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'ReactJS' })).toBeVisible();
