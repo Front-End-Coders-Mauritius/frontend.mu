@@ -73,7 +73,7 @@ const props = Astro.props;
 
   function changeImgSrc(imgSelector, array, counter) {
     const img = document.querySelector(
-      ".photo-container:nth-child(" + imgSelector + ") img"
+      ".photo-container:nth-child(" + imgSelector + ") img",
     );
 
     if (img) {

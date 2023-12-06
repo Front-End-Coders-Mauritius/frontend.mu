@@ -13,6 +13,7 @@ import RsvpComponent from "./user/rsvp-component.vue";
 import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
 import FecAnchor from "./FecAnchor.astro";
+import ContentBlock from "@layouts/partials/ContentBlock.astro";
 
 const props = Astro.props;
 
@@ -59,272 +60,231 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 
 <div>
   <div data-title={props.getCurrentEvent.title}>
-    <div class="relative">
-      <div class="pb-10 md:pb-24">
-        <div class="contain">
-          <div class="relative">
+    <ContentBlock contain={false}>
+      <div class="contain">
+        <div class="relative">
+          <!-- Content area -->
+          <div>
+            {
+              isUpcoming() && (
+                <div class="flex w-full items-center justify-start pb-4">
+                  <p
+                    class:list={[
+                      isUpcoming()
+                        ? "tagStyle bg-green-100 text-green-800"
+                        : "tagStyle bg-yellow-100 text-yellow-800",
+                      ,
+                      "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
+                    ]}
+                  >
+                    happening soon
+                  </p>
+                </div>
+              )
+            }
             <div
-              aria-hidden="true"
-              class="hidden sm:block lg:inset-y-0 lg:right-0 lg:w-screen"
+              class="text-base uppercase text-verse-900 dark:text-verse-200 font-semibold"
             >
-              <div
-                class="inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"
-              >
-              </div>
-              <!-- <IconDots class="w-[400px] xl:w-[600px] opacity-5 saturate-0" /> -->
+              Topic
             </div>
+
+            <div
+              style={vTransitionName("session-title", props.getCurrentEvent.id)}
+            >
+              <BaseHeading level={1} class="font-extrabold">
+                {props.getCurrentEvent?.title}
+              </BaseHeading>
+            </div>
+
+            <div class="grid md:grid-cols-2">
+              <SessionList sessions={props.getCurrentEvent.sessions} />
+
+              <!-- Internal RSVP Button -->
+              <MeetupGallery
+                currentAlbum={currentAlbum}
+                source={photoAlbumSource}
+                animationSpeed={4000}
+              />
+            </div>
+
+            <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
           </div>
 
-          <div
-            class="relative mx-auto px-8 py-3 sm:px-6 md:px-0 md:mx-0 md:py-24"
-          >
-            <!-- Content area -->
-            <div>
+          <!-- Stats section -->
+          <div class="mt-10">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
+            >
               {
-                isUpcoming() && (
-                  <div class="flex w-full items-center justify-start pb-4">
-                    <p
-                      class:list={[
-                        isUpcoming()
-                          ? "tagStyle bg-green-100 text-green-800"
-                          : "tagStyle bg-yellow-100 text-yellow-800",
-                        ,
-                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
-                      ]}
-                    >
-                      happening soon
-                    </p>
+                props.getCurrentEvent.Date && (
+                  <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
+                    <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
+                      Date
+                    </dt>
+                    <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                      {new Date(props.getCurrentEvent.Date).toDateString()}
+                    </dd>
                   </div>
                 )
               }
-              <div
-                class="text-base uppercase text-verse-900 dark:text-verse-200 font-semibold"
-              >
-                Topic
-              </div>
-
-              <div
-                style={vTransitionName(
-                  "session-title",
-                  props.getCurrentEvent.id,
-                )}
-              >
-                <BaseHeading
-                  level={1}
-                  class="text-3xl font-extrabold tracking-loose text-verse-500 md:text-4xl lg:text-6xl"
-                >
-                  {props.getCurrentEvent?.title}
-                </BaseHeading>
-              </div>
-
-              <div class="grid md:grid-cols-2">
-                <SessionList sessions={props.getCurrentEvent.sessions} />
-
-                {
-                  accepting_rsvp && (
-                    <RsvpComponent meetup={props.getCurrentEvent} client:only />
-                  )
-                }
-
-                <!-- Internal RSVP Button -->
-                <MeetupGallery
-                  currentAlbum={currentAlbum}
-                  source={photoAlbumSource}
-                  animationSpeed={4000}
-                />
-              </div>
-
-              <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
-            </div>
-            <!-- Stats section -->
-            <div class="mt-10">
-              <dl
-                class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8"
-              >
-                {
-                  props.getCurrentEvent.Date && (
-                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
-                      <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                        Date
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                        {new Date(props.getCurrentEvent.Date).toDateString()}
-                      </dd>
-                    </div>
-                  )
-                }
-                {
-                  props.getCurrentEvent.Venue && (
-                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                        Venue
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                        {props.getCurrentEvent.Venue}
-                      </dd>
-                    </div>
-                  )
-                }
-                {
-                  props.getCurrentEvent.Time && (
-                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                        Time
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                        {props.getCurrentEvent.Time}
-                      </dd>
-                    </div>
-                  )
-                }
-                {
-                  props.getCurrentEvent.Location && (
-                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
-                      <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                        Location
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                        {props.getCurrentEvent.Location}
-                      </dd>
-                    </div>
-                  )
-                }
-                {
-                  (props.getCurrentEvent.Attendees ||
-                    props.getCurrentEvent.seats_available) && (
-                    <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
-                      <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                        Seats Limit
-                      </dt>
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                        {props.getCurrentEvent.Attendees ||
-                          props.getCurrentEvent.seats_available}
-                      </dd>
-                    </div>
-                  )
-                }
-
-                <!-- Share Functions -->
-
-                <script is:inline>
-                  function copy() {
-                    const copyText = document.getElementById("myInput");
-                    copyText.select();
-                    copyText.setSelectionRange(0, 99999);
-                    navigator.clipboard.writeText(copyText.value);
-                  }
-
-                  function shareOnFacebook() {
-                    const navUrl =
-                      "https://www.facebook.com/sharer/sharer.php?u=" +
-                      `${window.location.href}`;
-                    window.open(navUrl, "_blank");
-                  }
-
-                  function shareOnTwitter() {
-                    const getTitleFromDataTitle = document
-                      .querySelector("[data-title]")
-                      .getAttribute("data-title");
-                    const str = encodeURIComponent(
-                      " #mauritius #frontendcoders ",
-                    );
-                    const navUrl =
-                      `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` +
-                      `${window.location.href}`;
-                    window.open(navUrl, "_blank");
-                  }
-
-                  function shareOnLinkedIn() {
-                    const navUrl =
-                      "http://www.linkedin.com/shareArticle?mini=true&url=" +
-                      `${window.location.href}`;
-                    window.open(navUrl, "_blank");
-                  }
-                </script>
-
-                <!-- Share Buttons -->
-                <div
-                  class="border-y-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6"
-                >
-                  <dt
-                    class="text-base font-medium text-verse-500 dark:text-verse-300"
-                  >
-                    Share
-                  </dt>
-                  <div class="flex gap-8 py-4">
-                    <button
-                      class="hover:text-[#4267B2] text-verse-500 dark:text-verse-200"
-                      onclick="shareOnFacebook()"
-                    >
-                      <IconFacebook class="w-10 md:w-12" />
-                    </button>
-                    <button
-                      class="hover:text-[#00acee] text-verse-500 dark:text-verse-200"
-                      onclick="shareOnTwitter()"
-                    >
-                      <IconTwitter class="w-10 md:w-12" />
-                    </button>
-                    <button
-                      class="hover:text-[#007db1] text-verse-500 dark:text-verse-200"
-                      onclick="shareOnLinkedIn()"
-                    >
-                      <IconLinkedin class="w-10 md:w-12" />
-                    </button>
+              {
+                props.getCurrentEvent.Venue && (
+                  <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
+                    <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
+                      Venue
+                    </dt>
+                    <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                      {props.getCurrentEvent.Venue}
+                    </dd>
                   </div>
-                  <dd
-                    class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]"
-                  >
-                    <input
-                      id="myInput"
-                      class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
-                      type="text"
-                      value={`https://frontend.mu/meetup/${props.routeId}/`}
-                      onclick="copy()"
-                    />
-                    <div class="cursor-pointer" onclick="copy()">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
-                        ></path>
-                        <path
-                          d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </dd>
-                </div>
+                )
+              }
+              {
+                props.getCurrentEvent.Time && (
+                  <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
+                    <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
+                      Time
+                    </dt>
+                    <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                      {props.getCurrentEvent.Time}
+                    </dd>
+                  </div>
+                )
+              }
+              {
+                props.getCurrentEvent.Location && (
+                  <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
+                    <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
+                      Location
+                    </dt>
+                    <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                      {props.getCurrentEvent.Location}
+                    </dd>
+                  </div>
+                )
+              }
+              {
+                (props.getCurrentEvent.Attendees ||
+                  props.getCurrentEvent.seats_available) && (
+                  <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
+                    <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
+                      Seats Limit
+                    </dt>
+                    <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                      {props.getCurrentEvent.Attendees ||
+                        props.getCurrentEvent.seats_available}
+                    </dd>
+                  </div>
+                )
+              }
 
-                <!-- RSVP Button -->
-                {
-                  isUpcoming() && props.getCurrentEvent.rsvplink && (
-                    <div class="md:border-t-2 border-brand-100 pt-4 md:pt-8 flex flex-col justify-center items-center md:items-start gap-4">
-                      <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-slate-200 md:text-3xl">
-                        <FecAnchor href={props.getCurrentEvent.rsvplink}>
-                          Book my seat
-                        </FecAnchor>
-                      </dd>
-                    </div>
-                  )
+              <!-- Share Functions -->
+
+              <script is:inline>
+                function copy() {
+                  const copyText = document.getElementById("myInput");
+                  copyText.select();
+                  copyText.setSelectionRange(0, 99999);
+                  navigator.clipboard.writeText(copyText.value);
                 }
-              </dl>
+
+                function shareOnFacebook() {
+                  const navUrl =
+                    "https://www.facebook.com/sharer/sharer.php?u=" +
+                    `${window.location.href}`;
+                  window.open(navUrl, "_blank");
+                }
+
+                function shareOnTwitter() {
+                  const getTitleFromDataTitle = document
+                    .querySelector("[data-title]")
+                    .getAttribute("data-title");
+                  const str = encodeURIComponent(
+                    " #mauritius #frontendcoders ",
+                  );
+                  const navUrl =
+                    `https://twitter.com/intent/tweet?text=${getTitleFromDataTitle}${str}` +
+                    `${window.location.href}`;
+                  window.open(navUrl, "_blank");
+                }
+
+                function shareOnLinkedIn() {
+                  const navUrl =
+                    "http://www.linkedin.com/shareArticle?mini=true&url=" +
+                    `${window.location.href}`;
+                  window.open(navUrl, "_blank");
+                }
+              </script>
+
+              <!-- Share Buttons -->
+              <div
+                class="border-y-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6"
+              >
+                <dt
+                  class="text-base font-medium text-verse-500 dark:text-verse-300"
+                >
+                  Share
+                </dt>
+                <div class="flex gap-8 py-4">
+                  <button
+                    class="hover:text-[#4267B2] text-verse-500 dark:text-verse-200"
+                    onclick="shareOnFacebook();"
+                  >
+                    <IconFacebook class="w-10 md:w-12" />
+                  </button>
+                  <button
+                    class="hover:text-[#00acee] text-verse-500 dark:text-verse-200"
+                    onclick="shareOnTwitter();"
+                  >
+                    <IconTwitter class="w-10 md:w-12" />
+                  </button>
+                  <button
+                    class="hover:text-[#007db1] text-verse-500 dark:text-verse-200"
+                    onclick="shareOnLinkedIn();"
+                  >
+                    <IconLinkedin class="w-10 md:w-12" />
+                  </button>
+                </div>
+                <dd
+                  class="flex justify-between rounded-md bg-gray-100 mt-2 px-2 py-1 lg:w-[450px]"
+                >
+                  <input
+                    id="myInput"
+                    class="text-md break-words bg-gray-100pr-2 tracking-tight bg-gray-100 text-gray-600 line-clamp-3 w-[500px]"
+                    type="text"
+                    value={`https://frontend.mu/meetup/${props.routeId}/`}
+                    onclick="copy();"
+                  />
+                  <div class="cursor-pointer" onclick="copy();">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                      ></path>
+                      <path
+                        d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+                      ></path>
+                    </svg>
+                  </div>
+                </dd>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="contain">
-          <RsvpAttendeeList
-            client:only
-            seatCapacity={props.getCurrentEvent.seats_available}
-            meetupId={props.routeId}
-          />
-        </div>
-
-        <MeetupAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />
       </div>
-    </div>
+
+      <div class="contain">
+        <RsvpAttendeeList
+          client:only
+          seatCapacity={props.getCurrentEvent.seats_available}
+          meetupId={props.routeId}
+        />
+      </div>
+
+      <MeetupAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />
+    </ContentBlock>
   </div>
 </div>
