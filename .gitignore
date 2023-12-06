@@ -21,3 +21,7 @@ pnpm-debug.log*
 
 #astro files
 .astro
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
