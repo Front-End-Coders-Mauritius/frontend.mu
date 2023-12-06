@@ -1,4 +1,3 @@
-import type { APIRoute } from "astro";
 import { getCleanedUpMeetupsData } from "@utils/data-helpers";
 
 // response from this api looks as follows
@@ -12,11 +11,12 @@ import { getCleanedUpMeetupsData } from "@utils/data-helpers";
 // topics -> [] of { title, speaker, github_account }
 // sponsors -> [] of { name, url }
 // live_url
-export const GET: APIRoute = async ({ request }) => {
+
+export async function GET({ params, request }) {
   const SITE_URL = new URL(request.url).origin;
-  return {
-    body: JSON.stringify({
+  return new Response(
+    JSON.stringify({
       ...getCleanedUpMeetupsData(SITE_URL),
-    }),
-  };
+    })
+  )
 };

@@ -20,13 +20,14 @@ import Backdrop from "./Backdrop.astro";
 const {
   title = "Front-End Coders Mauritius",
   description = "A community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.",
+  pageType = "page",
 } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
-    <OgImage pageType="page" title={title} />
+    <OgImage pageType={pageType} title={title} />
   </head>
 
   <body>

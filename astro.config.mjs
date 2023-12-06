@@ -39,5 +39,6 @@ export default defineConfig({
         autoInstall: true,
       }),
     ],
+    optimizeDeps: { exclude: ["fsevents"] },
   }
 });
