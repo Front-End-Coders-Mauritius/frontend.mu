@@ -26,6 +26,9 @@ jobs:
         npm install -g pnpm
         pnpm install --no-frozen-lockfile
 
+    - name: Install Browsers
+      run: pnpm exec playwright install
+
     - name: Run Playwright tests
       run: |
         pnpm run test
