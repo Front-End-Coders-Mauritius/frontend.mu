@@ -75,11 +75,15 @@ const {
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D603241W7C"
 ></script>
 <script>
+  // @ts-expect-error
   window.dataLayer = window.dataLayer || [];
   function gtag() {
+    // @ts-expect-error
     dataLayer.push(arguments);
   }
+  // @ts-expect-error
   gtag("js", new Date());
+  // @ts-expect-error
   gtag("config", "G-D603241W7C");
 </script>
 

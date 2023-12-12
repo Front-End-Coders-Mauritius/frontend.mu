@@ -1,0 +1,33 @@
+---
+import LayoutHome from "../layouts/LayoutHome.astro";
+---
+
+<LayoutHome>
+  <div class="mx-auto w-full grid items-center text-center">
+    <div class="flex flex-col justify-around">
+      <div></div>
+      <h2
+        class="uppercase text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
+      >
+        <span
+          class="block font-sans text-black dark:text-verse-300 xl:inline capitalize font-mono"
+        >
+          welcome back
+        </span>
+
+        <script is:inline>
+          async function refreshCookie() {
+            const res = await fetch("http://localhost:8055/auth/refresh", {
+              method: "POST",
+              credentials: "include", // this is required in order to send the refresh token cookie
+            });
+
+            console.log(res);
+          }
+
+          refreshCookie();
+        </script>
+      </h2>
+    </div>
+  </div>
+</LayoutHome>

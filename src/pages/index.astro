@@ -8,10 +8,14 @@ import StatsCounter from "../components/StatsCounter.astro";
 import eventsResponse from "@data/meetups-raw.json";
 import speakers from "@data/speakers-raw.json";
 import contributors from "@data/contributors.json";
+import Hodor from "../components/auth/Hodor.vue";
+import Bran from "../components/auth/Bran.vue";
 ---
 
 <LayoutHome pageType="home">
   <HomeHero />
+  <Hodor client:only />
+  <Bran client:only />
 
   <HomeFeaturedSpeakers />
 
