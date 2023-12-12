@@ -6,22 +6,15 @@ on:
     branches: [ main, master ]
 jobs:
   test:
+    name: Run end-to-end tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 6.0.2
-    - name: Install deps
-      run: pnpm install
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install   
-    - name: Run Playwright tests
-      run: pnpm exec playwright test
-    - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: install dependencies
+        run: npm ci
+      - name: install playwright browsers
+        run: npx playwright install --with-deps
+      - name: run e2e
+        run: npm run test
