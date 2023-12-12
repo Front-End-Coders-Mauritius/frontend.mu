@@ -2,7 +2,7 @@
   <button
     class="toggle"
     aria-pressed="false"
-    title="Toggle Dark Mode"
+    :title="isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode'"
     @click="toggleDark()"
   >
     <span class="toggle__content">
@@ -308,7 +308,7 @@
 
 <script setup lang="ts">
 import { useDark, useToggle } from "@vueuse/core";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 
 const isDark = useDark({
   selector: "body",
