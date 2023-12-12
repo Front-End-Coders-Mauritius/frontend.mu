@@ -6,12 +6,14 @@ Live website : https://frontend.mu/
 
 ## Setup
 
+[Install pnpm](https://pnpm.io/installation) on your development environment for the best experience. 
+
 ```
-npm install
+pnpm install
 ```
 
 ```
-npm run dev
+pnpm run dev
 ```
 
 ## Environment variables
