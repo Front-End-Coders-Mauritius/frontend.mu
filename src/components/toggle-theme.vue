@@ -308,7 +308,7 @@
 
 <script setup lang="ts">
 import { useDark, useToggle } from "@vueuse/core";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 
 const isDark = useDark({
   selector: "body",
