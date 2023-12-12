@@ -2,7 +2,7 @@
   <button
     class="toggle"
     aria-pressed="false"
-    title="Toggle Dark Mode"
+    :title="isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode'"
     @click="toggleDark()"
   >
     <span class="toggle__content">
