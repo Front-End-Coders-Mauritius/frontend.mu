@@ -12,9 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - name: install dependencies
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install
       - name: install playwright browsers
-        run: npx playwright install --with-deps
+        run: pnpm dlx playwright install --with-deps
       - name: run e2e
         run: npm run test
