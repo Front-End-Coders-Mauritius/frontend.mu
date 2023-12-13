@@ -1,12 +1,16 @@
 import { ref, computed } from "vue";
 import type { User } from "../utils/types";
-import { createDirectus, rest, readMe, readProviders } from '@directus/sdk';
+import { createDirectus, rest, readMe, readProviders, staticToken } from '@directus/sdk';
 
 const DIRECTUS_PROJECT_URL = 'https://directus.frontend.mu';
 
 let isAuth = ref(false);
 let user = ref<User | null>(null);
 let responseFromServer = ref<any>(null);
+
+const getCookieValue = (name) => (
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+)
 
 export default function useAuth() {
 
@@ -27,7 +31,11 @@ export default function useAuth() {
     })
 
     async function getCurrentUser() {
-        const result = await client.request(readMe({
+        const token = getCookieValue('access_token')
+
+        const authClient = createDirectus(DIRECTUS_PROJECT_URL).with(staticToken(token)).with(rest());
+
+        const result = await authClient.request(readMe({
             fields: ['id', 'first_name', 'last_name', 'email']
         }));
         responseFromServer.value = result;
