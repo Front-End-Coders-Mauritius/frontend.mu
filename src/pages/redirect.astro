@@ -26,7 +26,7 @@ import Layout from "../layouts/LayoutCustom.astro";
             );
 
             const data = await res.json();
-
+            console.log(data);
             document.cookie = `access_token=${data.access_token}`;
           }
 
