@@ -9,7 +9,7 @@ const props = Astro.params;
 export async function getStaticPaths() {
   const speakers = speakersResponse;
 
-  return speakers.data.map((speaker) => {
+  return speakers.map((speaker) => {
     return {
       params: {
         id: speaker.id.toString(),
@@ -19,14 +19,14 @@ export async function getStaticPaths() {
 }
 
 const getSpeaker = (id: string | number) => {
-  const speaker = speakersResponse.data.find((ev) => ev.id == id);
+  const speaker = speakersResponse.find((ev) => ev.id == id);
 
   if (speaker === null) {
     console.error("cannot find speaker id: ", id);
   }
 
   // Get sessions of this speaker from the events
-  const allSessions = eventsResponse.data.map((event) => event.sessions).flat();
+  const allSessions = eventsResponse.map((event) => event.sessions).flat();
   const speakerSession = allSessions.filter((session) => {
     let session_speaker_id = session.Session_id.speakers.id;
     return id === session_speaker_id;
@@ -41,10 +41,16 @@ const getSpeaker = (id: string | number) => {
 const speaker = getSpeaker(props.id);
 ---
 
-<LayoutSpeaker
-  title={speaker.person.name}
-  username={speaker.person.github_account}
-  description="Speaker Profile"
->
-  <SpeakerSingle routeId={props.id} speaker={speaker} />
-</LayoutSpeaker>
+{
+  speaker ? (
+    <LayoutSpeaker
+      title={speaker.person?.name}
+      username={speaker.person?.github_account}
+      description="Speaker Profile"
+    >
+      <SpeakerSingle routeId={props.id} speaker={speaker} />
+    </LayoutSpeaker>
+  ) : (
+    <div>Speaker not found</div>
+  )
+}

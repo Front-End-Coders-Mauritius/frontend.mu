@@ -8,7 +8,7 @@ export async function GET({ params, request }) {
   return new Response(
     JSON.stringify({
       people,
-      speakers: speakersResponse.data.map(({ name, github_account }) => ({
+      speakers: speakersResponse.map(({ name, github_account }) => ({
         name,
         github_account,
       })),

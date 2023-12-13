@@ -7,7 +7,7 @@ import ContentBlock from "@layouts/partials/ContentBlock.astro";
 
 // group response by year and sort by reverse date
 
-const grouped = eventsResponse.data.reduce((acc, event) => {
+const grouped = eventsResponse.reduce((acc, event) => {
   const year = new Date(event.Date).getFullYear();
   if (!acc[year]) {
     acc[year] = [];
