@@ -14,7 +14,9 @@ const getCookieValue = (name) => (
 
 export default function useAuth() {
 
-    const client = createDirectus(DIRECTUS_PROJECT_URL).with(rest());
+    let client = createDirectus(DIRECTUS_PROJECT_URL).with(rest());
+    // const token = getCookieValue('access_token')
+    // const client = createDirectus(DIRECTUS_PROJECT_URL).with(staticToken(token)).with(rest());
 
     function login() {
         // login logic
@@ -24,6 +26,8 @@ export default function useAuth() {
     function logout() {
         // logout logic
         isAuth.value = false;
+        // logout using the authentication composable
+        // const result = await client.logout();
     }
 
     const isLoggedIn = computed(() => {
@@ -33,11 +37,12 @@ export default function useAuth() {
     async function getCurrentUser() {
         const token = getCookieValue('access_token')
 
-        const authClient = createDirectus(DIRECTUS_PROJECT_URL).with(staticToken(token)).with(rest());
+        client = client.with(staticToken(token));
 
-        const result = await authClient.request(readMe({
+        const result = await client.request(readMe({
             fields: ['id', 'first_name', 'last_name', 'email']
         }));
+
         responseFromServer.value = result;
     }
 
