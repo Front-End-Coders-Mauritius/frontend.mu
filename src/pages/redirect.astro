@@ -1,8 +1,8 @@
 ---
-import LayoutHome from "../layouts/LayoutHome.astro";
+import Layout from "../layouts/LayoutCustom.astro";
 ---
 
-<LayoutHome>
+<Layout>
   <div class="mx-auto w-full grid items-center text-center">
     <div class="flex flex-col justify-around">
       <div></div>
@@ -17,10 +17,13 @@ import LayoutHome from "../layouts/LayoutHome.astro";
 
         <script is:inline>
           async function refreshCookie() {
-            const res = await fetch("http://localhost:8055/auth/refresh", {
-              method: "POST",
-              credentials: "include", // this is required in order to send the refresh token cookie
-            });
+            const res = await fetch(
+              "https://directus.frontend.mu/auth/refresh",
+              {
+                method: "POST",
+                credentials: "include", // this is required in order to send the refresh token cookie
+              },
+            );
 
             console.log(res);
           }
@@ -30,4 +33,4 @@ import LayoutHome from "../layouts/LayoutHome.astro";
       </h2>
     </div>
   </div>
-</LayoutHome>
+</Layout>

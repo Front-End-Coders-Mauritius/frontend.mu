@@ -10,7 +10,7 @@
             <p>Not logged in</p>
         </div>
 
-        <a href="http://localhost:8055/auth/login/google?redirect=http://localhost:3000/redirect">Login</a>
+        <a href="https://directus.frontend.mu/auth/login/google?redirect=https://dev.frontend.mu/redirect">Login</a>
 
         <div class="flex gap-2">
             <button class="p-2 bg-slate-500" @click.prevent="login()">Login</button>
