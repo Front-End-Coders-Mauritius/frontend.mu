@@ -15,11 +15,16 @@
         <div class="flex gap-2">
             <button class="p-2 bg-slate-500" @click.prevent="login()">Login</button>
             <button class="p-2 bg-slate-500" @click.prevent="logout()">Logout</button>
+            <button class="p-2 bg-slate-500" @click.prevent="getCurrentUser()">getCurrentUser</button>
+        </div>
+
+        <div>
+            <pre>{{ responseFromServer }}</pre>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import useAuth from '../../auth-utils/useAuth';
-const { user, login, logout, isLoggedIn } = useAuth();
+const { user, login, logout, isLoggedIn, getCurrentUser, responseFromServer } = useAuth();
 </script>

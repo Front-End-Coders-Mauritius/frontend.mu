@@ -42,6 +42,7 @@ export default function useAuth() {
         login,
         logout,
         isLoggedIn,
+        getCurrentUser,
         user,
         responseFromServer,
         getAuthProviders,
