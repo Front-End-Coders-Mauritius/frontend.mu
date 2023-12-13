@@ -1,16 +1,21 @@
-// any scripts occurring before astro build or dev goes here
-const { loadSpeakers, loadEvents, getPhotos } = require("./directus-dump");
-const fs = require("fs");
+// Import functions from directus-dump module
+import { loadSpeakers, loadEvents, getPhotos } from "./directus-dump.js";
 
-const preBuild = async () => {
-  // keep sequential so as not to overload the server
+// Import fs module
+import fs from "fs";
+
+// Define async function for pre-build steps
+async function preBuild() {
+  // Load data sequentially to avoid overloading server
   const speakers = await loadSpeakers();
   const meetups = await loadEvents();
   const photos = await getPhotos();
 
-  fs.writeFileSync("src/data/speakers-raw.json" , JSON.stringify(speakers));
-  fs.writeFileSync("src/data/meetups-raw.json" , JSON.stringify(meetups));
-  fs.writeFileSync("src/data/photos-raw.json" , JSON.stringify(photos));
+  // Write data to JSON files in data directory
+  fs.writeFileSync("src/data/speakers-raw.json", JSON.stringify(speakers));
+  fs.writeFileSync("src/data/meetups-raw.json", JSON.stringify(meetups));
+  fs.writeFileSync("src/data/photos-raw.json", JSON.stringify(photos));
 }
 
+// Run the pre-build function
 preBuild();
