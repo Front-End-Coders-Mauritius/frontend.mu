@@ -25,7 +25,7 @@ import Layout from "../layouts/LayoutCustom.astro";
               },
             );
 
-            console.log(res);
+            document.cookie = `access_token=${res.data.access_token}`;
           }
 
           refreshCookie();
