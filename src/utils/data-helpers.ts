@@ -20,7 +20,7 @@ const getSessionsDetails = (sessions) => {
 };
 
 export const getCleanedUpMeetupsData = (SITE_URL: string) =>
-  eventsResponse.data.reduce((acc, event) => {
+  eventsResponse.reduce((acc, event) => {
     const year = new Date(event.Date).getFullYear();
 
     if (!acc[year]) {

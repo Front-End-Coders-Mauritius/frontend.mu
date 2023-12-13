@@ -6,9 +6,7 @@ import { vTransitionName } from "@utils/helpers";
 import BaseHeading from "./base/BaseHeading.astro";
 
 // select 5 random speakers
-const featuredSpeakers = speakersResponse.data.filter(
-  (speaker) => speaker.featured
-);
+const featuredSpeakers = speakersResponse.filter((speaker) => speaker.featured);
 const isCenter = (index, length) => {
   return index === Math.floor(length / 2);
 };
@@ -76,18 +74,18 @@ const isCenter = (index, length) => {
 </div>
 
 <script is:inline>
-document.querySelectorAll(".single-photo").forEach(function (element) {
-  element.addEventListener("click", function () {
-    if (!this.classList.contains("active")) {
-      // remove all active classes
-      var actives = document.querySelectorAll(".active");
-      [].forEach.call(actives, function (elem) {
-        elem.classList.remove("active");
-      });
-    }
-    this.classList.toggle("active");
+  document.querySelectorAll(".single-photo").forEach(function (element) {
+    element.addEventListener("click", function () {
+      if (!this.classList.contains("active")) {
+        // remove all active classes
+        var actives = document.querySelectorAll(".active");
+        [].forEach.call(actives, function (elem) {
+          elem.classList.remove("active");
+        });
+      }
+      this.classList.toggle("active");
+    });
   });
-});
 </script>
 
 <style>

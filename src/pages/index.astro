@@ -16,8 +16,8 @@ import contributors from "@data/contributors.json";
   <HomeFeaturedSpeakers />
 
   <StatsCounter
-    numOfSpeakers={speakers.data.length || 0}
-    numOfMeetups={eventsResponse.data.length || 0}
+    numOfSpeakers={speakers.length || 0}
+    numOfMeetups={eventsResponse.length || 0}
     numOfContributors={contributors.length || 0}
   />
 

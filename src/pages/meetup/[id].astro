@@ -7,7 +7,7 @@ import EventJSONLD from "@components/EventJSONLD.astro";
 const props = Astro.params;
 
 export async function getStaticPaths() {
-  return eventsResponse.data.map((event) => {
+  return eventsResponse.map((event) => {
     return {
       params: {
         id: event.id.toString(),
@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   });
 }
 const getEvent = (id: string | number) => {
-  let event = eventsResponse.data.find((ev) => ev.id == id);
+  let event = eventsResponse.find((ev) => ev.id == id);
 
   if (event === null) {
     console.error("cannot find event id: ", id);

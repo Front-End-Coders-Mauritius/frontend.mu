@@ -1,6 +1,6 @@
 function Memoize(f) {
     let cache = {};
-    return async function() {
+    return async function () {
         let hash;
 
         switch (arguments.length) {
@@ -20,7 +20,7 @@ function Memoize(f) {
 
         try {
             cache[hash] = await f(...arguments);
-        } catch(e) {
+        } catch (e) {
             console.warn(e);
         }
 
@@ -28,6 +28,4 @@ function Memoize(f) {
     }
 }
 
-module.exports = {
-  Memoize
-}
+export default Memoize;

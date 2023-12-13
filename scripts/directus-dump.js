@@ -1,14 +1,19 @@
-const { getDirectusClient } = require("./directus-client");
-const { Memoize } = require("./memoizer")
+
+import getDirectusClient from "./directus-client.js";
+import { readItems } from '@directus/sdk';
+import Memoize from "./memoizer.js"
 
 // Events
 async function loadEventsUncached() {
 
-  const directus = await getDirectusClient();
+  const client = await getDirectusClient();
 
-  const events = await directus.items("Events").readByQuery({
-    fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sponsors.Sponsor_id.*.*"],
-  });
+  const events = await client.request(
+    readItems("Events",
+      {
+        fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sponsors.Sponsor_id.*.*"],
+      }
+    ));
 
   return events;
 }
@@ -17,10 +22,12 @@ const loadEvents = Memoize(loadEventsUncached);
 
 // Speakers
 async function loadSpeakersUncached() {
-  const directus = await getDirectusClient();
-  const speaker = await directus.items("Person").readByQuery({
-    fields: ["*.*.*"],
-  });
+  const client = await getDirectusClient();
+  const speaker = await client.request(
+    readItems("Person", {
+      fields: ["*.*.*"],
+    })
+  );
 
   return speaker;
 }
@@ -38,8 +45,4 @@ async function loadPhotosUncached() {
 
 const getPhotos = Memoize(loadPhotosUncached);
 
-module.exports = {
-  loadEvents,
-  loadSpeakers,
-  getPhotos
-}
+export { loadEvents, loadSpeakers, getPhotos };

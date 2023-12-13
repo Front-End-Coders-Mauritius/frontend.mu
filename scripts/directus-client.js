@@ -1,10 +1,9 @@
-const { Directus } = require("@directus/sdk");
+import { createDirectus, rest } from '@directus/sdk';
 
 const getDirectusClient = async () => {
-  const directus = new Directus('https://directus.frontend.mu');
-  return directus;
+  // const directus = new Directus();
+  const client = createDirectus('https://directus.frontend.mu').with(rest());
+  return client;
 };
 
-module.exports = {
-  getDirectusClient
-}
+export default getDirectusClient;
