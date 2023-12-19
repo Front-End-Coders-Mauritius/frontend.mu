@@ -3,28 +3,31 @@
         <h1>Hodor</h1>
         <p>Hold the door!</p>
 
-        <pre v-if="isLoggedIn">
-            {{ user }}
-        </pre>
-        <div v-else>
-            <p>Not logged in</p>
-        </div>
-
-        <a href="https://directus.frontend.mu/auth/login/google?redirect=https://dev.frontend.mu/redirect">Login</a>
-
         <div class="flex gap-2">
-            <button class="p-2 bg-slate-500" @click.prevent="login()">Login</button>
-            <button class="p-2 bg-slate-500" @click.prevent="logout()">Logout</button>
-            <button class="p-2 bg-slate-500" @click.prevent="getCurrentUser()">getCurrentUser</button>
+            <button v-if="isLoggedIn" class="p-2 bg-slate-500" @click.prevent="logout()">Logout</button>
         </div>
 
         <div>
             <pre>{{ responseFromServer }}</pre>
         </div>
+
+        <LoginForm />
     </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import useAuth from '../../auth-utils/useAuth';
-const { user, login, logout, isLoggedIn, getCurrentUser, responseFromServer } = useAuth();
+import { DIRECTUS_URL } from '@utils/helpers';
+import LoginForm from './LoginForm.vue';
+const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn } = useAuth();
+
+function inlineLogin() {
+    const currentPage = new URL(window.location.href);
+    window.location.href = `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
+}
+
+onMounted(() => {
+    checkIfLoggedIn();
+})
 </script>

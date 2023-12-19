@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/LayoutCustom.astro";
+import RefreshToken from "@components/auth/RefreshToken.vue";
 ---
 
 <Layout>
@@ -15,23 +16,7 @@ import Layout from "../layouts/LayoutCustom.astro";
           welcome back
         </span>
 
-        <script is:inline>
-          async function refreshCookie() {
-            const res = await fetch(
-              "https://directus.frontend.mu/auth/refresh",
-              {
-                method: "POST",
-                credentials: "include", // this is required in order to send the refresh token cookie
-              },
-            );
-
-            const data = await res.json();
-            console.log(data);
-            document.cookie = `access_token=${data.data.access_token}`;
-          }
-
-          refreshCookie();
-        </script>
+        <RefreshToken client:only />
       </h2>
     </div>
   </div>
