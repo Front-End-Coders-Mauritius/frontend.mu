@@ -82,7 +82,7 @@ const links: TMenu = {
 ---
 
 <div
-  class="menu-wrapper w-full flex justify-between sticky top-0 z-30 h-32 items-center"
+  class="menu-wrapper w-full flex justify-between contain sticky top-0 z-30 h-32 items-center"
 >
   <div class="megamenu theme-light w-full">
     <div class="flex justify-between items-center">
@@ -239,13 +239,12 @@ const links: TMenu = {
 <style lang="postcss">
   .menu-wrapper {
     transition: all 0.2s ease-out;
-    @apply max-w-6xl  mx-auto px-4;
   }
   .megamenu{
     transition: all 0.2s ease-out;
   }
   .intersect {
-    @apply h-16 w-full  max-w-none transition-all duration-200 ease-in-out;
+    @apply h-16;
   }
 
   .intersect .megamenu {
