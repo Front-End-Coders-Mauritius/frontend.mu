@@ -13,7 +13,7 @@ onMounted(() => {
 
 <template>
     <div>
-        Refresh Token {{ access_token }}
+        Refresh Token
     </div>
 </template>
 

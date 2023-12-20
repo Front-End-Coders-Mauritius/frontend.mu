@@ -75,11 +75,24 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     async function loginWithSSO() {
-        const refresh_token = getCookieValue("directus_refresh_token");
+        const res = await fetch(
+            "https://directus.frontend.mu/auth/refresh",
+            {
+                method: "POST",
+                credentials: "include", // this is required in order to send the refresh token cookie
+            },
+        );
 
-        const res = await client.request(refresh('json', refresh_token));
+        const data = await res.json();
+        console.log(data);
+        // document.cookie = `access_token=${data.data.access_token}`;
+        //   }
 
-        setCookie(res);
+        // const refresh_token = getCookieValue("directus_refresh_token");
+
+        // const res = await client.request(refresh('json', refresh_token));
+
+        // setCookie(res);
     }
 
     const isLoggedIn = computed(() => {
