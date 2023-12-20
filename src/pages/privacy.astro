@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/LayoutHome.astro";
+import BaseHeading from "../components/base/BaseHeading.astro";
+import ContentBlock from "@layouts/partials/ContentBlock.astro";
+
+const title = "Privacy Policy";
+const description = "Privacy Policy";
+---
+
+<Layout title={title} description={description}>
+  <ContentBlock>
+    <BaseHeading>Privacy Policy</BaseHeading>
+    <div
+      class="prose dark:prose-invert text-verse-600 dark:text-verse-300 py-4"
+    >
+      <p>
+        Welcome to frontend.mu, a community for developers in Mauritius who
+        connect through regular physical meetups. We value your privacy and are
+        committed to protecting your personal information. This Privacy Policy
+        explains what information we collect, how we use it, and who we share it
+        with.
+      </p>
+
+      <h2>Information We Collect</h2>
+
+      <ul>
+        <li>
+          <strong>Personal Information:</strong> During RSVP and login, we
+          collect your email address, Google ID (to prevent spam), meal
+          preference, and transport preference. If you choose to provide it, we
+          also collect your phone number.
+        </li>
+        <li>
+          <strong>Website Usage Data:</strong> We may collect anonymous data
+          about the website usage, such as pages visited and time spent on each
+          page via Google Analyrics. This data helps us improve the website
+          experience for everyone.
+        </li>
+      </ul>
+
+      <h2>How We Use Your Information</h2>
+
+      <ul>
+        <li>
+          <strong>Meetup Organization:</strong> We use your email address and
+          phone number to send you RSVP confirmation and updates about the
+          meetup. We use your preferences to ensure a smooth meetup experience,
+          such as arranging catering and transportation.
+        </li>
+      </ul>
+
+      <h2>Information We Share</h2>
+
+      <p>
+        We <strong>never share</strong> your personal information with sponsors,
+        recruiters, or anyone outside the frontend.mu organizing team.
+      </p>
+
+      <p>
+        We may share <strong>anonymous website usage data</strong> with
+        third-party analytics providers to help us understand how the website is
+        used. This does not include any personal information.
+      </p>
+
+      <h2>Your Choices</h2>
+
+      <ul>
+        <li>
+          You can control your email preferences for meetup updates at any time
+          by logging into your account or contacting us.
+        </li>
+        <li>You can delete your account at any time by contacting us.</li>
+      </ul>
+
+      <h2>Data Security</h2>
+
+      <p>
+        We take reasonable security measures to protect your personal
+        information from unauthorized access, disclosure, alteration, or
+        destruction. However, please be aware that no website is 100% secure.
+      </p>
+
+      <h2>Changes to this Policy</h2>
+
+      <p>
+        We may update this Privacy Policy from time to time. We will post any
+        changes on this page, so please review it periodically.
+      </p>
+
+      <h2>Contact Us</h2>
+
+      <p>
+        If you have any questions about this Privacy Policy, please contact us
+        at sandeep@ramgolam.com.
+      </p>
+
+      <h2>Effective Date</h2>
+
+      <p>This Privacy Policy is effective as of December 20, 2023.</p>
+    </div>
+  </ContentBlock>
+</Layout>
