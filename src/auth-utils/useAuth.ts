@@ -83,16 +83,15 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             },
         );
 
-        const data = await res.json();
-        console.log(data);
+        const data: AuthenticationData = await res.json();
+        setCookie(data);
+        // console.log(data);
         // document.cookie = `access_token=${data.data.access_token}`;
         //   }
 
         // const refresh_token = getCookieValue("directus_refresh_token");
 
         // const res = await client.request(refresh('json', refresh_token));
-
-        // setCookie(res);
     }
 
     const isLoggedIn = computed(() => {
