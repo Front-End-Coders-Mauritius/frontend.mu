@@ -1,24 +1,17 @@
 ---
-import LayoutHome from "../layouts/LayoutHome.astro";
+import LoginForm from "@components/auth/LoginForm.vue";
+import LayoutHome from "../layouts/LayoutCustom.astro";
 
 import LoginViaAuthProvider from "@components/LoginViaAuthProvider.vue";
+import LogoFec from "@components/LogoFec.astro";
 ---
 
 <LayoutHome>
-  <div class="mx-auto w-full grid items-center text-center">
-    <div class="flex flex-col justify-around">
-      <div></div>
-      <h2
-        class="uppercase text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl"
-      >
-        <span
-          class="block font-sans text-black dark:text-verse-300 xl:inline capitalize font-mono"
-        >
-          Login
-        </span>
-      </h2>
-
-      <LoginViaAuthProvider client:only />
+  <div class="mx-auto w-full grid items-center">
+    <div
+      class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8"
+    >
+      <LoginForm client:only />
     </div>
   </div>
 </LayoutHome>

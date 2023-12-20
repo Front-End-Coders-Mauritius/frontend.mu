@@ -11,6 +11,7 @@ const DIRECTUS_PROJECT_URL = DIRECTUS_URL()
 let isAuth = ref(false);
 let user = ref<User | null>(null);
 let responseFromServer = ref<any>(null);
+let isLoading = ref(false);
 
 export function getClient() {
     return createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
@@ -59,14 +60,19 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         // login using the authentication composable
         try {
 
+            isLoading.value = true;
             const result = await client.login(email, password);
+            isLoading.value = false;
             responseFromServer.value = result;
 
             if (result.access_token && result.expires_at) {
                 setCookie(result)
             }
 
-            isAuth.value = true;
+            getCurrentUser()
+
+            setAuth(true)
+
             return result
 
         } catch (error) {
@@ -85,23 +91,25 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
         const response: { data: AuthenticationData } = await res.json();
         setCookie(response.data);
-        // document.cookie = `access_token=${data.data.access_token}`;
-        //   }
-
-        // const refresh_token = getCookieValue("directus_refresh_token");
-
-        // const res = await client.request(refresh('json', refresh_token));
     }
 
     const isLoggedIn = computed(() => {
         return !!isAuth.value;
     })
 
+    function setAuth(value: boolean) {
+        if (value === false) {
+            isLoading.value = false;
+        }
+
+        isAuth.value = value;
+    }
+
     async function checkIfLoggedIn() {
         try {
             getCurrentUser()
         } catch (error) {
-            isAuth.value = false;
+            setAuth(false)
             handleError(error)
         }
     }
@@ -150,7 +158,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 fields: ACCOUNT_SETTINGS_FIELDS
             }));
 
-            isAuth.value = true;
+            setAuth(true)
             setCurrentUser(mapToValidUser(result));
 
         } catch (error) {
@@ -158,6 +166,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             throw new Error(error)
         }
 
+    }
+
+    function oAuthLogin() {
+        const currentPage = new URL(window.location.origin);
+        return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
     return {
@@ -171,5 +184,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         client,
         loginWithSSO,
         loginWithToken,
+        oAuthLogin,
+        isLoading
     }
 }
