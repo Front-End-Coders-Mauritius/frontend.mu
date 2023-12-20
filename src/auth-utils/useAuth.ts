@@ -83,9 +83,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             },
         );
 
-        const data: AuthenticationData = await res.json();
-        setCookie(data);
-        // console.log(data);
+        const response: { data: AuthenticationData } = await res.json();
+        setCookie(response.data);
         // document.cookie = `access_token=${data.data.access_token}`;
         //   }
 
