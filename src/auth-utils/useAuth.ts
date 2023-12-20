@@ -25,7 +25,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function logout() {
         // logout logic
-        let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
+        // let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
         // login using the authentication composable
         console.log('logging out')
         logoutCookie()
@@ -81,16 +81,25 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     async function loginWithSSO() {
-        const res = await fetch(
-            "https://directus.frontend.mu/auth/refresh",
-            {
-                method: "POST",
-                credentials: "include", // this is required in order to send the refresh token cookie
-            },
-        );
+        try {
+            const res = await fetch(
+                "https://directus.frontend.mu/auth/refresh",
+                {
+                    method: "POST",
+                    credentials: "include", // this is required in order to send the refresh token cookie
+                },
+            );
 
-        const response: { data: AuthenticationData } = await res.json();
-        setCookie(response.data);
+            const response: { data: AuthenticationData } = await res.json();
+
+            setCookie(response.data);
+            getCurrentUser()
+            setAuth(true)
+
+            return response.data;
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const isLoggedIn = computed(() => {
