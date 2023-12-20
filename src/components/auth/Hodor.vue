@@ -17,10 +17,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import useAuth from '../../auth-utils/useAuth';
+import useAuth, { getClient } from '../../auth-utils/useAuth';
 import { DIRECTUS_URL } from '@utils/helpers';
 import LoginForm from './LoginForm.vue';
-const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn } = useAuth();
+const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn } = useAuth(getClient());
 
 function inlineLogin() {
     const currentPage = new URL(window.location.href);

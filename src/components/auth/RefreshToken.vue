@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import useAuth from '../../auth-utils/useAuth';
+import useAuth, { getClient } from '../../auth-utils/useAuth';
 import { onMounted, ref } from 'vue';
 
-const { loginWithSSO } = useAuth();
+const { loginWithSSO } = useAuth(getClient());
 const access_token = ref<string | null>(null)
 
 onMounted(() => {

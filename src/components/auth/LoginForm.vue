@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import useAuth from '../../auth-utils/useAuth';
+import useAuth, { getClient } from '../../auth-utils/useAuth';
 import { DIRECTUS_URL } from '@utils/helpers';
-const { loginWithUsernameAndPassword, isLoggedIn } = useAuth();
 
-const email = ref('');
-const password = ref('');
+const { loginWithUsernameAndPassword, loginWithToken, isLoggedIn } = useAuth(getClient());
+
+const email = ref('rajnikant@super.com');
+const password = ref('^tpzj$4*]8(27gbU');
 
 function login() {
     loginWithUsernameAndPassword(email.value, password.value);

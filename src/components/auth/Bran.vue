@@ -17,6 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import useAuth from '../../auth-utils/useAuth';
-const { user, logout, isLoggedIn } = useAuth();
+import useAuth, { getClient } from '../../auth-utils/useAuth';
+const { user, logout, isLoggedIn } = useAuth(getClient());
 </script>

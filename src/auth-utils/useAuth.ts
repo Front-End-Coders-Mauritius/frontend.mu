@@ -3,7 +3,7 @@ import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers
 import { ref, computed } from "vue";
 import type { User } from "../utils/types";
 import { createDirectus, rest, readMe, staticToken, authentication, refresh } from '@directus/sdk';
-import type { AuthenticationData } from '@directus/sdk';
+import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient } from '@directus/sdk';
 import { is } from 'date-fns/locale';
 
 const DIRECTUS_PROJECT_URL = DIRECTUS_URL()
@@ -12,13 +12,13 @@ let isAuth = ref(false);
 let user = ref<User | null>(null);
 let responseFromServer = ref<any>(null);
 
+export function getClient() {
+    return createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
+}
 
 
+export default function useAuth(client: DirectusClient<any> & AuthenticationClient<any> & RestClient<any>) {
 
-
-export default function useAuth() {
-
-    let client = createDirectus(DIRECTUS_PROJECT_URL).with(rest());
     // const token = getCookieValue('access_token')
     // const client = createDirectus(DIRECTUS_PROJECT_URL).with(staticToken(token)).with(rest());
 
@@ -32,11 +32,11 @@ export default function useAuth() {
         isAuth.value = false;
         responseFromServer.value = null;
         // logout using the authentication composable
-        const result = await loginClient.logout();
+        // const result = await loginClient.logout();
     }
 
     function handleError(error) {
-        console.log(error)
+        // console.log(error)
         responseFromServer.value = error;
     }
 
@@ -47,7 +47,6 @@ export default function useAuth() {
 
     function setCurrentUser(data: User) {
         user.value = data;
-        responseFromServer.value = data;
     }
 
     function logoutCookie() {
@@ -56,11 +55,11 @@ export default function useAuth() {
     }
 
     async function loginWithUsernameAndPassword(email: string, password: string) {
-        let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
+        // let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication());
         // login using the authentication composable
         try {
 
-            const result = await loginClient.login(email, password);
+            const result = await client.login(email, password);
             responseFromServer.value = result;
 
             if (result.access_token && result.expires_at) {
@@ -96,19 +95,51 @@ export default function useAuth() {
         }
     }
 
+    async function loginWithToken(email, password) {
+        // login using the authentication composable
+        try {
+
+            const loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication());
+
+            const result = await loginClient.login(email, password, {
+                mode: 'cookie'
+            })
+
+            // let token = await loginClient.getToken()
+            // console.log(result)
+            setCookie(result)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async function getCurrentUser() {
+
+        const ACCOUNT_SETTINGS_FIELDS = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "avatar",
+            "meal",
+        ]
+
         try {
 
             const token = getCookieValue('access_token')
 
-            client = client.with(staticToken(token));
+            if (!token) {
+                throw new Error('User is not logged in')
+            }
+
+            client = client.with(staticToken(token))
 
             const result = await client.request(readMe({
-                fields: ['id', 'first_name', 'last_name', 'email']
+                fields: ACCOUNT_SETTINGS_FIELDS
             }));
 
             isAuth.value = true;
-
             setCurrentUser(mapToValidUser(result));
 
         } catch (error) {
@@ -128,5 +159,6 @@ export default function useAuth() {
         responseFromServer,
         client,
         loginWithSSO,
+        loginWithToken,
     }
 }
