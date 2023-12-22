@@ -1,10 +1,9 @@
-import { currentUser } from './../store/userStore';
-import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
 import { ref, computed } from "vue";
+import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
+import { createDirectus, rest, readMe, staticToken, authentication } from '@directus/sdk';
+
 import type { User } from "../utils/types";
-import { createDirectus, rest, readMe, staticToken, authentication, refresh } from '@directus/sdk';
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient } from '@directus/sdk';
-import { is } from 'date-fns/locale';
 
 const DIRECTUS_PROJECT_URL = DIRECTUS_URL()
 
@@ -20,29 +19,18 @@ export function getClient() {
 
 export default function useAuth(client: DirectusClient<any> & AuthenticationClient<any> & RestClient<any>) {
 
-    // const token = getCookieValue('access_token')
-    // const client = createDirectus(DIRECTUS_PROJECT_URL).with(staticToken(token)).with(rest());
-
     async function logout() {
-        // logout logic
-        // let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
-        // login using the authentication composable
-        console.log('logging out')
         logoutCookie()
         user.value = null;
         isAuth.value = false;
         responseFromServer.value = null;
-        // logout using the authentication composable
-        // const result = await loginClient.logout();
     }
 
     function handleError(error) {
-        // console.log(error)
         responseFromServer.value = error;
     }
 
     function setCookie(authData: AuthenticationData) {
-        // set cookie logic
         document.cookie = `access_token=${authData.access_token}; expires=${new Date(authData.expires_at ?? '').toUTCString()}; path=/`;
     }
 
@@ -56,8 +44,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     async function loginWithUsernameAndPassword(email: string, password: string) {
-        // let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication());
-        // login using the authentication composable
         try {
 
             isLoading.value = true;
