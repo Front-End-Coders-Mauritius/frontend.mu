@@ -109,25 +109,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
-    async function loginWithToken(email, password) {
-        // login using the authentication composable
-        try {
-
-            const loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication());
-
-            const result = await loginClient.login(email, password, {
-                mode: 'cookie'
-            })
-
-            // let token = await loginClient.getToken()
-            // console.log(result)
-            setCookie(result)
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     async function getCurrentUser() {
 
         const ACCOUNT_SETTINGS_FIELDS = [
@@ -178,7 +159,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         responseFromServer,
         client,
         loginWithSSO,
-        loginWithToken,
         oAuthLogin,
         isLoading
     }
