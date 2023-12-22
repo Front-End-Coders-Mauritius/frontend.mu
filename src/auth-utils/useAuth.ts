@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
-import { createDirectus, rest, readMe, staticToken, authentication } from '@directus/sdk';
+import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem } from '@directus/sdk';
 
 import type { User } from "../utils/types";
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient } from '@directus/sdk';
@@ -149,6 +149,30 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
+    async function rsvpToEvent(eventId: string) {
+        let userId = user.value?.id
+        console.log({ userId, eventId })
+
+        if (!userId) {
+            throw new Error('User is not logged in')
+        }
+
+        const result = await client.request(
+            createItem('Events', {
+                rsvp: [{
+                    "Events_id": eventId,
+                    "directus_users_id": {
+                        "id": userId
+                    }
+                }],
+
+            })
+        );
+
+        console.log(result)
+
+    }
+
     return {
         loginWithUsernameAndPassword,
         logout,
@@ -160,6 +184,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         client,
         loginWithSSO,
         oAuthLogin,
+        rsvpToEvent,
         isLoading
     }
 }

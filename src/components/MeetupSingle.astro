@@ -14,6 +14,7 @@ import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
 import FecAnchor from "./FecAnchor.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
+import RsvpToMeetup from "./auth/RsvpToMeetup.vue";
 
 const props = Astro.props;
 
@@ -274,6 +275,10 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="contain">
+        <RsvpToMeetup client:only meetupId={props.routeId} />
       </div>
 
       <div class="contain">
