@@ -51,3 +51,30 @@ export interface MeetupAttendees {
   full_name: string | null;
   avatar_url: string | null;
 }
+
+export type DirectusEvent = {
+  id: number
+  title: string
+  description: any
+  Location: string
+  Venue: string
+  Date: string
+  Time: string
+  Attendees: number
+  images: any
+  rsvplink: any
+  album: any
+  seats_available: number
+  accepting_rsvp: boolean
+  rsvp_closing_date: string
+  rsvp: Array<number>
+};
+
+export type DirectusAstroUser = {
+  id?: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  meal?: string
+  Events?: { Events_id: DirectusEvent | string }[]
+}

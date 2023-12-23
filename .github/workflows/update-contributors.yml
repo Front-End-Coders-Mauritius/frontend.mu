@@ -17,15 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: "16.x"
+          version: 6.0.2
+          
+      # - name: Install Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: "18"
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Update Contributors
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run update-contributors
+        run: pnpm run update-contributors

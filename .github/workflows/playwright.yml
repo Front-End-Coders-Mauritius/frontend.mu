@@ -1,27 +1,34 @@
-name: Playwright Tests
+name: Playwright CI
+
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20  # Replace with the latest Node.js version
+
     - name: Install dependencies
-      run: npm install -g pnpm && pnpm install
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps
+      run: |
+        npm install -g pnpm
+        pnpm install --no-frozen-lockfile
+
+    - name: Install Browsers
+      run: pnpm exec playwright install
+
     - name: Run Playwright tests
-      run: pnpm exec playwright test
-    - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      run: |
+        pnpm run test

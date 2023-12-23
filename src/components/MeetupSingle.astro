@@ -9,12 +9,10 @@ import { photoAlbumSource } from "src/config";
 import photosResponse from "@data/photos-raw.json";
 import { vTransitionName } from "@utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
-import RsvpComponent from "./user/rsvp-component.vue";
-import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
-import FecAnchor from "./FecAnchor.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
 import MeetupDock from "./MeetupDock.astro";
+import RsvpToMeetup from "./auth/RsvpToMeetup.vue";
 
 const props = Astro.props;
 
@@ -284,12 +282,16 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
       </div>
 
       <div class="contain">
+        <RsvpToMeetup client:only meetupId={props.routeId} />
+      </div>
+
+      <!-- <div class="contain">
         <RsvpAttendeeList
           client:only
           seatCapacity={props.getCurrentEvent.seats_available}
           meetupId={props.routeId}
         />
-      </div>
+      </div> -->
 
       <MeetupAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />
     </ContentBlock>

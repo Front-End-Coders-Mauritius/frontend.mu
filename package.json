@@ -1,6 +1,7 @@
 {
   "name": "frontend.mu",
   "version": "0.0.3",
+  "type": "module",
   "scripts": {
     "dev": "astro dev --port 3000",
     "start": "astro dev",
@@ -17,7 +18,7 @@
     "@astrojs/mdx": "^2.0.0",
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.0.3",
-    "@directus/sdk": "^10.3.5",
+    "@directus/sdk": "^13.0.2",
     "@heroicons/vue": "^2.0.18",
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/vue": "^0.10.0",

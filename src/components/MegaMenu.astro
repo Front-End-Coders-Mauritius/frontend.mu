@@ -174,59 +174,66 @@ const links: TMenu = {
         </ul>
       </nav>
 
-      <div class="flex items-center gap-2">
-        <slot name="dock-right" />
+      <div>
+        <div class="flex items-center gap-2">
+          <slot name="dock-right" />
+        </div>
       </div>
       <!-- <MainMenu />
     <ToggleTheme client:load /> -->
+      <div
+        class="absolute right-10 top-10 rounded-lg px-4 bg-white/20 shadow-[0px_0px_2px_var(--color-verse-500)]"
+      >
+        <slot name="dock-right-bottom" />
+      </div>
     </div>
   </div>
 </div>
 
 <script is:inline>
-function makeHeaderSticky() {
-  const header = document.querySelector(".menu-wrapper");
-  if (!header) return;
+  function makeHeaderSticky() {
+    const header = document.querySelector(".menu-wrapper");
+    if (!header) return;
 
-  // Function to be called when the intersection changes
-  function handleIntersection(entries) {
-    entries.forEach((entry) => {
-      if (!header) return;
-      if (entry.isIntersecting) {
-        header.classList.remove("intersect");
-        // console.log("intersecting");
-      } else {
-        header.classList.add("intersect");
-        // console.log("not intersecting");
-      }
-    });
+    // Function to be called when the intersection changes
+    function handleIntersection(entries) {
+      entries.forEach((entry) => {
+        if (!header) return;
+        if (entry.isIntersecting) {
+          header.classList.remove("intersect");
+          // console.log("intersecting");
+        } else {
+          header.classList.add("intersect");
+          // console.log("not intersecting");
+        }
+      });
+    }
+
+    // Options for the IntersectionObserver
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
+      threshold: 0, // Trigger the callback when even one pixel is visible
+    };
+
+    // Create the IntersectionObserver
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    // Target element that you want to observe
+    const target = document.querySelector("#sticky-observer");
+
+    if (!target) return;
+
+    // Start observing the target element
+    observer.observe(target);
   }
 
-  // Options for the IntersectionObserver
-  const options = {
-    root: null, // Use the viewport as the root
-    rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
-    threshold: 0, // Trigger the callback when even one pixel is visible
-  };
+  // Call the function to make the .header class sticky
+  // makeHeaderSticky();
 
-  // Create the IntersectionObserver
-  const observer = new IntersectionObserver(handleIntersection, options);
+  document.addEventListener("DOMContentLoaded", makeHeaderSticky);
 
-  // Target element that you want to observe
-  const target = document.querySelector("#sticky-observer");
-
-  if (!target) return;
-
-  // Start observing the target element
-  observer.observe(target);
-}
-
-// Call the function to make the .header class sticky
-// makeHeaderSticky();
-
-document.addEventListener("DOMContentLoaded", makeHeaderSticky);
-
-document.addEventListener("astro:after-swap", makeHeaderSticky);
+  document.addEventListener("astro:after-swap", makeHeaderSticky);
 </script>
 
 <style lang="postcss">
