@@ -175,8 +175,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             isLoading.value = true;
             const result = await client.request(updateMe(data));
+            await getCurrentUser();
             isLoading.value = false;
-
 
             console.log(result)
         } catch (error) {

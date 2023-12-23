@@ -1,5 +1,5 @@
 <template>
-  <div class="text-verse-500" :class="{ 'spin': !!loading }">
+  <div :class="[{ 'spin': !!loading }]">
     <svg width="100%" viewBox="0 0 1106 1031" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M975.531 515.446C975.531 748.711 786.358 937.812 552.996 937.812C319.635 937.812 130.461 748.711 130.461 515.446C130.461 282.182 319.635 93.0801 552.996 93.0801C786.358 93.0801 975.531 282.182 975.531 515.446Z"
@@ -13,8 +13,9 @@
 
 
 <script setup lang="ts">
-const { loading } = defineProps<{
+const { loading, color } = defineProps<{
   loading?: boolean;
+  color?: boolean;
 }>();
 </script>
 

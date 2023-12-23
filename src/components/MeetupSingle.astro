@@ -111,7 +111,9 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
         </div>
       </div>
 
-      <MeetupDock>hi</MeetupDock>
+      <MeetupDock>
+        <RsvpToMeetup client:only meetupId={props.routeId} />
+      </MeetupDock>
 
       <div>
         <div class="contain">
@@ -279,10 +281,6 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="contain">
-        <RsvpToMeetup client:only meetupId={props.routeId} />
       </div>
 
       <!-- <div class="contain">
