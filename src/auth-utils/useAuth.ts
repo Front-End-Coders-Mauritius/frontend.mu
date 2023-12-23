@@ -1,21 +1,22 @@
 import { ref, computed } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
-import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem } from '@directus/sdk';
+import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe } from '@directus/sdk';
 
 import type { User } from "../utils/types";
-import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient } from '@directus/sdk';
+import type { DirectusAstroUser } from './../utils/types';
+import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
 const DIRECTUS_PROJECT_URL = DIRECTUS_URL()
 
 let isAuth = ref(false);
 let user = ref<User | null>(null);
+let rawUser = ref<DirectusAstroUser | null>(null);
 let responseFromServer = ref<any>(null);
 let isLoading = ref(false);
 
 export function getClient() {
     return createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
 }
-
 
 export default function useAuth(client: DirectusClient<any> & AuthenticationClient<any> & RestClient<any>) {
 
@@ -116,8 +117,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "first_name",
             "last_name",
             "email",
-            "avatar",
             "meal",
+            "Events.Events_id.*",
         ]
 
         try {
@@ -128,13 +129,14 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 throw new Error('User is not logged in')
             }
 
-            client = client.with(staticToken(token))
+            client = await client.with(staticToken(token))
 
             const result = await client.request(readMe({
                 fields: ACCOUNT_SETTINGS_FIELDS
             }));
 
             setAuth(true)
+            rawUser.value = result;
             setCurrentUser(mapToValidUser(result));
 
         } catch (error) {
@@ -144,33 +146,42 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     }
 
+    const currentEventsRSVP = computed(() => {
+        return rawUser.value?.Events?.map((event) => {
+            if (typeof event.Events_id === 'string') {
+                return { "Events_id": event.Events_id }
+            }
+            return { "Events_id": event.Events_id.id.toString() }
+        }) || []
+    })
+
     function oAuthLogin() {
         const currentPage = new URL(window.location.origin);
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    async function rsvpToEvent(eventId: string) {
-        let userId = user.value?.id
-        console.log({ userId, eventId })
+    async function updateUserProfile(data: DirectusAstroUser) {
+        try {
+            //     updateItem('directus_users', data.id, data)
+            // );
 
-        if (!userId) {
-            throw new Error('User is not logged in')
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            isLoading.value = true;
+            const result = await client.request(updateMe(data));
+            isLoading.value = false;
+
+
+            console.log(result)
+        } catch (error) {
+            console.log(error)
         }
-
-        const result = await client.request(
-            createItem('Events', {
-                rsvp: [{
-                    "Events_id": eventId,
-                    "directus_users_id": {
-                        "id": userId
-                    }
-                }],
-
-            })
-        );
-
-        console.log(result)
-
     }
 
     return {
@@ -179,12 +190,14 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         isLoggedIn,
         getCurrentUser,
         checkIfLoggedIn,
+        rawUser,
         user,
         responseFromServer,
         client,
         loginWithSSO,
         oAuthLogin,
-        rsvpToEvent,
+        updateUserProfile,
+        currentEventsRSVP,
         isLoading
     }
 }
