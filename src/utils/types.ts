@@ -78,3 +78,12 @@ export type DirectusAstroUser = {
   meal?: string
   Events?: { Events_id: DirectusEvent | string }[]
 }
+
+export type ToastTypes = 'SUCCESS' | 'WARNING' | 'INFO' | 'ERROR'
+
+export type SiteToast = {
+  title?: string
+  message?: string
+  type: ToastTypes | undefined
+  visible: boolean
+}

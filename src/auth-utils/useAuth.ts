@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
 import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe } from '@directus/sdk';
 
-import type { User } from "../utils/types";
+import type { SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
@@ -14,8 +14,36 @@ let rawUser = ref<DirectusAstroUser | null>(null);
 let responseFromServer = ref<any>(null);
 let isLoading = ref(false);
 
+let toastMessage = ref<SiteToast>({
+    title: undefined,
+    message: undefined,
+    type: undefined,
+    visible: false
+})
+
 export function getClient() {
     return createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
+}
+
+export function useToast() {
+    function show(err: SiteToast) {
+        toastMessage.value = err
+    }
+
+    function hide() {
+        toastMessage.value.visible = false
+    }
+
+    const isVisible = computed(() => {
+        return toastMessage.value.visible
+    })
+
+    return {
+        toastMessage,
+        isVisible,
+        show,
+        hide
+    }
 }
 
 export default function useAuth(client: DirectusClient<any> & AuthenticationClient<any> & RestClient<any>) {
@@ -59,6 +87,13 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             getCurrentUser()
 
             setAuth(true)
+
+            useToast().show({
+                title: "Success!",
+                message: "User is logged in",
+                type: "SUCCESS",
+                visible: true
+            })
 
             return result
 
@@ -137,6 +172,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             setAuth(true)
             rawUser.value = result;
+
             setCurrentUser(mapToValidUser(result));
 
         } catch (error) {
@@ -162,18 +198,16 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function updateUserProfile(data: DirectusAstroUser) {
         try {
-            //     updateItem('directus_users', data.id, data)
-            // );
-
+            isLoading.value = true;
             const token = getCookieValue('access_token')
 
             if (!token) {
+                isLoading.value = false;
                 throw new Error('User is not logged in')
             }
 
             client = await client.with(staticToken(token))
 
-            isLoading.value = true;
             const result = await client.request(updateMe(data));
             await getCurrentUser();
             isLoading.value = false;
