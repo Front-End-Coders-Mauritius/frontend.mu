@@ -11,8 +11,13 @@ import { vTransitionName } from "@utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import BaseHeading from "./base/BaseHeading.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
-import MeetupDock from "./MeetupDock.astro";
 import RsvpToMeetup from "./auth/RsvpToMeetup.vue";
+import type { DirectusEvent } from "@utils/types";
+
+interface Props {
+  routeId: string;
+  getCurrentEvent: DirectusEvent;
+}
 
 const props = Astro.props;
 
@@ -36,7 +41,7 @@ function isUpcoming() {
 // Google Photos Album Section
 let maxAlbumLength = 0;
 
-function fetchAlbumDetails(albumName: string) {
+function fetchAlbumDetails(albumName: string | null) {
   if (!albumName) return [];
 
   if (photosResponse) {
@@ -111,9 +116,13 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
         </div>
       </div>
 
-      <MeetupDock>
-        <RsvpToMeetup client:only meetupId={props.routeId} />
-      </MeetupDock>
+      <RsvpToMeetup
+        client:only
+        meetupId={props.routeId}
+        meetupDetails={props.getCurrentEvent}
+      />
+      <!-- <MeetupDock> -->
+      <!-- </MeetupDock> -->
 
       <div>
         <div class="contain">
