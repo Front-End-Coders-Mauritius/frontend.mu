@@ -3,6 +3,7 @@ import LayoutSingleMeetup from "@layouts/LayoutSingleMeetup.astro";
 import MeetupSingle from "@components/MeetupSingle.astro";
 import eventsResponse from "@data/meetups-raw.json";
 import EventJSONLD from "@components/EventJSONLD.astro";
+import type { DirectusEvent } from "@utils/types";
 
 const props = Astro.params;
 
@@ -22,7 +23,7 @@ const getEvent = (id: string | number) => {
     console.error("cannot find event id: ", id);
   }
 
-  return event;
+  return event as DirectusEvent;
 };
 const meetup = getEvent(props.id) ?? {
   title: "Event not found",
