@@ -55,7 +55,7 @@ export interface MeetupAttendees {
 export type DirectusEvent = {
   id: number
   title: string
-  description: any
+  description: string
   Location: string
   Venue: string
   Date: string
@@ -63,12 +63,98 @@ export type DirectusEvent = {
   Attendees: number
   images: any
   rsvplink: any
-  album: any
-  seats_available: number
-  accepting_rsvp: boolean
-  rsvp_closing_date: string
-  rsvp: Array<number>
+  album: string
+  seats_available: any
+  accepting_rsvp: any
+  rsvp_closing_date: any
+  gallery: any[]
+  sessions: Session[]
+  sponsors: Sponsor[]
 };
+
+export interface Session {
+  id: number
+  Events_id: EventsId
+  Session_id: SessionId
+}
+
+export interface EventsId {
+  id: number
+  title: string
+  description: string
+  Location: string
+  Venue: string
+  Date: string
+  Time: string
+  Attendees: number
+  images: any
+  rsvplink: any
+  album: string
+  seats_available: any
+  accepting_rsvp: any
+  rsvp_closing_date: any
+  gallery: any[]
+  sessions: number[]
+  sponsors: number[]
+}
+
+export interface SessionId {
+  title: string
+  speakers: Speakers
+}
+
+export interface Speakers {
+  name: string
+  id: string
+  github_account: string
+}
+
+export interface Sponsor {
+  id: number
+  Events_id: number
+  Sponsor_id: SponsorId
+}
+
+export interface SponsorId {
+  id: string
+  status: string
+  sort: any
+  date_created: string
+  date_updated: string
+  Name: string
+  Website: string
+  Description: any
+  Sponsor_type: string[]
+  darkbg: boolean
+  Logo: Logo
+}
+
+export interface Logo {
+  id: string
+  storage: string
+  filename_disk: string
+  filename_download: string
+  title: string
+  type: string
+  folder: any
+  uploaded_by: string
+  uploaded_on: string
+  modified_by: any
+  modified_on: string
+  charset: any
+  filesize: number
+  width: number
+  height: number
+  duration: any
+  embed: any
+  description: any
+  location: any
+  tags: any
+  metadata: Metadata
+}
+
+export interface Metadata { }
+
 
 export type DirectusAstroUser = {
   id?: string
