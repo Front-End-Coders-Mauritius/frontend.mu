@@ -3,11 +3,14 @@ import LogoFec from '@components/logo-fec.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import { computed } from 'vue';
+import type { DirectusEvent } from '@utils/types';
+import { formatDate } from '../../utils/helpers';
 
 const { isLoading, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
 
 const props = defineProps<{
     meetupId: string
+    meetupDetails: DirectusEvent
 }>();
 
 let arrayOfRandomFoodItems = [
@@ -51,6 +54,25 @@ let arrayOfRandomFoodItems = [
 function getFoodItemFromList() {
     return arrayOfRandomFoodItems[Math.floor(Math.random() * arrayOfRandomFoodItems.length)];
 }
+
+
+const acceptingRsvp = computed(() => props.meetupDetails.accepting_rsvp)
+const rsvp_closing_date = computed(() => props.meetupDetails.rsvp_closing_date)
+
+const rsvpOpen = computed(() => {
+    if (!acceptingRsvp.value) {
+        return false;
+    }
+
+    if (!rsvp_closing_date.value) {
+        return true;
+    }
+
+    const rsvpClosingDate = new Date(rsvp_closing_date.value);
+    const now = new Date();
+
+    return rsvpClosingDate > now;
+});
 
 function updateProfile() {
     updateUserProfile({
@@ -104,29 +126,44 @@ const color = computed(() => {
 </script>
 
 <template>
-    <div
-        class="rounded-full flex items-center shadow-lg bg-white/90 text-zinc-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/40 dark:text-zinc-200 dark:ring-white/10 min-h-[50px] h-[8dvh] max-h-[100px] py-[1dvh]">
-        <div class="flex items-center justify-between px-4 gap-2 w-full">
-            <template v-if="isLoggedIn">
-                <LogoFec :loading="isLoading" :class="color" class="w-16" />
+    <div class="dock-block sticky top-[90dvh] z-10" v-if="rsvpOpen">
+        <div class="contain">
+            <div
+                class="relative rounded-full flex items-center shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/40 dark:text-zinc-200 dark:ring-white/10 h-20 py-2">
+                <div class="flex items-center justify-between px-4 gap-2 w-full">
+                    <div class="px-4">
+                        <div class="text-base font-semibold">
+                            {{ props.meetupDetails.title }}
+                        </div>
+                        <div class="text-xs">
+                            {{ formatDate(props.meetupDetails.Date) }} / <span class="font-medium text-verse-500">FREE TO
+                                ATTEND</span>
+                        </div>
+                    </div>
 
-                <div>
-                    {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'Not Attending' }}
+                    <template v-if="isLoggedIn">
+
+                        <div>
+                            {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'You have not RSVP\'d to this meetup' }}
+                        </div>
+
+                        <div class="flex items-center gap-2 px-2">
+                            <div>
+                                <BaseButton size="lg" @click="rsvpToCurrentMeetup(meetupId)"
+                                    :color="isAttendingCurrentEvent ? 'danger' : 'primary'">
+                                    {{ isAttendingCurrentEvent ? 'Unregister' : 'Attend' }}
+                                </BaseButton>
+                            </div>
+                            <!-- <LogoFec :loading="isLoading" :class="color" class="h-16 aspect-square" /> -->
+                        </div>
+                    </template>
+                    <template v-else>
+                        <BaseButton size="lg" color="warning" href="/login">
+                            Login to RSVP
+                        </BaseButton>
+                    </template>
                 </div>
-
-                <div class="flex gap-2 px-2">
-                    <BaseButton @click="rsvpToCurrentMeetup(meetupId)">
-                        {{ isAttendingCurrentEvent ? 'Unregister' : 'Book my seat' }}
-                    </BaseButton>
-                </div>
-            </template>
-            <template v-else>
-                Please login to RSVP
-
-                <BaseButton href="/login">
-                    Login
-                </BaseButton>
-            </template>
+            </div>
         </div>
     </div>
 </template>
