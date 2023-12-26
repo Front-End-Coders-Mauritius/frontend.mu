@@ -138,7 +138,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function checkIfLoggedIn() {
         try {
-            getCurrentUser()
+            await getCurrentUser()
+            return true
         } catch (error) {
             setAuth(false)
             handleError(error)
