@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, reactive } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 const {
     user,
@@ -13,8 +13,24 @@ const {
     oAuthLogin
 } = useAuth(getClient());
 
-onMounted(() => {
-    checkIfLoggedIn();
+const userDetails = reactive({
+    email: '',
+    full_name: '',
+    phone: '',
+    meal: ''
+})
+
+function setUserDetails() {
+    userDetails.email = user.value?.email || '';
+    userDetails.full_name = user.value?.full_name || '';
+    userDetails.phone = user.value?.phone || '';
+    userDetails.meal = user.value?.meal || '';
+}
+
+onMounted(async () => {
+    if (await checkIfLoggedIn()) {
+        setUserDetails();
+    }
 });
 
 </script>
@@ -28,11 +44,6 @@ onMounted(() => {
             </div>
             <div class="divide-y divide-white/5 dark:text-white" v-else>
                 <template v-if="isLoggedIn">
-                    <div class="prose dark:prose-invert">
-                        <pre>
-                            {{ rawUser }}
-                        </pre>
-                    </div>
                     <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
                         <div>
                             <h2 class="text-xl font-semibold leading-7">
@@ -53,41 +64,63 @@ onMounted(() => {
                                         class="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover" />
                                 </div> -->
 
-                                <!-- <div class="col-span-full">
+                                <div class="col-span-full">
                                     <label for="email" class="block text-lg font-medium leading-6">Email address</label>
                                     <div class="mt-2">
-                                        <input disabled id="email" name="email" v-model="user?.email" type="email"
+                                        <input disabled id="email" name="email" v-model="userDetails.email" type="email"
                                             autocomplete="email"
                                             class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
                                     </div>
-                                </div> -->
-                                <!-- 
+                                </div>
+
                                 <div class="col-span-full">
                                     <label for="fullname" class="block text-lg font-medium leading-6">Full name</label>
                                     <div class="mt-2">
                                         <div
                                             class="flex rounded-md bg-white/5 ring-1 ring-inset dark:ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                                            <input type="text" v-model="user?.full_name" name="fullname" id="fullname"
+                                            <input type="text" v-model="userDetails.full_name" name="fullname" id="fullname"
                                                 autocomplete="username"
                                                 class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6" />
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
 
-                                <!-- <div class="col-span-full">
+                                <div class="col-span-full">
                                     <label for="phone" class="block text-lg font-medium leading-6">Phone</label>
                                     <div class="mt-2">
                                         <div
                                             class="flex rounded-md bg-white/5 ring-1 ring-inset dark:ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                                            <input type="number" v-model="user?.phone" name="phone" id="phone"
+                                            <input type="number" v-model="userDetails.phone" name="phone" id="phone"
                                                 autocomplete="phone"
                                                 class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
                                                 placeholder="57654321" />
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                         </form>
+                    </div>
+
+                    <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
+                        <div>
+                            <h2 class="text-xl font-semibold leading-7">Meetups RSVP'd to</h2>
+                            <p class="mt-1 text-lg leading-6 text-verse-500 dark:text-verse-200">
+                                You have RSVP'd to these meetups.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex flex-col">
+                                <template v-for="event in rawUser?.Events" :key="event.id">
+                                    <template v-if="(typeof event.Events_id !== 'string')">
+                                        <div>
+                                            <a :href="`/meetup/${event.Events_id.id}`" class="text-lg font-medium">{{
+                                                event.Events_id.title }}</a>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
@@ -97,6 +130,17 @@ onMounted(() => {
                                 We will use these details to prefill your Meetup RSVP whenever
                                 you decide to attend an upcoming meetup.
                             </p>
+                        </div>
+
+                        <div>
+                            <div class="col-span-full">
+                                <label for="meal" class="block text-lg font-medium leading-6">Meal</label>
+                                <div class="mt-2">
+                                    <input disabled id="meal" name="meal" v-model="userDetails.meal" type="meal"
+                                        autocomplete="meal"
+                                        class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
+                                </div>
+                            </div>
                         </div>
 
                     </div>
