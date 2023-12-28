@@ -15,8 +15,8 @@ function login() {
     loginWithUsernameAndPassword(email.value, password.value);
 }
 
+const developmentEnvironment = process.env.NODE_ENV === "development";
 </script>
-
 
 <template>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -35,7 +35,7 @@ function login() {
                 </div>
             </div>
             <div v-else>
-                <form class="space-y-6" @submit.prevent="login()">
+                <form class="space-y-6" @submit.prevent="login()" v-if="developmentEnvironment">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div class="mt-2">
@@ -72,8 +72,8 @@ function login() {
                     </div>
                 </form>
 
-                <div>
-                    <div class="relative mt-10">
+                <div v-else>
+                    <div class="relative">
                         <div class="absolute inset-0 flex items-center" aria-hidden="true">
                             <div class="w-full border-t border-gray-200" />
                         </div>
