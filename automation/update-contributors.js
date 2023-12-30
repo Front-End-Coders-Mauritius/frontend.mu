@@ -15,19 +15,18 @@ async function updateContributors() {
     );
 
     const result = await response.json();
-
-    const contributors = result.map((contributor) => {
-
-      // filter out bots
-      if (contributor.login === "actions-user") {
-        return null;
-      }
-
-      return {
-        username: contributor.login,
-        contributions: contributor.contributions,
-      };
-    });
+    const contributors = result
+      .map((contributor) => {
+        return {
+          username: contributor.login,
+          contributions: contributor.contributions,
+        };
+      })
+      .filter((contributor) => {
+        // Exclude the following contributors from the list
+        const excludedContributors = ["actions-user"];
+        return !excludedContributors.includes(contributor.username);
+      });
 
     const updatedContributors = [...new Set(contributors)];
 
