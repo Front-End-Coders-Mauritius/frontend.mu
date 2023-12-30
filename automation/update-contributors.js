@@ -1,18 +1,28 @@
-const axios = require("axios");
-const fs = require("fs");
+import fs from "fs";
+import { execSync } from "child_process";
 
 const owner = "Front-End-Coders-Mauritius";
 const repo = "frontendmu-astro";
 const branch = "main"; // Replace with the default branch of your repository
 
+
 const contributorsFile = "./src/data/contributors.json";
 
 async function updateContributors() {
   try {
-    const response = await axios.get(
+    const response = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contributors`
     );
-    const contributors = response.data.map((contributor) => {
+
+    const result = await response.json();
+
+    const contributors = result.map((contributor) => {
+
+      // filter out bots
+      if (contributor.login === "actions-user") {
+        return null;
+      }
+
       return {
         username: contributor.login,
         contributions: contributor.contributions,
@@ -30,9 +40,6 @@ async function updateContributors() {
         JSON.stringify(updatedContributors, null, 2)
       );
       console.log("Contributors file updated.");
-
-      // Add the commit and push logic
-      const { execSync } = require("child_process");
 
       // Configure Git user and email for the commit
       execSync('git config --global user.name "GitHub Action"');
