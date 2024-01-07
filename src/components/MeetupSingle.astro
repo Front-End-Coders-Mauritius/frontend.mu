@@ -7,7 +7,7 @@ import MeetupGallery from "./MeetupGallery.astro";
 import SessionList from "./SessionList.astro";
 import { photoAlbumSource } from "src/config";
 import photosResponse from "@data/photos-raw.json";
-import { vTransitionName } from "@utils/helpers";
+import { vTransitionName, convertTo24HourFormat } from "@utils/helpers";
 import MeetupSonspor from "./MeetupSonspor.astro";
 import RsvpComponent from "./user/rsvp-component.vue";
 import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
@@ -55,8 +55,24 @@ function fetchAlbumDetails(albumName: string) {
   }
 }
 
+function splitTimeRange(timeRangeStr: string) {
+  return timeRangeStr.split("to").map((time) => time.trim());
+}
+
 let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 ---
+
+<script type="module">
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      observer.disconnect();
+      import("../../node_modules/add-to-calendar-button/dist/module/index.js");
+    }
+  });
+  const instances = document.querySelectorAll("add-to-calendar-button");
+  for (const instance of instances) observer.observe(instance);
+</script>
 
 <div>
   <div data-title={props.getCurrentEvent.title}>
@@ -67,18 +83,42 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
           <div>
             {
               isUpcoming() && (
-                <div class="flex w-full items-center justify-start pb-4">
-                  <p
-                    class:list={[
-                      isUpcoming()
-                        ? "tagStyle bg-green-100 text-green-800"
-                        : "tagStyle bg-yellow-100 text-yellow-800",
-                      ,
-                      "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
-                    ]}
-                  >
-                    happening soon
-                  </p>
+                <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
+                  <div class="flex w-full items-center justify-start">
+                    <p
+                      class:list={[
+                        isUpcoming()
+                          ? "tagStyle bg-green-100 text-green-800"
+                          : "tagStyle bg-yellow-100 text-yellow-800",
+                        ,
+                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
+                      ]}
+                    >
+                      happening soon
+                    </p>
+                  </div>
+                  <add-to-calendar-button
+                    name={`Frontend.mu – ${props.getCurrentEvent.title}`}
+                    options="'Apple','Google','iCal','Microsoft365','Outlook.com'"
+                    location={props.getCurrentEvent.Location}
+                    startDate={
+                      new Date(props.getCurrentEvent.Date)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                    endDate={
+                      new Date(props.getCurrentEvent.Date)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                    startTime={convertTo24HourFormat(
+                      splitTimeRange(props.getCurrentEvent.Time)[0],
+                    )}
+                    endTime={convertTo24HourFormat(
+                      splitTimeRange(props.getCurrentEvent.Time)[1],
+                    )}
+                    timeZone="Indian/Mauritius"
+                  />
                 </div>
               )
             }
