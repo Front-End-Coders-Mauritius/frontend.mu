@@ -89,9 +89,10 @@ function rsvpToCurrentMeetup(meetupId: string) {
         const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
         if (confirmNotAttending) {
             let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== meetupId);
-            updateUserProfile({
-                Events: updatedEvents
-            });
+            updateUserProfile(
+                {
+                    Events: updatedEvents
+                });
         }
         return;
     }
@@ -113,7 +114,8 @@ function rsvpToCurrentMeetup(meetupId: string) {
 
     updateUserProfile({
         Events: uniqueArrayOfObjects
-    });
+
+    }, props.meetupId);
 }
 
 const isAttendingCurrentEvent = computed(() => {

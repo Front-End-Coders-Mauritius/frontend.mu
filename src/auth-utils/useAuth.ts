@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
-import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe } from '@directus/sdk';
+import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
 
 import type { SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
@@ -197,7 +197,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    async function updateUserProfile(data: DirectusAstroUser) {
+    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '') {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -210,10 +210,53 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             client = await client.with(staticToken(token))
 
             const result = await client.request(updateMe(data));
+            updateRsvpMetadata(currentEventId, { meta: { Events: data.Events } })
             await getCurrentUser();
             isLoading.value = false;
 
             console.log(result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function updateRsvpMetadata(currentEventId: string, data: { meta: { [key: string]: any } }) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            console.log(currentEventId)
+
+            const query_object = {
+                filter: {
+                    Events_id: {
+                        _eq: currentEventId
+                    },
+                    directus_users_id: {
+                        _eq: user.value?.id
+                    }
+                }
+            }
+
+            const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
+
+            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKeyQuery[0].id, {
+                meta: {
+                    hello: "world"
+                }
+            }));
+
+            await getCurrentUser();
+
+            console.log(updateMetaResult);
+            isLoading.value = false;
         } catch (error) {
             console.log(error)
         }
