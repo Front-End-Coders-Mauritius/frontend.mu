@@ -14,6 +14,7 @@ import RsvpAttendeeList from "./user/rsvp-attendee-list.vue";
 import BaseHeading from "./base/BaseHeading.astro";
 import FecAnchor from "./FecAnchor.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
+import AddToCalendar from "./AddToCalendar.astro";
 
 const props = Astro.props;
 
@@ -55,24 +56,10 @@ function fetchAlbumDetails(albumName: string) {
   }
 }
 
-function splitTimeRange(timeRangeStr: string) {
-  return timeRangeStr.split("to").map((time) => time.trim());
-}
+
 
 let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 ---
-
-<script type="module">
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      observer.disconnect();
-      import("../../node_modules/add-to-calendar-button/dist/module/index.js");
-    }
-  });
-  const instances = document.querySelectorAll("add-to-calendar-button");
-  for (const instance of instances) observer.observe(instance);
-</script>
 
 <div>
   <div data-title={props.getCurrentEvent.title}>
@@ -97,28 +84,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
                       happening soon
                     </p>
                   </div>
-                  <add-to-calendar-button
-                    name={`Frontend.mu – ${props.getCurrentEvent.title}`}
-                    options="'Apple','Google','iCal','Microsoft365','Outlook.com'"
-                    location={props.getCurrentEvent.Location}
-                    startDate={
-                      new Date(props.getCurrentEvent.Date)
-                        .toISOString()
-                        .split("T")[0]
-                    }
-                    endDate={
-                      new Date(props.getCurrentEvent.Date)
-                        .toISOString()
-                        .split("T")[0]
-                    }
-                    startTime={convertTo24HourFormat(
-                      splitTimeRange(props.getCurrentEvent.Time)[0],
-                    )}
-                    endTime={convertTo24HourFormat(
-                      splitTimeRange(props.getCurrentEvent.Time)[1],
-                    )}
-                    timeZone="Indian/Mauritius"
-                  />
+                  <AddToCalendar event={props.getCurrentEvent}>
                 </div>
               )
             }
