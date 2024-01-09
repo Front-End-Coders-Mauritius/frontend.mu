@@ -1,0 +1,33 @@
+---
+import { convertTo24HourFormat } from "@utils/helpers";
+
+const { event } = Astro.props;
+
+function splitTimeRange(timeRangeStr: string) {
+  return timeRangeStr.split("to").map((time) => time.trim());
+}
+---
+
+<script type="module" hoist>
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      observer.disconnect();
+      import("../../node_modules/add-to-calendar-button/dist/module/index.js");
+    }
+  });
+  const instances = document.querySelectorAll("add-to-calendar-button");
+  for (const instance of instances) observer.observe(instance);
+</script>
+
+<add-to-calendar-button
+  name={`Frontend.mu – ${event.title}`}
+  options="'Apple','Google','iCal','Microsoft365','Outlook.com'"
+  location={event.Location}
+  startDate={new Date(event.Date).toISOString().split("T")[0]}
+  endDate={new Date(event.Date).toISOString().split("T")[0]}
+  startTime={convertTo24HourFormat(splitTimeRange(event.Time)[0])}
+  endTime={convertTo24HourFormat(splitTimeRange(event.Time)[1])}
+  timeZone="Indian/Mauritius"
+>
+</add-to-calendar-button>

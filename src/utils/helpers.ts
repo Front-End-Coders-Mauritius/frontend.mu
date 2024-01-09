@@ -55,3 +55,15 @@ export const DIRECTUS_URL = () => {
   //   ? 'https://directus.frontend.mu'
   //   : 'http://localhost:8055'
 }
+
+// Converts time from 12-hour AM/PM format to 24-hour format.
+export const convertTo24HourFormat = (timeStr: string) => {
+  const [time, period] = timeStr.match(/(\d+)(AM|PM)/i).slice(1);
+  let [hours] = time.split(':').map(Number);
+  if (period.toUpperCase() === 'PM' && hours < 12) {
+    hours += 12;
+  } else if (period.toUpperCase() === 'AM' && hours === 12) {
+    hours = 0;
+  }
+  return `${hours.toString().padStart(2, '0')}:00`;
+}
