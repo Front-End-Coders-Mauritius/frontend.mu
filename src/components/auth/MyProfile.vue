@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
+import BaseButton from '@components/base/BaseButton.vue';
 const {
     user,
     rawUser,
@@ -10,6 +11,7 @@ const {
     getCurrentUser,
     responseFromServer,
     checkIfLoggedIn,
+    updateUserProfile,
     oAuthLogin
 } = useAuth(getClient());
 
@@ -17,14 +19,21 @@ const userDetails = reactive({
     email: '',
     full_name: '',
     phone: '',
-    meal: ''
+    transport: '',
+    meal: '',
+    occupation: '',
+    github_username: ''
 })
 
 function setUserDetails() {
+    console.log(user)
     userDetails.email = user.value?.email || '';
     userDetails.full_name = user.value?.full_name || '';
     userDetails.phone = user.value?.phone || '';
     userDetails.meal = user.value?.meal || '';
+    userDetails.transport = user.value?.transport || '';
+    userDetails.occupation = user.value?.occupation || '';
+    userDetails.github_username = user.value?.github_username || '';
 }
 
 onMounted(async () => {
@@ -33,14 +42,38 @@ onMounted(async () => {
     }
 });
 
+
+function updateProfile() {
+    let extractEditableFields = {
+        phone: userDetails.phone,
+        transport: userDetails.transport,
+        meal: userDetails.meal,
+        occupation: userDetails.occupation,
+        github_username: userDetails.github_username
+    }
+
+    updateUserProfile(extractEditableFields);
+}
+
+// Avatar based on github username
+
+const avatar = computed(() => {
+    if (user.value?.github_username) {
+        return `https://avatars.githubusercontent.com/${user.value?.github_username}`;
+    }
+    return false;
+});
+
+
 </script>
 
 
 <template>
     <div class="contain py-32">
         <Transition>
+
             <div class="flex flex-wrap w-full items-center justify-center" v-if="isLoading">
-                <div class="dark:text-white py-64">Loading your {{ user?.avatar_url }}..</div>
+                <div class="dark:text-white py-64">Loading your profile..</div>
             </div>
             <div class="divide-y divide-white/5 dark:text-white" v-else>
                 <template v-if="isLoggedIn">
@@ -59,10 +92,10 @@ onMounted(async () => {
 
                         <form class="md:col-span-2 pb-16">
                             <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                <!-- <div class="col-span-full flex items-center gap-x-8">
-                                    <img :src="user?.avatar_url || ''" alt=""
+                                <div class="col-span-full flex items-center gap-x-8" v-if="avatar">
+                                    <img :src="avatar || ''" alt=""
                                         class="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover" />
-                                </div> -->
+                                </div>
 
                                 <div class="col-span-full">
                                     <label for="email" class="block text-lg font-medium leading-6">Email address</label>
@@ -85,6 +118,20 @@ onMounted(async () => {
                                     </div>
                                 </div>
 
+
+                                <div class="col-span-full">
+                                    <label for="github_username" class="block text-lg font-medium leading-6">GitHub
+                                        Username</label>
+                                    <div class="mt-2">
+                                        <div
+                                            class="flex rounded-md bg-white/5 ring-1 ring-inset dark:ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                                            <input type="text" v-model="userDetails.github_username" name="github_username"
+                                                id="github_username" autocomplete="username"
+                                                class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-span-full">
                                     <label for="phone" class="block text-lg font-medium leading-6">Phone</label>
                                     <div class="mt-2">
@@ -96,6 +143,12 @@ onMounted(async () => {
                                                 placeholder="57654321" />
                                         </div>
                                     </div>
+                                </div>
+
+                                <div>
+                                    <BaseButton @click="updateProfile">
+                                        {{ isLoading ? 'Loading...' : 'Update' }}
+                                    </BaseButton>
                                 </div>
                             </div>
                         </form>
@@ -132,16 +185,48 @@ onMounted(async () => {
                             </p>
                         </div>
 
-                        <div>
-                            <div class="col-span-full">
-                                <label for="meal" class="block text-lg font-medium leading-6">Meal</label>
-                                <div class="mt-2">
-                                    <input disabled id="meal" name="meal" v-model="userDetails.meal" type="meal"
-                                        autocomplete="meal"
-                                        class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
+                        <div class="flex flex-col gap-8">
+                            <div>
+                                <div class="col-span-full">
+                                    <label for="meal" class="block text-lg font-medium leading-6">Meal</label>
+                                    <div class="mt-2">
+                                        <input id="meal" name="meal" v-model="userDetails.meal" type="text"
+                                            autocomplete="meal"
+                                            class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
+                                    </div>
                                 </div>
                             </div>
+
+                            <div>
+                                <div class="col-span-full">
+                                    <label for="transport" class="block text-lg font-medium leading-6">Transport</label>
+                                    <div class="mt-2">
+                                        <input id="transport" name="transport" v-model="userDetails.transport" type="text"
+                                            autocomplete="transport"
+                                            class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="col-span-full">
+                                    <label for="occupation" class="block text-lg font-medium leading-6">Occupation</label>
+                                    <div class="mt-2">
+                                        <input id="occupation" name="occupation" v-model="userDetails.occupation"
+                                            type="text" autocomplete="occupation"
+                                            class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <BaseButton @click="updateProfile">
+                                    {{ isLoading ? 'Loading...' : 'Update' }}
+                                </BaseButton>
+                            </div>
                         </div>
+
 
                     </div>
 
