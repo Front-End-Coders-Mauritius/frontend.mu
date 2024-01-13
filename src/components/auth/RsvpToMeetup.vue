@@ -2,7 +2,8 @@
 import LogoFec from '@components/logo-fec.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
-import { computed } from 'vue';
+import RsvpForm from '@components/auth/RsvpForm.vue';
+import { computed, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
 
@@ -125,11 +126,24 @@ const isAttendingCurrentEvent = computed(() => {
 const color = computed(() => {
     return !!isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
 });
+
+const rsvpPaneOpen = ref(false);
+
 </script>
+
 
 <template>
     <div class="dock-block sticky top-[90dvh] z-10" v-if="rsvpOpen">
-        <div class="contain">
+        <div class="contain relative">
+            <!-- RSVP Form -->
+            <div class="absolute md:left-[50%] md:translate-x-[-50%] bottom-0">
+                <Transition mode="out-in" name="slidedown">
+                    <div class="mx-auto w-full md:w-[800px] mb-20 shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/40 dark:text-zinc-200 dark:ring-white/10 rounded-t-2xl"
+                        v-if="rsvpPaneOpen">
+                        <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" />
+                    </div>
+                </Transition>
+            </div>
             <div
                 class="relative rounded-full flex items-center shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/40 dark:text-zinc-200 dark:ring-white/10 h-20 py-2">
                 <div class="flex items-center justify-between px-4 gap-2 w-full">
@@ -145,15 +159,16 @@ const color = computed(() => {
 
                     <template v-if="isLoggedIn">
 
-                        <div>
+                        <!-- <div>
                             {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'You have not RSVP\'d to this meetup' }}
-                        </div>
+                        </div> -->
 
                         <div class="flex items-center gap-2 px-2">
                             <div>
-                                <BaseButton size="lg" @click="rsvpToCurrentMeetup(meetupId)"
-                                    :color="isAttendingCurrentEvent ? 'danger' : 'primary'">
-                                    {{ isAttendingCurrentEvent ? 'Unregister' : 'Attend' }}
+                                <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
+                                <BaseButton size="lg" @click="rsvpPaneOpen = !rsvpPaneOpen"
+                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                    {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'Attend' }}
                                 </BaseButton>
                             </div>
                             <!-- <LogoFec :loading="isLoading" :class="color" class="h-16 aspect-square" /> -->
@@ -165,7 +180,28 @@ const color = computed(() => {
                         </BaseButton>
                     </template>
                 </div>
+
             </div>
+
         </div>
     </div>
 </template>
+
+<style scoped>
+.slidedown-enter-active,
+.slidedown-leave-active {
+    transition: max-height 0.5s ease-in;
+}
+
+.slidedown-enter-to,
+.slidedown-leave-from {
+    overflow: hidden;
+    max-height: 1000px;
+}
+
+.slidedown-enter-from,
+.slidedown-leave-to {
+    overflow: hidden;
+    max-height: 0;
+}
+</style>
