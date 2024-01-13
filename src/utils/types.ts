@@ -28,10 +28,12 @@ export interface User {
   current_occupation: string | null;
   meal: string | null;
   transport: string | null;
+  occupation: string | null;
   phone: string | null;
   created_at: string;
   avatar_url: string | null;
   google?: GoogleInfo;
+  github_username?: string;
 }
 
 export type Transport = "car" | "bus" | "need a ride";
@@ -162,6 +164,10 @@ export type DirectusAstroUser = {
   last_name?: string
   email?: string
   meal?: string
+  transport?: string
+  occupation?: string
+  phone?: string
+  github_username?: string
   Events?: { Events_id: DirectusEvent | string }[]
 }
 

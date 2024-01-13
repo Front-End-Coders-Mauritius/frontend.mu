@@ -41,7 +41,9 @@ export const mapToValidUser = (user: any): User => {
     meal: user?.meal || "",
     transport: user.transport || "",
     phone: user.phone || "",
+    occupation: user.occupation || "",
     created_at: user?.created_at || "",
+    github_username: user?.github_username || "",
     avatar_url: user.avatar_url,
     google: user.google,
 
