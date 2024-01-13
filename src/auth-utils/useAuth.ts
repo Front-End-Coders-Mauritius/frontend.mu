@@ -153,7 +153,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "first_name",
             "last_name",
             "email",
+            "phone",
+            "transport",
             "meal",
+            "occupation",
+            "github_username",
             "Events.Events_id.*",
         ]
 
@@ -210,7 +214,9 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             client = await client.with(staticToken(token))
 
             const result = await client.request(updateMe(data));
-            updateRsvpMetadata(currentEventId, { meta: { Events: data.Events } })
+
+            // updateRsvpMetadata(currentEventId, { meta: { Events: data.Events } })
+
             await getCurrentUser();
             isLoading.value = false;
 
