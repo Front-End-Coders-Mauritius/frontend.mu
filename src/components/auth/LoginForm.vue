@@ -29,8 +29,9 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
         <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <div v-if="isLoggedIn">
                 <div class="text-center flex flex-col gap-8">
-                    You are logged in as {{ user?.full_name }}
-
+                    <span>
+                        You are logged in as <a class="underline" href="/user/me"> {{ user?.full_name }}</a>
+                    </span>
                     <button @click="logout">Logout</button>
                 </div>
             </div>
