@@ -201,7 +201,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: any = {}) {
+    // !TODO refactor to use object instead
+    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: any = {}, isCancelling: boolean = false) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -215,7 +216,9 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             const result = await client.request(updateMe(data));
 
-            updateRsvpMetadata(currentEventId, metadata)
+            if (!isCancelling) {
+                updateRsvpMetadata(currentEventId, metadata)
+            }
 
             await getCurrentUser();
             isLoading.value = false;
