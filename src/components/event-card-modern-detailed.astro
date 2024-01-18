@@ -79,8 +79,9 @@ let currentAlbum = fetchAlbumDetails();
   title={hasAlbum() ? "has album" : "no album"}
 >
   <div
-    class="flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-verse-400"
+    class="relative flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-verse-400"
   >
+    <a class="absolute inset-0 z-10" href={`meetup/${event.id}`}></a>
     <div class="relative flex flex-col p-4 gap-2">
       <!-- Date -->
       {
@@ -106,15 +107,14 @@ let currentAlbum = fetchAlbumDetails();
       <h3
         class="leading-2 text-2xl font-semibold flex-1 py-2 text-verse-500 dark:text-verse-400 group-hover[.in-card]:text-verse-500"
       >
-        <a
-          href={`meetup/${event.id}`}
+        <div
           class="w-[300px] md:w-96 focus:outline-none"
           style={vTransitionName("session-title", event.id)}
           title={`Meetup ` + event?.title}
         >
           <span class="absolute inset-0" aria-hidden="true"></span>
           {event?.title}
-        </a>
+        </div>
       </h3>
 
       <div class="flex gap-4 pr-4 border-gray-100">

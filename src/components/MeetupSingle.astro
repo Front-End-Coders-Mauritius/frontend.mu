@@ -117,6 +117,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
       </div>
 
       <RsvpToMeetup
+        transition:persist
         client:only
         meetupId={props.routeId}
         meetupDetails={props.getCurrentEvent}

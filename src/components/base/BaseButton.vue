@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 const props = defineProps<{
     size?: 'sm' | 'md' | 'lg'
-    color?: 'primary' | 'cta' | 'danger' | 'success' | 'warning'
+    color?: 'primary' | 'cta' | 'danger' | 'success' | 'warning' | 'neutral'
 }>()
 
 const sizeClasses = computed(() => {
@@ -30,6 +30,8 @@ const colorClasses = computed(() => {
             return 'bg-green-500 text-white hover:bg-green-600'
         case 'warning':
             return 'bg-yellow-500 text-white hover:bg-yellow-600'
+        case 'neutral':
+            return 'bg-transparent ring-gray-200/10 ring-2 text-white hover:bg-verse-300/20'
         default:
             return 'hover:bg-white/80 text-verse-700 dark:text-verse-100 hover:dark:text-verse-100/80 bg-white dark:bg-verse-700/50'
     }

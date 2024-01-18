@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import FormLabel from './FormLabel.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
-import { computed, shallowRef } from 'vue';
+import { computed, shallowRef, defineModel, type Ref } from 'vue';
 import BaseButton from '@components/base/BaseButton.vue';
 import FormRadio from '@components/auth/FormRadio.vue';
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
@@ -38,6 +38,7 @@ const props = defineProps<{
     meetupDetails: DirectusEvent
 }>();
 
+
 const { isLoading, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
 
 const full_name = computed(() => {
@@ -72,12 +73,13 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
                 {
                     Events: updatedEvents
                 });
+
         }
         return;
     }
 }
 
-function rsvpToCurrentMeetup(meetupId: string) {
+function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
     // check if item already in array
     let updatedEvents = Array.from(
         new Set([
@@ -134,14 +136,19 @@ const showMeAsAttendingOptions = [
 ];
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
 
+// get user photo
+const avatarUrl = computed(() => {
+    return `https://github.com/${rawUser.value?.github_username}.png`
+})
 
+defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
 </script>
 <template>
-    <div class="p-8">
-        <div class="flex flex-col gap-8">
-            <div class="flex justify-center font-bold text-lg">
-                <h2>RSVP</h2>
-            </div>
+    <div class="flex gap-8">
+        <div class="flex flex-col gap-8 flex-1">
+            <!-- <div class="flex justify-center font-bold text-lg">
+            <h2>RSVP</h2>
+        </div> -->
 
             <FormLabel label="Name" :value="full_name" :disabled="true" />
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
@@ -184,7 +191,7 @@ const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
             </FormLabel>
 
 
-
+            <!-- 
             <div class="flex gap-4 justify-end">
 
                 <BaseButton color="danger" v-if="isAttendingCurrentEvent" @click="cancelRsvpToCurrentMeetup(meetupId)">
@@ -194,7 +201,14 @@ const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
                 <BaseButton @click="rsvpToCurrentMeetup(meetupId)" :color="'primary'">
                     {{ isLoading ? 'Loading...' : 'Confirm' }}
                 </BaseButton>
+            </div> -->
+        </div>
+
+        <div class="grid place-items-center flex-1 w-full">
+            <div class="ring-2 ring-white rounded-full">
+                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-64 overflow-hidden">
             </div>
         </div>
+
     </div>
 </template>

@@ -3,9 +3,10 @@ import LogoFec from '@components/logo-fec.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import RsvpForm from '@components/auth/RsvpForm.vue';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
+import IconClose from "~icons/solar/close-circle-linear";
 
 const { isLoading, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
 
@@ -129,60 +130,92 @@ const color = computed(() => {
 
 const rsvpPaneOpen = ref(false);
 
+//rsvpForm
+const $rsvpForm = ref<InstanceType<typeof RsvpForm> | null>(null);
+
+function saveForm() {
+    $rsvpForm.value?.rsvpToCurrentMeetup()
+}
+
 </script>
 
 
 <template>
-    <div class="dock-block sticky top-[90dvh] z-10" v-if="rsvpOpen">
+    <div class="dock-block sticky top-[95vh] px-8 z-10 w-full" v-if="rsvpOpen">
+
         <div class="contain relative">
-            <!-- RSVP Form -->
-            <div class="absolute md:left-[50%] md:translate-x-[-50%] bottom-0">
-                <Transition mode="out-in" name="slidedown">
-                    <div class="mx-auto w-full md:w-[800px] mb-20 shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/40 dark:text-zinc-200 dark:ring-white/10 rounded-t-2xl"
-                        v-if="rsvpPaneOpen">
-                        <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" />
-                    </div>
-                </Transition>
-            </div>
-            <div
-                class="relative rounded-full flex items-center shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/40 dark:text-zinc-200 dark:ring-white/10 h-20 py-2">
-                <div class="flex items-center justify-between px-4 gap-2 w-full">
-                    <div class="px-4">
-                        <div class="text-base font-semibold">
-                            {{ props.meetupDetails.title }}
-                        </div>
-                        <div class="text-xs">
-                            {{ formatDate(props.meetupDetails.Date) }} / <span class="font-medium text-verse-500">FREE TO
-                                ATTEND</span>
-                        </div>
-                    </div>
+            <div class="absolute left-0 right-0 bottom-0 w-full">
+                <div
+                    class="relative rounded-2xl flex gap-8 flex-col shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur-2xl dark:bg-verse-800/40 dark:text-zinc-200 dark:ring-white/10 py-2">
+                    <div class="flex items-center justify-between px-4 py-2 gap-2 w-full">
 
-                    <template v-if="isLoggedIn">
 
-                        <!-- <div>
-                            {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'You have not RSVP\'d to this meetup' }}
-                        </div> -->
 
-                        <div class="flex items-center gap-2 px-2">
-                            <div>
-                                <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
-                                <BaseButton size="lg" @click="rsvpPaneOpen = !rsvpPaneOpen"
-                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'">
-                                    {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'Attend' }}
-                                </BaseButton>
+
+                        <div class="px-4">
+                            <div class="text-base font-semibold">
+                                {{ props.meetupDetails.title }}
                             </div>
-                            <!-- <LogoFec :loading="isLoading" :class="color" class="h-16 aspect-square" /> -->
+                            <div class="text-xs">
+                                {{ formatDate(props.meetupDetails.Date) }} / <span class="font-medium text-verse-500">FREE
+                                    TO
+                                    ATTEND</span>
+                            </div>
                         </div>
-                    </template>
-                    <template v-else>
-                        <BaseButton size="lg" color="warning" href="/login">
-                            Login to RSVP
-                        </BaseButton>
-                    </template>
+
+                        <template v-if="isLoggedIn">
+
+                            <!-- <div>
+                                {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'You have not RSVP\'d to this meetup' }}
+                            </div> -->
+
+                            <div class="flex items-center gap-2 px-2">
+
+                                <Transition name="fade" mode="out-in">
+                                    <IconClose
+                                        class="absolute bottom-8 right-8 text-4xl text-gray-400 cursor-pointer hover:text-white"
+                                        v-if="rsvpPaneOpen" @click="rsvpPaneOpen = false" />
+                                </Transition>
+
+
+                                <BaseButton color="danger" v-if="rsvpPaneOpen && isAttendingCurrentEvent"
+                                    @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)">
+                                    Cancel my RSVP
+                                </BaseButton>
+
+
+                                <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
+                                <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
+                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                    {{ isAttendingCurrentEvent ? rsvpPaneOpen ? 'Close' : 'You\'re Attending' : 'Attend'
+                                    }}
+                                </BaseButton>
+
+                                <!-- <BaseButton  :color="'neutral'">
+                                </BaseButton> -->
+
+                                <BaseButton v-if="rsvpPaneOpen && !isAttendingCurrentEvent" @click="saveForm()"
+                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                    Confirm
+                                </BaseButton>
+                                <!-- <LogoFec :loading="isLoading" :class="color" class="h-16 aspect-square" /> -->
+                            </div>
+                        </template>
+                        <template v-else>
+                            <BaseButton size="lg" color="warning" href="/login">
+                                Login to RSVP
+                            </BaseButton>
+                        </template>
+                    </div>
+
+                    <!-- RSVP Form -->
+                    <Transition mode="out-in" name="slidedown">
+                        <div class="p-8" v-if="rsvpPaneOpen">
+                            <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" ref="$rsvpForm" />
+                        </div>
+                    </Transition>
                 </div>
-
             </div>
-
         </div>
     </div>
 </template>
