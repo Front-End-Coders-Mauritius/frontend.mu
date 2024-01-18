@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import FormLabel from './FormLabel.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
-import { computed, shallowRef, defineModel, type Ref } from 'vue';
+import { computed, shallowRef, defineModel, type Ref, onMounted } from 'vue';
 import BaseButton from '@components/base/BaseButton.vue';
 import FormRadio from '@components/auth/FormRadio.vue';
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
@@ -69,10 +69,9 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
         const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
         if (confirmNotAttending) {
             let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== meetupId);
-            updateUserProfile(
-                {
-                    Events: updatedEvents
-                });
+            updateUserProfile({
+                Events: updatedEvents
+            }, meetupId, {}, true);
 
         }
         return;
@@ -97,16 +96,22 @@ function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
     });
 
     updateUserProfile({
-        Events: uniqueArrayOfObjects
-
-    }, props.meetupId);
+        Events: uniqueArrayOfObjects,
+        meal: foodSelection.value.value,
+        transport: transportSelection.value.value,
+        occupation: professionSelection.value.value
+    }, props.meetupId, {
+        meal: foodSelection.value.value,
+        transport: transportSelection.value.value,
+        occupation: professionSelection.value.value
+    });
 }
 
 // Food Preferences
 const foodOptions = [
+    { value: "none", name: "None", icon: IconNoFood },
     { value: "veg", name: "Veg", icon: IconVegan },
     { value: "non/veg", name: "Non/Veg", icon: IconChicken },
-    { value: "none", name: "None", icon: IconNoFood },
 ];
 const foodSelection = shallowRef(foodOptions[1]);
 
@@ -135,6 +140,26 @@ const showMeAsAttendingOptions = [
     { value: "false", name: "Hide", icon: IconNoFood },
 ];
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
+
+function findObjectByValue(value: string, obj) {
+    return obj.filter(item => item.value === value)[0]
+}
+
+
+// onLoad fill my food selection
+onMounted(() => {
+    let mealValue = rawUser.value?.meal || foodOptions[0].value;
+    foodSelection.value = findObjectByValue(mealValue, foodOptions)
+
+    let transportValue = rawUser.value?.transport || transportOptions[0].value;
+    transportSelection.value = findObjectByValue(transportValue, transportOptions)
+
+    let professionValue = rawUser.value?.occupation || professionOptions[0].value;
+    professionSelection.value = findObjectByValue(professionValue, professionOptions)
+
+    // let showMeAsAttendingValue = rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
+    // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
+})
 
 // get user photo
 const avatarUrl = computed(() => {
@@ -181,14 +206,14 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
                 </RadioGroup>
             </FormLabel>
 
-            <FormLabel label="My profile">
+            <!-- <FormLabel label="My profile">
                 <RadioGroup v-model="showMeAsAttendingSelection">
                     <RadioGroupLabel class="sr-only">Public Visiblity</RadioGroupLabel>
                     <div class="flex gap-4 flex-wrap">
                         <FormRadio :options="showMeAsAttendingOptions" />
                     </div>
                 </RadioGroup>
-            </FormLabel>
+            </FormLabel> -->
 
 
             <!-- 
