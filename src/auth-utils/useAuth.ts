@@ -201,7 +201,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '') {
+    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: any = {}) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -215,7 +215,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             const result = await client.request(updateMe(data));
 
-            // updateRsvpMetadata(currentEventId, { meta: { Events: data.Events } })
+            updateRsvpMetadata(currentEventId, metadata)
 
             await getCurrentUser();
             isLoading.value = false;
@@ -226,7 +226,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
-    async function updateRsvpMetadata(currentEventId: string, data: { meta: { [key: string]: any } }) {
+    async function updateRsvpMetadata(currentEventId: string, metadata: any) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -254,9 +254,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
 
             const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKeyQuery[0].id, {
-                meta: {
-                    hello: "world"
-                }
+                meta: metadata
             }));
 
             await getCurrentUser();
