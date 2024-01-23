@@ -6,7 +6,7 @@ import { computed, shallowRef, defineModel, type Ref, onMounted } from 'vue';
 import BaseButton from '@components/base/BaseButton.vue';
 import FormRadio from '@components/auth/FormRadio.vue';
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
-import type { DirectusEvent } from '@utils/types';
+import type { DirectusEvent, Meal, Transport, Occupation } from '@utils/types';
 
 import IconUserAvatar from "~icons/carbon/user-avatar";
 import CalendarDaysIcon from "~icons/carbon/calendar";
@@ -69,9 +69,18 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
         const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
         if (confirmNotAttending) {
             let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== meetupId);
-            updateUserProfile({
-                Events: updatedEvents
-            }, meetupId, {}, true);
+            updateUserProfile(
+                {
+                    Events: updatedEvents
+                }, meetupId,
+                {
+                    meal: foodSelection.value.value,
+                    transport: transportSelection.value.value,
+                    occupation: professionSelection.value.value,
+                    is_public: true // @todo: set the right value
+                },
+                true
+            );
 
         }
         return;
@@ -95,24 +104,29 @@ function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
         return { "Events_id": eventId };
     });
 
-    updateUserProfile({
-        Events: uniqueArrayOfObjects,
-        meal: foodSelection.value.value,
-        transport: transportSelection.value.value,
-        occupation: professionSelection.value.value
-    }, props.meetupId, {
-        meal: foodSelection.value.value,
-        transport: transportSelection.value.value,
-        occupation: professionSelection.value.value
-    });
+    updateUserProfile(
+        {
+            Events: uniqueArrayOfObjects,
+            meal: foodSelection.value.value,
+            transport: transportSelection.value.value,
+            occupation: professionSelection.value.value
+        },
+        props.meetupId,
+        {
+            meal: foodSelection.value.value,
+            transport: transportSelection.value.value,
+            occupation: professionSelection.value.value,
+            is_public: true // @todo: set the right value
+        }
+    );
 }
 
 // Food Preferences
 const foodOptions = [
     { value: "none", name: "None", icon: IconNoFood },
     { value: "veg", name: "Veg", icon: IconVegan },
-    { value: "non/veg", name: "Non/Veg", icon: IconChicken },
-];
+    { value: "non_veg", name: "Non/Veg", icon: IconChicken },
+] as { value: Meal, name: string, icon: astroHTML.JSX.Element }[];
 const foodSelection = shallowRef(foodOptions[1]);
 
 // Transport Preferences
@@ -121,7 +135,7 @@ const transportOptions = [
     { value: "car", name: "Car", icon: IconCar },
     { value: "need_a_ride", name: "Need a ride", icon: IconRide },
     { value: "other", name: "Other", icon: IconBroom },
-];
+] as { value: Transport, name: string, icon: astroHTML.JSX.Element }[];
 const transportSelection = shallowRef(transportOptions[1]);
 
 // Profession Preferences
@@ -131,7 +145,8 @@ const professionOptions = [
     { value: "manager", name: "Manager", icon: IconManager },
     { value: "designer", name: "Designer", icon: IconDesigner },
     { value: "hr", name: "Hr", icon: IconHr },
-];
+    { value: "other", name: "Other", icon: IconHr },
+] as { value: Occupation, name: string, icon: astroHTML.JSX.Element }[];
 const professionSelection = shallowRef(professionOptions[0]);
 
 // Show me as attending
@@ -169,7 +184,7 @@ const avatarUrl = computed(() => {
 defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
 </script>
 <template>
-    <div class="flex gap-8">
+    <div class="flex flex-col-reverse md:flex-row gap-8">
         <div class="flex flex-col gap-8 flex-1">
             <!-- <div class="flex justify-center font-bold text-lg">
             <h2>RSVP</h2>
@@ -231,9 +246,8 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
 
         <div class="grid place-items-center flex-1 w-full">
             <div class="ring-2 ring-white rounded-full">
-                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-64 overflow-hidden">
+                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-32 md:w-64 overflow-hidden">
             </div>
         </div>
-
     </div>
 </template>

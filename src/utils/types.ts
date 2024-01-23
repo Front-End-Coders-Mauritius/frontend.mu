@@ -36,9 +36,9 @@ export interface User {
   github_username?: string;
 }
 
-export type Transport = "car" | "bus" | "need a ride";
+// export type Transport = "car" | "bus" | "need a ride";
 
-export type Meal = "nonveg" | "veg" | "not-eating";
+// export type Meal = "nonveg" | "veg" | "not-eating";
 
 export type RSVPMetaObject = {
   transport: Transport;
@@ -179,3 +179,19 @@ export type SiteToast = {
   type: ToastTypes | undefined
   visible: boolean
 }
+
+// typescript enums are bad
+
+export type Meal = "veg" | "non_veg" | "no_food"
+
+export type Transport = "bus" | "car" | "need_a_ride" | "other"
+
+export type Occupation = "developer" | "student" | "manager" | "designer" | "hr" | "other"
+
+export type RSVPMetaData = {
+  meal: Meal
+  transport: Transport
+  occupation: Occupation
+  is_public: boolean
+  meta?: string
+} 

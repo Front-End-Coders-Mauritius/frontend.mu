@@ -76,50 +76,6 @@ const rsvpOpen = computed(() => {
     return rsvpClosingDate > now;
 });
 
-function updateProfile() {
-    updateUserProfile({
-        meal: getFoodItemFromList(),
-    });
-}
-
-function rsvpToCurrentMeetup(meetupId: string) {
-    // check if item already in array
-
-    // If already attending, remove from array and update profile
-    let eventIds = currentEventsRSVP.value.map(event => event.Events_id);
-    if (eventIds.includes(meetupId)) {
-        const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
-        if (confirmNotAttending) {
-            let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== meetupId);
-            updateUserProfile(
-                {
-                    Events: updatedEvents
-                });
-        }
-        return;
-    }
-
-    let updatedEvents = Array.from(
-        new Set([
-            ...currentEventsRSVP.value,
-            {
-                Events_id: meetupId
-            }
-        ])
-    );
-
-    // Remove duplicate events
-    let uniqueEvents = Array.from(new Set(updatedEvents.map(obj => obj.Events_id)));
-    const uniqueArrayOfObjects = uniqueEvents.map(eventId => {
-        return { "Events_id": eventId };
-    });
-
-    updateUserProfile({
-        Events: uniqueArrayOfObjects
-
-    }, props.meetupId);
-}
-
 const isAttendingCurrentEvent = computed(() => {
     return currentEventsRSVP.value.some(event => event.Events_id === props.meetupId);
 });

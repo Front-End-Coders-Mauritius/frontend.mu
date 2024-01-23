@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
 import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
 
-import type { SiteToast, User } from "../utils/types";
+import type { RSVPMetaData, SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
@@ -202,7 +202,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     // !TODO refactor to use object instead
-    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: any = {}, isCancelling: boolean = false) {
+    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: RSVPMetaData, isCancelling: boolean = false) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -229,7 +229,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
-    async function updateRsvpMetadata(currentEventId: string, metadata: any) {
+    async function updateRsvpMetadata(currentEventId: string, metadata: RSVPMetaData) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -257,7 +257,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
 
             const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKeyQuery[0].id, {
-                meta: metadata
+                meta: metadata.meta,
+                meal: metadata.meal,
+                transport: metadata.transport,
+                occupation: metadata.occupation,
+                is_public: metadata.is_public,
             }));
 
             await getCurrentUser();
