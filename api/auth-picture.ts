@@ -8,7 +8,7 @@ const googleClientSecret = process.env.AUTH_GOOGLE_CLIENT_SECRET;
 
 const directusApiEndpoint = 'https://directus.frontend.mu/users/me';
 
-async function fetchPicture(accessToken: string, userId: string) {
+async function fetchPicture(accessToken: string) {
 	let result = await fetch(directusApiEndpoint, {
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
@@ -47,7 +47,6 @@ async function fetchPicture(accessToken: string, userId: string) {
 	return result
 }
 
-
 async function getAccessTokenFromGoogle(refreshToken: string) {
 	const tokenEndpoint = 'https://accounts.google.com/o/oauth2/token';
 	try {
@@ -85,21 +84,55 @@ async function getProfilePictureFromGoogle(googleAccessToken: string) {
 
 }
 
+async function uploadImageToDirectus(imageUrl: string, directusAccessToken: string, directusUserId: string) {
+
+	let base64String = await fromUrlToBase64(imageUrl);
+
+	const DIRECTUS_PROJECT_URL = 'https://directus.frontend.mu';
+
+	try {
+		// Make a POST request to /files in the Directus instance
+
+		const uploadResponse = await axios.patch(
+			`${DIRECTUS_PROJECT_URL}/users/${directusUserId}`,
+			{
+				profile_picture: base64String
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${directusAccessToken}`,
+				},
+			});
+
+		console.log('File uploaded successfully:', uploadResponse.data);
+	} catch (error: any) {
+		console.error('Error uploading file to Directus:', error.message);
+	}
+}
+
+async function fromUrlToBase64(imageUrl: string) {
+
+	let result = await fetch(imageUrl)
+		.then(response => response.arrayBuffer())
+		.then(buffer => {
+			const base64String = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+			console.log('Base64 String:', base64String);
+		})
+		.catch(error => console.error('Error fetching or converting image:', error));
+
+	return result
+}
+
 export default async (req: VercelRequest, res: VercelResponse): Promise<void> => {
 	try {
 		const userId = req.headers['user-id'] as string;
 		const accessToken = req.headers['access-token'] as string;
 
-		// let shout = await echo('Welcome')
+		let imageUrl = await fetchPicture(accessToken)
 
-		// res.status(200).json({
-		// 	userId: userId,
-		// 	accessToken: accessToken,
-		// 	shout: shout,
-		// 	// imageUrl: imageUrl,
-		// });
+		// Example usage
+		await uploadImageToDirectus(imageUrl, accessToken, userId);
 
-		let imageUrl = await fetchPicture(accessToken, userId)
 		console.log(imageUrl);
 		res.status(200).json({
 			imageUrl: imageUrl,
