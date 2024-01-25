@@ -116,7 +116,7 @@ async function fromUrlToBase64(imageUrl: string) {
 		.then(response => response.arrayBuffer())
 		.then(buffer => {
 			const base64String = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-			console.log('Base64 String:', base64String);
+			return base64String
 		})
 		.catch(error => console.error('Error fetching or converting image:', error));
 
