@@ -275,19 +275,18 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     async function cloudFunctionUpdateProfilePicture(userId) {
-        const deployment_url = window.location.origin;
-        const AUTH_PICTURE_URL = `${deployment_url}/api/auth-picture`
 
-        // Example usage
-        const accessToken = getCookieValue('access_token')
-        console.log(accessToken);
-        const response = await fetch(AUTH_PICTURE_URL, {
+        const ORIGIN = window.location.origin;
+        const FUNCTION_AUTH_PICTURE_URL = `${ORIGIN}/api/auth-picture`
+
+        await fetch(FUNCTION_AUTH_PICTURE_URL, {
             method: 'POST',
             headers: {
                 'user-id': userId,
-                'access-token': accessToken
+                'access-token': getCookieValue('access_token')
             },
         });
+
     }
 
     return {
