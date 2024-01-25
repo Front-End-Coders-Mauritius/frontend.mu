@@ -7,7 +7,6 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 		const googleClientId = process.env.AUTH_GOOGLE_CLIENT_ID;
 		const googleClientSecret = process.env.AUTH_GOOGLE_CLIENT_SECRET;
 
-		// Extract user ID and access token from headers
 		const userId = req.headers['user-id'] as string;
 		const accessToken = req.headers['access-token'] as string;
 
@@ -47,7 +46,6 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 
 		const gAccessToken = tokenResponse.data.access_token;
 
-		// Perform the UserInfo API call using the new access token
 		const userInfoEndpoint = 'https://www.googleapis.com/oauth2/v1/userinfo';
 		const userInfoResponse = await axios.get(userInfoEndpoint, {
 			params: {
@@ -60,7 +58,6 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 
 		console.log(`Retrieved profile picture for user ${userId} : ${imageUrl}`)
 
-		// Example: Return a JSON response
 		res.status(200).json({
 			imageUrl: imageUrl,
 
