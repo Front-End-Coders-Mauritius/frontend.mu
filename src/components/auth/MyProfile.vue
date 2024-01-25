@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
+import { base64Url } from '@utils/helpers';
 const {
     user,
     rawUser,
@@ -22,7 +23,8 @@ const userDetails = reactive({
     transport: '',
     meal: '',
     occupation: '',
-    github_username: ''
+    github_username: '',
+    profile_picture: '',
 })
 
 function setUserDetails() {
@@ -34,6 +36,7 @@ function setUserDetails() {
     userDetails.transport = user.value?.transport || '';
     userDetails.occupation = user.value?.occupation || '';
     userDetails.github_username = user.value?.github_username || '';
+    userDetails.profile_picture = user.value?.profile_picture || '';
 }
 
 onMounted(async () => {
@@ -52,18 +55,18 @@ function updateProfile() {
         github_username: userDetails.github_username
     }
 
-    updateUserProfile(extractEditableFields);
+    // updateUserProfile(extractEditableFields);
 }
 
 // Avatar based on github username
 
+
 const avatar = computed(() => {
-    if (user.value?.github_username) {
-        return `https://avatars.githubusercontent.com/${user.value?.github_username}`;
+    if (userDetails?.profile_picture) {
+        return base64Url(userDetails.profile_picture)
     }
     return false;
-});
-
+})
 
 </script>
 

@@ -115,7 +115,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const response: { data: AuthenticationData } = await res.json();
 
             setCookie(response.data);
-            getCurrentUser()
+            await getCurrentUser()
+            if (rawUser.value?.profile_picture) {
+                let picture = await cloudFunctionUpdateProfilePicture(rawUser.value.id)
+                console.log(picture)
+            }
             setAuth(true)
 
             return response.data;
