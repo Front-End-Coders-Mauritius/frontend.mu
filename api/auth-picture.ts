@@ -49,19 +49,23 @@ async function fetchPicture(accessToken: string, userId: string) {
 
 
 async function getAccessTokenFromGoogle(refreshToken: string) {
-
 	const tokenEndpoint = 'https://accounts.google.com/o/oauth2/token';
-	const tokenResponse = await axios.post(tokenEndpoint, null, {
-		params: {
-			client_id: googleClientId,
-			client_secret: googleClientSecret,
-			refresh_token: refreshToken,
-			grant_type: 'refresh_token',
-		},
-	});
+	try {
+		const tokenResponse = await axios.post(tokenEndpoint, null, {
+			params: {
+				client_id: googleClientId,
+				client_secret: googleClientSecret,
+				refresh_token: refreshToken,
+				grant_type: 'refresh_token',
+			},
+		});
 
-	const gAccessToken = tokenResponse.data.access_token;
-	return gAccessToken;
+		const gAccessToken = tokenResponse.data.access_token;
+		return gAccessToken;
+	} catch (error) {
+		console.log(error)
+		throw new Error('Could not retrieve access token');
+	}
 }
 
 async function getProfilePictureFromGoogle(googleAccessToken: string) {
