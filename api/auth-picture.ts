@@ -9,7 +9,7 @@ const googleClientSecret = process.env.AUTH_GOOGLE_CLIENT_SECRET;
 const directusApiEndpoint = 'https://directus.frontend.mu/users/me';
 
 async function fetchPicture(accessToken: string, userId: string) {
-	fetch(directusApiEndpoint, {
+	let result = await fetch(directusApiEndpoint, {
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 		},
@@ -32,7 +32,8 @@ async function fetchPicture(accessToken: string, userId: string) {
 				}
 
 				try {
-					return await getProfilePictureFromGoogle(accessToken, userId)
+					let pp = await getProfilePictureFromGoogle(accessToken)
+					return pp
 				} catch (err) {
 					throw new Error('Could not retrieve profile picture');
 				}
@@ -42,6 +43,8 @@ async function fetchPicture(accessToken: string, userId: string) {
 		.catch((error: Error) => {
 			console.error('Error fetching user data:', error.message);
 		});
+
+	return result
 }
 
 
@@ -61,7 +64,7 @@ async function getAccessTokenFromGoogle(refreshToken: string) {
 	return gAccessToken;
 }
 
-async function getProfilePictureFromGoogle(googleAccessToken: string, userId: string) {
+async function getProfilePictureFromGoogle(googleAccessToken: string) {
 	const userInfoEndpoint = 'https://www.googleapis.com/oauth2/v1/userinfo';
 	const userInfoResponse = await axios.get(userInfoEndpoint, {
 		params: {
@@ -72,7 +75,7 @@ async function getProfilePictureFromGoogle(googleAccessToken: string, userId: st
 	const googleUserInfo = userInfoResponse.data;
 	var imageUrl = googleUserInfo['picture'];
 
-	console.log(`Retrieved profile picture for user ${userId} : ${imageUrl}`)
+	// console.log(`Retrieved profile picture for user ${userId} : ${imageUrl}`)
 	return imageUrl;
 
 
