@@ -10,9 +10,7 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 		const userId = req.headers['user-id'] as string;
 		const accessToken = req.headers['access-token'] as string;
 
-
 		const directusApiEndpoint = 'https://directus.frontend.mu/users/me';
-
 
 		let refreshToken
 
@@ -44,6 +42,8 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 			},
 		});
 
+
+		
 		const gAccessToken = tokenResponse.data.access_token;
 
 		const userInfoEndpoint = 'https://www.googleapis.com/oauth2/v1/userinfo';
