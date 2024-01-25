@@ -284,13 +284,23 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         const ORIGIN = window.location.origin;
         const FUNCTION_AUTH_PICTURE_URL = `${ORIGIN}/api/auth-picture`
 
-        await fetch(FUNCTION_AUTH_PICTURE_URL, {
+        const result = await fetch(FUNCTION_AUTH_PICTURE_URL, {
             method: 'POST',
             headers: {
                 'user-id': userId,
                 'access-token': getCookieValue('access_token')
             },
         });
+
+        console.log(result);
+
+        useToast().show({
+            title: "Success!",
+            message: "Profile picture synced successfully",
+            type: "SUCCESS",
+            visible: true
+        })
+
 
     }
 

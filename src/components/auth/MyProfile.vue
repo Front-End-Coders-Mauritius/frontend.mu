@@ -28,7 +28,6 @@ const userDetails = reactive({
 })
 
 function setUserDetails() {
-    console.log(user)
     userDetails.email = user.value?.email || '';
     userDetails.full_name = user.value?.full_name || '';
     userDetails.phone = user.value?.phone || '';
