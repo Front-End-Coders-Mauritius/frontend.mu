@@ -1,0 +1,23 @@
+<script setup lang="ts">
+
+const props = withDefaults(
+    defineProps<{
+        label: string
+        value?: string
+        disabled?: boolean
+        labelClass?: string
+    }>(),
+    {
+        disabled: false,
+        labelClass: 'w-[100px]',
+    })
+</script>
+
+<template>
+    <div class="flex gap-4">
+        <label :class="[labelClass]">{{ props.label }}</label>
+        <input v-if="props.value" type="text" v-model="props.value" class="bg-transparent" :disabled="disabled" />
+
+        <slot />
+    </div>
+</template>

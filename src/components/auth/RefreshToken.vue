@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import useAuth, { getClient } from '../../auth-utils/useAuth';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
 const { loginWithSSO, user, logout, isLoggedIn } = useAuth(getClient());
 
 onMounted(async () => {
-    await loginWithSSO();
+    const response = await loginWithSSO();
+
+    if (response?.access_token) {
+        window.setTimeout(() => {
+            window.location.href = '/user/me'
+        }, 5000)
+    }
 })
 
 </script>

@@ -1,48 +1,65 @@
-import { currentUser } from './../store/userStore';
-import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
 import { ref, computed } from "vue";
-import type { User } from "../utils/types";
-import { createDirectus, rest, readMe, staticToken, authentication, refresh } from '@directus/sdk';
-import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient } from '@directus/sdk';
-import { is } from 'date-fns/locale';
+import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
+import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
+
+import type { RSVPMetaData, SiteToast, User } from "../utils/types";
+import type { DirectusAstroUser } from './../utils/types';
+import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
 const DIRECTUS_PROJECT_URL = DIRECTUS_URL()
 
 let isAuth = ref(false);
 let user = ref<User | null>(null);
+let rawUser = ref<DirectusAstroUser | null>(null);
 let responseFromServer = ref<any>(null);
 let isLoading = ref(false);
+
+let toastMessage = ref<SiteToast>({
+    title: undefined,
+    message: undefined,
+    type: undefined,
+    visible: false
+})
 
 export function getClient() {
     return createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
 }
 
+export function useToast() {
+    function show(err: SiteToast) {
+        toastMessage.value = err
+    }
+
+    function hide() {
+        toastMessage.value.visible = false
+    }
+
+    const isVisible = computed(() => {
+        return toastMessage.value.visible
+    })
+
+    return {
+        toastMessage,
+        isVisible,
+        show,
+        hide
+    }
+}
 
 export default function useAuth(client: DirectusClient<any> & AuthenticationClient<any> & RestClient<any>) {
 
-    // const token = getCookieValue('access_token')
-    // const client = createDirectus(DIRECTUS_PROJECT_URL).with(staticToken(token)).with(rest());
-
     async function logout() {
-        // logout logic
-        // let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication()).with(rest());
-        // login using the authentication composable
-        console.log('logging out')
         logoutCookie()
         user.value = null;
         isAuth.value = false;
         responseFromServer.value = null;
-        // logout using the authentication composable
-        // const result = await loginClient.logout();
     }
 
     function handleError(error) {
-        // console.log(error)
         responseFromServer.value = error;
     }
 
     function setCookie(authData: AuthenticationData) {
-        // set cookie logic
         document.cookie = `access_token=${authData.access_token}; expires=${new Date(authData.expires_at ?? '').toUTCString()}; path=/`;
     }
 
@@ -56,8 +73,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     async function loginWithUsernameAndPassword(email: string, password: string) {
-        // let loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication());
-        // login using the authentication composable
         try {
 
             isLoading.value = true;
@@ -72,6 +87,13 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             getCurrentUser()
 
             setAuth(true)
+
+            useToast().show({
+                title: "Success!",
+                message: "User is logged in",
+                type: "SUCCESS",
+                visible: true
+            })
 
             return result
 
@@ -116,29 +138,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function checkIfLoggedIn() {
         try {
-            getCurrentUser()
+            await getCurrentUser()
+            return true
         } catch (error) {
             setAuth(false)
             handleError(error)
-        }
-    }
-
-    async function loginWithToken(email, password) {
-        // login using the authentication composable
-        try {
-
-            const loginClient = createDirectus(DIRECTUS_PROJECT_URL).with(authentication());
-
-            const result = await loginClient.login(email, password, {
-                mode: 'cookie'
-            })
-
-            // let token = await loginClient.getToken()
-            // console.log(result)
-            setCookie(result)
-
-        } catch (error) {
-            console.log(error)
         }
     }
 
@@ -149,8 +153,12 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "first_name",
             "last_name",
             "email",
-            "avatar",
+            "phone",
+            "transport",
             "meal",
+            "occupation",
+            "github_username",
+            "Events.Events_id.*",
         ]
 
         try {
@@ -161,13 +169,15 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 throw new Error('User is not logged in')
             }
 
-            client = client.with(staticToken(token))
+            client = await client.with(staticToken(token))
 
             const result = await client.request(readMe({
                 fields: ACCOUNT_SETTINGS_FIELDS
             }));
 
             setAuth(true)
+            rawUser.value = result;
+
             setCurrentUser(mapToValidUser(result));
 
         } catch (error) {
@@ -177,9 +187,90 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     }
 
+    const currentEventsRSVP = computed(() => {
+        return rawUser.value?.Events?.map((event) => {
+            if (typeof event.Events_id === 'string') {
+                return { "Events_id": event.Events_id }
+            }
+            return { "Events_id": event.Events_id.id.toString() }
+        }) || []
+    })
+
     function oAuthLogin() {
         const currentPage = new URL(window.location.origin);
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
+    }
+
+    // !TODO refactor to use object instead
+    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: RSVPMetaData, isCancelling: boolean = false) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            const result = await client.request(updateMe(data));
+
+            if (!isCancelling) {
+                updateRsvpMetadata(currentEventId, metadata)
+            }
+
+            await getCurrentUser();
+            isLoading.value = false;
+
+            console.log(result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function updateRsvpMetadata(currentEventId: string, metadata: RSVPMetaData) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            console.log(currentEventId)
+
+            const query_object = {
+                filter: {
+                    Events_id: {
+                        _eq: currentEventId
+                    },
+                    directus_users_id: {
+                        _eq: user.value?.id
+                    }
+                }
+            }
+
+            const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
+
+            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKeyQuery[0].id, {
+                meta: metadata.meta,
+                meal: metadata.meal,
+                transport: metadata.transport,
+                occupation: metadata.occupation,
+                is_public: metadata.is_public,
+            }));
+
+            await getCurrentUser();
+
+            console.log(updateMetaResult);
+            isLoading.value = false;
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return {
@@ -188,12 +279,14 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         isLoggedIn,
         getCurrentUser,
         checkIfLoggedIn,
+        rawUser,
         user,
         responseFromServer,
         client,
         loginWithSSO,
-        loginWithToken,
         oAuthLogin,
+        updateUserProfile,
+        currentEventsRSVP,
         isLoading
     }
 }

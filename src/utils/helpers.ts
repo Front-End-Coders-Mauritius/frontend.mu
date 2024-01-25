@@ -5,7 +5,7 @@ export const random = (list: string[] | number[]) =>
 
 // a function that converts string to safe variable name
 // Path: src/utils/helpers.ts
-export const toSafeVarName = (str: string) => {
+export const toSafeVarName = (str: string | number) => {
   return str
     .toString()
     .replace(/[^a-zA-Z0-9_]/g, "_")
@@ -16,7 +16,7 @@ export const getCookieValue = (name) => (
   document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
 )
 
-export const vTransitionName = (modelType: string = "meetup", str: string) => {
+export const vTransitionName = (modelType: string = "meetup", str: string | number) => {
   return `view-transition-name: ${toSafeVarName(modelType)}-${toSafeVarName(
     str
   )}`;
@@ -41,7 +41,9 @@ export const mapToValidUser = (user: any): User => {
     meal: user?.meal || "",
     transport: user.transport || "",
     phone: user.phone || "",
+    occupation: user.occupation || "",
     created_at: user?.created_at || "",
+    github_username: user?.github_username || "",
     avatar_url: user.avatar_url,
     google: user.google,
 

@@ -6,6 +6,7 @@ import Sponsors from "../components/Sponsors.astro";
 import OgImage from "../components/OgImage.astro";
 import BackgroundShapes from "../components/BackgroundShapes.astro";
 import Backdrop from "./Backdrop.astro";
+import SiteError from "../components/auth/SiteError.vue";
 
 // export interface Props {
 // 	content: {
@@ -40,5 +41,6 @@ const {
 
       <Footer />
     </Backdrop>
+    <SiteError client:only />
   </body>
 </html>
