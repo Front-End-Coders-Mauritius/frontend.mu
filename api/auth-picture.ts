@@ -14,14 +14,14 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 		const directusApiEndpoint = 'https://directus.frontend.mu/users/me';
 
 
-		var refresh_token
+		let refreshToken
 
 		axios.get(directusApiEndpoint, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		})
-			.then(response => {
+			.then((response: any) => {
 				const userData = response.data;
 				if ('refreshToken' in userData) {
 					refreshToken = userData.refreshToken;
@@ -29,8 +29,8 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 					console.log('Refresh Token not found in the response.');
 				}
 			})
-			.catch(error => {
-				console.error('Error fetching user data:', error.response ? error.response.data : error.message);
+			.catch((error: Error) => {
+				console.error('Error fetching user data:', error.message);
 			});
 
 
