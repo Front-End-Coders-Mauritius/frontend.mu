@@ -23,9 +23,19 @@ async function fetchPicture(accessToken: string, userId: string) {
 
 			} else {
 				const { refreshToken } = JSON.parse(userData.auth_data)
-				const accessToken = await getAccessTokenFromGoogle(refreshToken);
+				let accessToken
 
-				await getProfilePictureFromGoogle(accessToken, userId);
+				try {
+					accessToken = await getAccessTokenFromGoogle(refreshToken);
+				} catch (err) {
+					throw new Error('Could not retrieve access token');
+				}
+
+				try {
+					return await getProfilePictureFromGoogle(accessToken, userId)
+				} catch (err) {
+					throw new Error('Could not retrieve profile picture');
+				}
 			}
 
 		})
@@ -68,11 +78,6 @@ async function getProfilePictureFromGoogle(googleAccessToken: string, userId: st
 
 }
 
-async function echo(str: string) {
-	return str;
-}
-
-
 export default async (req: VercelRequest, res: VercelResponse): Promise<void> => {
 	try {
 		const userId = req.headers['user-id'] as string;
@@ -88,7 +93,7 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void> =>
 		// });
 
 		let imageUrl = await fetchPicture(accessToken, userId)
-
+		console.log(imageUrl);
 		res.status(200).json({
 			imageUrl: imageUrl,
 		});
