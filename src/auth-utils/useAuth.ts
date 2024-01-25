@@ -118,8 +118,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             await getCurrentUser()
             setAuth(true)
             console.log(rawUser.value)
-            if (rawUser.value?.profile_picture) {
-                let picture = await cloudFunctionUpdateProfilePicture(rawUser.value.id)
+            if (!rawUser.value?.profile_picture) {
+                let picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id)
                 console.log(picture)
             }
 
