@@ -34,6 +34,7 @@ export interface User {
   avatar_url: string | null;
   google?: GoogleInfo;
   github_username?: string;
+  profile_picture?: string | null;
 }
 
 // export type Transport = "car" | "bus" | "need a ride";

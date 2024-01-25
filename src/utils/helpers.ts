@@ -45,6 +45,7 @@ export const mapToValidUser = (user: any): User => {
     created_at: user?.created_at || "",
     github_username: user?.github_username || "",
     avatar_url: user.avatar_url,
+    profile_picture: user.profile_picture || "",
     google: user.google,
 
   }
@@ -68,4 +69,8 @@ export const convertTo24HourFormat = (timeStr: string) => {
     hours = 0;
   }
   return `${hours.toString().padStart(2, '0')}:00`;
+}
+
+export const base64Url = (base64String: string): string => {
+  return "data:image/png;base64," + base64String;
 }

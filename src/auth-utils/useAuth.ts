@@ -159,6 +159,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "occupation",
             "github_username",
             "Events.Events_id.*",
+            "profile_picture",
         ]
 
         try {
@@ -273,7 +274,24 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
+    async function cloudFunctionUpdateProfilePicture(userId) {
+        const deployment_url = window.location.origin;
+        const AUTH_PICTURE_URL = `${deployment_url}/api/auth-picture`
+
+        // Example usage
+        const accessToken = getCookieValue('access_token')
+        console.log(accessToken);
+        const response = await fetch(AUTH_PICTURE_URL, {
+            method: 'POST',
+            headers: {
+                'user-id': userId,
+                'access-token': accessToken
+            },
+        });
+    }
+
     return {
+        cloudFunctionUpdateProfilePicture,
         loginWithUsernameAndPassword,
         logout,
         isLoggedIn,
