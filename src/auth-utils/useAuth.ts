@@ -1,5 +1,5 @@
 import { ref, computed } from "vue";
-import { getCookieValue, DIRECTUS_URL, mapToValidUser } from './../utils/helpers';
+import { getCookieValue, DIRECTUS_URL, mapToValidUser, base64Url } from './../utils/helpers';
 import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
 
 import type { RSVPMetaData, SiteToast, User } from "../utils/types";
@@ -202,6 +202,15 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }) || []
     })
 
+    const avatarUrl = computed(() => {
+        if (rawUser.value?.profile_picture) {
+            return base64Url(rawUser.value.profile_picture)
+        } else if (rawUser.value?.github_username) {
+            return `https://github.com/${rawUser.value?.github_username}.png`
+        }
+        return false;
+    })
+
     function oAuthLogin() {
         const currentPage = new URL(window.location.origin);
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
@@ -319,6 +328,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         oAuthLogin,
         updateUserProfile,
         currentEventsRSVP,
-        isLoading
+        isLoading,
+        avatarUrl
     }
 }
