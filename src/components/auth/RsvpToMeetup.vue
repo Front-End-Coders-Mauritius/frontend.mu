@@ -97,24 +97,21 @@ function saveForm() {
 
 
 <template>
-    <div class="dock-block sticky top-[95vh] px-8 z-10 w-full" v-if="rsvpOpen">
+    <div class="dock-block sticky top-[97vh] px-2 md:px-8 z-10 w-full" v-if="rsvpOpen">
 
         <div class="contain relative">
-            <div class="absolute left-0 right-0 bottom-0 w-full">
+            <div class="absolute left-0 right-0 bottom-0 w-full max-h-[80vh] overflow-y-auto">
                 <div
-                    class="relative rounded-2xl flex gap-8 flex-col shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur-2xl dark:bg-verse-800/40 dark:text-zinc-200 dark:ring-white/10 py-2">
+                    class="relative rounded-2xl flex md:gap-8 gap-2 flex-col shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur-2xl dark:bg-verse-800/40 dark:text-zinc-200 dark:ring-white/10 py-2">
                     <div class="flex items-center justify-between px-4 py-2 gap-2 w-full">
 
-
-
-
-                        <div class="px-4">
+                        <div class="px-2 md:px-4">
                             <div class="text-base font-semibold">
                                 {{ props.meetupDetails.title }}
                             </div>
                             <div class="text-xs">
-                                {{ formatDate(props.meetupDetails.Date) }} / <span class="font-medium text-verse-500">FREE
-                                    TO
+                                {{ formatDate(props.meetupDetails.Date) }} <span
+                                    class="font-medium hidden md:block text-verse-500 dark:text-verse-200">/ FREE TO
                                     ATTEND</span>
                             </div>
                         </div>
@@ -129,21 +126,21 @@ function saveForm() {
 
                                 <Transition name="fade" mode="out-in">
                                     <IconClose
-                                        class="absolute bottom-8 right-8 text-4xl text-gray-400 cursor-pointer hover:text-white"
+                                        class="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-4xl text-gray-400 cursor-pointer hover:text-white"
                                         v-if="rsvpPaneOpen" @click="rsvpPaneOpen = false" />
                                 </Transition>
 
 
                                 <BaseButton color="danger" v-if="rsvpPaneOpen && isAttendingCurrentEvent"
-                                    @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)">
-                                    Cancel my RSVP
+                                    @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)" class="hidden md:block">
+                                    Cancel RSVP
                                 </BaseButton>
 
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
                                 <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
                                     :color="isAttendingCurrentEvent ? 'success' : 'primary'">
-                                    {{ isAttendingCurrentEvent ? rsvpPaneOpen ? 'Close' : 'You\'re Attending' : 'Attend'
+                                    {{ isAttendingCurrentEvent ? rsvpPaneOpen ? 'Close' : 'Attending' : 'Attend'
                                     }}
                                 </BaseButton>
 
@@ -166,7 +163,7 @@ function saveForm() {
 
                     <!-- RSVP Form -->
                     <Transition mode="out-in" name="slidedown">
-                        <div class="p-8" v-if="rsvpPaneOpen">
+                        <div class="p-6 md:p-8 pt-0 md:pt-8" v-if="rsvpPaneOpen">
                             <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" ref="$rsvpForm" />
                         </div>
                     </Transition>

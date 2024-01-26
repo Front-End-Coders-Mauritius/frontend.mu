@@ -24,8 +24,8 @@ defineProps<{
         ? 'transition-all duration-100 ring-slate-800 bg-white dark:ring-white dark:text-black ring-2  dark:hover:bg-slate-100'
         : 'dark:bg-slate-900 dark:ring-slate-700 ring-0 bg-white shadow-md dark:shadow-white/5 dark:ring-1 dark:ring-white/10 dark:text-white dark:hover:bg-slate-900',
 
-      'text-slate-700 flex items-center rounded-md py-1 text-sm font-semibold text-center px-4 relative cursor-pointer  ',
-      'h-12 md:h-auto',
+      'text-slate-700 flex items-center rounded-md py-1 text-sm font-semibold text-center px-2 relative cursor-pointer  ',
+      'md:h-auto',
     ]">
       <RadioGroupLabel as="div" class="select-none text-center w-full">
         <Transition name="slide">

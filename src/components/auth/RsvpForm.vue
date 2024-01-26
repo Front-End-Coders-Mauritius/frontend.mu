@@ -39,7 +39,7 @@ const props = defineProps<{
 }>();
 
 
-const { isLoading, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
+const { isLoading, avatarUrl, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
 
 const full_name = computed(() => {
     if (rawUser) {
@@ -176,19 +176,25 @@ onMounted(() => {
     // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
 })
 
-// get user photo
-const avatarUrl = computed(() => {
-    return `https://github.com/${rawUser.value?.github_username}.png`
-})
+// // get user photo
+// const avatarUrl = computed(() => {
+//     return `https://github.com/${rawUser.value?.github_username}.png`
+// })
 
 defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
 </script>
 <template>
-    <div class="flex flex-col-reverse md:flex-row gap-8">
-        <div class="flex flex-col gap-8 flex-1">
+    <div class="flex flex-col-reverse md:flex-row md:gap-8 gap-4">
+        <div class="flex flex-col  md:gap-8 gap-4 flex-1">
             <!-- <div class="flex justify-center font-bold text-lg">
             <h2>RSVP</h2>
         </div> -->
+
+            <BaseButton class="block md:hidden" color="danger" v-if="isAttendingCurrentEvent"
+                @click="cancelRsvpToCurrentMeetup(meetupId)">
+                Cancel RSVP
+            </BaseButton>
+
 
             <FormLabel label="Name" :value="full_name" :disabled="true" />
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
@@ -244,9 +250,9 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
             </div> -->
         </div>
 
-        <div class="grid place-items-center flex-1 w-full">
+        <div class="hidden md:grid place-items-center flex-1 w-full" v-if="avatarUrl">
             <div class="ring-2 ring-white rounded-full">
-                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-32 md:w-64 overflow-hidden">
+                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-10 md:w-32 overflow-hidden">
             </div>
         </div>
     </div>
