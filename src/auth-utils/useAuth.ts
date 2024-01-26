@@ -115,8 +115,13 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const response: { data: AuthenticationData } = await res.json();
 
             setCookie(response.data);
-            getCurrentUser()
+            await getCurrentUser()
             setAuth(true)
+            console.log(rawUser.value)
+            if (!rawUser.value?.profile_picture) {
+                let picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id)
+                console.log(picture)
+            }
 
             return response.data;
         } catch (error) {
@@ -159,6 +164,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "occupation",
             "github_username",
             "Events.Events_id.*",
+            "profile_picture",
         ]
 
         try {
@@ -273,7 +279,33 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
+    async function cloudFunctionUpdateProfilePicture(userId) {
+
+        const ORIGIN = window.location.origin;
+        const FUNCTION_AUTH_PICTURE_URL = `${ORIGIN}/api/auth-picture`
+
+        const result = await fetch(FUNCTION_AUTH_PICTURE_URL, {
+            method: 'POST',
+            headers: {
+                'user-id': userId,
+                'access-token': getCookieValue('access_token')
+            },
+        });
+
+        console.log(result);
+
+        useToast().show({
+            title: "Success!",
+            message: "Profile picture synced successfully",
+            type: "SUCCESS",
+            visible: true
+        })
+
+
+    }
+
     return {
+        cloudFunctionUpdateProfilePicture,
         loginWithUsernameAndPassword,
         logout,
         isLoggedIn,

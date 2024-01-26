@@ -18,6 +18,7 @@ interface Props {
   routeId: string;
   getCurrentEvent: DirectusEvent;
 }
+import AddToCalendar from "./AddToCalendar.astro";
 
 const props = Astro.props;
 
@@ -59,6 +60,8 @@ function fetchAlbumDetails(albumName: string | null) {
   }
 }
 
+
+
 let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 ---
 
@@ -71,18 +74,21 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
           <div>
             {
               isUpcoming() && (
-                <div class="flex w-full items-center justify-start pb-4">
-                  <p
-                    class:list={[
-                      isUpcoming()
-                        ? "tagStyle bg-green-100 text-green-800"
-                        : "tagStyle bg-yellow-100 text-yellow-800",
-                      ,
-                      "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
-                    ]}
-                  >
-                    happening soon
-                  </p>
+                <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
+                  <div class="flex w-full items-center justify-start">
+                    <p
+                      class:list={[
+                        isUpcoming()
+                          ? "tagStyle bg-green-100 text-green-800"
+                          : "tagStyle bg-yellow-100 text-yellow-800",
+                        ,
+                        "p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4",
+                      ]}
+                    >
+                      happening soon
+                    </p>
+                  </div>
+                  <AddToCalendar event={props.getCurrentEvent}>
                 </div>
               )
             }

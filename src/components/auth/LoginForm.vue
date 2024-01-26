@@ -20,7 +20,7 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
 
 <template>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <LogoFec class="w-10 mx-auto" :loading="isLoading" />
+        <LogoFec class="w-10 mx-auto dark:text-white" :loading="isLoading" />
         <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-verse-900 dark:text-verse-100">
             {{ isLoggedIn ? 'Welcome back' : 'Sign in to your account' }}
         </h2>

@@ -45,6 +45,7 @@ export const mapToValidUser = (user: any): User => {
     created_at: user?.created_at || "",
     github_username: user?.github_username || "",
     avatar_url: user.avatar_url,
+    profile_picture: user.profile_picture || "",
     google: user.google,
 
   }
@@ -56,4 +57,20 @@ export const DIRECTUS_URL = () => {
   // return process.env.NODE_ENV === 'production'
   //   ? 'https://directus.frontend.mu'
   //   : 'http://localhost:8055'
+}
+
+// Converts time from 12-hour AM/PM format to 24-hour format.
+export const convertTo24HourFormat = (timeStr: string) => {
+  const [time, period] = timeStr.match(/(\d+)(AM|PM)/i).slice(1);
+  let [hours] = time.split(':').map(Number);
+  if (period.toUpperCase() === 'PM' && hours < 12) {
+    hours += 12;
+  } else if (period.toUpperCase() === 'AM' && hours === 12) {
+    hours = 0;
+  }
+  return `${hours.toString().padStart(2, '0')}:00`;
+}
+
+export const base64Url = (base64String: string): string => {
+  return "data:image/png;base64," + base64String;
 }
