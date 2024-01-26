@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('sandeep pages', async ({ page }) => {
     await page.goto('/');
-    await page.getByText('All meetups').first().click();
+    await page.getByText('View all meetups').first().click();
     await expect(page.locator('h1').first()).toContainText('All meetups');
     await expect(page.getByRole('link', { name: 'The CSS Meetup' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Vue / Tailwind / OpenData' })).toBeVisible();
