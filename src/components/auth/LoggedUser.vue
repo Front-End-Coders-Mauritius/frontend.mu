@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
-const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn } = useAuth(getClient());
+const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn, avatarUrl } = useAuth(getClient());
 
 onMounted(() => {
   checkIfLoggedIn();
@@ -15,10 +15,9 @@ onMounted(() => {
     <a class="px-2" v-if="!isLoggedIn" href="/login">
       Log In
     </a>
-    <div v-else class="flex">
-
-      <div class="group relative hover:bg-white/60 hover:text-verse-800 rounded-t-xl px-2">
-        <a href="/user/me" v-bind:title="'Hello ' + user?.full_name + '!'" class="">
+    <div v-else class="flex  gap-2 items-center">
+      <div class="group relative hover:bg-white/60 hover:text-verse-800 rounded-t-xl px-2 ">
+        <a href="/user/me" v-bind:title="'Hello ' + user?.full_name + '!'" class="md:block hidden">
           {{ user?.full_name }}
         </a>
         <div
@@ -27,6 +26,9 @@ onMounted(() => {
             Log Out
           </button>
         </div>
+      </div>
+      <div v-if="avatarUrl">
+        <img class="w-10 aspect-square rounded-full" :src="avatarUrl">
       </div>
     </div>
   </div>

@@ -15,12 +15,12 @@ function login() {
     loginWithUsernameAndPassword(email.value, password.value);
 }
 
+const developmentEnvironment = process.env.NODE_ENV === "development";
 </script>
-
 
 <template>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <LogoFec class="w-10 mx-auto" :loading="isLoading" />
+        <LogoFec class="w-10 mx-auto dark:text-white" :loading="isLoading" />
         <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-verse-900 dark:text-verse-100">
             {{ isLoggedIn ? 'Welcome back' : 'Sign in to your account' }}
         </h2>
@@ -29,13 +29,14 @@ function login() {
         <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <div v-if="isLoggedIn">
                 <div class="text-center flex flex-col gap-8">
-                    You are logged in as {{ user?.full_name }}
-
+                    <span>
+                        You are logged in as <a class="underline" href="/user/me"> {{ user?.full_name }}</a>
+                    </span>
                     <button @click="logout">Logout</button>
                 </div>
             </div>
             <div v-else>
-                <form class="space-y-6" @submit.prevent="login()">
+                <form class="space-y-6" @submit.prevent="login()" v-if="developmentEnvironment">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div class="mt-2">
@@ -72,8 +73,8 @@ function login() {
                     </div>
                 </form>
 
-                <div>
-                    <div class="relative mt-10">
+                <div v-else>
+                    <div class="relative">
                         <div class="absolute inset-0 flex items-center" aria-hidden="true">
                             <div class="w-full border-t border-gray-200" />
                         </div>
