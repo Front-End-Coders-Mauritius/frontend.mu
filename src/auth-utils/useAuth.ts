@@ -18,7 +18,7 @@ let toastMessage = ref<SiteToast>({
     title: undefined,
     message: undefined,
     type: undefined,
-    visible: false
+    visible: false,
 })
 
 export function getClient() {
@@ -26,8 +26,8 @@ export function getClient() {
 }
 
 export function useToast() {
-    function show(err: SiteToast) {
-        toastMessage.value = err
+    function show(message: SiteToast) {
+        toastMessage.value = message
     }
 
     function hide() {
@@ -224,6 +224,13 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             if (!token) {
                 isLoading.value = false;
+                alert('yarm')
+                useToast().show({
+                    title: "Session expired",
+                    message: "Please login again.",
+                    type: "INFO",
+                    visible: true,
+                })
                 throw new Error('User is not logged in')
             }
 
@@ -234,6 +241,29 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             if (!isCancelling) {
                 updateRsvpMetadata(currentEventId, metadata)
             }
+
+            await getCurrentUser();
+            isLoading.value = false;
+
+            console.log(result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function cancelRsvp(data: DirectusAstroUser, currentEventId: string = '') {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            const result = await client.request(updateMe(data));
 
             await getCurrentUser();
             isLoading.value = false;
@@ -327,6 +357,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         loginWithSSO,
         oAuthLogin,
         updateUserProfile,
+        cancelRsvp,
         currentEventsRSVP,
         isLoading,
         avatarUrl

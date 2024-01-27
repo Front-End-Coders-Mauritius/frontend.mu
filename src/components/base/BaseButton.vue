@@ -29,7 +29,7 @@ const colorClasses = computed(() => {
         case 'success':
             return 'bg-green-500 text-white hover:bg-green-600'
         case 'warning':
-            return 'bg-yellow-500 text-white hover:bg-yellow-600'
+            return 'bg-yellow-600 text-white hover:bg-yellow-600'
         case 'neutral':
             return 'bg-transparent ring-gray-200/10 ring-2 text-white hover:bg-verse-300/20'
         default:

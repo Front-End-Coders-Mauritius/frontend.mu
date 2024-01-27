@@ -179,7 +179,7 @@ export type SiteToast = {
   title?: string
   message?: string
   type: ToastTypes | undefined
-  visible: boolean
+  visible: boolean,
 }
 
 // typescript enums are bad

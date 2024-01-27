@@ -97,22 +97,23 @@ function saveForm() {
 
 
 <template>
-    <div class="dock-block sticky top-[97vh] px-2 md:px-8 z-10 w-full" v-if="rsvpOpen">
+    <div class="dock-block sticky top-[95vh] px-2 md:px-8 z-10 w-full" v-if="rsvpOpen">
 
         <div class="contain relative">
             <div class="absolute left-0 right-0 bottom-0 w-full max-h-[80vh] overflow-y-auto">
                 <div
-                    class="relative rounded-2xl flex md:gap-8 gap-2 flex-col shadow-lg bg-white/90 text-verse-800 shadow-zinc-800/5 ring-2 ring-zinc-900/5 backdrop-blur-2xl dark:bg-verse-800/40 dark:text-zinc-200 dark:ring-white/10 py-2">
+                    class="relative rounded-2xl flex md:gap-4 gap-2 flex-col shadow-2xl bg-white/90 text-verse-800 shadow-zinc-800 ring-2 ring-zinc-900/5 backdrop-blur-2xl dark:bg-verse-800/40 dark:text-zinc-200  py-2">
                     <div class="flex items-center justify-between px-4 py-2 gap-2 w-full">
 
                         <div class="px-2 md:px-4">
-                            <div class="text-base font-semibold">
+                            <div class="text-xl font-semibold">
                                 {{ props.meetupDetails.title }}
                             </div>
-                            <div class="text-xs">
-                                {{ formatDate(props.meetupDetails.Date) }} <span
-                                    class="font-medium hidden md:block text-verse-500 dark:text-verse-200">/ FREE TO
-                                    ATTEND</span>
+                            <div class="text-base flex gap-2">
+                                {{ formatDate(props.meetupDetails.Date) }}
+                                <span class="font-medium hidden md:block text-verse-500 dark:text-verse-200">
+                                    // FREE TO ATTEND
+                                </span>
                             </div>
                         </div>
 
@@ -131,10 +132,19 @@ function saveForm() {
                                 </Transition>
 
 
-                                <BaseButton color="danger" v-if="rsvpPaneOpen && isAttendingCurrentEvent"
+                                <BaseButton color="primary"
+                                    v-if="rsvpPaneOpen && isAttendingCurrentEvent && $rsvpForm?.formIsLocked"
+                                    @click="$rsvpForm?.unlockForm()" class="hidden md:block">
+                                    Update RSVP
+                                </BaseButton>
+
+
+                                <BaseButton color="danger"
+                                    v-if="rsvpPaneOpen && isAttendingCurrentEvent && $rsvpForm?.formIsLocked"
                                     @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)" class="hidden md:block">
                                     Cancel RSVP
                                 </BaseButton>
+
 
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
@@ -147,8 +157,9 @@ function saveForm() {
                                 <!-- <BaseButton  :color="'neutral'">
                                 </BaseButton> -->
 
-                                <BaseButton v-if="rsvpPaneOpen && !isAttendingCurrentEvent" @click="saveForm()"
-                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                <BaseButton
+                                    v-if="($rsvpForm?.formIsLocked === false && isAttendingCurrentEvent) || (rsvpPaneOpen && !isAttendingCurrentEvent)"
+                                    @click="saveForm()" :color="isAttendingCurrentEvent ? 'success' : 'primary'">
                                     Confirm
                                 </BaseButton>
                                 <!-- <LogoFec :loading="isLoading" :class="color" class="h-16 aspect-square" /> -->
