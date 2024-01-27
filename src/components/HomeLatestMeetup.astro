@@ -16,6 +16,12 @@ export interface Meetup {
   images?: [];
   gallery?: [];
   album?: string;
+  seats_available: number;
+  accepting_rsvp: boolean;
+  rsvp_closing_date: string
+  rsvplink: string;
+  sessions: [];
+  sponsors: []
 }
 
 const props = Astro.props;
@@ -24,14 +30,14 @@ const data = props.response;
 
 console.log(props)
 
-const dateInPast = function (firstDate: Date, secondDate: Date) {
+export const dateInPast = function (firstDate: Date, secondDate: Date) {
   if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
     return true;
 
   return false;
 };
 
-const isUpcoming = (currentEventDate: string) => {
+export const isUpcoming = (currentEventDate: string) => {
   const past = new Date(currentEventDate);
   const today = new Date();
   const verifyValue = dateInPast(past, today);
