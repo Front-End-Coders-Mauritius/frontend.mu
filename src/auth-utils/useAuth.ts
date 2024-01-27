@@ -338,6 +338,24 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     }
 
+    async function getListOfAttendeees(currentEventId: string) {
+        const query_object = {
+            filter: {
+                id: {
+                    _eq: currentEventId
+                },
+            },
+            fields: [
+                "*",
+            ]
+        }
+
+        const result = await client.request(readItems('Events', query_object));
+        console.log(result)
+
+        return result
+    }
+
     return {
         cloudFunctionUpdateProfilePicture,
         loginWithUsernameAndPassword,
@@ -353,6 +371,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         oAuthLogin,
         updateUserProfile,
         cancelRsvp,
+        getListOfAttendeees,
         currentEventsRSVP,
         isLoading,
         avatarUrl
