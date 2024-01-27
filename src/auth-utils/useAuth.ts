@@ -117,7 +117,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             setCookie(response.data);
             await getCurrentUser()
             setAuth(true)
-            console.log(rawUser.value)
             if (!rawUser.value?.profile_picture) {
                 let picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id)
                 console.log(picture)
@@ -285,8 +284,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             client = await client.with(staticToken(token))
 
-            console.log(currentEventId)
-
             const query_object = {
                 filter: {
                     Events_id: {
@@ -310,7 +307,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             await getCurrentUser();
 
-            console.log(updateMetaResult);
             isLoading.value = false;
         } catch (error) {
             console.log(error)
