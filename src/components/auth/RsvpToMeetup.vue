@@ -111,8 +111,10 @@ function saveForm() {
                             </div>
                             <div class="text-base flex gap-2">
                                 {{ formatDate(props.meetupDetails.Date) }}
-                                <span class="font-medium hidden md:block text-verse-500 dark:text-verse-200">
-                                    // FREE TO ATTEND
+
+                                <span
+                                    class="text-xs px-2 py-1 font-bold bg-verse-200/10 rounded-lg text-center hidden md:inline-block text-verse-500 dark:text-verse-200">
+                                    FREE TO ATTEND
                                 </span>
                             </div>
                         </div>

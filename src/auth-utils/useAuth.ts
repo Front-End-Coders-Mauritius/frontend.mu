@@ -224,7 +224,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             if (!token) {
                 isLoading.value = false;
-                alert('yarm')
                 useToast().show({
                     title: "Session expired",
                     message: "Please login again.",
