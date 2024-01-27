@@ -20,7 +20,9 @@ export interface Meetup {
 
 const props = Astro.props;
 
-const data = props.response.data;
+const data = props.response;
+
+console.log(props)
 
 const dateInPast = function (firstDate: Date, secondDate: Date) {
   if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
