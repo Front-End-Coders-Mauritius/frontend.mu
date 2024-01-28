@@ -22,6 +22,7 @@
     "@heroicons/vue": "^2.0.18",
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/vue": "^0.10.0",
+    "@sentry/astro": "^7.98.0",
     "@supabase/supabase-js": "^2.39.0",
     "@vueuse/core": "^10.7.0",
     "add-to-calendar-button": "^2.5.7",
