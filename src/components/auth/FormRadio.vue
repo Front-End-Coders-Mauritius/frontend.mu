@@ -12,11 +12,12 @@ type option = {
 defineProps<{
   options: option[],
   returnValueOnly?: boolean;
+  disabled?: boolean;
 }>();
 </script>
 
 <template>
-  <RadioGroupOption as="template" v-for="option in options" :key="option.name"
+  <RadioGroupOption as="template" v-for="option in options" :key="option.name" :disabled="disabled"
     :value="returnValueOnly ? option.value : option" v-slot="{ active, checked }">
     <div :class="[
       active ? '' : '',
@@ -26,6 +27,7 @@ defineProps<{
 
       'text-slate-700 flex items-center rounded-md py-1 text-sm font-semibold text-center px-2 relative cursor-pointer  ',
       'md:h-auto',
+      disabled && !checked ? 'opacity-30' : '',
     ]">
       <RadioGroupLabel as="div" class="select-none text-center w-full">
         <Transition name="slide">

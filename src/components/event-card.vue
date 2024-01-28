@@ -55,7 +55,7 @@ const tiltOptions = {
     <div
       class="mt-4 md:mt-0 relative rounded-xl group flex flex-col items-start md:items-center gap-6 md:gap-16 group bg-white dark:bg-verse-950 dark-glow p-8 md:p-16 shadow-xl">
       <logo-fec
-        class="w-32 z-0 transition-all hidden md:block select-none top-0 saturate-100 opacity-100 overflow-hidden" />
+        class="w-32 z-0 dark:text-white transition-all hidden md:block select-none top-0 saturate-100 opacity-100 overflow-hidden" />
       <!-- <div class="w-64 top-0 h-64 z-10 bg-gradient-to-t from-white to-transparent absolute">&nbsp;</div> -->
 
       <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-600 dark:text-verse-300">
@@ -67,8 +67,8 @@ const tiltOptions = {
 
       <div class="flex flex-col md:flex-row w-full justify-between gap-4 border-gray-100">
         <span v-if="props.event.Date" class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/10" :class="isUpcoming(props.event.Date)
-            ? 'bg-gray-50 text-gray-700'
-            : 'bg-green-50 text-green-600 font-bold dark:bg-verse-900'
+          ? 'bg-gray-50 text-gray-700'
+          : 'bg-green-50 text-green-600 font-bold dark:bg-verse-900'
           ">
           <IconCalendar class="mr-2 h-6 w-6" />
           <span>{{ new Date(props.event.Date).toDateString() }}</span>

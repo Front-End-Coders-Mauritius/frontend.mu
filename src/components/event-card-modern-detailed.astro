@@ -26,9 +26,10 @@ interface Meetup {
 
 interface Props {
   event: Meetup;
+  isNextMeetup: boolean;
 }
 
-const { event } = Astro.props;
+const { event, isNextMeetup } = Astro.props;
 
 // to get past or upcoming value base in Date
 const dateInPast = function (firstDate: Date, secondDate: Date) {
@@ -42,8 +43,9 @@ const isUpcoming = () => {
   const past = new Date(event?.Date);
   const today = new Date();
   const verifyValue = dateInPast(past, today);
-  return verifyValue;
+  return !verifyValue;
 };
+
 const hasAlbum = () => {
   return Boolean(event && event.album && event?.album.toString() === "null");
 };
@@ -82,23 +84,27 @@ let currentAlbum = fetchAlbumDetails();
     class="relative flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-verse-400"
   >
     <a class="absolute inset-0 z-10" href={`meetup/${event.id}`}></a>
-    <div class="relative flex flex-col p-4 gap-2">
+    <div class="relative flex flex-col p-4 w-full">
       <!-- Date -->
       {
         event.Date && (
-          <div class="">
-            <span
-              title={isUpcoming() ? "Upcoming" : "Past"}
+          <div class="flex justify-between w-full">
+            <div
               class:list={[
                 isUpcoming()
-                  ? "text-verse-900 dark:text-verse-300"
-                  : "text-green-600 font-bold",
-                "flex font-mono text-sm font-medium items-center",
+                ? "text-green-600 font-bold"
+                : "text-verse-900 dark:text-verse-300",
+                "flex font-mono text-sm font-medium items-center gap-2",
               ]}
             >
               <IconCalendar class="mr-2 h-6 w-6" />
               <span>{format(new Date(event.Date), "dd MMM yyyy")}</span>
-            </span>
+            </div>
+              {
+                isNextMeetup && (
+                  <span class="bg-green-700 text-sm font-mono items-center grid text-white px-3 rounded-md font-bold">NEXT MEETUP</span>
+                )
+              }
           </div>
         )
       }

@@ -13,6 +13,7 @@ import BaseHeading from "./base/BaseHeading.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
 import RsvpToMeetup from "./auth/RsvpToMeetup.vue";
 import type { DirectusEvent } from "@utils/types";
+import RsvpAttendeeList from "./auth/RsvpAttendeeList.vue";
 
 interface Props {
   routeId: string;
@@ -88,7 +89,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
                       happening soon
                     </p>
                   </div>
-                  <AddToCalendar event={props.getCurrentEvent}>
+                  <AddToCalendar event={props.getCurrentEvent} />
                 </div>
               )
             }
@@ -118,6 +119,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
             </div>
 
             <MeetupSonspor sponsors={props.getCurrentEvent.sponsors} />
+            
           </div>
         </div>
       </div>
@@ -299,13 +301,13 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
         </div>
       </div>
 
-      <!-- <div class="contain">
+      <div class="contain">
         <RsvpAttendeeList
           client:only
           seatCapacity={props.getCurrentEvent.seats_available}
           meetupId={props.routeId}
         />
-      </div> -->
+      </div>
 
       <MeetupAlbum currentAlbum={currentAlbum} source={photoAlbumSource} />
     </ContentBlock>

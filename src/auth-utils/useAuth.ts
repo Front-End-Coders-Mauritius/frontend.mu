@@ -1,8 +1,8 @@
-import { ref, computed } from "vue";
+import { ref, computed, type Ref } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser, base64Url } from './../utils/helpers';
 import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
 
-import type { RSVPMetaData, SiteToast, User } from "../utils/types";
+import type { Attendee, RSVPMetaData, SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
@@ -13,12 +13,13 @@ let user = ref<User | null>(null);
 let rawUser = ref<DirectusAstroUser | null>(null);
 let responseFromServer = ref<any>(null);
 let isLoading = ref(false);
+let meetupAttendees: Ref<Record<string, Attendee[]>> = ref({});
 
 let toastMessage = ref<SiteToast>({
     title: undefined,
     message: undefined,
     type: undefined,
-    visible: false
+    visible: false,
 })
 
 export function getClient() {
@@ -26,8 +27,8 @@ export function getClient() {
 }
 
 export function useToast() {
-    function show(err: SiteToast) {
-        toastMessage.value = err
+    function show(message: SiteToast) {
+        toastMessage.value = message
     }
 
     function hide() {
@@ -70,6 +71,10 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     function logoutCookie() {
         // set cookie logic
         document.cookie = `access_token=; expires=${new Date().toUTCString()}; path=/`;
+    }
+
+    function filterAttendees(result: Attendee[]) {
+        return result.filter(attendee => attendee.name !== null).filter(attendee => attendee.is_public);
     }
 
     async function loginWithUsernameAndPassword(email: string, password: string) {
@@ -117,7 +122,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             setCookie(response.data);
             await getCurrentUser()
             setAuth(true)
-            console.log(rawUser.value)
             if (!rawUser.value?.profile_picture) {
                 let picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id)
                 console.log(picture)
@@ -217,34 +221,51 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
 
     // !TODO refactor to use object instead
-    async function updateUserProfile(data: DirectusAstroUser, currentEventId: string = '', metadata: RSVPMetaData, isCancelling: boolean = false) {
+    async function updateUserProfile(
+        {
+            profile_updates,
+            event_id,
+            rsvp_updates,
+        }: {
+            profile_updates: DirectusAstroUser,
+            event_id: string,
+            rsvp_updates: RSVPMetaData,
+        }) {
+
+        console.log(rsvp_updates)
+
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
 
             if (!token) {
                 isLoading.value = false;
+                useToast().show({
+                    title: "Session expired",
+                    message: "Please login again.",
+                    type: "INFO",
+                    visible: true,
+                })
                 throw new Error('User is not logged in')
             }
 
             client = await client.with(staticToken(token))
 
-            const result = await client.request(updateMe(data));
+            const result = await client.request(updateMe(profile_updates));
+            console.log('profile updated')
 
-            if (!isCancelling) {
-                updateRsvpMetadata(currentEventId, metadata)
-            }
+            await updateRsvp(event_id, rsvp_updates)
+
 
             await getCurrentUser();
             isLoading.value = false;
 
-            console.log(result)
         } catch (error) {
             console.log(error)
         }
     }
 
-    async function updateRsvpMetadata(currentEventId: string, metadata: RSVPMetaData) {
+    async function cancelRsvp({ currentEventId }: { currentEventId: string }) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -256,7 +277,41 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             client = await client.with(staticToken(token))
 
-            console.log(currentEventId)
+            let eventIds = currentEventsRSVP.value.map(event => event.Events_id);
+            let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== currentEventId);
+
+            let data = { Events: updatedEvents }
+
+            if (eventIds.includes(currentEventId)) {
+                const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
+                if (confirmNotAttending) {
+                    await client.request(updateMe(data));
+                } else {
+                    return;
+                }
+            }
+
+            await getCurrentUser();
+            await getListOfAttendeees(currentEventId);
+            isLoading.value = false;
+
+            console.log('rsvp cancelled')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function updateRsvp(currentEventId: string, metadata: RSVPMetaData) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
 
             const query_object = {
                 filter: {
@@ -271,17 +326,28 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
 
-            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKeyQuery[0].id, {
+            const rsvp_updates = {
                 meta: metadata.meta,
                 meal: metadata.meal,
                 transport: metadata.transport,
                 occupation: metadata.occupation,
                 is_public: metadata.is_public,
-            }));
+                name: metadata.name,
+                profile_picture: metadata.profile_picture
+            }
 
+            const primaryKey = primaryKeyQuery[0].id
+
+            console.log({ primaryKey })
+            console.log({ rsvp_updates })
+
+            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKey, rsvp_updates));
+
+            console.log('rsvp updated')
+
+            await getListOfAttendeees(currentEventId);
             await getCurrentUser();
 
-            console.log(updateMetaResult);
             isLoading.value = false;
         } catch (error) {
             console.log(error)
@@ -313,6 +379,41 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     }
 
+    async function getListOfAttendeees(currentEventId: string) {
+
+        console.log('getting attendee list')
+        const token = getCookieValue('access_token')
+
+        if (!token) {
+            isLoading.value = false;
+            throw new Error('User is not logged in')
+        }
+
+        client = await client.with(staticToken(token))
+
+        const query_object = {
+            filter: {
+                Events_id: {
+                    _eq: currentEventId
+                },
+            },
+            fields: [
+                "*",
+            ]
+        }
+
+        try {
+            const result = await client.request<Attendee[]>(readItems('Events_directus_users', query_object));
+            let attendees = filterAttendees(result);
+            meetupAttendees.value[currentEventId] = attendees
+            return attendees
+        } catch (err) {
+            console.log(err)
+            throw new Error(err)
+        }
+
+    }
+
     return {
         cloudFunctionUpdateProfilePicture,
         loginWithUsernameAndPassword,
@@ -327,8 +428,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         loginWithSSO,
         oAuthLogin,
         updateUserProfile,
+        cancelRsvp,
+        getListOfAttendeees,
         currentEventsRSVP,
         isLoading,
-        avatarUrl
+        avatarUrl,
+        meetupAttendees
     }
 }

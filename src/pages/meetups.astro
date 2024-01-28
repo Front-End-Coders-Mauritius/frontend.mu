@@ -4,6 +4,7 @@ import eventsResponse from "@data/meetups-raw.json";
 import EventCardModernDetailed from "../components/event-card-modern-detailed.astro";
 import BaseHeading from "../components/base/BaseHeading.astro";
 import ContentBlock from "@layouts/partials/ContentBlock.astro";
+import { isUpcoming, type Meetup } from "@components/HomeLatestMeetup.astro";
 
 // group response by year and sort by reverse date
 
@@ -15,6 +16,20 @@ const grouped = eventsResponse.reduce((acc, event) => {
   acc[year].push(event);
   return acc;
 }, {});
+
+const getUpcomingData = () => {
+  if (!eventsResponse) return [];
+  const sortedData = eventsResponse.sort((a, b) => {
+    return new Date(b.Date).getTime() - new Date(a.Date).getTime();
+  });
+
+  return sortedData.filter((item) => {
+    return !isUpcoming(item.Date);
+  });
+};
+
+const upcomingData = getUpcomingData();
+const nextMeetupId = [upcomingData[upcomingData.length - 1]][0].id;
 
 const title = "All meetups";
 const description = "A list of all meetups we've held";
@@ -45,7 +60,7 @@ const description = "A list of all meetups we've held";
               </div>
               <div class="grid grid-cols-2 gap-4 relative z-10">
                 {grouped[year].map((event) => (
-                  <EventCardModernDetailed event={event} />
+                  <EventCardModernDetailed event={event} isNextMeetup={event.id === nextMeetupId} />
                 ))}
               </div>
             </div>

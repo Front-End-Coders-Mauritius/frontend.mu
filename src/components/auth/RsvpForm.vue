@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import FormLabel from './FormLabel.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
-import { computed, shallowRef, defineModel, type Ref, onMounted } from 'vue';
+import { computed, shallowRef, defineModel, type Ref, onMounted, ref, watch } from 'vue';
 import BaseButton from '@components/base/BaseButton.vue';
 import FormRadio from '@components/auth/FormRadio.vue';
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
@@ -39,7 +39,7 @@ const props = defineProps<{
 }>();
 
 
-const { isLoading, avatarUrl, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
+const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp } = useAuth(getClient());
 
 const full_name = computed(() => {
     if (rawUser) {
@@ -62,32 +62,12 @@ const isAttendingCurrentEvent = computed(() => {
     return currentEventsRSVP.value.some(event => event.Events_id === props.meetupId);
 });
 
-function cancelRsvpToCurrentMeetup(meetupId: string) {
-    // If already attending, remove from array and update profile
-    let eventIds = currentEventsRSVP.value.map(event => event.Events_id);
-    if (eventIds.includes(meetupId)) {
-        const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
-        if (confirmNotAttending) {
-            let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== meetupId);
-            updateUserProfile(
-                {
-                    Events: updatedEvents
-                }, meetupId,
-                {
-                    meal: foodSelection.value.value,
-                    transport: transportSelection.value.value,
-                    occupation: professionSelection.value.value,
-                    is_public: true // @todo: set the right value
-                },
-                true
-            );
 
-        }
-        return;
-    }
+function cancelRsvpToCurrentMeetup(meetupId: string) {
+    cancelRsvp({ currentEventId: meetupId });
 }
 
-function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
+async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
     // check if item already in array
     let updatedEvents = Array.from(
         new Set([
@@ -104,21 +84,26 @@ function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
         return { "Events_id": eventId };
     });
 
-    updateUserProfile(
+    await updateUserProfile(
         {
-            Events: uniqueArrayOfObjects,
-            meal: foodSelection.value.value,
-            transport: transportSelection.value.value,
-            occupation: professionSelection.value.value
-        },
-        props.meetupId,
-        {
-            meal: foodSelection.value.value,
-            transport: transportSelection.value.value,
-            occupation: professionSelection.value.value,
-            is_public: true // @todo: set the right value
-        }
-    );
+            profile_updates: {
+                Events: uniqueArrayOfObjects,
+                meal: foodSelection.value.value,
+                transport: transportSelection.value.value,
+                occupation: professionSelection.value.value
+            },
+            event_id: props.meetupId,
+            rsvp_updates: {
+                name: user.value?.full_name,
+                profile_picture: user.value?.profile_picture,
+                meal: foodSelection.value.value,
+                transport: transportSelection.value.value,
+                occupation: professionSelection.value.value,
+                is_public: true // @todo: set the right value
+            }
+        });
+
+    formIsLocked.value = true;
 }
 
 // Food Preferences
@@ -160,6 +145,20 @@ function findObjectByValue(value: string, obj) {
     return obj.filter(item => item.value === value)[0]
 }
 
+const formIsLocked = ref(true);
+
+onMounted(() => {
+    if (isAttendingCurrentEvent.value) {
+        formIsLocked.value = true;
+    } else {
+        formIsLocked.value = false;
+    }
+})
+
+function unlockForm() {
+    formIsLocked.value = false;
+}
+
 
 // onLoad fill my food selection
 onMounted(() => {
@@ -181,11 +180,11 @@ onMounted(() => {
 //     return `https://github.com/${rawUser.value?.github_username}.png`
 // })
 
-defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
+defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unlockForm })
 </script>
 <template>
     <div class="flex flex-col-reverse md:flex-row md:gap-8 gap-4">
-        <div class="flex flex-col  md:gap-8 gap-4 flex-1">
+        <div class="flex flex-col md:gap-8 gap-4 flex-2">
             <!-- <div class="flex justify-center font-bold text-lg">
             <h2>RSVP</h2>
         </div> -->
@@ -204,7 +203,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
                 <RadioGroup v-model="transportSelection">
                     <RadioGroupLabel class="sr-only">Transport</RadioGroupLabel>
                     <div class="flex gap-4 flex-wrap">
-                        <FormRadio :options="transportOptions" />
+                        <FormRadio :disabled="formIsLocked" :options="transportOptions" />
                     </div>
                 </RadioGroup>
             </FormLabel>
@@ -213,7 +212,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
                 <RadioGroup v-model="foodSelection">
                     <RadioGroupLabel class="sr-only">Meal</RadioGroupLabel>
                     <div class="flex gap-4 flex-wrap">
-                        <FormRadio :options="foodOptions" />
+                        <FormRadio :disabled="formIsLocked" :options="foodOptions" />
                     </div>
                 </RadioGroup>
             </FormLabel>
@@ -222,7 +221,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
                 <RadioGroup v-model="professionSelection">
                     <RadioGroupLabel class="sr-only">Profession</RadioGroupLabel>
                     <div class="flex gap-4 flex-wrap">
-                        <FormRadio :options="professionOptions" />
+                        <FormRadio :disabled="formIsLocked" :options="professionOptions" />
                     </div>
                 </RadioGroup>
             </FormLabel>
@@ -231,7 +230,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup })
                 <RadioGroup v-model="showMeAsAttendingSelection">
                     <RadioGroupLabel class="sr-only">Public Visiblity</RadioGroupLabel>
                     <div class="flex gap-4 flex-wrap">
-                        <FormRadio :options="showMeAsAttendingOptions" />
+                        <FormRadio :disabled="formIsLocked" :options="showMeAsAttendingOptions" />
                     </div>
                 </RadioGroup>
             </FormLabel> -->
