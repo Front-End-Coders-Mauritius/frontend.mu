@@ -39,7 +39,7 @@ const props = defineProps<{
 }>();
 
 
-const { isLoading, avatarUrl, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp } = useAuth(getClient());
+const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp } = useAuth(getClient());
 
 const full_name = computed(() => {
     if (rawUser) {
@@ -64,21 +64,7 @@ const isAttendingCurrentEvent = computed(() => {
 
 
 function cancelRsvpToCurrentMeetup(meetupId: string) {
-    // If already attending, remove from array and update profile
-    let eventIds = currentEventsRSVP.value.map(event => event.Events_id);
-    if (eventIds.includes(meetupId)) {
-        const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
-        if (confirmNotAttending) {
-            let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== meetupId);
-            cancelRsvp(
-                {
-                    Events: updatedEvents
-                }, meetupId
-            );
-
-        }
-        return;
-    }
+    cancelRsvp({ currentEventId: meetupId });
 }
 
 async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
@@ -100,19 +86,22 @@ async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
 
     await updateUserProfile(
         {
-            Events: uniqueArrayOfObjects,
-            meal: foodSelection.value.value,
-            transport: transportSelection.value.value,
-            occupation: professionSelection.value.value
-        },
-        props.meetupId,
-        {
-            meal: foodSelection.value.value,
-            transport: transportSelection.value.value,
-            occupation: professionSelection.value.value,
-            is_public: true // @todo: set the right value
-        }
-    );
+            profile_updates: {
+                Events: uniqueArrayOfObjects,
+                meal: foodSelection.value.value,
+                transport: transportSelection.value.value,
+                occupation: professionSelection.value.value
+            },
+            event_id: props.meetupId,
+            rsvp_updates: {
+                name: user.value?.full_name,
+                profile_picture: user.value?.profile_picture,
+                meal: foodSelection.value.value,
+                transport: transportSelection.value.value,
+                occupation: professionSelection.value.value,
+                is_public: true // @todo: set the right value
+            }
+        });
 
     formIsLocked.value = true;
 }

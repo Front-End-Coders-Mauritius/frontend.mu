@@ -8,7 +8,7 @@ import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
 import IconClose from "~icons/solar/close-circle-linear";
 
-const { isLoading, updateUserProfile, rawUser, currentEventsRSVP, isLoggedIn } = useAuth(getClient());
+const { currentEventsRSVP, isLoggedIn } = useAuth(getClient());
 
 const props = defineProps<{
     meetupId: string
