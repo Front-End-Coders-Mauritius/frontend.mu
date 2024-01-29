@@ -273,15 +273,12 @@ const avatar = computed(() => {
                     </div>
                 </template>
                 <template v-else>
-                    <div class="grid place-items-center gap-16">
-                        <div class="text-[50px]">You are not logged in.</div>
-                        <button
-                            class="px-8 py-4 rounded-md text-lg font-bold inline-flex items-center justify-center shadow-sm text-white bg-verse-700"
-                            @click="oAuthLogin()">
-                            <div class="flex gap-2 items-center">
-                                <span>Login to RSVP</span>
-                            </div>
-                        </button>
+                    <div class="grid place-items-center gap-8">
+                        <div class="text-2xl">You are not logged in.</div>
+
+                        <BaseButton href="/login" :color="'primary'">
+                            Login to RSVP
+                        </BaseButton>
                     </div>
                 </template>
             </div>
