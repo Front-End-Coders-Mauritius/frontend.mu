@@ -26,7 +26,7 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
         </h2>
     </div>
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-        <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+        <div class="bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl sm:rounded-lg sm:px-12">
             <div v-if="isLoggedIn">
                 <div class="text-center flex flex-col gap-8">
                     <span>
@@ -74,12 +74,13 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
                 </form>
 
                 <div v-else>
+                    <div class="relative flex justify-center text-sm font-medium leading-6">
+                        <span class="bg-white px-6 text-gray-900">Or continue with</span>
+                    </div>
+
                     <div class="relative">
                         <div class="absolute inset-0 flex items-center" aria-hidden="true">
                             <div class="w-full border-t border-gray-200" />
-                        </div>
-                        <div class="relative flex justify-center text-sm font-medium leading-6">
-                            <span class="bg-white px-6 text-gray-900">Or continue with</span>
                         </div>
                     </div>
 
