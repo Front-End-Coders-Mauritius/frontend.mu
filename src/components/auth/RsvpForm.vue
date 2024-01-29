@@ -39,7 +39,7 @@ const props = defineProps<{
 }>();
 
 
-const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp } = useAuth(getClient());
+const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp, vraiRsvp } = useAuth(getClient());
 
 const full_name = computed(() => {
     if (rawUser) {
@@ -68,26 +68,17 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
 }
 
 async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
-    // check if item already in array
-    let updatedEvents = Array.from(
-        new Set([
-            ...currentEventsRSVP.value,
-            {
-                Events_id: meetupId
-            }
-        ])
-    );
 
-    // Remove duplicate events
-    let uniqueEvents = Array.from(new Set(updatedEvents.map(obj => obj.Events_id)));
-    const uniqueArrayOfObjects = uniqueEvents.map(eventId => {
-        return { "Events_id": eventId };
-    });
+    if (user.value?.id) {
+        await vraiRsvp({
+            eventId: meetupId,
+            userId: user.value?.id,
+        })
+    }
 
     await updateUserProfile(
         {
             profile_updates: {
-                Events: uniqueArrayOfObjects,
                 meal: foodSelection.value.value,
                 transport: transportSelection.value.value,
                 occupation: professionSelection.value.value

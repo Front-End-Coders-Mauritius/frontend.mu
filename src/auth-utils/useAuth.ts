@@ -220,7 +220,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    // !TODO refactor to use object instead
+    // !TODO refactor to use object instead     
     async function updateUserProfile(
         {
             profile_updates,
@@ -263,6 +263,28 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         } catch (error) {
             console.log(error)
         }
+    }
+
+    async function vraiRsvp({ eventId, userId }: { eventId: string, userId: string }) {
+
+        let payload = {
+            "Events": {
+                "create": [{ "directus_users_id": userId, "Events_id": { "id": eventId } }],
+                "update": [],
+                "delete": []
+            }
+        }
+
+        const result = await fetch(`https://directus.frontend.mu/users/me`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getCookieValue('access_token')}`
+            },
+            body: JSON.stringify(payload)
+        })
+
     }
 
     async function cancelRsvp({ currentEventId }: { currentEventId: string }) {
@@ -433,6 +455,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         currentEventsRSVP,
         isLoading,
         avatarUrl,
-        meetupAttendees
+        meetupAttendees,
+        vraiRsvp
     }
 }
