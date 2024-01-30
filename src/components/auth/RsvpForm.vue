@@ -151,14 +151,14 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 
             <FormLabel label="Name">
                 <input type="text" v-model="user_full_name" :disabled="formIsLocked" :class="[
-                    formIsLocked ? 'bg-transparent' : 'shadow-inner bg-verse-900/40   px-2'
+                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10   px-2'
                 ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
             </FormLabel>
 
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
             <FormLabel label="Phone">
                 <input type="text" v-model="user_phone" :disabled="formIsLocked" :class="[
-                    formIsLocked ? 'bg-transparent' : 'shadow-inner bg-verse-900/40  px-2'
+                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2'
                 ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
             </FormLabel>
 
@@ -214,7 +214,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 
         <div class="hidden md:grid place-items-center flex-1 w-full" v-if="avatarUrl">
             <div class="ring-2 ring-white rounded-full">
-                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-10 md:w-32 overflow-hidden">
+                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-10 md:w-32 -mt-10 overflow-hidden">
             </div>
         </div>
     </div>
