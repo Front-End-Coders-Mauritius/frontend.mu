@@ -161,6 +161,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "id",
             "first_name",
             "last_name",
+            "full_name",
             "email",
             "phone",
             "transport",
@@ -224,15 +225,13 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     async function updateUserProfile(
         {
             profile_updates,
-            event_id,
-            rsvp_updates,
+            // event_id,
+            // rsvp_updates,
         }: {
             profile_updates: DirectusAstroUser,
-            event_id: string,
-            rsvp_updates: RSVPMetaData,
+            // event_id: string,
+            // rsvp_updates: RSVPMetaData,
         }) {
-
-        console.log(rsvp_updates)
 
         try {
             isLoading.value = true;
@@ -254,7 +253,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const result = await client.request(updateMe(profile_updates));
             console.log('profile updated')
 
-            await updateRsvp(event_id, rsvp_updates)
+            // await updateRsvp(event_id, rsvp_updates)
 
 
             await getCurrentUser();
