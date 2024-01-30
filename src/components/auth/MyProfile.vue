@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue';
+import { computed, onMounted, reactive, shallowRef } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
-import { base64Url } from '@utils/helpers';
+import { base64Url, findObjectByValue } from '@utils/helpers';
 import SideInfo from './SideInfo.vue'
+import { foodOptions, transportOptions, professionOptions, showMeAsAttendingOptions } from './constants';
+import FormLabel from './FormLabel.vue';
+import FormRadio from '@components/auth/FormRadio.vue';
+import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
+
 const {
     user,
     rawUser,
@@ -22,9 +27,6 @@ const userDetails = reactive({
     email: '',
     full_name: '',
     phone: '',
-    transport: '',
-    meal: '',
-    occupation: '',
     github_username: '',
     profile_picture: '',
 })
@@ -33,9 +35,6 @@ function setUserDetails() {
     userDetails.email = user.value?.email || '';
     userDetails.full_name = user.value?.full_name || '';
     userDetails.phone = user.value?.phone || '';
-    userDetails.meal = user.value?.meal || '';
-    userDetails.transport = user.value?.transport || '';
-    userDetails.occupation = user.value?.occupation || '';
     userDetails.github_username = user.value?.github_username || '';
     userDetails.profile_picture = user.value?.profile_picture || '';
 }
@@ -46,15 +45,45 @@ onMounted(async () => {
     }
 });
 
+// Food Preferences
+
+const foodSelection = shallowRef(foodOptions[1]);
+
+// Transport Preferences
+
+const transportSelection = shallowRef(transportOptions[1]);
+
+// Profession Preferences
+
+const professionSelection = shallowRef(professionOptions[0]);
+
+// Show me as attending
+
+const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
+
+onMounted(() => {
+    let mealValue = rawUser.value?.meal || foodOptions[0].value;
+    foodSelection.value = findObjectByValue(mealValue, foodOptions)
+
+    let transportValue = rawUser.value?.transport || transportOptions[0].value;
+    transportSelection.value = findObjectByValue(transportValue, transportOptions)
+
+    let professionValue = rawUser.value?.occupation || professionOptions[0].value;
+    professionSelection.value = findObjectByValue(professionValue, professionOptions)
+
+    // let showMeAsAttendingValue = rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
+    // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
+})
+
 
 function updateProfile() {
     let extractEditableFields = {
         phone: userDetails.phone,
-        transport: userDetails.transport,
         full_name: userDetails.full_name,
-        meal: userDetails.meal,
-        occupation: userDetails.occupation,
-        github_username: userDetails.github_username
+        github_username: userDetails.github_username,
+        occupation: professionSelection.value.value,
+        meal: foodSelection.value.value,
+        transport: transportSelection.value.value,
     }
 
     updateUserProfile({
@@ -166,8 +195,8 @@ function updateProfile() {
                         you decide to attend an upcoming meetup.
                     </SideInfo>
 
-                    <div class="flex flex-col gap-8">
-                        <div>
+                    <div class="flex flex-col gap-8 col-span-2">
+                        <!-- <div>
                             <div class="col-span-full">
                                 <label for="meal" class="block text-lg font-medium leading-6">Meal</label>
                                 <div class="mt-2">
@@ -186,9 +215,36 @@ function updateProfile() {
                                         class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div>
+                        <FormLabel label="Transport">
+                            <RadioGroup v-model="transportSelection">
+                                <RadioGroupLabel class="sr-only">Transport</RadioGroupLabel>
+                                <div class="flex gap-4 flex-wrap">
+                                    <FormRadio :disabled="isLoading" :options="transportOptions" />
+                                </div>
+                            </RadioGroup>
+                        </FormLabel>
+
+                        <FormLabel label="Meal">
+                            <RadioGroup v-model="foodSelection">
+                                <RadioGroupLabel class="sr-only">Meal</RadioGroupLabel>
+                                <div class="flex gap-4 flex-wrap">
+                                    <FormRadio :disabled="isLoading" :options="foodOptions" />
+                                </div>
+                            </RadioGroup>
+                        </FormLabel>
+
+                        <FormLabel label="Profession">
+                            <RadioGroup v-model="professionSelection">
+                                <RadioGroupLabel class="sr-only">Profession</RadioGroupLabel>
+                                <div class="flex gap-4 flex-wrap">
+                                    <FormRadio :disabled="isLoading" :options="professionOptions" />
+                                </div>
+                            </RadioGroup>
+                        </FormLabel>
+
+                        <!-- <div>
                             <div class="col-span-full">
                                 <label for="occupation" class="block text-lg font-medium leading-6">Occupation</label>
                                 <div class="mt-2">
@@ -197,7 +253,7 @@ function updateProfile() {
                                         class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div>

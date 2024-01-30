@@ -79,3 +79,7 @@ export const convertTo24HourFormat = (timeStr: string) => {
 export const base64Url = (base64String: string): string => {
   return "data:image/png;base64," + base64String;
 }
+
+export function findObjectByValue(value: string, obj) {
+  return obj.filter(item => item.value === value)[0]
+}
