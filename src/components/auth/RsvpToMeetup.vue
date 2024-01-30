@@ -129,7 +129,7 @@ function saveForm() {
 
                                 <Transition name="fade" mode="out-in">
                                     <IconClose
-                                        class="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-4xl text-gray-400 cursor-pointer hover:text-white"
+                                        class="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-4xl dark:text-gray-400 cursor-pointer dark:hover:text-white hover:text-verse-700"
                                         v-if="rsvpPaneOpen" @click="rsvpPaneOpen = false" />
                                 </Transition>
 

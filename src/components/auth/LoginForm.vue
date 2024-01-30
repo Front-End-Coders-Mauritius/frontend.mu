@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import LogosGoogleIcon from "~icons/logos/google-icon";
 import LogoFec from "@components/logo-fec.vue";
+import BaseButton from "@components/base/BaseButton.vue";
 // import LogosGitHubIcon from "~icons/logos/github-icon";
 
 
@@ -28,11 +29,19 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div class="bg-verse-200/10 dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl sm:rounded-lg sm:px-12">
             <div v-if="isLoggedIn">
-                <div class="text-center flex flex-col gap-8">
+                <div class="text-center flex flex-col gap-8 text-verse-900 dark:text-verse-100 w-full">
                     <span>
                         You are logged in as <a class="underline" href="/user/me"> {{ user?.full_name }}</a>
                     </span>
-                    <button @click="logout">Logout</button>
+
+                    <div class="grid grid-cols-2 gap-4 w-full justify-evenly">
+                        <BaseButton @click="logout" color="neutral">
+                            Logout
+                        </BaseButton>
+                        <BaseButton href="/user/me">
+                            My profile
+                        </BaseButton>
+                    </div>
                 </div>
             </div>
             <div v-else>

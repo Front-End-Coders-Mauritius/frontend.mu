@@ -2,6 +2,8 @@
 import { onMounted } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn, avatarUrl } = useAuth(getClient());
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 onMounted(() => {
   checkIfLoggedIn();
@@ -10,26 +12,54 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="dark:text-zinc-200 dark:ring-white/10">
+  <div class="dark:text-zinc-200 dark:ring-white/10 pl-4">
 
-    <a class="px-2" v-if="!isLoggedIn" href="/login">
+    <a v-if="!isLoggedIn" href="/login">
       Log In
     </a>
-    <div v-else class="flex  gap-2 items-center">
-      <div class="group relative hover:bg-white/60 hover:text-verse-800 rounded-t-xl px-2 ">
-        <a href="/user/me" v-bind:title="'Hello ' + user?.full_name + '!'" class="md:block hidden">
-          {{ user?.full_name }}
-        </a>
-        <div
-          class="group-hover:block hidden text-sm text-right absolute bg-white/60 w-full left-0 rounded-b-xl py-2 px-2">
-          <button class="w-full text-right" @click="logout">
-            Log Out
-          </button>
+    <div v-else class="flex gap-2 items-center">
+      <Menu as="div" class="relative inline-block text-left">
+        <div>
+          <MenuButton
+            class="inline-flex items-center w-full justify-center gap-x-1.5 rounded-full  text-sm font-semibold text-verse-900 dark:text-verse-100 shadow-sm  ring-gray-300 hover:bg-gray-50">
+            <div v-if="avatarUrl">
+              <img class="w-10 aspect-square rounded-full" :src="avatarUrl">
+            </div>
+            <!-- <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" /> -->
+          </MenuButton>
         </div>
-      </div>
-      <div v-if="avatarUrl">
-        <img class="w-10 aspect-square rounded-full" :src="avatarUrl">
-      </div>
+
+        <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95"
+          enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
+          leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+          <MenuItems
+            class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100/10 rounded-md bg-verse-200/10 dark:bg-verse-500/20 dark:backdrop-blur-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div class="py-1">
+              <MenuItem v-slot="{ active }">
+              <a href="/user/me"
+                :class="[active ? 'bg-gray-400/10 text-verse-900 dark:text-verse-100' : 'text-verse-900 dark:text-verse-100', 'block px-4 py-2 text-sm']">My
+                Profile</a>
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+              <a @click="logout()"
+                :class="[active ? 'bg-gray-400/10 text-verse-900 dark:text-verse-100' : 'text-verse-900 dark:text-verse-100', 'block px-4 py-2 text-sm cursor-pointer']">Logout</a>
+              </MenuItem>
+            </div>
+            <div class="text-verse-900 dark:text-verse-100 p-4 text-sm">
+              <div class="flex flex-col items-center justify-center gap-2">
+                <div v-if="avatarUrl">
+                  <img class="w-16 aspect-square rounded-full" :src="avatarUrl">
+                </div>
+
+                {{ user?.full_name }}
+              </div>
+            </div>
+
+          </MenuItems>
+        </transition>
+      </Menu>
+
+
     </div>
   </div>
 </template>

@@ -33,9 +33,14 @@ export const formatDate = (date: string) => {
 };
 
 export const mapToValidUser = (user: any): User => {
+
+  const full_name = user?.full_name
+    ? user.full_name
+    : user.first_name + " " + user.last_name
+
   return {
     id: user.id,
-    full_name: user.first_name + " " + user.last_name,
+    full_name,
     email: user.email,
     current_occupation: user?.current_occupation || "",
     meal: user?.meal || "",
@@ -73,4 +78,8 @@ export const convertTo24HourFormat = (timeStr: string) => {
 
 export const base64Url = (base64String: string): string => {
   return "data:image/png;base64," + base64String;
+}
+
+export function findObjectByValue(value: string, obj) {
+  return obj.filter(item => item.value === value)[0]
 }

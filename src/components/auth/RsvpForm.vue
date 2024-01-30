@@ -1,37 +1,14 @@
 
 <script setup lang="ts">
-import FormLabel from './FormLabel.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import { computed, shallowRef, defineModel, type Ref, onMounted, ref, watch } from 'vue';
 import BaseButton from '@components/base/BaseButton.vue';
+import FormLabel from './FormLabel.vue';
 import FormRadio from '@components/auth/FormRadio.vue';
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
-import type { DirectusEvent, Meal, Transport, Occupation } from '@utils/types';
-
-import IconUserAvatar from "~icons/carbon/user-avatar";
-import CalendarDaysIcon from "~icons/carbon/calendar";
-import TimeIcon from "~icons/carbon/time";
-
-import IconUp from "~icons/solar/double-alt-arrow-up-linear";
-import IconDown from "~icons/solar/double-alt-arrow-down-linear";
-
-import IconChicken from "~icons/icon-park-twotone/chicken";
-import IconVegan from "~icons/iconoir/vegan";
-import IconBus from "~icons/mdi/bus-side";
-import IconCar from "~icons/mdi/car-side";
-import IconBroom from "~icons/game-icons/magic-broom";
-import IconRide from "~icons/ic/round-thumb-up-off-alt";
-import IconNoFood from "~icons/radix-icons/component-none";
-
-import IconPhone from "~icons/material-symbols/phone-android-outline-rounded";
-import IconEmail from "~icons/material-symbols/mail-outline-rounded";
-import IconPublic from "~icons/material-symbols/public";
-
-import IconDeveloper from "~icons/ic/round-code";
-import IconStudent from "~icons/ph/student";
-import IconManager from "~icons/material-symbols/person-celebrate-rounded";
-import IconDesigner from "~icons/ph/paint-brush-duotone";
-import IconHr from "~icons/mdi/briefcase-account";
+import type { DirectusEvent, Meal, Transport, Occupation, RSVPResponse } from '@utils/types';
+import { foodOptions, transportOptions, professionOptions, showMeAsAttendingOptions } from './constants';
+import { findObjectByValue } from '@utils/helpers';
 
 const props = defineProps<{
     meetupId: string
@@ -39,14 +16,10 @@ const props = defineProps<{
 }>();
 
 
-const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp, vraiRsvp } = useAuth(getClient());
+const { isLoading, avatarUrl, updateUserProfile, checkIfLoggedIn, user, rawUser, currentEventsRSVP, getRsvp, isLoggedIn, cancelRsvp, createRsvp, updateRsvp } = useAuth(getClient());
 
-const full_name = computed(() => {
-    if (rawUser) {
-        return `${rawUser.value?.first_name} ${rawUser.value?.last_name}`;
-    }
-    return '';
-});
+const user_full_name = ref();
+const user_phone = ref()
 
 const requiredFields = {
     name: 'Name',
@@ -70,7 +43,7 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
 async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
 
     if (user.value?.id) {
-        await vraiRsvp({
+        await createRsvp({
             eventId: meetupId,
             userId: user.value?.id,
         })
@@ -81,68 +54,62 @@ async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
             profile_updates: {
                 meal: foodSelection.value.value,
                 transport: transportSelection.value.value,
-                occupation: professionSelection.value.value
-            },
-            event_id: props.meetupId,
-            rsvp_updates: {
-                name: user.value?.full_name,
-                profile_picture: user.value?.profile_picture,
-                meal: foodSelection.value.value,
-                transport: transportSelection.value.value,
                 occupation: professionSelection.value.value,
-                is_public: true // @todo: set the right value
-            }
+                full_name: user_full_name.value,
+                phone: user_phone.value
+            },
+
         });
+
+    await updateRsvp({
+        event_id: props.meetupId,
+        rsvp_updates: {
+            name: user.value?.full_name,
+            profile_picture: user.value?.profile_picture,
+            meal: foodSelection.value.value,
+            transport: transportSelection.value.value,
+            occupation: professionSelection.value.value,
+            is_public: true // @todo: set the right value
+        }
+    })
 
     formIsLocked.value = true;
 }
 
 // Food Preferences
-const foodOptions = [
-    { value: "none", name: "None", icon: IconNoFood },
-    { value: "veg", name: "Veg", icon: IconVegan },
-    { value: "non_veg", name: "Non/Veg", icon: IconChicken },
-] as { value: Meal, name: string, icon: astroHTML.JSX.Element }[];
+
 const foodSelection = shallowRef(foodOptions[1]);
 
 // Transport Preferences
-const transportOptions = [
-    { value: "bus", name: "Bus", icon: IconBus },
-    { value: "car", name: "Car", icon: IconCar },
-    { value: "need_a_ride", name: "Need a ride", icon: IconRide },
-    { value: "other", name: "Other", icon: IconBroom },
-] as { value: Transport, name: string, icon: astroHTML.JSX.Element }[];
+
 const transportSelection = shallowRef(transportOptions[1]);
 
 // Profession Preferences
-const professionOptions = [
-    { value: "developer", name: "Developer", icon: IconDeveloper },
-    { value: "student", name: "Student", icon: IconStudent },
-    { value: "manager", name: "Manager", icon: IconManager },
-    { value: "designer", name: "Designer", icon: IconDesigner },
-    { value: "hr", name: "Hr", icon: IconHr },
-    { value: "other", name: "Other", icon: IconHr },
-] as { value: Occupation, name: string, icon: astroHTML.JSX.Element }[];
+
 const professionSelection = shallowRef(professionOptions[0]);
 
 // Show me as attending
-const showMeAsAttendingOptions = [
-    { value: "true", name: "Public", icon: IconPublic },
-    { value: "false", name: "Hide", icon: IconNoFood },
-];
+
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
 
-function findObjectByValue(value: string, obj) {
-    return obj.filter(item => item.value === value)[0]
-}
 
 const formIsLocked = ref(true);
 
-onMounted(() => {
-    if (isAttendingCurrentEvent.value) {
-        formIsLocked.value = true;
-    } else {
-        formIsLocked.value = false;
+onMounted(async () => {
+    if (await checkIfLoggedIn()) {
+        let rsvpDetails = await getRsvp({ event_id: props.meetupId });
+
+        if (rsvpDetails) {
+            setUserDetails(rsvpDetails[0])
+        } else {
+            setUserDetails()
+        }
+
+        if (isAttendingCurrentEvent.value) {
+            formIsLocked.value = true;
+        } else {
+            formIsLocked.value = false;
+        }
     }
 })
 
@@ -150,26 +117,22 @@ function unlockForm() {
     formIsLocked.value = false;
 }
 
-
-// onLoad fill my food selection
-onMounted(() => {
-    let mealValue = rawUser.value?.meal || foodOptions[0].value;
+function setUserDetails(rsvpDetails?: RSVPResponse) {
+    let mealValue = rsvpDetails?.meal || rawUser.value?.meal || foodOptions[0].value;
     foodSelection.value = findObjectByValue(mealValue, foodOptions)
 
-    let transportValue = rawUser.value?.transport || transportOptions[0].value;
+    let transportValue = rsvpDetails?.transport || rawUser.value?.transport || transportOptions[0].value;
     transportSelection.value = findObjectByValue(transportValue, transportOptions)
 
-    let professionValue = rawUser.value?.occupation || professionOptions[0].value;
+    let professionValue = rsvpDetails?.occupation || rawUser.value?.occupation || professionOptions[0].value;
     professionSelection.value = findObjectByValue(professionValue, professionOptions)
 
-    // let showMeAsAttendingValue = rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
-    // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
-})
+    user_full_name.value = rsvpDetails?.name || user.value?.full_name
+    user_phone.value = user.value?.phone
 
-// // get user photo
-// const avatarUrl = computed(() => {
-//     return `https://github.com/${rawUser.value?.github_username}.png`
-// })
+    // let showMeAsAttendingValue = rsvpDetails?.meal ||  rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
+    // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
+}
 
 defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unlockForm })
 </script>
@@ -186,9 +149,18 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
             </BaseButton>
 
 
-            <FormLabel label="Name" :value="full_name" :disabled="true" />
+            <FormLabel label="Name">
+                <input type="text" v-model="user_full_name" :disabled="formIsLocked" :class="[
+                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10   px-2'
+                ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
+            </FormLabel>
+
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
-            <FormLabel label="Phone" :value="rawUser?.phone" />
+            <FormLabel label="Phone">
+                <input type="text" v-model="user_phone" :disabled="formIsLocked" :class="[
+                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2'
+                ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
+            </FormLabel>
 
             <FormLabel label="Transport">
                 <RadioGroup v-model="transportSelection">
@@ -242,7 +214,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 
         <div class="hidden md:grid place-items-center flex-1 w-full" v-if="avatarUrl">
             <div class="ring-2 ring-white rounded-full">
-                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-10 md:w-32 overflow-hidden">
+                <img :src="avatarUrl" alt="" class="p-2 rounded-full w-10 md:w-32 -mt-10 overflow-hidden">
             </div>
         </div>
     </div>

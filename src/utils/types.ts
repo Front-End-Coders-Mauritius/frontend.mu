@@ -163,6 +163,7 @@ export type DirectusAstroUser = {
     id?: string
     first_name?: string
     last_name?: string
+    full_name?: string
     email?: string
     meal?: string
     transport?: string
@@ -208,4 +209,12 @@ export type Attendee = {
     name: string
     profile_picture: string
     verified: boolean
+}
+
+export type RSVPResponse = {
+    is_public?: boolean
+    meal?: string
+    name?: string
+    occupation?: string
+    transport?: string
 }

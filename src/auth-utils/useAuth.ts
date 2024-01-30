@@ -2,7 +2,7 @@ import { ref, computed, type Ref } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser, base64Url } from './../utils/helpers';
 import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
 
-import type { Attendee, RSVPMetaData, SiteToast, User } from "../utils/types";
+import type { Attendee, RSVPMetaData, RSVPResponse, SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
@@ -161,13 +161,15 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "id",
             "first_name",
             "last_name",
+            "full_name",
             "email",
             "phone",
             "transport",
             "meal",
             "occupation",
             "github_username",
-            "Events.Events_id.*",
+            "Events.Events_id.id",
+            "Events.Events_id.title",
             "profile_picture",
         ]
 
@@ -220,19 +222,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    // !TODO refactor to use object instead     
-    async function updateUserProfile(
-        {
-            profile_updates,
-            event_id,
-            rsvp_updates,
-        }: {
-            profile_updates: DirectusAstroUser,
-            event_id: string,
-            rsvp_updates: RSVPMetaData,
-        }) {
-
-        console.log(rsvp_updates)
+    async function updateUserProfile({ profile_updates, }: { profile_updates: DirectusAstroUser, }) {
 
         try {
             isLoading.value = true;
@@ -254,9 +244,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const result = await client.request(updateMe(profile_updates));
             console.log('profile updated')
 
-            await updateRsvp(event_id, rsvp_updates)
-
-
             await getCurrentUser();
             isLoading.value = false;
 
@@ -265,7 +252,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
-    async function vraiRsvp({ eventId, userId }: { eventId: string, userId: string }) {
+    async function createRsvp({ eventId, userId }: { eventId: string, userId: string }) {
 
         let payload = {
             "Events": {
@@ -275,15 +262,28 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             }
         }
 
-        const result = await fetch(`https://directus.frontend.mu/users/me`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${getCookieValue('access_token')}`
-            },
-            body: JSON.stringify(payload)
-        })
+        // list all events from this user
+        const eventList = rawUser.value?.Events || []
+        const eventListIds = eventList.map((event: any) => {
+            if (typeof event === 'object') {
+                return event.Events_id.id
+            }
+        });
+
+        if (eventListIds.includes(parseInt(eventId))) {
+            // console.log('Already RSVPd, skipping')
+        } else {
+            const result = await fetch(`https://directus.frontend.mu/users/me`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${getCookieValue('access_token')}`
+                },
+                body: JSON.stringify(payload)
+            })
+        }
+
 
     }
 
@@ -323,7 +323,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
     }
 
-    async function updateRsvp(currentEventId: string, metadata: RSVPMetaData) {
+    async function getRsvp({ event_id }: { event_id: string }) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -338,7 +338,45 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             const query_object = {
                 filter: {
                     Events_id: {
-                        _eq: currentEventId
+                        _eq: event_id
+                    },
+                    directus_users_id: {
+                        _eq: user.value?.id
+                    }
+                },
+                fields: [
+                    "name",
+                    "transport",
+                    "meal",
+                    "occupation",
+                    "is_public"
+                ]
+            }
+
+            const result = await client.request<RSVPResponse[]>(readItems('Events_directus_users', query_object));
+            return result
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function updateRsvp({ event_id, rsvp_updates }: { event_id: string, rsvp_updates: RSVPMetaData }) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            const query_object = {
+                filter: {
+                    Events_id: {
+                        _eq: event_id
                     },
                     directus_users_id: {
                         _eq: user.value?.id
@@ -348,26 +386,23 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
 
-            const rsvp_updates = {
-                meta: metadata.meta,
-                meal: metadata.meal,
-                transport: metadata.transport,
-                occupation: metadata.occupation,
-                is_public: metadata.is_public,
-                name: metadata.name,
-                profile_picture: metadata.profile_picture
+            const updates = {
+                meta: rsvp_updates.meta,
+                meal: rsvp_updates.meal,
+                transport: rsvp_updates.transport,
+                occupation: rsvp_updates.occupation,
+                is_public: rsvp_updates.is_public,
+                name: rsvp_updates.name,
+                profile_picture: rsvp_updates.profile_picture
             }
 
             const primaryKey = primaryKeyQuery[0].id
 
-            console.log({ primaryKey })
-            console.log({ rsvp_updates })
-
-            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKey, rsvp_updates));
+            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKey, updates));
 
             console.log('rsvp updated')
 
-            await getListOfAttendeees(currentEventId);
+            await getListOfAttendeees(event_id);
             await getCurrentUser();
 
             isLoading.value = false;
@@ -403,7 +438,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function getListOfAttendeees(currentEventId: string) {
 
-        console.log('getting attendee list')
         const token = getCookieValue('access_token')
 
         if (!token) {
@@ -449,6 +483,9 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         client,
         loginWithSSO,
         oAuthLogin,
+        createRsvp,
+        updateRsvp,
+        getRsvp,
         updateUserProfile,
         cancelRsvp,
         getListOfAttendeees,
@@ -456,6 +493,5 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         isLoading,
         avatarUrl,
         meetupAttendees,
-        vraiRsvp
     }
 }
