@@ -33,9 +33,14 @@ export const formatDate = (date: string) => {
 };
 
 export const mapToValidUser = (user: any): User => {
+
+  const full_name = user?.full_name
+    ? user.full_name
+    : user.first_name + " " + user.last_name
+
   return {
     id: user.id,
-    full_name: user.first_name + " " + user.last_name,
+    full_name,
     email: user.email,
     current_occupation: user?.current_occupation || "",
     meal: user?.meal || "",
