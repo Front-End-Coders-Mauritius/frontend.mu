@@ -16,7 +16,7 @@ const props = defineProps<{
 }>();
 
 
-const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp, vraiRsvp } = useAuth(getClient());
+const { isLoading, avatarUrl, updateUserProfile, user, rawUser, currentEventsRSVP, isLoggedIn, cancelRsvp, createRsvp, updateRsvp } = useAuth(getClient());
 
 const full_name = computed(() => {
     if (rawUser) {
@@ -47,7 +47,7 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
 async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
 
     if (user.value?.id) {
-        await vraiRsvp({
+        await createRsvp({
             eventId: meetupId,
             userId: user.value?.id,
         })
@@ -60,16 +60,20 @@ async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
                 transport: transportSelection.value.value,
                 occupation: professionSelection.value.value
             },
-            // event_id: props.meetupId,
-            // rsvp_updates: {
-            //     name: user.value?.full_name,
-            //     profile_picture: user.value?.profile_picture,
-            //     meal: foodSelection.value.value,
-            //     transport: transportSelection.value.value,
-            //     occupation: professionSelection.value.value,
-            //     is_public: true // @todo: set the right value
-            // }
+
         });
+
+    await updateRsvp({
+        event_id: props.meetupId,
+        rsvp_updates: {
+            name: user.value?.full_name,
+            profile_picture: user.value?.profile_picture,
+            meal: foodSelection.value.value,
+            transport: transportSelection.value.value,
+            occupation: professionSelection.value.value,
+            is_public: true // @todo: set the right value
+        }
+    })
 
     formIsLocked.value = true;
 }
