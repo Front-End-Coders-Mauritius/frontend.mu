@@ -210,3 +210,11 @@ export type Attendee = {
     profile_picture: string
     verified: boolean
 }
+
+export type RSVPResponse = {
+    is_public?: boolean
+    meal?: string
+    name?: string
+    occupation?: string
+    transport?: string
+}

@@ -2,7 +2,7 @@ import { ref, computed, type Ref } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser, base64Url } from './../utils/helpers';
 import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
 
-import type { Attendee, RSVPMetaData, SiteToast, User } from "../utils/types";
+import type { Attendee, RSVPMetaData, RSVPResponse, SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
 import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
 
@@ -222,17 +222,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
     }
 
-    // !TODO refactor to use object instead     
-    async function updateUserProfile(
-        {
-            profile_updates,
-            // event_id,
-            // rsvp_updates,
-        }: {
-            profile_updates: DirectusAstroUser,
-            // event_id: string,
-            // rsvp_updates: RSVPMetaData,
-        }) {
+    async function updateUserProfile({ profile_updates, }: { profile_updates: DirectusAstroUser, }) {
 
         try {
             isLoading.value = true;
@@ -253,9 +243,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             const result = await client.request(updateMe(profile_updates));
             console.log('profile updated')
-
-            // await updateRsvp(event_id, rsvp_updates)
-
 
             await getCurrentUser();
             isLoading.value = false;
@@ -331,6 +318,44 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             isLoading.value = false;
 
             console.log('rsvp cancelled')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function getRsvp({ event_id }: { event_id: string }) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            const query_object = {
+                filter: {
+                    Events_id: {
+                        _eq: event_id
+                    },
+                    directus_users_id: {
+                        _eq: user.value?.id
+                    }
+                },
+                fields: [
+                    "name",
+                    "transport",
+                    "meal",
+                    "occupation",
+                    "is_public"
+                ]
+            }
+
+            const result = await client.request<RSVPResponse[]>(readItems('Events_directus_users', query_object));
+            return result
+
         } catch (error) {
             console.log(error)
         }
@@ -460,6 +485,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         oAuthLogin,
         createRsvp,
         updateRsvp,
+        getRsvp,
         updateUserProfile,
         cancelRsvp,
         getListOfAttendeees,
