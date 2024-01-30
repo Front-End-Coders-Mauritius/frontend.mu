@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, shallowRef } from 'vue';
+import { computed, onMounted, reactive, shallowRef, watch } from 'vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import { base64Url, findObjectByValue } from '@utils/helpers';
@@ -37,6 +37,20 @@ function setUserDetails() {
     userDetails.phone = user.value?.phone || '';
     userDetails.github_username = user.value?.github_username || '';
     userDetails.profile_picture = user.value?.profile_picture || '';
+
+    let mealValue = rawUser.value?.meal || foodOptions[0].value;
+    foodSelection.value = findObjectByValue(mealValue, foodOptions)
+
+    let transportValue = rawUser.value?.transport || transportOptions[0].value;
+    transportSelection.value = findObjectByValue(transportValue, transportOptions)
+
+    let professionValue = rawUser.value?.occupation || professionOptions[0].value;
+    professionSelection.value = findObjectByValue(professionValue, professionOptions)
+
+    // let showMeAsAttendingValue = rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
+    // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
+
+
 }
 
 onMounted(async () => {
@@ -60,20 +74,6 @@ const professionSelection = shallowRef(professionOptions[0]);
 // Show me as attending
 
 const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0]);
-
-onMounted(() => {
-    let mealValue = rawUser.value?.meal || foodOptions[0].value;
-    foodSelection.value = findObjectByValue(mealValue, foodOptions)
-
-    let transportValue = rawUser.value?.transport || transportOptions[0].value;
-    transportSelection.value = findObjectByValue(transportValue, transportOptions)
-
-    let professionValue = rawUser.value?.occupation || professionOptions[0].value;
-    professionSelection.value = findObjectByValue(professionValue, professionOptions)
-
-    // let showMeAsAttendingValue = rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
-    // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
-})
 
 
 function updateProfile() {
@@ -196,26 +196,6 @@ function updateProfile() {
                     </SideInfo>
 
                     <div class="flex flex-col gap-8 col-span-2">
-                        <!-- <div>
-                            <div class="col-span-full">
-                                <label for="meal" class="block text-lg font-medium leading-6">Meal</label>
-                                <div class="mt-2">
-                                    <input id="meal" name="meal" v-model="userDetails.meal" type="text" autocomplete="meal"
-                                        class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="col-span-full">
-                                <label for="transport" class="block text-lg font-medium leading-6">Transport</label>
-                                <div class="mt-2">
-                                    <input id="transport" name="transport" v-model="userDetails.transport" type="text"
-                                        autocomplete="transport"
-                                        class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
-                                </div>
-                            </div>
-                        </div> -->
 
                         <FormLabel label="Transport">
                             <RadioGroup v-model="transportSelection">
@@ -243,17 +223,6 @@ function updateProfile() {
                                 </div>
                             </RadioGroup>
                         </FormLabel>
-
-                        <!-- <div>
-                            <div class="col-span-full">
-                                <label for="occupation" class="block text-lg font-medium leading-6">Occupation</label>
-                                <div class="mt-2">
-                                    <input id="occupation" name="occupation" v-model="userDetails.occupation" type="text"
-                                        autocomplete="occupation"
-                                        class="block w-full pl-2 rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset dark:ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-lg sm:leading-6" />
-                                </div>
-                            </div>
-                        </div> -->
 
 
                         <div>
