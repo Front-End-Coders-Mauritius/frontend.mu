@@ -26,7 +26,8 @@ export default defineConfig({
       sourceMapsUploadOptions: {
         project: "javascript-astro",
         authToken: process.env.SENTRY_AUTH_TOKEN
-      }
+      },
+      enabled: !import.meta.env.DEV,
     })],
   image: {
     domains: ["github.com", "githubusercontent.com"],
