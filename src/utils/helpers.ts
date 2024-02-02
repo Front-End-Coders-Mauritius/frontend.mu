@@ -83,3 +83,8 @@ export const base64Url = (base64String: string): string => {
 export function findObjectByValue(value: string, obj) {
   return obj.filter(item => item.value === value)[0]
 }
+
+
+export function isFalsy(value: any): boolean {
+  return value === 'false' || value === '0' || value === null || value === 'undefined' || value === ''
+}

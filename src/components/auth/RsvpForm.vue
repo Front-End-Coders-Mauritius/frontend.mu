@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import useAuth, { getClient } from '../../auth-utils/useAuth';
+import useAuth, { getClient, useToast } from '../../auth-utils/useAuth';
 import { computed, shallowRef, defineModel, type Ref, onMounted, ref, watch } from 'vue';
 import BaseButton from '@components/base/BaseButton.vue';
 import FormLabel from './FormLabel.vue';
@@ -8,7 +8,7 @@ import FormRadio from '@components/auth/FormRadio.vue';
 import { RadioGroup, RadioGroupLabel } from "@headlessui/vue";
 import type { DirectusEvent, Meal, Transport, Occupation, RSVPResponse } from '@utils/types';
 import { foodOptions, transportOptions, professionOptions, showMeAsAttendingOptions } from './constants';
-import { findObjectByValue } from '@utils/helpers';
+import { findObjectByValue, isFalsy } from '@utils/helpers';
 
 const props = defineProps<{
     meetupId: string
@@ -19,7 +19,8 @@ const props = defineProps<{
 const { isLoading, avatarUrl, updateUserProfile, checkIfLoggedIn, user, rawUser, currentEventsRSVP, getRsvp, isLoggedIn, cancelRsvp, createRsvp, updateRsvp } = useAuth(getClient());
 
 const user_full_name = ref();
-const user_phone = ref()
+const user_phone = ref<string | undefined | null>(null)
+const user_phone_has_error = ref(false)
 
 const requiredFields = {
     name: 'Name',
@@ -40,7 +41,28 @@ function cancelRsvpToCurrentMeetup(meetupId: string) {
     cancelRsvp({ currentEventId: meetupId });
 }
 
+function isFormValid() {
+    // check phone number
+    if (isFalsy(user_phone.value)) {
+        user_phone_has_error.value = true;
+        useToast().show({
+            title: "Phone number is missing",
+            message: "Please enter a phone number to RSVP",
+            type: "ERROR",
+            visible: true,
+        })
+        return false
+    } else {
+        user_phone_has_error.value = false
+    }
+}
+
 async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
+
+
+    if (isFormValid() === false) {
+        return false
+    }
 
     if (user.value?.id) {
         await createRsvp({
@@ -128,7 +150,7 @@ function setUserDetails(rsvpDetails?: RSVPResponse) {
     professionSelection.value = findObjectByValue(professionValue, professionOptions)
 
     user_full_name.value = rsvpDetails?.name || user.value?.full_name
-    user_phone.value = user.value?.phone
+    user_phone.value = isFalsy(user.value?.phone) ? null : user.value?.phone
 
     // let showMeAsAttendingValue = rsvpDetails?.meal ||  rawUser.value?.occupation || showMeAsAttendingOptions[0].value;
     // showMeAsAttendingSelection.value = findObjectByValue(showMeAsAttendingValue, showMeAsAttendingOptions)
@@ -138,7 +160,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 </script>
 <template>
     <div class="flex flex-col-reverse md:flex-row md:gap-8 gap-4">
-        <div class="flex flex-col md:gap-8 gap-4 flex-2">
+        <form class="flex flex-col md:gap-8 gap-4 flex-2">
             <!-- <div class="flex justify-center font-bold text-lg">
             <h2>RSVP</h2>
         </div> -->
@@ -151,14 +173,15 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 
             <FormLabel label="Name">
                 <input type="text" v-model="user_full_name" :disabled="formIsLocked" :class="[
-                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10   px-2'
+                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10 px-2'
                 ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
             </FormLabel>
 
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
             <FormLabel label="Phone">
-                <input type="text" v-model="user_phone" :disabled="formIsLocked" :class="[
-                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2'
+                <input ref="input_phone" type="number" v-model="user_phone" required :disabled="formIsLocked" :class="[
+                    formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2',
+                    user_phone_has_error ? 'border border-red-500' : ''
                 ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
             </FormLabel>
 
@@ -210,7 +233,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
                     {{ isLoading ? 'Loading...' : 'Confirm' }}
                 </BaseButton>
             </div> -->
-        </div>
+        </form>
 
         <div class="hidden md:grid place-items-center flex-1 w-full" v-if="avatarUrl">
             <div class="ring-2 ring-white rounded-full">

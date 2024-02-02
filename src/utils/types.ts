@@ -168,7 +168,7 @@ export type DirectusAstroUser = {
     meal?: string
     transport?: string
     occupation?: string
-    phone?: string
+    phone?: string | null
     github_username?: string
     profile_picture?: string
     Events?: { Events_id: DirectusEvent | string }[]
