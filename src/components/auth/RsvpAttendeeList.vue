@@ -86,7 +86,7 @@ onMounted(async () => {
       <div v-for="(attendee, index) in attendeeList" :key="'attendee-' + index">
         <div class="flex flex-col gap-4 justify-center">
           <div v-if="attendee.profile_picture">
-            <img :src="base64Url(attendee.profile_picture)" alt="" class="rounded-full mx-auto" />
+            <img :src="base64Url(attendee.profile_picture)" alt="" class="rounded-full mx-auto w-28 h-28 aspect-square" />
           </div>
           <div class="font-bold w-[150px] text-center truncate">
             {{ attendee.name }}
