@@ -4,6 +4,7 @@ import useAuth, { getClient } from '../../auth-utils/useAuth';
 const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLoggedIn, avatarUrl } = useAuth(getClient());
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import BaseButton from '@components/base/BaseButton.vue';
 
 onMounted(() => {
   checkIfLoggedIn();
@@ -14,9 +15,9 @@ onMounted(() => {
 <template>
   <div class="dark:text-zinc-200 dark:ring-white/10 pl-4">
 
-    <a v-if="!isLoggedIn" href="/login">
+    <BaseButton v-if="!isLoggedIn" href="/login" :color="'primary'" class="font-bold">
       Log In
-    </a>
+    </BaseButton>
     <div v-else class="flex gap-2 items-center">
       <Menu as="div" class="relative inline-block text-left">
         <div>
