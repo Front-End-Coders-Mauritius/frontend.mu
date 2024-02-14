@@ -148,6 +148,8 @@ function saveForm() {
                                 </BaseButton>
 
 
+                                // todo: IF ATTENDEE -> add button to open up the QR code?
+                                // todo: IF ROLE_ADMIN -> add button to open up the QR code reader?
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
                                 <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
