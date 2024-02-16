@@ -15,6 +15,7 @@ import IconStudent from "~icons/ph/student";
 import IconManager from "~icons/material-symbols/person-celebrate-rounded";
 import IconDesigner from "~icons/ph/paint-brush-duotone";
 import IconHr from "~icons/mdi/briefcase-account";
+import IconEntrepreneur from "~icons/mdi/head-cog-outline";
 
 import type { Meal, Occupation, Transport } from "@utils/types";
 
@@ -30,6 +31,7 @@ export const professionOptions = [
     { value: "manager", name: "Manager", icon: IconManager },
     { value: "designer", name: "Designer", icon: IconDesigner },
     { value: "hr", name: "Hr", icon: IconHr },
+    { value: "entrepreneur", name: "Entrepreneur", icon: IconEntrepreneur },
     { value: "other", name: "Other", icon: IconHr },
 ] as { value: Occupation, name: string, icon: astroHTML.JSX.Element }[];
 
