@@ -76,9 +76,9 @@ const {
       .forEach((statNum) => observor.observe(statNum));
   }
 
-  document.addEventListener("DOMContentLoaded", counterAnimation);
+  // document.addEventListener("DOMContentLoaded", counterAnimation);
   // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", counterAnimation);
+  document.addEventListener("astro:page-load", counterAnimation);
 </script>
 
 <style>
