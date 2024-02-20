@@ -3,12 +3,13 @@ import LogoFec from '@components/logo-fec.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import RsvpForm from '@components/auth/RsvpForm.vue';
+import AttendeeQRCode from '@components/auth/AttendeeQRCode.vue';
 import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
 import IconClose from "~icons/solar/close-circle-linear";
 
-const { currentEventsRSVP, isLoggedIn } = useAuth(getClient());
+const { currentEventsRSVP, isLoggedIn, user } = useAuth(getClient());
 
 const props = defineProps<{
     meetupId: string
@@ -80,6 +81,21 @@ const isAttendingCurrentEvent = computed(() => {
     return currentEventsRSVP.value.some(event => event.Events_id === props.meetupId);
 });
 
+const isAttendee = computed(() => {
+    if (!user.value) {
+        return false;
+    }
+
+    // * @MrSunshyne a little help to distinguish between the roles
+    // * Admin or non-admin user?
+    
+    // * Below the intented approach
+    // return user.value?.role === 'attendee';
+
+    // * dev only, WIP
+    return true
+})
+
 const color = computed(() => {
     return !!isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
 });
@@ -146,10 +162,17 @@ function saveForm() {
                                     @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)" class="hidden md:block">
                                     Cancel RSVP
                                 </BaseButton>
+                                
+                                <!-- // todo: IF ROLE_ADMIN -> add button to open up the QR code reader? -->
 
-
-                                // todo: IF ATTENDEE -> add button to open up the QR code?
-                                // todo: IF ROLE_ADMIN -> add button to open up the QR code reader?
+                                <Suspense>
+                                    <AttendeeQRCode
+                                        client:only
+                                        v-if="rsvpPaneOpen && isAttendingCurrentEvent && isAttendee"
+                                        :meetup-id="meetupId"
+                                        :user-id="user!.id"
+                                    />
+                                </Suspense>
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
                                 <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
