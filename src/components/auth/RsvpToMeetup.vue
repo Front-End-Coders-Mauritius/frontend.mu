@@ -4,6 +4,7 @@ import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import RsvpForm from '@components/auth/RsvpForm.vue';
 import AttendeeQRCode from '@components/auth/AttendeeQRCode.vue';
+import OrganiserQRCodeScanner from '@components/auth/OrganiserQRCodeScanner.vue';
 import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
@@ -93,7 +94,8 @@ const isAttendee = computed(() => {
     // return user.value?.role === 'attendee';
 
     // * dev only, WIP
-    return true
+    // * `false` for admin, `true` for attendee
+    return false
 })
 
 const color = computed(() => {
@@ -171,6 +173,13 @@ function saveForm() {
                                         v-if="rsvpPaneOpen && isAttendingCurrentEvent && isAttendee"
                                         :meetup-id="meetupId"
                                         :user-id="user!.id"
+                                    />
+                                </Suspense>
+                                <Suspense>
+                                    <OrganiserQRCodeScanner
+                                        client:only
+                                        v-if="rsvpPaneOpen && !isAttendee"
+                                        :meetup-id="meetupId"
                                     />
                                 </Suspense>
 
