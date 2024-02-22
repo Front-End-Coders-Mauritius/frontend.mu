@@ -94,7 +94,7 @@ function updateProfile() {
 
 
 <template>
-    <div class="contain py-12 sm:py-32">
+    <div class="contain py-10 sm:py-32">
         <div class="divide-y divide-white/5 dark:text-white">
             <template v-if="isLoggedIn">
                 <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
@@ -109,7 +109,7 @@ function updateProfile() {
                         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                             <div class="col-span-full flex items-center gap-x-8" v-if="avatarUrl">
                                 <img :src="avatarUrl || ''" alt=""
-                                    class="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover" />
+                                    class="h-28 w-28 flex-none rounded-lg bg-gray-800 object-cover" />
                             </div>
 
                             <div class="col-span-full">

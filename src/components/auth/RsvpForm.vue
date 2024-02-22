@@ -164,12 +164,17 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
             <!-- <div class="flex justify-center font-bold text-lg">
             <h2>RSVP</h2>
         </div> -->
+            <div class="flex justify-start">  
+                <BaseButton class="block md:hidden w-32 mr-3" color="primary" v-if="isAttendingCurrentEvent"
+                    @click="unlockForm()">
+                    Update RSVP
+                </BaseButton>
 
-            <BaseButton class="block md:hidden" color="danger" v-if="isAttendingCurrentEvent"
-                @click="cancelRsvpToCurrentMeetup(meetupId)">
-                Cancel RSVP
-            </BaseButton>
-
+                <BaseButton class="block md:hidden w-32" color="danger" v-if="isAttendingCurrentEvent"
+                    @click="cancelRsvpToCurrentMeetup(meetupId)">
+                    Cancel RSVP
+                </BaseButton>
+            </div>    
 
             <FormLabel label="Name">
                 <input type="text" v-model="user_full_name" :disabled="formIsLocked" :class="[
