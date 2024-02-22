@@ -51,11 +51,11 @@ const description = "A list of all meetups we've held";
         Object.keys(grouped)
           .reverse()
           .map((year) => (
-            <div class="grid pb-24 relative group is-page">
+            <div class="grid pb-16 sm:pb-20 relative group is-page">
               <div class="text-lg font-bold text-verse-900 uppercase md:hidden">
                 {year}
               </div>
-              <div class="absolute origin-bottom-lef left-[-150px] top-[50px] opacity-5 -rotate-90 text-[100px] font-bold text-gray-900 dark:text-gray-100 group-hover-[.is-page]:left-[-170px] transition-all duration-300">
+              <div class="absolute origin-bottom-lef left-[-150px] top-[50px] opacity-5 -rotate-90 text-[100px] font-bold text-gray-900 dark:text-gray-100 group-hover-[.is-page]:left-[-170px] transition-all duration-300 hidden md:block">
                 {year}
               </div>
               <div class="grid grid-cols-2 gap-4 relative z-10">
