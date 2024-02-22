@@ -94,7 +94,7 @@ function updateProfile() {
 
 
 <template>
-    <div class="contain py-32">
+    <div class="contain py-12 sm:py-32">
         <div class="divide-y divide-white/5 dark:text-white">
             <template v-if="isLoggedIn">
                 <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
@@ -152,7 +152,7 @@ function updateProfile() {
                                 <div class="mt-2">
                                     <div
                                         class="flex rounded-md bg-white/5 ring-1 ring-inset dark:ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                                        <input type="number" v-model="userDetails.phone" name="phone" id="phone"
+                                        <input v-model="userDetails.phone" name="phone" id="phone"
                                             autocomplete="phone"
                                             class="flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-lg sm:leading-6"
                                             placeholder="57654321" />
