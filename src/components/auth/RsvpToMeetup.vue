@@ -168,7 +168,7 @@ function saveForm() {
                             </div>
                         </template>
                         <template v-else>
-                            <BaseButton size="lg" color="warning" href="/login">
+                            <BaseButton color="warning" href="/login">
                                 Login to RSVP
                             </BaseButton>
                         </template>

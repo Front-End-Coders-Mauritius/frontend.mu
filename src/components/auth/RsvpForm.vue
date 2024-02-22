@@ -179,7 +179,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
             <FormLabel label="Phone">
-                <input ref="input_phone" type="number" v-model="user_phone" required :disabled="formIsLocked" :class="[
+                <input ref="input_phone" v-model="user_phone" required :disabled="formIsLocked" :class="[
                     formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2',
                     user_phone_has_error ? 'border border-red-500' : ''
                 ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
