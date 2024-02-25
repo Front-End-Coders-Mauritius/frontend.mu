@@ -471,6 +471,58 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     }
 
+    async function updateUserVerification({ user_id, event_id, status }: { user_id: string, event_id: string, status: Boolean }) {
+        try {
+            isLoading.value = true;
+            const token = getCookieValue('access_token')
+
+            if (!token) {
+                isLoading.value = false;
+                throw new Error('User is not logged in')
+            }
+
+            client = await client.with(staticToken(token))
+
+            const query_object = {
+                filter: {
+                    Events_id: {
+                        _eq: event_id
+                    },
+                    directus_users_id: {
+                        _eq: user_id
+                    }
+                }
+            }
+
+            const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
+
+            const updates = {
+                verified: status,
+            }
+
+            const primaryKey = primaryKeyQuery[0].id
+
+            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKey, updates));
+
+            useToast().show({
+                title: "Success!",
+                message: "User verified successfully",
+                type: "SUCCESS",
+                visible: true
+            })
+
+            // await getListOfAttendeees(event_id);
+            // await getCurrentUser();
+
+            isLoading.value = false;
+
+            return updateMetaResult
+        } catch (error) {
+            return new Error("You don't have permission for this action")
+            console.log(error)
+        }
+    }
+
     return {
         cloudFunctionUpdateProfilePicture,
         loginWithUsernameAndPassword,
@@ -490,6 +542,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         updateUserProfile,
         cancelRsvp,
         getListOfAttendeees,
+        updateUserVerification,
         currentEventsRSVP,
         isLoading,
         avatarUrl,
