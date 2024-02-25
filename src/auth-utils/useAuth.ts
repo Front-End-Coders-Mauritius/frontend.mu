@@ -171,6 +171,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "Events.Events_id.id",
             "Events.Events_id.title",
             "profile_picture",
+            "role.name",
         ]
 
         try {

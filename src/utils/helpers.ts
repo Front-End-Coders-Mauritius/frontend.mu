@@ -52,7 +52,7 @@ export const mapToValidUser = (user: any): User => {
     avatar_url: user.avatar_url,
     profile_picture: user.profile_picture || "",
     google: user.google,
-
+    role: user.role.name
   }
 }
 

@@ -82,21 +82,7 @@ const isAttendingCurrentEvent = computed(() => {
     return currentEventsRSVP.value.some(event => event.Events_id === props.meetupId);
 });
 
-const isAttendee = computed(() => {
-    if (!user.value) {
-        return false;
-    }
-
-    // * @MrSunshyne a little help to distinguish between the roles
-    // * Admin or non-admin user?
-    
-    // * Below the intented approach
-    // return user.value?.role === 'attendee';
-
-    // * dev only, WIP
-    // * `false` for admin, `true` for attendee
-    return false
-})
+const isAttendee = computed(() => user?.value?.role === 'sso_google')
 
 const color = computed(() => {
     return !!isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
@@ -164,7 +150,7 @@ function saveForm() {
                                     @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)" class="hidden md:block">
                                     Cancel RSVP
                                 </BaseButton>
-                                
+
                                 <!-- // todo: IF ROLE_ADMIN -> add button to open up the QR code reader? -->
 
                                 <Suspense>
