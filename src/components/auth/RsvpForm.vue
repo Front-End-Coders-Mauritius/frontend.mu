@@ -164,12 +164,17 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
             <!-- <div class="flex justify-center font-bold text-lg">
             <h2>RSVP</h2>
         </div> -->
+            <div class="flex justify-start">  
+                <BaseButton class="block md:hidden w-32 mr-3" color="primary" v-if="isAttendingCurrentEvent"
+                    @click="unlockForm()">
+                    Update RSVP
+                </BaseButton>
 
-            <BaseButton class="block md:hidden" color="danger" v-if="isAttendingCurrentEvent"
-                @click="cancelRsvpToCurrentMeetup(meetupId)">
-                Cancel RSVP
-            </BaseButton>
-
+                <BaseButton class="block md:hidden w-32" color="danger" v-if="isAttendingCurrentEvent"
+                    @click="cancelRsvpToCurrentMeetup(meetupId)">
+                    Cancel RSVP
+                </BaseButton>
+            </div>    
 
             <FormLabel label="Name">
                 <input type="text" v-model="user_full_name" :disabled="formIsLocked" :class="[
@@ -179,7 +184,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
 
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
             <FormLabel label="Phone">
-                <input ref="input_phone" type="number" v-model="user_phone" required :disabled="formIsLocked" :class="[
+                <input ref="input_phone" v-model="user_phone" required :disabled="formIsLocked" :class="[
                     formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2',
                     user_phone_has_error ? 'border border-red-500' : ''
                 ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
