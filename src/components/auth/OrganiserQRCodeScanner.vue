@@ -8,7 +8,7 @@ const { updateUserVerification } = useAuth(getClient());
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 
 // * Kept for debugging
-const props = defineProps<{ meetupId: string }>()
+const props = defineProps<{ meetupId?: string }>()
 
 type QrCodeContent = {
   rawValue: string
@@ -27,7 +27,7 @@ async function onDetect(content: Array<QrCodeContent>) {
     return
   }
 
-  const userDetailsOrError = await updateUserVerification({ user_id: qrData.userId, event_id: qrData.meetupId, status: true})
+  const userDetailsOrError = await updateUserVerification({ user_id: qrData.userId, event_id: qrData.meetupId, status: true })
 
   if (userDetailsOrError instanceof Error) {
     console.error('Error verifying user', userDetailsOrError);
@@ -38,8 +38,8 @@ async function onDetect(content: Array<QrCodeContent>) {
 // * Kept for debugging
 async function verifyUser() {
   const userDetailsOrError = await updateUserVerification({
-    event_id:"50",
-    user_id:"1aa6e2a6-985a-49a0-8cc6-9155a29d3b05",
+    event_id: "50",
+    user_id: "1aa6e2a6-985a-49a0-8cc6-9155a29d3b05",
     status: true
   })
 

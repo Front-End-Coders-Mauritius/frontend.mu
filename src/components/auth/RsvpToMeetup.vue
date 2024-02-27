@@ -4,7 +4,6 @@ import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import RsvpForm from '@components/auth/RsvpForm.vue';
 import AttendeeQRCode from '@components/auth/AttendeeQRCode.vue';
-import OrganiserQRCodeScanner from '@components/auth/OrganiserQRCodeScanner.vue';
 import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
@@ -164,14 +163,6 @@ const showQrModal = ref(false);
                                     @click="showQrModal = true">
                                     Show QR Code
                                 </BaseButton>
-
-                                <!-- // todo: IF ROLE_ADMIN -> add button to open up the QR code reader? -->
-
-
-                                <Suspense>
-                                    <OrganiserQRCodeScanner client:only v-if="rsvpPaneOpen && !isAttendee"
-                                        :meetup-id="meetupId" />
-                                </Suspense>
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
                                 <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
