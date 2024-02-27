@@ -9,6 +9,7 @@ import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
 import IconClose from "~icons/solar/close-circle-linear";
+import { QrCodeIcon } from '@heroicons/vue/20/solid';
 
 const { currentEventsRSVP, isLoggedIn, user } = useAuth(getClient());
 
@@ -84,9 +85,9 @@ const isAttendingCurrentEvent = computed(() => {
 
 const isAttendee = computed(() => user?.value?.role === 'sso_google')
 
-const isVerified = computed(() => 
-// user?.value?.verified
-false
+const isVerified = computed(() =>
+    // user?.value?.verified
+    false
 )
 
 const color = computed(() => {
@@ -101,6 +102,9 @@ const $rsvpForm = ref<InstanceType<typeof RsvpForm> | null>(null);
 function saveForm() {
     $rsvpForm.value?.rsvpToCurrentMeetup()
 }
+
+// QR Code Modal
+const showQrModal = ref(false);
 
 </script>
 
@@ -156,24 +160,17 @@ function saveForm() {
                                     Cancel RSVP
                                 </BaseButton>
 
+                                <BaseButton color="primary" v-if="isAttendingCurrentEvent && isAttendee"
+                                    @click="showQrModal = true">
+                                    Show QR Code
+                                </BaseButton>
+
                                 <!-- // todo: IF ROLE_ADMIN -> add button to open up the QR code reader? -->
 
+
                                 <Suspense>
-                                    <template v-if="rsvpPaneOpen && isAttendingCurrentEvent && isAttendee">
-                                        <AttendeeQRCode
-                                            client:only
-                                            v-if="!isVerified"    
-                                            :meetup-id="meetupId"
-                                            :user-id="user!.id"
-                                        />
-                                    </template>
-                                </Suspense>
-                                <Suspense>
-                                    <OrganiserQRCodeScanner
-                                        client:only
-                                        v-if="rsvpPaneOpen && !isAttendee"
-                                        :meetup-id="meetupId"
-                                    />
+                                    <OrganiserQRCodeScanner client:only v-if="rsvpPaneOpen && !isAttendee"
+                                        :meetup-id="meetupId" />
                                 </Suspense>
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
@@ -207,9 +204,25 @@ function saveForm() {
                             <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" ref="$rsvpForm" />
                         </div>
                     </Transition>
+
                 </div>
             </div>
         </div>
+        <Transition mode="out-in" name="fade">
+            <div v-if="showQrModal" @click="showQrModal = false"
+                class="fixed inset-0 h-screen z-[2000] w-full grid place-items-center bg-black/40 backdrop-blur-sm">
+                <Suspense>
+                    <template v-if="isAttendingCurrentEvent && isAttendee">
+                        <div class="grid place-items-center">
+                            <AttendeeQRCode client:only v-if="!isVerified" :meetup-id="meetupId" :user-id="user!.id" />
+                            <div class="text-lg py-4 uppercase font-medium text-white px-4">
+                                Scan to verify {{ user?.full_name }}
+                            </div>
+                        </div>
+                    </template>
+                </Suspense>
+            </div>
+        </Transition>
     </div>
 </template>
 

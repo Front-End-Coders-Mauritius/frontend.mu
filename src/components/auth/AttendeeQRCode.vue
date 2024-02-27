@@ -21,7 +21,7 @@ async function getCoordinates() {
     return;
   }
 
-  const data: GeolocationPosition = await  new Promise((resolve, reject) => {
+  const data: GeolocationPosition = await new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 
@@ -31,8 +31,8 @@ async function getCoordinates() {
 
   // * DON'T LEAK YOUR ADDRESS!
   return {
-    "latitude":"76.12541",
-    "longitude":"47.63588"
+    "latitude": "76.12541",
+    "longitude": "47.63588"
   }
 
   // * actual code
@@ -46,10 +46,8 @@ async function getCoordinates() {
 
 
 <template>
-  <div class="w-32 h-32 bg-white rounded-lg shadow-lg p-4">
-    <img
-      :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${infoJsonString}`"
-      alt="QR Code"
-    />
+  <div class=" bg-white rounded-lg shadow-lg p-4 z-[1000] relative w-full flex justify-center">
+    <img class="w-full aspect-square object-contain max-w-4xl"
+      :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${infoJsonString}`" alt="QR Code" />
   </div>
 </template>
