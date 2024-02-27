@@ -84,6 +84,11 @@ const isAttendingCurrentEvent = computed(() => {
 
 const isAttendee = computed(() => user?.value?.role === 'sso_google')
 
+const isVerified = computed(() => 
+// user?.value?.verified
+false
+)
+
 const color = computed(() => {
     return !!isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
 });
@@ -154,12 +159,14 @@ function saveForm() {
                                 <!-- // todo: IF ROLE_ADMIN -> add button to open up the QR code reader? -->
 
                                 <Suspense>
-                                    <AttendeeQRCode
-                                        client:only
-                                        v-if="rsvpPaneOpen && isAttendingCurrentEvent && isAttendee"
-                                        :meetup-id="meetupId"
-                                        :user-id="user!.id"
-                                    />
+                                    <template v-if="rsvpPaneOpen && isAttendingCurrentEvent && isAttendee">
+                                        <AttendeeQRCode
+                                            client:only
+                                            v-if="!isVerified"    
+                                            :meetup-id="meetupId"
+                                            :user-id="user!.id"
+                                        />
+                                    </template>
                                 </Suspense>
                                 <Suspense>
                                     <OrganiserQRCodeScanner

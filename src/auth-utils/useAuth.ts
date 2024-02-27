@@ -172,6 +172,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "Events.Events_id.title",
             "profile_picture",
             "role.name",
+            // "verified" @MrSunshyne: we need that
         ]
 
         try {
@@ -518,8 +519,14 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             return updateMetaResult
         } catch (error) {
+            useToast().show({
+                title: "Oops!",
+                message: "Failed to verify the user!",
+                type: "ERROR",
+                visible: true
+            })
+            
             return new Error("You don't have permission for this action")
-            console.log(error)
         }
     }
 
