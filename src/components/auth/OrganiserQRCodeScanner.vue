@@ -10,6 +10,9 @@ import useAuth, { getClient } from '../../auth-utils/useAuth';
 // * Kept for debugging
 const props = defineProps<{ meetupId?: string }>()
 
+const verificationDone = ref(false);
+const verifiedUserData = ref({});
+
 type QrCodeContent = {
   rawValue: string
   // * has other properties that we do not care about (for now?)
@@ -31,7 +34,12 @@ async function onDetect(content: Array<QrCodeContent>) {
 
   if (userDetailsOrError instanceof Error) {
     console.error('Error verifying user', userDetailsOrError);
+    return;
   }
+
+  verificationDone.value = true
+  verifiedUserData.value = userDetailsOrError
+  console.log(userDetailsOrError)
 }
 
 
@@ -52,6 +60,13 @@ async function verifyUser() {
 <template>
   <div class="flex flex-col items-center justify-center">
     <QrcodeStream @detect="onDetect" />
+    <div v-if="verificationDone">
+      <!-- <img src="" alt=""> -->
+      <div>
+        {{ verifiedUserData }}
+      </div>
+
+    </div>
     <!-- Keep that for debugging -->
     <!-- <BaseButton @click="verifyUser">Verify</BaseButton> -->
   </div>
