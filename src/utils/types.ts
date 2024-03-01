@@ -35,6 +35,7 @@ export interface User {
     google?: GoogleInfo;
     github_username?: string;
     profile_picture?: string | null;
+    role: "sso_google" | "Admin";
 }
 
 // export type Transport = "car" | "bus" | "need a ride";
@@ -217,4 +218,5 @@ export type RSVPResponse = {
     name?: string
     occupation?: string
     transport?: string
+    verified?: boolean
 }

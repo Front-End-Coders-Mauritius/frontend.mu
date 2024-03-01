@@ -1,0 +1,11 @@
+---
+import LayoutHome from "../../layouts/LayoutCustom.astro";
+import AdminVerifyAttendee from "@components/auth/AdminVerifyAttendee.vue";
+
+const props = Astro.params;
+
+---
+
+<LayoutHome pageType="home">
+    <AdminVerifyAttendee client:only />
+</LayoutHome>

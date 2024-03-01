@@ -3,12 +3,15 @@ import LogoFec from '@components/logo-fec.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import BaseButton from '@components/base/BaseButton.vue';
 import RsvpForm from '@components/auth/RsvpForm.vue';
+import AttendeeQRCode from '@components/auth/AttendeeQRCode.vue';
 import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
 import IconClose from "~icons/solar/close-circle-linear";
+import IconCheckmark from "~icons/mdi/check-decagram";
+import { QrCodeIcon } from '@heroicons/vue/20/solid';
 
-const { currentEventsRSVP, isLoggedIn } = useAuth(getClient());
+const { currentEventsRSVP, isLoggedIn, user, getRsvp } = useAuth(getClient());
 
 const props = defineProps<{
     meetupId: string
@@ -80,6 +83,13 @@ const isAttendingCurrentEvent = computed(() => {
     return currentEventsRSVP.value.some(event => event.Events_id === props.meetupId);
 });
 
+const isAttendee = computed(() => user?.value?.role === 'sso_google')
+
+const isVerified = computed(() =>
+    // user?.value?.verified
+    false
+)
+
 const color = computed(() => {
     return !!isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
 });
@@ -92,6 +102,11 @@ const $rsvpForm = ref<InstanceType<typeof RsvpForm> | null>(null);
 function saveForm() {
     $rsvpForm.value?.rsvpToCurrentMeetup()
 }
+
+// QR Code Modal
+const showQrModal = ref(false);
+const arrayOfEventRsvpDetail = await getRsvp({ event_id: props.meetupId })
+const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[0]
 
 </script>
 
@@ -109,10 +124,17 @@ function saveForm() {
                             <div class="text-xl font-semibold">
                                 {{ props.meetupDetails.title }}
                             </div>
-                            <div class="text-base flex gap-2">
+                            <div class="text-base flex md:flex-row flex-col gap-2">
                                 {{ formatDate(props.meetupDetails.Date) }}
 
-                                <span
+                                <template v-if="currentEventRsvpDetail?.verified">
+                                    <div
+                                        class="text-xs flex gap-1 tracking-widest px-2 py-1 font-medium uppercase bg-green-700 rounded-lg text-center md:flex text-white w-fit">
+                                        <IconCheckmark />
+                                        Verified
+                                    </div>
+                                </template>
+                                <span v-else
                                     class="text-xs px-2 py-1 font-bold bg-verse-200/10 rounded-lg text-center hidden md:inline-block text-verse-500 dark:text-verse-200">
                                     FREE TO ATTEND
                                 </span>
@@ -125,7 +147,7 @@ function saveForm() {
                                 {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'You have not RSVP\'d to this meetup' }}
                             </div> -->
 
-                            <div class="flex items-center gap-2 px-2">
+                            <div class="flex md:flex-row flex-col items-center gap-2 px-2">
 
                                 <Transition name="fade" mode="out-in">
                                     <IconClose
@@ -148,6 +170,14 @@ function saveForm() {
                                 </BaseButton>
 
 
+                                <template v-if="!currentEventRsvpDetail?.verified">
+                                    <BaseButton color="primary" v-if="isAttendingCurrentEvent && isAttendee"
+                                        @click="showQrModal = true">
+                                        QR Code
+                                    </BaseButton>
+                                </template>
+
+                                <!-- {{ currentEventRsvpDetail }} -->
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
                                 <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
@@ -180,9 +210,25 @@ function saveForm() {
                             <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" ref="$rsvpForm" />
                         </div>
                     </Transition>
+
                 </div>
             </div>
         </div>
+        <Transition mode="out-in" name="fade">
+            <div v-if="showQrModal" @click="showQrModal = false"
+                class="fixed inset-0 h-screen z-[2000] w-full grid place-items-center bg-black/40 backdrop-blur-sm">
+                <Suspense>
+                    <template v-if="isAttendingCurrentEvent && isAttendee">
+                        <div class="grid place-items-center">
+                            <AttendeeQRCode client:only v-if="!isVerified" :meetup-id="meetupId" :user-id="user!.id" />
+                            <div class="text-lg py-4 uppercase font-medium text-white px-4">
+                                Scan to verify {{ user?.full_name }}
+                            </div>
+                        </div>
+                    </template>
+                </Suspense>
+            </div>
+        </Transition>
     </div>
 </template>
 

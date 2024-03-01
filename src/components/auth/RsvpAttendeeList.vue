@@ -4,6 +4,7 @@ import { useStore } from "@nanostores/vue";
 import { isUserLoggedIn, currentUser } from "@store/userStore";
 import type { Attendee, MeetupAttendees } from "@utils/types";
 import { base64Url } from "@utils/helpers";
+import IconCheckmark from "~icons/mdi/check-decagram";
 
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 
@@ -85,10 +86,15 @@ onMounted(async () => {
     <div class="grid grid-cols-2 sm:flex flex-wrap gap-8">
       <div v-for="(attendee, index) in attendeeList" :key="'attendee-' + index">
         <div class="flex flex-col gap-4 justify-center">
-          <div v-if="attendee.profile_picture">
+
+          <div v-if="attendee.profile_picture" class="relative flex flex-col items-center">
             <img :src="base64Url(attendee.profile_picture)" alt="" class="rounded-full mx-auto w-28 h-28 aspect-square" />
+            <div title="This person was present at the meetup" v-if="attendee.verified"
+              class="text-xs flex gap-1 tracking-widest p-0.5 shadow-lg font-medium uppercase bg-green-600 rounded-full text-center md:flex text-white w-fit -mt-4">
+              <IconCheckmark class="text-xl" />
+            </div>
           </div>
-          <div class="font-bold w-[150px] text-center truncate">
+          <div class="font-bold w-[150px] text-center truncate" :class="[attendee.verified ? ' -mt-4' : '']">
             {{ attendee.name }}
           </div>
         </div>
