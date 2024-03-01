@@ -26,8 +26,8 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
             {{ isLoggedIn ? 'Welcome back' : 'Sign in to your account' }}
         </h2>
     </div>
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-        <div class="bg-verse-200/10 dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl sm:rounded-lg sm:px-12">
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px] flex justify-center">
+        <div class="bg-verse-200/10 dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl rounded-lg sm:px-12 w-11/12">
             <div v-if="isLoggedIn">
                 <div class="text-center flex flex-col gap-8 text-verse-900 dark:text-verse-100 w-full">
                     <span>
@@ -52,7 +52,7 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
                             address</label>
                         <div class="mt-2">
                             <input v-model="email" id="email" name="email" type="email" autocomplete="email" required
-                                class="block w-full rounded-md border-0 p-1.5 text-verse-900 dark:text-verse-100 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verse-600 sm:text-sm sm:leading-6" />
+                                class="block w-full rounded-md border-0 p-1.5 text-verse-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verse-600 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
                         <div class="mt-2">
                             <input v-model="password" id="password" name="password" type="password"
                                 autocomplete="current-password" required
-                                class="block w-full rounded-md border-0 p-1.5 text-verse-900 dark:text-verse-100 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verse-600 sm:text-sm sm:leading-6" />
+                                class="block w-full rounded-md border-0 p-1.5 text-verse-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verse-600 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
@@ -87,7 +87,7 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
 
                 <div v-else>
                     <div class="relative flex justify-center text-sm font-medium leading-6">
-                        <span class="pb-8 text-verse-900 dark:text-verse-100">connect using</span>
+                        <span class="pb-8 text-verse-900 dark:text-verse-100 text-lg">connect using</span>
                     </div>
 
                     <div class="relative">
