@@ -6,12 +6,12 @@ const props = defineProps<{
   userId: string
 }>();
 
-const coordinates = await getCoordinates();
+// const coordinates = await getCoordinates();
 
 const infoJsonString = JSON.stringify({
   meetupId: props.meetupId,
   userId: props.userId,
-  coordinates: coordinates
+  // coordinates: coordinates
 });
 
 

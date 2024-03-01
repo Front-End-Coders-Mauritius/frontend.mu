@@ -172,7 +172,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             "Events.Events_id.title",
             "profile_picture",
             "role.name",
-            // "verified" @MrSunshyne: we need that
         ]
 
         try {
@@ -336,6 +335,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             }
 
             client = await client.with(staticToken(token))
+            await getCurrentUser();
 
             const query_object = {
                 filter: {
@@ -351,7 +351,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                     "transport",
                     "meal",
                     "occupation",
-                    "is_public"
+                    "is_public",
+                    "verified",
                 ]
             }
 
@@ -503,7 +504,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             const primaryKey = primaryKeyQuery[0].id
 
-            const updateMetaResult = await client.request(updateItem('Events_directus_users', primaryKey, updates));
+            const updateMetaResult = await client.request<Attendee>(updateItem('Events_directus_users', primaryKey, updates));
 
             useToast().show({
                 title: "Success!",
@@ -525,7 +526,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 type: "ERROR",
                 visible: true
             })
-            
+
             return new Error("You don't have permission for this action")
         }
     }

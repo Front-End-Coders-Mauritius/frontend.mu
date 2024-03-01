@@ -218,4 +218,5 @@ export type RSVPResponse = {
     name?: string
     occupation?: string
     transport?: string
+    verified?: boolean
 }

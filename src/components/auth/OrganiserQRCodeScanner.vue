@@ -6,12 +6,14 @@ import { QrcodeStream } from 'vue-qrcode-reader'
 import BaseButton from '@components/base/BaseButton.vue';
 const { updateUserVerification } = useAuth(getClient());
 import useAuth, { getClient } from '../../auth-utils/useAuth';
+import type { Attendee } from '@utils/types';
+import { base64Url } from '@utils/helpers';
 
 // * Kept for debugging
 const props = defineProps<{ meetupId?: string }>()
 
 const verificationDone = ref(false);
-const verifiedUserData = ref({});
+const verifiedUserData = ref<Attendee | undefined>();
 
 type QrCodeContent = {
   rawValue: string
@@ -39,9 +41,13 @@ async function onDetect(content: Array<QrCodeContent>) {
 
   verificationDone.value = true
   verifiedUserData.value = userDetailsOrError
-  console.log(userDetailsOrError)
 }
 
+
+function resetVerification() {
+  verificationDone.value = false
+  verifiedUserData.value = undefined
+}
 
 // * Kept for debugging
 async function verifyUser() {
@@ -59,16 +65,18 @@ async function verifyUser() {
 
 <template>
   <div class="flex flex-col items-center justify-center">
-    <QrcodeStream @detect="onDetect" />
-    <div v-if="verificationDone">
-      <!-- <img src="" alt=""> -->
+    <QrcodeStream @detect="onDetect" v-if="!verificationDone" />
+    <div v-else class=" flex flex-col gap-8 justify-center items-center text-verse-300 text-2xl">
+      <img class="block w-[50vw] aspect-square" v-if="verifiedUserData?.profile_picture"
+        :src="base64Url(verifiedUserData?.profile_picture)" alt="">
+      <div class="font-bold uppercase text-green-500">Success !</div>
       <div>
-        {{ verifiedUserData }}
+        {{ verifiedUserData?.name }} has been <span class="text-green-500 font-medium">verified</span>
       </div>
 
+      <BaseButton color="primary" @click="resetVerification">Verify another user</BaseButton>
     </div>
     <!-- Keep that for debugging -->
-    <!-- <BaseButton @click="verifyUser">Verify</BaseButton> -->
   </div>
 </template>
 

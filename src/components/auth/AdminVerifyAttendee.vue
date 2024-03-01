@@ -25,7 +25,7 @@ const isAdmin = computed(() => user.value?.role === 'Admin')
             </h2>
 
             <BaseButton>
-                <router-link to="/">Back to homepage</router-link>
+                <a href="/">Back to homepage</a>
             </BaseButton>
         </div>
     </div>

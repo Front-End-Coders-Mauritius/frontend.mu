@@ -8,9 +8,10 @@ import { computed, onMounted, ref } from 'vue';
 import type { DirectusEvent } from '@utils/types';
 import { formatDate } from '../../utils/helpers';
 import IconClose from "~icons/solar/close-circle-linear";
+import IconCheckmark from "~icons/mdi/check-decagram";
 import { QrCodeIcon } from '@heroicons/vue/20/solid';
 
-const { currentEventsRSVP, isLoggedIn, user } = useAuth(getClient());
+const { currentEventsRSVP, isLoggedIn, user, getRsvp } = useAuth(getClient());
 
 const props = defineProps<{
     meetupId: string
@@ -104,6 +105,8 @@ function saveForm() {
 
 // QR Code Modal
 const showQrModal = ref(false);
+const arrayOfEventRsvpDetail = await getRsvp({ event_id: props.meetupId })
+const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[0]
 
 </script>
 
@@ -121,10 +124,17 @@ const showQrModal = ref(false);
                             <div class="text-xl font-semibold">
                                 {{ props.meetupDetails.title }}
                             </div>
-                            <div class="text-base flex gap-2">
+                            <div class="text-base flex md:flex-row flex-col gap-2">
                                 {{ formatDate(props.meetupDetails.Date) }}
 
-                                <span
+                                <template v-if="currentEventRsvpDetail?.verified">
+                                    <div
+                                        class="text-xs flex gap-1 tracking-widest px-2 py-1 font-medium uppercase bg-green-700 rounded-lg text-center md:flex text-white w-fit">
+                                        <IconCheckmark />
+                                        Verified
+                                    </div>
+                                </template>
+                                <span v-else
                                     class="text-xs px-2 py-1 font-bold bg-verse-200/10 rounded-lg text-center hidden md:inline-block text-verse-500 dark:text-verse-200">
                                     FREE TO ATTEND
                                 </span>
@@ -137,7 +147,7 @@ const showQrModal = ref(false);
                                 {{ isAttendingCurrentEvent ? 'You\'re Attending' : 'You have not RSVP\'d to this meetup' }}
                             </div> -->
 
-                            <div class="flex items-center gap-2 px-2">
+                            <div class="flex md:flex-row flex-col items-center gap-2 px-2">
 
                                 <Transition name="fade" mode="out-in">
                                     <IconClose
@@ -159,10 +169,15 @@ const showQrModal = ref(false);
                                     Cancel RSVP
                                 </BaseButton>
 
-                                <BaseButton color="primary" v-if="isAttendingCurrentEvent && isAttendee"
-                                    @click="showQrModal = true">
-                                    Show QR Code
-                                </BaseButton>
+
+                                <template v-if="!currentEventRsvpDetail?.verified">
+                                    <BaseButton color="primary" v-if="isAttendingCurrentEvent && isAttendee"
+                                        @click="showQrModal = true">
+                                        QR Code
+                                    </BaseButton>
+                                </template>
+
+                                <!-- {{ currentEventRsvpDetail }} -->
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
                                 <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
