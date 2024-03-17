@@ -114,6 +114,9 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 {
                     method: "POST",
                     credentials: "include", // this is required in order to send the refresh token cookie
+                    body: JSON.stringify({
+                        refresh_token: getCookieValue('directus_session_token'),
+                    }),
                 },
             );
 
@@ -129,6 +132,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             return response.data;
         } catch (error) {
+            console.error('Could not get access token from refresh token')
             console.log(error)
         }
     }
