@@ -22,7 +22,10 @@ onMounted(async () => {
 <template>
     <div v-if="user" class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div class="prose dark:prose-invert text-center py-8" v-if="willRedirect">
-            redirecting in {{ Math.round(countdown / 1000) }}s ...
+            <div v-if="countdown < 1000"> redirecting...</div>
+            <div v-else>
+                redirecting in {{ Math.round(countdown / 1000) }}s ...
+            </div>
         </div>
         <BaseCard>
             <div v-if="isLoggedIn">
