@@ -5,6 +5,9 @@ const { user, logout, isLoggedIn, getCurrentUser, responseFromServer, checkIfLog
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import BaseButton from '@components/base/BaseButton.vue';
+import useAuthRedirect from '../../auth-utils/useAuthRedirect';
+
+const { setUrl } = useAuthRedirect()
 
 onMounted(() => {
   checkIfLoggedIn();
@@ -15,7 +18,7 @@ onMounted(() => {
 <template>
   <div class="dark:text-zinc-200 dark:ring-white/10 pl-4">
 
-    <BaseButton v-if="!isLoggedIn" href="/login" :color="'primary'" class="font-bold">
+    <BaseButton v-if="!isLoggedIn" href="/login" :color="'primary'" class="font-bold" @click="setUrl()">
       Log In
     </BaseButton>
     <div v-else class="flex gap-2 items-center">
@@ -30,9 +33,10 @@ onMounted(() => {
           </MenuButton>
         </div>
 
-        <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95"
-          enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
-          leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+        <transition enter-active-class="transition ease-out duration-100"
+          enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+          leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+          leave-to-class="transform opacity-0 scale-95">
           <MenuItems
             class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100/10 rounded-md bg-zinc-500/20 dark:bg-verse-500/20 backdrop-blur-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div class="py-1">
