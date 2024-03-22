@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LogoFec from '@components/logo-fec.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
+import useAuthRedirect from 'src/auth-utils/useAuthRedirect';
 import BaseButton from '@components/base/BaseButton.vue';
 import RsvpForm from '@components/auth/RsvpForm.vue';
 import AttendeeQRCode from '@components/auth/AttendeeQRCode.vue';
@@ -12,6 +13,7 @@ import IconCheckmark from "~icons/mdi/check-decagram";
 import { QrCodeIcon } from '@heroicons/vue/20/solid';
 
 const { currentEventsRSVP, isLoggedIn, user, getRsvp } = useAuth(getClient());
+const { setUrl } = useAuthRedirect()
 
 const props = defineProps<{
     meetupId: string
@@ -198,7 +200,7 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
                             </div>
                         </template>
                         <template v-else>
-                            <BaseButton color="warning" href="/login">
+                            <BaseButton color="warning" href="/login" @click="setUrl()">
                                 Login to RSVP
                             </BaseButton>
                         </template>

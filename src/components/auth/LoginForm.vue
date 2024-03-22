@@ -4,7 +4,9 @@ import useAuth, { getClient } from '../../auth-utils/useAuth';
 import LogosGoogleIcon from "~icons/logos/google-icon";
 import LogoFec from "@components/logo-fec.vue";
 import BaseButton from "@components/base/BaseButton.vue";
+import useAuthRedirect from '../../auth-utils/useAuthRedirect';
 // import LogosGitHubIcon from "~icons/logos/github-icon";
+const { tryRedirect, countdown, countDownPercentage, willRedirect } = useAuthRedirect()
 
 
 const { loginWithUsernameAndPassword, isLoggedIn, oAuthLogin, user, logout, isLoading } = useAuth(getClient());
@@ -12,8 +14,11 @@ const { loginWithUsernameAndPassword, isLoggedIn, oAuthLogin, user, logout, isLo
 const email = ref('');
 const password = ref('');
 
-function login() {
-    loginWithUsernameAndPassword(email.value, password.value);
+async function login() {
+    const result = await loginWithUsernameAndPassword(email.value, password.value);
+    if (result?.access_token) {
+        tryRedirect();
+    }
 }
 
 const developmentEnvironment = process.env.NODE_ENV === "development";
@@ -27,12 +32,16 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
         </h2>
     </div>
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px] flex justify-center">
-        <div class="bg-verse-200/10 dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl rounded-lg sm:px-12 w-11/12">
+        <div
+            class="bg-verse-200/10 overflow-hidden dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl rounded-lg sm:px-12 w-11/12">
             <div v-if="isLoggedIn">
                 <div class="text-center flex flex-col gap-8 text-verse-900 dark:text-verse-100 w-full">
                     <span>
                         You are logged in as <a class="underline" href="/user/me"> {{ user?.full_name }}</a>
                     </span>
+                    <div v-if="willRedirect">
+                        redirecting in {{ Math.round(countdown / 1000) }}s
+                    </div>
 
                     <div class="grid grid-cols-2 gap-4 w-full justify-evenly">
                         <BaseButton @click="logout" color="neutral">
@@ -115,7 +124,10 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
                     </div>
                 </div>
             </div>
+
+            <div class="absolute bottom-0 left-0 bg-zinc-500/20 dark:bg-verse-500/20 backdrop-blur-2xl  right-0 z-10 h-0"
+                :style="{ height: countDownPercentage }">
+            </div>
         </div>
     </div>
 </template>
-  
