@@ -100,6 +100,8 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 visible: true
             })
 
+            
+
             return result
 
         } catch (error) {
