@@ -20,7 +20,6 @@ export default function useAuthRedirect() {
             willRedirect.value = true;
             // start the countdown
             setTimeout(() => {
-                window.location.href
                 window.location.href = redirectUrl;
             } , duration.value);     
             
