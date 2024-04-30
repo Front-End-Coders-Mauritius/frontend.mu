@@ -1,7 +1,7 @@
 {
   "references": [
     {
-      "path": "@frontend.mu/frontendmu-astro"
+      "path": "@frontend.mu/astro"
     }
   ],
   "compilerOptions": {}

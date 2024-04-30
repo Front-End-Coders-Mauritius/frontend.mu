@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "astro": "pnpm --filter @frontend.mu/frontendmu-astro"
+        "astro": "pnpm --filter @frontend.mu/astro"
     },
     "keywords": [],
     "author": "",

@@ -1,5 +1,5 @@
 {
-  "name": "@frontend.mu/frontendmu-astro",
+  "name": "@frontend.mu/astro",
   "private": true,
   "version": "0.0.3",
   "type": "module",
