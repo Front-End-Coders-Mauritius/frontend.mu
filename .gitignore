@@ -20,7 +20,7 @@ pnpm-debug.log*
 .DS_Store
 
 #astro files
-.astro
+.astro/
 test-results/
 playwright-report/
 /blob-report/
