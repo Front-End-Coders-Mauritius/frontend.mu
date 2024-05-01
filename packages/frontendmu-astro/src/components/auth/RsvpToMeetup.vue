@@ -222,7 +222,8 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
                 <Suspense>
                     <template v-if="isAttendingCurrentEvent && isAttendee">
                         <div class="grid place-items-center">
-                            <AttendeeQRCode client:only v-if="!isVerified" :meetup-id="meetupId" :user-id="user!.id" />
+                            <AttendeeQRCode client:only="vue" v-if="!isVerified" :meetup-id="meetupId"
+                                :user-id="user!.id" />
                             <div class="text-lg py-4 uppercase font-medium text-white px-4">
                                 Scan to verify {{ user?.full_name }}
                             </div>
