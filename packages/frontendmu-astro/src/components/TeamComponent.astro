@@ -105,7 +105,7 @@ const contributors: Contributor[] = Contributors;
 
           return (
             <li>
-              <a href={`/speaker/${person.id}`} class="space-y-4">
+              <a href={`/speaker/${person.id}`} class="space-y-4" title={person.name}>
                 <Image
                   class="mx-auto h-20 w-20 rounded-full border-verse-2 shadow-lg 00 border p-2 lg:w-32 lg:h-32 profile-avatar"
                   style={vTransitionName("speaker-avatar", person.name)}

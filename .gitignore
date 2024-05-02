@@ -20,9 +20,9 @@ pnpm-debug.log*
 .DS_Store
 
 #astro files
-.astro
-/test-results/
-/playwright-report/
+.astro/
+test-results/
+playwright-report/
 /blob-report/
-/playwright/.cache/
+playwright/.cache/
 .vercel

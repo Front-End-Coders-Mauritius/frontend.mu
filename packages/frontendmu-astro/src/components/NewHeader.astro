@@ -7,8 +7,8 @@ import MainMenu from "./MegaMenu.astro";
 
 <MainMenu transition:persist>
   <RandomColor slot="dock-right" />
-  <ToggleTheme slot="dock-right" client:only />
-  <LoggedUser slot="dock-right" client:only />
+  <ToggleTheme slot="dock-right" client:only="vue" />
+  <LoggedUser slot="dock-right" client:only="vue" />
 </MainMenu>
 <div id="sticky-observer" class="bg-transparent z-0 h-4 w-full top-32 relative">
 </div>

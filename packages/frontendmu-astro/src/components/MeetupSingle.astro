@@ -126,7 +126,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 
       <RsvpToMeetup
         transition:persist
-        client:only
+        client:only="vue"
         meetupId={props.routeId}
         meetupDetails={props.getCurrentEvent}
       />
@@ -303,7 +303,7 @@ let currentAlbum = fetchAlbumDetails(props.getCurrentEvent.album);
 
       <div class="contain">
         <RsvpAttendeeList
-          client:only
+          client:only="vue"
           seatCapacity={props.getCurrentEvent.seats_available}
           meetupId={props.routeId}
         />

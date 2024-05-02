@@ -12,8 +12,12 @@ Live website : https://frontend.mu/
 pnpm install
 ```
 
+This project uses pnpm workspaces
+
+To run the astro project, run the following command
+
 ```
-pnpm run dev
+pnpm run astro dev
 ```
 
 ## Environment variables
