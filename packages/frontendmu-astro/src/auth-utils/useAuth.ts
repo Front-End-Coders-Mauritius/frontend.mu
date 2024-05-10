@@ -100,7 +100,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 visible: true
             })
 
-            
+
 
             return result
 
@@ -422,8 +422,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function cloudFunctionUpdateProfilePicture(userId) {
 
-        const ORIGIN = window.location.origin;
-        const FUNCTION_AUTH_PICTURE_URL = `${ORIGIN}/api/auth-picture`
+        const FUNCTION_AUTH_PICTURE_URL = `https://auth-picture.frontend.mu/`
 
         const result = await fetch(FUNCTION_AUTH_PICTURE_URL, {
             method: 'POST',
