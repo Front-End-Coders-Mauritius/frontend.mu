@@ -10,11 +10,11 @@
                 <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
                   <div class="flex w-full items-center justify-start">
                     <p :class="[
-                      isUpcoming
-                        ? 'tagStyle bg-green-100 text-green-800'
-                        : 'tagStyle bg-yellow-100 text-yellow-800',
-                      'p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4',
-                    ]">
+      isUpcoming
+        ? 'tagStyle bg-green-100 text-green-800'
+        : 'tagStyle bg-yellow-100 text-yellow-800',
+      'p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4',
+    ]">
                       happening soon
                     </p>
                   </div>
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <RsvpToMeetup transition:persist client:only="vue" :meetupId="routeId" :meetupDetails="getCurrentEvent" />
+        <RsvpToMeetup :meetupId="routeId" :meetupDetails="getCurrentEvent" />
         <div class="contain">
           <div class="mt-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8">
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="contain">
-          <RsvpAttendeeList client:only="vue" :seatCapacity="getCurrentEvent.seats_available" :meetupId="routeId" />
+          <RsvpAttendeeList :seatCapacity="getCurrentEvent.seats_available" :meetupId="routeId" />
         </div>
         <MeetupAlbum :getCurrentEvent="getCurrentEvent" :currentAlbum="currentAlbum" :source="photoAlbumSource" />
       </ContentBlock>
@@ -111,8 +111,8 @@ import type { DirectusEvent } from "@/utils/types";
 import photosResponse from '../../../frontendmu-astro/src/data/photos-raw.json';
 import MeetupAlbum from "@/components/meetup/MeetupAlbum.vue";
 
-// import RsvpToMeetup from "./auth/RsvpToMeetup.vue";
-// import RsvpAttendeeList from "./auth/RsvpAttendeeList.vue";
+import RsvpToMeetup from "@/components/auth/RsvpToMeetup.vue";
+import RsvpAttendeeList from "@/components/auth/RsvpAttendeeList.vue";
 
 interface Props {
   routeId: string;

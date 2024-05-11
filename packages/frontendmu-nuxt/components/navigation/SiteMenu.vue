@@ -93,17 +93,16 @@ const links: TMenu = {
               frontend.mu
             </span>
           </a>
-          {{ currentPath }}
         </div>
         <nav>
           <ul class="nav-links text-sm md:text-sm lg:text-base flex gap-4 font-medium font-heading">
             <template v-for='item of Object.keys(links)'>
               <li :class="[
-            { 'nav-link-dropdown': links[item].children },
-            links[item].class,
-            currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
-            'nav-link',
-          ]">
+              { 'nav-link-dropdown': links[item].children },
+              links[item].class,
+              currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
+              'nav-link',
+            ]">
                 <NuxtLink class="nav-link-text  flex items-center" :href='links[item].href'
                   :target='!!links[item].href.includes("https") ? "_blank" : "_self"'>
                   <span style="view-transition-name: menubar" v-if='currentPath.includes(links[item].href)'
