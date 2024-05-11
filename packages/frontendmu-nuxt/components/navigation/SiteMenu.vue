@@ -83,7 +83,6 @@ const links: TMenu = {
 </script>
 
 <template>
-
   <div class="menu-wrapper w-full flex justify-between contain sticky top-0 z-30 h-32 items-center">
     <div class="megamenu theme-light w-full">
       <div class="flex justify-between items-center">
