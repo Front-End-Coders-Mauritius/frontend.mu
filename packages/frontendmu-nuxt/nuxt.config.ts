@@ -27,5 +27,6 @@ export default defineNuxtConfig({
   },
   alias: {
     "@monorepo/astro": "../frontendmu-astro/src/",
+    "@data": "../frontendmu-astro/src/data/"
   }
 })
