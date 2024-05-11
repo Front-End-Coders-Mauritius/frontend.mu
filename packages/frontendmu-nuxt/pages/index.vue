@@ -1,3 +1,5 @@
 <template>
-    homepage
+    <div>
+        homepage
+    </div>
 </template>
