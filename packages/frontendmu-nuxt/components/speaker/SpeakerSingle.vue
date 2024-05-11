@@ -61,7 +61,6 @@
 import EventsList from "./EventsList.vue";
 import LogoSpiral from "@/components/misc/LogoSpiral.vue";
 import { getGithubUrl } from "@/utils/fns";
-import BaseHeading from "@/components/misc/BaseHeading.vue";
 import ContentBlock from "@/components/misc/ContentBlock.vue";
 
 const props = defineProps({

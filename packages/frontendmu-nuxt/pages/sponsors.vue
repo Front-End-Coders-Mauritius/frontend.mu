@@ -48,7 +48,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import BaseHeading from "@/components/misc/BaseHeading.vue";
 // @ts-expect-error
 import sponsorTypes from "@data/sponsors.js";
 import { vTransitionName } from "@/utils/helpers";

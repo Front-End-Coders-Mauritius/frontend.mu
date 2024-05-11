@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseHeading from '~/components/misc/BaseHeading.vue';
 import ContentBlock from '~/components/misc/ContentBlock.vue';
 import eventsResponse from "../../frontendmu-astro/src/data/meetups-raw.json";
 import EventCard from '~/components/cards/EventCard.vue';

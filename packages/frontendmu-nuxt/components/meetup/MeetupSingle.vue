@@ -103,7 +103,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import BaseHeading from '@/components/misc/BaseHeading.vue';
 import SessionList from "@/components/meetup/SessionList.vue";
 import MeetupSonspor from "@/components/meetup/MeetupSonspor.vue";
 import type { DirectusEvent } from "@/utils/types";

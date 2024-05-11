@@ -118,7 +118,6 @@
 // @ts-expect-error
 import speakersResponse from "@data/speakers-raw.json";
 import { getGithubUrl } from "@/utils/fns";
-import BaseHeading from "@/components/misc/BaseHeading.vue";
 
 // @ts-expect-error
 import Contributors from "@data/contributors.json";
