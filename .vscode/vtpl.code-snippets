@@ -1,0 +1,20 @@
+{
+	// A snippet to start vue 3 file with script setup at the top with ts and a template tag
+	"Vue 3 with script setup": {
+		"scope": "vue",
+		"prefix": "vtpl",
+		"body": [
+			"<script setup lang=\"ts\">",
+			"    $1",
+			"</script>",
+			"",
+			"<template>",
+			"  <div>",
+			"    $2",
+			"  </div>",
+			"</template>",
+			"",
+		],
+		"description": "Vue 3 with script setup"
+	},
+}
