@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
   css: [
     "~/styles/global.css",
     "~/styles/tailwind.css",
@@ -19,12 +20,12 @@ export default defineNuxtConfig({
   //     ]
   //   }
   // },
-  modules: ["@nuxtjs/tailwindcss","@nuxtjs/color-mode",'nuxt-icon'
-],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode", 'nuxt-icon'
+  ],
   tailwindcss: {
     configPath: "./tailwind.config.js",
   },
   alias: {
-    "@astro": "../frontendmu-astro/",
+    "@monorepo/astro": "../frontendmu-astro/src/",
   }
 })
