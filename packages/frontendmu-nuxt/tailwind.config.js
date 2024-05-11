@@ -1,9 +1,9 @@
 module.exports = {
   darkMode: ["class", '[class="dark-mode"]'],
   content: [
-    "./components/**/*.{astro,vue,md,mdx}",
-    "./layouts/**/*.{astro,vue,md,mdx}",
-    "./pages/**/*.{astro,vue,md,mdx}",
+    "./components/**/**/*.{vue,md,mdx}",
+    "./layouts/**/*.{vue,md,mdx}",
+    "./pages/**/*.{vue,md,mdx}",
   ],
   theme: {
     fontFamily: {

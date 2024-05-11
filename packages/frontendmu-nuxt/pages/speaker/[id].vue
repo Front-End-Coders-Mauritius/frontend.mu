@@ -18,15 +18,15 @@ const route = useRoute();
 const id = computed(() => route.params.id as string);
 
 const getSpeaker = (id: string | number) => {
-  const speaker = speakersResponse.find((ev) => ev.id == id);
+  const speaker = speakersResponse.find((ev: { id: string }) => ev.id == id);
 
   if (speaker === null) {
     console.error("cannot find speaker id: ", id);
   }
 
   // Get sessions of this speaker from the events
-  const allSessions = eventsResponse.map((event) => event.sessions).flat();
-  const speakerSession = allSessions.filter((session) => {
+  const allSessions = eventsResponse.map((event: any) => event.sessions).flat();
+  const speakerSession = allSessions.filter((session: any) => {
     let session_speaker_id = session.Session_id.speakers.id;
     return id === session_speaker_id;
   });

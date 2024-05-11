@@ -27,7 +27,7 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
   sessions: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
