@@ -9,9 +9,10 @@ import SiteMenu from "./SiteMenu.vue";
   <SiteMenu>
     <template #dock-right>
       <ColorModeToggle />
+
     </template>
-  <!-- <RandomColor slot="dock-right" /> -->
-  <!-- <LoggedUser slot="dock-right" client:only="vue" /> -->
+    <!-- <RandomColor slot="dock-right" /> -->
+    <!-- <LoggedUser slot="dock-right" client:only="vue" /> -->
   </SiteMenu>
   <div id="sticky-observer" class="bg-transparent z-0 h-4 w-full top-32 relative">
   </div>
