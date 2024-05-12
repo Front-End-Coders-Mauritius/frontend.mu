@@ -220,3 +220,8 @@ export type RSVPResponse = {
     transport?: string
     verified?: boolean
 }
+
+export type MeetupPhotos = string[]
+export interface MeetupAlbums {
+    [key: string]: MeetupPhotos;
+}

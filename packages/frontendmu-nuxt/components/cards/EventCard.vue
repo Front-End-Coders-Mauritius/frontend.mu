@@ -10,16 +10,17 @@
         <!-- Date -->
         <template v-if="event.Date">
           <div :class="[
-            isUpcoming() ? 'text-green-600 font-bold' : 'text-verse-900 dark:text-verse-300',
+            isUpcoming ? 'text-green-600 font-bold' : 'text-verse-900 dark:text-verse-300',
             'flex font-mono text-sm font-medium items-center gap-2',
           ]">
             <Icon name="carbon:calendar" class="mr-2 h-6 w-6" />
             <span>{{ formatDate(new Date(event.Date), 'dd MMM yyyy') }}</span>
+            <template v-if="isNextMeetup">
+              <span class="bg-green-700 text-sm font-mono text-white px-3 rounded-md font-bold">
+                NEXT MEETUP
+              </span>
+            </template>
           </div>
-          <template v-if="isNextMeetup">
-            <span class="bg-green-700 text-sm font-mono items-center grid text-white px-3 rounded-md font-bold">NEXT
-              MEETUP</span>
-          </template>
         </template>
 
         <!-- Title -->
@@ -107,12 +108,12 @@ const dateInPast = function (firstDate: Date, secondDate: Date) {
   return false;
 };
 
-const isUpcoming = () => {
+const isUpcoming = computed(() => {
   const past = new Date(event?.Date);
   const today = new Date();
   const verifyValue = dateInPast(past, today);
   return !verifyValue;
-};
+})
 
 const hasAlbum = () => {
   return Boolean(event && event.album && event?.album.toString() === 'null');
