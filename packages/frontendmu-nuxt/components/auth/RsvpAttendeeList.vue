@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { onMounted, ref, type Ref, computed, watch } from "vue";
 import { useStore } from "@nanostores/vue";
-import { isUserLoggedIn, currentUser } from "@/store/userStore";
+import { isUserLoggedIn } from "@/store/userStore";
 import type { Attendee, MeetupAttendees } from "@/utils/types";
 import { base64Url } from "@/utils/helpers";
 
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 
 
-const $session = useStore(currentUser);
 const $isUserLoggedIn = useStore(isUserLoggedIn);
 
 const { getListOfAttendeees, meetupAttendees } = useAuth(getClient());
@@ -69,7 +68,7 @@ onMounted(async () => {
         Attendees
         <span
           class="bg-verse-200 aspect-square z-2 rounded-full inline-grid place-items-center text-verse-800 p-4 md:p-1 text-6xl md:text-xl shadow-sm shadow-black/40 relative z-3">{{
-    attendeeCount }}</span>
+            attendeeCount }}</span>
         <span
           class="z-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 md:opacity-0 duration-[250ms] rounded-md md:rounded-r-full md:pl-5 ease-in-out md:-translate-x-8 relative transition text-sm text-verse-900 bg-verse-200/60 px-2 pl-4 text-center md:text-left md:-left-8 py-1">
           RSVPs so far

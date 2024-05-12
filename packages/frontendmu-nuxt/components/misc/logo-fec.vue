@@ -1,6 +1,6 @@
 <template>
   <div :class="[{ 'spin': !!loading }]">
-    <svg width="100%" height="auto" viewBox="0 0 874 875" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="100%" viewBox="0 0 874 875" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M859.531 437.446C859.531 670.711 670.358 859.812 436.996 859.812C203.635 859.812 14.461 670.711 14.461 437.446C14.461 204.182 203.635 15.0801 436.996 15.0801C670.358 15.0801 859.531 204.182 859.531 437.446Z"
         stroke="currentColor" stroke-width="30" />

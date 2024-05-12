@@ -19,11 +19,11 @@ const links: TMenu = {
     title: 'About',
     href: '/about',
     children: [
-      {
-        title: 'FAQ',
-        href: '/faq',
-        class: '',
-      },
+      // {
+      //   title: 'FAQ',
+      //   href: '/faq',
+      //   class: '',
+      // },
       {
         title: 'WhatsApp',
         href: 'https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q',
