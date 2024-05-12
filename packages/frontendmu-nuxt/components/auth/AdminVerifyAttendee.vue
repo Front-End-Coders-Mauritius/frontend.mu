@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import OrganiserQRCodeScanner from '@components/auth/OrganiserQRCodeScanner.vue';
+import OrganiserQRCodeScanner from '@/components/auth/OrganiserQRCodeScanner.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import { computed } from 'vue';
-import BaseButton from '@components/base/BaseButton.vue';
 
 const { isLoggedIn, user } = useAuth(getClient());
 
@@ -25,7 +24,7 @@ const isAdmin = computed(() => user.value?.role === 'Admin')
             </h2>
 
             <BaseButton>
-                <a href="/">Back to homepage</a>
+                <NuxtLink href="/">Back to homepage</NuxtLink>
             </BaseButton>
         </div>
     </div>

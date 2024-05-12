@@ -5,7 +5,7 @@ const description = "About us";
 
 <template>
     <ContentBlock>
-        <BaseHeading>About us</BaseHeading>
+        <BaseHeading :level="1">About us</BaseHeading>
         <div class="prose text-verse-600 dark:text-verse-300 pt-4 pb-16 text-center md:text-left">
             <p>
                 Front-End Coders Mauritius is a community around front-end development

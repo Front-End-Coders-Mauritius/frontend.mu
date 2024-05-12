@@ -52,7 +52,7 @@ const colorClasses = computed(() => {
 </script>
 
 <template>
-    <a v-bind="$attrs" :class="[sizeClasses, colorClasses]" :disabled="loading"
+    <NuxtLink v-bind="$attrs" :class="[sizeClasses, colorClasses]" :disabled="loading"
         class="shadow-xl hover:shadow-lg active:shadow cursor-pointer transition-all inline-flex gap-4 items-center justify-center rounded-full disabled:opacity-20 disabled:cursor-not-allowed">
 
         <Transition mode="out-in" name="fade">
@@ -60,5 +60,5 @@ const colorClasses = computed(() => {
         </Transition>
 
         <slot />
-    </a>
+    </NuxtLink>
 </template>

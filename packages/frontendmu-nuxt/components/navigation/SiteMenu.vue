@@ -87,22 +87,22 @@ const links: TMenu = {
     <div class="megamenu theme-light w-full">
       <div class="flex justify-between items-center">
         <div class="flex">
-          <a href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="Hello Kitty!">
+          <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="Hello Kitty!">
             <LogoFec class="w-10" />
             <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl md:block">
               frontend.mu
             </span>
-          </a>
+          </NuxtLink>
         </div>
         <nav>
           <ul class="nav-links text-sm md:text-sm lg:text-base flex gap-4 font-medium font-heading">
             <template v-for='item of Object.keys(links)'>
               <li :class="[
-              { 'nav-link-dropdown': links[item].children },
-              links[item].class,
-              currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
-              'nav-link',
-            ]">
+                { 'nav-link-dropdown': links[item].children },
+                links[item].class,
+                currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
+                'nav-link',
+              ]">
                 <NuxtLink class="nav-link-text  flex items-center" :href='links[item].href'
                   :target='!!links[item].href.includes("https") ? "_blank" : "_self"'>
                   <span style="view-transition-name: menubar" v-if='currentPath.includes(links[item].href)'

@@ -5,6 +5,7 @@ import SiteNavigation from '~/components/navigation/SiteNavigation.vue';
 </script>
 
 <template>
+    <NuxtLoadingIndicator />
     <LayoutBackdrop>
         <SiteNavigation />
 

@@ -20,10 +20,10 @@
           </div>
         </div>
 
-        <a :href="`/speaker/${session.Session_id.speakers.id}`" class="absolute inset-0"
+        <NuxtLink :href="`/speaker/${session.Session_id.speakers.id}`" class="absolute inset-0"
           :title="`Speaker name: ${session.Session_id.speakers.name}`">
           <span class="sr-only">{{ session.Session_id.speakers.name }}</span>
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </div>

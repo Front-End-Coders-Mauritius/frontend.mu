@@ -40,13 +40,15 @@ onMounted(() => {
             class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100/10 rounded-md bg-zinc-500/20 dark:bg-verse-500/20 backdrop-blur-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div class="py-1">
               <MenuItem v-slot="{ active }">
-              <a href="/user/me"
-                :class="[active ? 'bg-gray-400/10 text-verse-900 dark:text-verse-100' : 'text-verse-900 dark:text-verse-100', 'block px-4 py-2 text-sm']">My
-                Profile</a>
+              <NuxtLink href="/user/me"
+                :class="[active ? 'bg-gray-400/10 text-verse-900 dark:text-verse-100' : 'text-verse-900 dark:text-verse-100', 'block px-4 py-2 text-sm']">
+                My
+                Profile</NuxtLink>
               </MenuItem>
               <MenuItem v-slot="{ active }">
-              <a @click="logout()"
-                :class="[active ? 'bg-gray-400/10 text-verse-900 dark:text-verse-100' : 'text-verse-900 dark:text-verse-100', 'block px-4 py-2 text-sm cursor-pointer']">Logout</a>
+              <NuxtLink @click="logout()"
+                :class="[active ? 'bg-gray-400/10 text-verse-900 dark:text-verse-100' : 'text-verse-900 dark:text-verse-100', 'block px-4 py-2 text-sm cursor-pointer']">
+                Logout</NuxtLink>
               </MenuItem>
             </div>
             <div class="text-verse-900 dark:text-verse-100 p-4 text-sm">

@@ -178,8 +178,8 @@ function updateProfile() {
                             <template v-for="event in rawUser?.Events" :key="event.id">
                                 <template v-if="(typeof event.Events_id !== 'string')">
                                     <div>
-                                        <a :href="`/meetup/${event.Events_id.id}`" class="text-lg font-medium">{{
-                event.Events_id.title }}</a>
+                                        <NuxtLink :href="`/meetup/${event.Events_id.id}`" class="text-lg font-medium">{{
+                                            event.Events_id.title }}</NuxtLink>
                                     </div>
                                 </template>
                             </template>

@@ -5,7 +5,7 @@
   ]" :title="hasAlbum() ? 'has album' : 'no album'">
     <div
       class="relative flex flex-col md:flex-row justify-between w-full transition-all duration-300 group-hover[.in-card]:shadow-lg group-hover[.in-card]:border-verse-400">
-      <a class="absolute inset-0 z-10" :href="`/meetup/${event.id}`"></a>
+      <NuxtLink class="absolute inset-0 z-10" :href="`/meetup/${event.id}`"></NuxtLink>
       <div class="relative flex flex-col p-4 w-full">
         <!-- Date -->
         <template v-if="event.Date">

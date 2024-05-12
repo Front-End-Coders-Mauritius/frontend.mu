@@ -35,7 +35,8 @@ const developmentEnvironment = process.env.NODE_ENV === "development";
             <div v-if="isLoggedIn">
                 <div class="text-center flex flex-col gap-8 text-verse-900 dark:text-verse-100 w-full">
                     <span>
-                        You are logged in as <a class="underline" href="/user/me"> {{ user?.full_name }}</a>
+                        You are logged in as <NuxtLink class="underline" href="/user/me"> {{ user?.full_name }}
+                        </NuxtLink>
                     </span>
                     <div v-if="willRedirect">
                         redirecting in {{ Math.round(countdown / 1000) }}s
