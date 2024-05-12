@@ -3,10 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import MeetupSingle from "@/components/meetup/MeetupSingle.vue";
 import eventsResponse from "../../../frontendmu-data/data/meetups-raw.json"
+// @ts-expect-error
 import type { DirectusEvent } from "@/utils/types";
-
 
 const route = useRoute();
 const routeId = computed(() => route.params.id as string)
@@ -26,5 +25,21 @@ const meetup = computed(() => {
         title: "Event not found",
         description: "Event not found",
     }
+})
+
+useHead({
+    title: meetup.value.title,
+    meta: [
+        {
+            hid: "description",
+            name: "description",
+            content: meetup.value.description,
+        },
+    ],
+})
+
+defineOgImageComponent('Event', {
+    title: meetup.value.title,
+    description: meetup.value.description,
 })
 </script>

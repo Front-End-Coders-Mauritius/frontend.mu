@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  ssr: false,
   css: [
     "~/styles/global.css",
     "~/styles/tailwind.css",
@@ -21,8 +20,14 @@ export default defineNuxtConfig({
     "#data": "../frontendmu-data/data/",
   },
   app: {
+
     head: {
       link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon.png'
+        },
         {
           rel: 'icon',
           type: 'image/svg+xml',

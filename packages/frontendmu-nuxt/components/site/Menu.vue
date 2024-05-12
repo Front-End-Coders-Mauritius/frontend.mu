@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const currentPath = computed(() => useRoute().path);
 import { computed, onMounted } from 'vue';
-import LogoFec from './SiteLogo.vue';
 
 interface TMenuItem {
   title: string;
@@ -110,7 +109,7 @@ onMounted(makeHeaderSticky);
       <div class="flex justify-between items-center">
         <div class="flex">
           <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="Hello Kitty!">
-            <LogoFec class="w-10" />
+            <SiteLogo class="w-10" />
             <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl md:block">
               frontend.mu
             </span>

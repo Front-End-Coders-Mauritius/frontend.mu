@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import SpeakerSingle from "@/components/speaker/SpeakerSingle.vue";
 import eventsResponse from "../../../frontendmu-astro/src/data/meetups-raw.json";
 import speakersResponse from "../../../frontendmu-astro/src/data/speakers-raw.json";
 
@@ -37,5 +36,21 @@ const getSpeaker = (id: string | number) => {
 const speaker = ref(getSpeaker(id.value));
 
 const speakerExists = computed(() => speaker.value !== null);
+
+useHead({
+  title: speaker.value.person ? speaker.value.person.name : '',
+  meta: [
+    {
+      hid: "description",
+      name: "description",
+      content: 'frontend.mu speaker profile',
+    },
+  ],
+});
+
+defineOgImageComponent('Speaker', {
+  title: speaker.value.person ? speaker.value.person.name : '',
+  username: speaker.value.person?.github_account
+});
 
 </script>
