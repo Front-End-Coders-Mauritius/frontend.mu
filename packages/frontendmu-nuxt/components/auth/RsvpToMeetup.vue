@@ -110,7 +110,6 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
 
 
 <template>
-    {{ rsvpOpen }}
     <div class="dock-block sticky top-[90dvh] px-2 md:px-8 z-10 w-full" v-if="rsvpOpen">
 
         <div class="contain relative h-16">
