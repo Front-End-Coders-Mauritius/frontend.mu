@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import RandomColor from "../components/RandomColor.astro";
-// import LoggedUser from "./auth/LoggedUser.vue";
+import LoggedUser from "@/components/auth/LoggedUser.vue";
 import ColorModeToggle from "../misc/ColorModeToggle.vue";
 import SiteMenu from "./SiteMenu.vue"; 
 </script>
@@ -9,9 +9,10 @@ import SiteMenu from "./SiteMenu.vue";
   <SiteMenu>
     <template #dock-right>
       <ColorModeToggle />
+      <LoggedUser />
+
     </template>
-  <!-- <RandomColor slot="dock-right" /> -->
-  <!-- <LoggedUser slot="dock-right" client:only="vue" /> -->
+    <!-- <RandomColor slot="dock-right" /> -->
   </SiteMenu>
   <div id="sticky-observer" class="bg-transparent z-0 h-4 w-full top-32 relative">
   </div>

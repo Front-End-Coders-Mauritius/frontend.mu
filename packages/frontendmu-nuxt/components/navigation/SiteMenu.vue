@@ -2,7 +2,8 @@
 import LogoFec from "./SiteLogo.vue";
 
 // const currentPath = Astro.url.pathname;
-const currentPath = useRoute().path;
+const currentPath = computed(() => useRoute().path);
+
 
 interface TMenuItem {
   title: string;
@@ -72,17 +73,16 @@ const links: TMenu = {
     href: "/sponsors",
     class: "hidden md:block",
   },
-  github: {
-    title: "Github",
-    href: "https://github.com/Front-End-Coders-Mauritius",
-    class: "hidden md:block",
-  },
+  // github: {
+  //   title: "Github",
+  //   href: "https://github.com/Front-End-Coders-Mauritius",
+  //   class: "hidden md:block",
+  // },
 };
 
 </script>
 
 <template>
-
   <div class="menu-wrapper w-full flex justify-between contain sticky top-0 z-30 h-32 items-center">
     <div class="megamenu theme-light w-full">
       <div class="flex justify-between items-center">
@@ -98,12 +98,12 @@ const links: TMenu = {
           <ul class="nav-links text-sm md:text-sm lg:text-base flex gap-4 font-medium font-heading">
             <template v-for='item of Object.keys(links)'>
               <li :class="[
-                { 'nav-link-dropdown': links[item].children },
-                links[item].class,
-                currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
-                'nav-link',
-              ]">
-                <a class="nav-link-text  flex items-center" :href='links[item].href'
+              { 'nav-link-dropdown': links[item].children },
+              links[item].class,
+              currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
+              'nav-link',
+            ]">
+                <NuxtLink class="nav-link-text  flex items-center" :href='links[item].href'
                   :target='!!links[item].href.includes("https") ? "_blank" : "_self"'>
                   <span style="view-transition-name: menubar" v-if='currentPath.includes(links[item].href)'
                     class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-verse-700 dark:bg-verse-100" />
@@ -111,7 +111,7 @@ const links: TMenu = {
                   <span class="relative z-20  p-2">{{ links[item].title }}</span>
 
                   <Icon name="carbon:launch" height="1em" v-if='!!links[item].href.includes("https")' />
-                </a>
+                </NuxtLink>
 
                 <div v-if="links[item].children" class="menu-dropdown px-2 pb-2 bg-white rounded-md text-black">
                   <div class="menu-dropdown-item  theme-dark">
@@ -119,7 +119,7 @@ const links: TMenu = {
 
                       <template v-for="submenu in links[item].children">
                         <li class:list={[submenu.class]}>
-                          <a :href="submenu.href" :target='!!submenu.href.includes("https") ? "_blank" : "_self"'
+                          <NuxtLink :href="submenu.href" :target='!!submenu.href.includes("https") ? "_blank" : "_self"'
                             class="hover:bg-verse-100 rounded-md block p-2">
                             <div class="flex items-center gap-2">
                               <div class="whitespace-nowrap">
@@ -128,7 +128,7 @@ const links: TMenu = {
 
                               <Icon name="carbon:launch" v-if='!!submenu.href.includes("https")' class="w-4 h-4" />
                             </div>
-                          </a>
+                          </NuxtLink>
                         </li>
                       </template>
                     </ul>
@@ -141,6 +141,9 @@ const links: TMenu = {
 
         <div>
           <div class="flex items-center gap-2">
+            <a href="https://github.com/Front-End-Coders-Mauritius">
+              <Icon name="carbon:logo-github" class="w-6 h-6 text-gray-500" />
+            </a>
             <slot name="dock-right" />
           </div>
         </div>
