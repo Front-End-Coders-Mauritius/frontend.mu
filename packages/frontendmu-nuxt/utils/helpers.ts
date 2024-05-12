@@ -12,7 +12,7 @@ export const toSafeVarName = (str: string | number) => {
     .toLowerCase();
 };
 
-export const getCookieValue = (name) => (
+export const getCookieValue = (name: string) => (
   document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
 )
 
@@ -66,6 +66,7 @@ export const DIRECTUS_URL = () => {
 
 // Converts time from 12-hour AM/PM format to 24-hour format.
 export const convertTo24HourFormat = (timeStr: string) => {
+  // @ts-expect-error
   const [time, period] = timeStr.match(/(\d+)(AM|PM)/i).slice(1);
   let [hours] = time.split(':').map(Number);
   if (period.toUpperCase() === 'PM' && hours < 12) {
@@ -80,7 +81,7 @@ export const base64Url = (base64String: string): string => {
   return "data:image/png;base64," + base64String;
 }
 
-export function findObjectByValue(value: string, obj) {
+export function findObjectByValue(value: string, obj: any[]) {
   return obj.filter(item => item.value === value)[0]
 }
 
@@ -95,4 +96,19 @@ export const getGithubUrl = (username: string) => {
     : "https://github.com/Github.png";
 
   return speaker_photo;
+};
+
+export function isUpcoming(currentEventDate: string) {
+  const past = new Date(currentEventDate);
+  const today = new Date();
+  const verifyValue = dateInPast(past, today);
+  return verifyValue;
+};
+
+
+export function dateInPast(firstDate: Date, secondDate: Date) {
+  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
+    return true;
+
+  return false;
 };
