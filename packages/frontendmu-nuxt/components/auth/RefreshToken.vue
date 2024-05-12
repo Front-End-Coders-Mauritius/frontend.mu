@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import BaseButton from '@components/base/BaseButton.vue';
-import useAuth, { getClient } from '../../auth-utils/useAuth';
+import useAuth, { getClient } from '@/auth-utils/useAuth';
 import { onMounted } from 'vue';
-import useAuthRedirect from '../../auth-utils/useAuthRedirect';
+import useAuthRedirect from '@/auth-utils/useAuthRedirect';
 
-import IconCheckmark from '~icons/carbon/checkmark-outline';
-import BaseCard from '@components/base/BaseCard.vue';
 const { loginWithSSO, user, logout, isLoggedIn } = useAuth(getClient());
 const { tryRedirect, countdown, countDownPercentage, willRedirect } = useAuthRedirect()
 
@@ -30,7 +27,7 @@ onMounted(async () => {
         <BaseCard>
             <div v-if="isLoggedIn">
                 <div class="flex flex-col items-center gap-8">
-                    <IconCheckmark class="text-4xl text-green-500" />
+                    <Icon name="carbon:checkmark" class="text-4xl text-green-500" />
                     <div class="text-center flex flex-col gap-8 text-verse-900 dark:text-verse-100">
                         You are logged in as {{ user?.full_name }}
 
