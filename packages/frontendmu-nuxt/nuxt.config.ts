@@ -19,5 +19,22 @@ export default defineNuxtConfig({
   alias: {
     "#astro": "../frontendmu-astro/src/",
     "#data": "../frontendmu-data/data/",
+  },
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg'
+        },
+      ]
+    },
+  },
+  site: {
+    url: 'https://frontend.mu',
+    name: 'Front-End Coders Mauritius',
+    description: 'A community around frontend, tech and development in general based in Mauritius. We also organise monthly meetups free for anyone interested to attend.',
+    defaultLocale: 'en', // not needed if you have @nuxtjs/i18n installed
   }
 })
