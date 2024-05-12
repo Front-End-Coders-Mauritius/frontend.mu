@@ -29,7 +29,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Update Contributors
+      - name: Update Contributors Astro
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run astro update-contributors
+
+      - name: Update Contributors Nuxt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run data update-contributors
