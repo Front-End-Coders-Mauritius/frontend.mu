@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     configPath: "./tailwind.config.js",
   },
   alias: {
+    "@/*": "./*",
     "#astro": "../frontendmu-astro/src/",
     "#data": "../frontendmu-data/data/",
   },

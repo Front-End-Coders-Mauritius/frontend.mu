@@ -1,23 +1,10 @@
 <script setup lang="ts">
+import type { DirectusEvent } from "@/utils/types";
 import type { PropType } from "vue";
-
-interface Meetup {
-  id: string;
-  title: string;
-  Date: string;
-  Attendees: number;
-  Venue: string;
-  description: string;
-  Location: string;
-  Time: string;
-  images?: [];
-  gallery?: [];
-  seats_available: number;
-}
 
 const props = defineProps({
   event: {
-    type: Object as PropType<Meetup>,
+    type: Object as PropType<DirectusEvent>,
     default: () => ({}),
   },
 });

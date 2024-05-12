@@ -23,14 +23,30 @@ export default function useMeetups() {
         });
     };
 
-    function nextMeetup() {
+    const nextMeetup = computed(() => {
         return upcomingMeetups()[upcomingMeetups().length - 1];
-    }
+    })
+
+    const pastMeetups = computed(() => {
+        if (!allMeetups) return [];
+        const sortedData = allMeetups.sort((a, b) => {
+            return new Date(b.Date).getTime() - new Date(a.Date).getTime();
+        });
+
+        const withoutUpcoming = sortedData.filter((item) => {
+            return isUpcoming(item.Date);
+        });
+
+        return withoutUpcoming.slice(0, 10);
+    })
+
+
 
     return {
         allMeetups,
         meetupsGroupedByYear,
         upcomingMeetups,
-        nextMeetup
+        nextMeetup,
+        pastMeetups
     }
 }

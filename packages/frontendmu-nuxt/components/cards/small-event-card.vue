@@ -1,40 +1,13 @@
 <script setup lang="ts">
+import type { DirectusEvent } from "@/utils/types";
 import type { PropType } from "vue";
-
-interface Meetup {
-  id: string;
-  title: string;
-  Date: string;
-  Attendees: number;
-  Venue: string;
-  description: string;
-  Location: string;
-  Time: string;
-  images?: [];
-  gallery?: [];
-}
 
 const props = defineProps({
   event: {
-    type: Object as PropType<Meetup>,
+    type: Object as PropType<DirectusEvent>,
     default: () => ({}),
   },
 });
-
-// to get past or upcoming value base in Date
-const dateInPast = function (firstDate: Date, secondDate: Date) {
-  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
-    return true;
-
-  return false;
-};
-
-const isUpcoming = (currentEventDate: string) => {
-  const past = new Date(currentEventDate);
-  const today = new Date();
-  const verifyValue = dateInPast(past, today);
-  return verifyValue;
-};
 </script>
 
 <template>

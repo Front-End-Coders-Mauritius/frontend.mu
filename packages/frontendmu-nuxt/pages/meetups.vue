@@ -6,7 +6,7 @@ import EventCard from '~/components/cards/EventCard.vue';
 
 const { allMeetups, meetupsGroupedByYear, nextMeetup } = useMeetups()
 
-const nextMeetupId = nextMeetup().id;
+const nextMeetupId = nextMeetup.value.id;
 
 </script>
 
