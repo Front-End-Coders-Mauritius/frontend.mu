@@ -6,8 +6,7 @@ export default defineNuxtConfig({
     "~/styles/global.css",
     "~/styles/tailwind.css",
   ],
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode", 'nuxt-icon'
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode", 'nuxt-icon', "@nuxt/fonts"],
   tailwindcss: {
     configPath: "./tailwind.config.js",
   },
