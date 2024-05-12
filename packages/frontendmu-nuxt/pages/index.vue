@@ -1,5 +1,9 @@
 <template>
     <div>
-        homepage
+        <HomeHero />
+        <HomeFeaturedSpeakers />
+        <HomeLatestMeetup />
+        <HomeSocialPresence />
+        <HomeStatsCounter />
     </div>
 </template>
