@@ -3,11 +3,10 @@
 import { ref } from 'vue';
 import { QrcodeStream } from 'vue-qrcode-reader'
 // * Kept for debugging
-import BaseButton from '@components/base/BaseButton.vue';
 const { updateUserVerification } = useAuth(getClient());
 import useAuth, { getClient } from '../../auth-utils/useAuth';
-import type { Attendee } from '@utils/types';
-import { base64Url } from '@utils/helpers';
+import type { Attendee } from '@/utils/types';
+import { base64Url } from '@/utils/helpers';
 
 // * Kept for debugging
 const props = defineProps<{ meetupId?: string }>()
@@ -79,4 +78,3 @@ async function verifyUser() {
     <!-- Keep that for debugging -->
   </div>
 </template>
-
