@@ -17,8 +17,8 @@ import sponsors from "../../../frontendmu-astro/src/data/sponsors.js";
               <!-- <flip-book class="mt-[-16%] md:mt-[-12%]" /> -->
               <p class="text-md md:text-lg text-black dark:text-verse-300 font-mono font-bold">
                 We're lucky to have sponsors support our community. If you're
-                interested in sponsoring us, please reach out to us <a href="mailto:hello@frontend.mu"
-                  class="underline">here</a>.
+                interested in sponsoring us, <a href="mailto:hello@frontend.mu" title="Email us"
+                  class="underline">please reach out to us here</a>.
               </p>
               <div class="grid place-items-center">
                 <a href="/sponsors"

@@ -3,6 +3,7 @@
     <ul role="list" class="flex flex-col gap-8 py-8">
       <li v-for="(session, index) in sessions" :key="index">
         <NuxtLink :href="`/meetup/${session.Events_id.id}`" class="space-y-4 flex gap-10">
+          <span class="sr-only">{{ session.Events_id.title }}</span>
           <div class="space-y-2">
             <div>
               <span class="text-gray-500 font-bold font-mono">

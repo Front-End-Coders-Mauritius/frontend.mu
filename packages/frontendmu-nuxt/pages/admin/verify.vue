@@ -1,8 +1,9 @@
 <template>
-    <AdminVerifyAttendee />
+    <ClientOnly>
+        <AuthAdminVerifyAttendee />
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import AdminVerifyAttendee from "@/components/auth/AdminVerifyAttendee.vue";
 
 </script>

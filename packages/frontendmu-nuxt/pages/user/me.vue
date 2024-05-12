@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import MyProfile from '@/components/auth/MyProfile.vue';
 </script>
 
 <template>
     <div>
-        <MyProfile />
+        <ClientOnly>
+            <AuthMyProfile />
+        </ClientOnly>
     </div>
 </template>
 s

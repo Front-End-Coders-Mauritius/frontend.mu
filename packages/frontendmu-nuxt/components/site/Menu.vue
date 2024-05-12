@@ -158,6 +158,7 @@ onMounted(makeHeaderSticky);
         <div>
           <div class="flex items-center gap-2">
             <a target="_blank" href="https://github.com/Front-End-Coders-Mauritius">
+              <span class="sr-only">GitHub Repository</span>
               <Icon name="carbon:logo-github" class="w-6 h-6 text-verse-600 dark:text-verse-100" />
             </a>
             <slot name="dock-right" />

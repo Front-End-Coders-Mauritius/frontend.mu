@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import RefreshToken from "@/components/auth/RefreshToken.vue";
 
 </script>
 
@@ -7,7 +6,9 @@ import RefreshToken from "@/components/auth/RefreshToken.vue";
 <template>
   <div class="mx-auto w-full grid items-center text-center">
     <div class="flex flex-col justify-around">
-      <RefreshToken />
+      <ClientOnly>
+        <AuthRefreshToken />
+      </ClientOnly>
     </div>
   </div>
 </template>

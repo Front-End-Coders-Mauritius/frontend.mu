@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
 import eventsResponse from "../../../frontendmu-data/data/meetups-raw.json"
-// @ts-expect-error
 import type { DirectusEvent } from "@/utils/types";
 
 const route = useRoute();

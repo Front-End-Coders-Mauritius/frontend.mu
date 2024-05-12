@@ -15,6 +15,7 @@
         <li v-for="person in people" :key="person.id">
           <template v-if="person.id">
             <NuxtLink class="space-y-4" :href="`/speaker/${person.id}`">
+              <span class="sr-only">{{ person.name }}</span>
               <img class="mx-auto h-20 w-20 rounded-lg border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48"
                 :src="person.imageUrl" :alt="person.name" :title="person.name" width="300" height="300" />
 

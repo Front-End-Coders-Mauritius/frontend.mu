@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LogoFec from '@/components/misc/logo-fec.vue';
 import useAuth, { getClient } from '@/auth-utils/useAuth';
 import useAuthRedirect from '@/auth-utils/useAuthRedirect';
 import RsvpForm from '@/components/auth/RsvpForm.vue';

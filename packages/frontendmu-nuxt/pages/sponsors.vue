@@ -5,8 +5,8 @@
         <BaseHeading>Sponsors</BaseHeading>
         <p class="text-xl text-verse-600 dark:text-verse-200">
           We're lucky to have sponsors support our community. If you're
-          interested in sponsoring us, please reach out to the organizers
-          <a href="mailto:hello@frontend.mu" class="underline">here</a>.
+          interested in sponsoring us,<a href="mailto:hello@frontend.mu" class="underline" title="Please reach out to us via email"> please reach out to the organizers
+          here</a>.
         </p>
       </div>
       <div class="grid gap-20 pt-12 md:grid-cols-2">
@@ -47,9 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import sponsorTypes from "../../frontendmu-astro/src/data/sponsors.js";
-// @ts-expect-error
 import { vTransitionName } from "@/utils/helpers";
 
 const title = "Our sponsors";

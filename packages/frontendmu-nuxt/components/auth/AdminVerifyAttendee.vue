@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import OrganiserQRCodeScanner from '@/components/auth/OrganiserQRCodeScanner.vue';
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import { computed } from 'vue';
 
@@ -14,7 +13,7 @@ const isAdmin = computed(() => user.value?.role === 'Admin')
             Admins can Scan a QR Code to verify a user's attendance to a meetup.
         </h2>
         <Suspense>
-            <OrganiserQRCodeScanner />
+            <AuthOrganiserQRCodeScanner />
         </Suspense>
     </template>
     <div v-else class="flex justify-center text-verse-300">
