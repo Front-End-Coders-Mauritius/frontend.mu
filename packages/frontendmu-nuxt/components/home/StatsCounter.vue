@@ -26,12 +26,9 @@
 
 <script setup lang="ts">
 
-// @ts-expect-error
-import eventsResponse from "@data/meetups-raw.json";
-// @ts-expect-error
-import speakers from "@data/speakers-raw.json";
-// @ts-expect-error
-import contributors from "@data/contributors.json";
+import eventsResponse from "../../../frontendmu-data/data/meetups-raw.json"
+import speakers from "../../../frontendmu-data/data/speakers-raw.json";
+import contributors from "../../../frontendmu-data/data/contributors.json";
 
 const numOfSpeakers = ref(speakers.length || 0);
 const numOfMeetups = ref(eventsResponse.length || 0);

@@ -6,8 +6,7 @@
 
 <script setup lang="ts">
 import MeetupSingle from "@/components/meetup/MeetupSingle.vue";
-// @ts-expect-error
-import eventsResponse from "@monorepo/astro/data/meetups-raw.json";
+import eventsResponse from "../../../frontendmu-data/data/meetups-raw.json"
 import type { DirectusEvent } from "@/utils/types";
 
 
@@ -15,7 +14,7 @@ const route = useRoute();
 const routeId = computed(() => route.params.id as string)
 
 function getEvent(id: string | number) {
-    let event = eventsResponse.find((ev: DirectusEvent) => ev.id == id);
+    let event = eventsResponse.find((ev) => ev.id == id);
 
     if (event === null) {
         console.error("cannot find event id: ", id);

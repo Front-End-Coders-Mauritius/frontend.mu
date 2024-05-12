@@ -3,4 +3,7 @@
     "../../tsconfig.json",
     "./.nuxt/tsconfig.json"
   ],
+  "compilerOptions": {
+    "baseUrl": ".",
+  }
 }

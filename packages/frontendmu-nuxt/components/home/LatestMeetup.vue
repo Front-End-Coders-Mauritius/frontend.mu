@@ -41,8 +41,7 @@ import { ref, computed } from 'vue';
 import EventCard from "@/components/cards/Card.vue";
 import EventCardModern from "@/components/cards/event-card-modern.vue";
 import SmallEventCard from "@/components/cards/small-event-card.vue";
-// @ts-expect-error
-import eventsResponse from "@data/meetups-raw.json";
+import eventsResponse from "../../../frontendmu-data/data/meetups-raw.json"
 
 interface Meetup {
   id: string;

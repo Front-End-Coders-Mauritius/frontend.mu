@@ -1,2 +1,4 @@
 packages:
-  - "packages/*"
+  - "packages/frontendmu-astro/"
+  - "packages/frontendmu-nuxt/"
+  - "packages/frontendmu-data/"

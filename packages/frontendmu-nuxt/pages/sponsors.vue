@@ -48,8 +48,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import sponsorTypes from "../../frontendmu-astro/src/data/sponsors.js";
 // @ts-expect-error
-import sponsorTypes from "@data/sponsors.js";
 import { vTransitionName } from "@/utils/helpers";
 
 const title = "Our sponsors";

@@ -4,7 +4,8 @@
     "description": "",
     "scripts": {
         "astro": "pnpm --filter @frontend.mu/astro",
-        "nuxt": "pnpm --filter @frontend.mu/nuxt"
+        "nuxt": "pnpm --filter @frontend.mu/nuxt",
+        "data": "pnpm --filter @frontend.mu/data"
     },
     "keywords": [],
     "author": "",

@@ -8,11 +8,8 @@
 
 <script setup lang="ts">
 import SpeakerSingle from "@/components/speaker/SpeakerSingle.vue";
-// @ts-expect-error
-import eventsResponse from "@data/meetups-raw.json";
-// @ts-expect-error
-import speakersResponse from "@data/speakers-raw.json";
-import { ref, computed } from "vue";
+import eventsResponse from "../../../frontendmu-astro/src/data/meetups-raw.json";
+import speakersResponse from "../../../frontendmu-astro/src/data/speakers-raw.json";
 
 const route = useRoute();
 const id = computed(() => route.params.id as string);

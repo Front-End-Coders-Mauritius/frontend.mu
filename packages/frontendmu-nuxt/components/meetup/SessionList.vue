@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 // import { Image } from "astro:assets";
-import { getGithubUrl } from "@/utils/fns";
+import { getGithubUrl } from "@/utils/helpers";
 // import { vTransitionName } from "@/utils/helpers";
 
 const props = defineProps({

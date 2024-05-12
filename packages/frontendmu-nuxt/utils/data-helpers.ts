@@ -1,4 +1,4 @@
-import eventsResponse from "@data/meetups-raw.json";
+import eventsResponse from "../../frontendmu-astro/src/data/meetups-raw.json";
 
 const getSponsorDetails = (sponsors) => {
   return (

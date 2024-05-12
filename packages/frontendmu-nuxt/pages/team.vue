@@ -115,14 +115,12 @@
 </template>
 
 <script setup lang="ts">
-// @ts-expect-error
-import speakersResponse from "@data/speakers-raw.json";
-import { getGithubUrl } from "@/utils/fns";
+import speakersResponse from "../../frontendmu-data/data/speakers-raw.json";
+// @ts-ignore
+import { getGithubUrl } from "@/utils/helpers";
 
-// @ts-expect-error
-import Contributors from "@data/contributors.json";
-// @ts-expect-error
-import { people } from "@data/people";
+import Contributors from "../../frontendmu-astro/src/data/contributors.json";
+import { people } from "../../frontendmu-astro/src/data/people";
 
 interface Contributor {
   username: string;

@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import EventsList from "./EventsList.vue";
 import LogoSpiral from "@/components/misc/LogoSpiral.vue";
-import { getGithubUrl } from "@/utils/fns";
+import { getGithubUrl } from "@/utils/helpers";
 import ContentBlock from "@/components/misc/ContentBlock.vue";
 
 const props = defineProps({

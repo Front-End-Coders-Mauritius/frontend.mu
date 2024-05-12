@@ -41,9 +41,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-// @ts-expect-error
-import speakersResponse from '@data/speakers-raw.json';
-import { getGithubUrl } from '@/utils/fns';
+import speakersResponse from '../../../frontendmu-astro/src/data/speakers-raw.json';
+// @ts-ignore
+import { getGithubUrl } from '@/utils/helpers';
 
 const featuredSpeakers = ref(
   speakersResponse.filter((speaker: { featured: boolean }) => speaker.featured)
