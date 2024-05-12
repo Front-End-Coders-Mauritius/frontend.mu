@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import LogoFec from "./SiteLogo.vue";
-
-// const currentPath = Astro.url.pathname;
 const currentPath = computed(() => useRoute().path);
-
+import { computed, onMounted } from 'vue';
+import LogoFec from './SiteLogo.vue';
 
 interface TMenuItem {
   title: string;
@@ -16,70 +14,94 @@ interface TMenu {
   [key: string]: TMenuItem;
 }
 
-// Object of all the links
 const links: TMenu = {
   about: {
-    title: "About",
-    href: "/about",
+    title: 'About',
+    href: '/about',
     children: [
       {
-        title: "FAQ",
-        href: "/faq",
-        class: "",
+        title: 'FAQ',
+        href: '/faq',
+        class: '',
       },
       {
-        title: "WhatsApp",
-        href: "https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q",
-        class: "",
+        title: 'WhatsApp',
+        href: 'https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q',
+        class: '',
       },
       {
-        title: "Instagram",
-        href: "https://www.instagram.com/frontend.mu/?ref=frontend.mu",
-        class: "",
+        title: 'Instagram',
+        href: 'https://www.instagram.com/frontend.mu/?ref=frontend.mu',
+        class: '',
       },
       {
-        title: "LinkedIn",
-        href: "https://www.linkedin.com/company/81846464/admin/?ref=frontend.mu",
-        class: "",
+        title: 'LinkedIn',
+        href: 'https://www.linkedin.com/company/81846464/admin/?ref=frontend.mu',
+        class: '',
       },
       {
-        title: "Join Discord",
-        href: "https://discord.gg/WxXW9Jvv6k?ref=frontend.mu",
-        class: "",
+        title: 'Join Discord',
+        href: 'https://discord.gg/WxXW9Jvv6k?ref=frontend.mu',
+        class: '',
       },
       {
-        title: "GitHub",
-        href: "https://github.com/Front-End-Coders-Mauritius?ref=frontend.mu",
-        class: "",
+        title: 'GitHub',
+        href: 'https://github.com/Front-End-Coders-Mauritius?ref=frontend.mu',
+        class: '',
       },
       {
-        title: "Twitter",
-        href: "https://twitter.com/frontendmu?ref=frontend.mu",
-        class: "",
+        title: 'Twitter',
+        href: 'https://twitter.com/frontendmu?ref=frontend.mu',
+        class: '',
       },
     ],
   },
   meetups: {
-    title: "Meetups",
-    href: "/meetups",
+    title: 'Meetups',
+    href: '/meetups',
   },
   team: {
-    title: "Team",
-    href: "/team",
-    class: "hidden md:block",
+    title: 'Team',
+    href: '/team',
+    class: 'hidden md:block',
   },
   sponsors: {
-    title: "Sponsors",
-    href: "/sponsors",
-    class: "hidden md:block",
+    title: 'Sponsors',
+    href: '/sponsors',
+    class: 'hidden md:block',
   },
-  // github: {
-  //   title: "Github",
-  //   href: "https://github.com/Front-End-Coders-Mauritius",
-  //   class: "hidden md:block",
-  // },
 };
 
+function makeHeaderSticky() {
+  const header = document.querySelector('.menu-wrapper');
+  if (!header) return;
+
+  function handleIntersection(entries: IntersectionObserverEntry[]) {
+    entries.forEach((entry) => {
+      if (!header) return;
+      if (entry.isIntersecting) {
+        header.classList.remove('intersect');
+      } else {
+        header.classList.add('intersect');
+      }
+    });
+  }
+
+  const options = {
+    root: null,
+    rootMargin: '-200px 0px 0px 0px',
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver(handleIntersection, options);
+  const target = document.querySelector('#sticky-observer');
+
+  if (!target) return;
+
+  observer.observe(target);
+}
+
+onMounted(makeHeaderSticky);
 </script>
 
 <template>
@@ -109,23 +131,19 @@ const links: TMenu = {
                     class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-verse-700 dark:bg-verse-100" />
 
                   <span class="relative z-20  p-2">{{ links[item].title }}</span>
-
                   <Icon name="carbon:launch" height="1em" v-if='!!links[item].href.includes("https")' />
                 </NuxtLink>
-
                 <div v-if="links[item].children" class="menu-dropdown px-2 pb-2 bg-white rounded-md text-black">
                   <div class="menu-dropdown-item  theme-dark">
                     <ul class="flex flex-col gap-2">
-
                       <template v-for="submenu in links[item].children">
-                        <li class:list={[submenu.class]}>
+                        <li class:list="[submenu.class]">
                           <NuxtLink :href="submenu.href" :target='!!submenu.href.includes("https") ? "_blank" : "_self"'
                             class="hover:bg-verse-100 rounded-md block p-2">
                             <div class="flex items-center gap-2">
                               <div class="whitespace-nowrap">
                                 {{ submenu.title }}
                               </div>
-
                               <Icon name="carbon:launch" v-if='!!submenu.href.includes("https")' class="w-4 h-4" />
                             </div>
                           </NuxtLink>
@@ -138,7 +156,6 @@ const links: TMenu = {
             </template>
           </ul>
         </nav>
-
         <div>
           <div class="flex items-center gap-2">
             <a href="https://github.com/Front-End-Coders-Mauritius">
@@ -147,8 +164,6 @@ const links: TMenu = {
             <slot name="dock-right" />
           </div>
         </div>
-        <!-- <MainMenu />
-    <ToggleTheme client:load /> -->
         <div class="absolute right-10 top-10 rounded-lg px-4 bg-white/20 shadow-[0px_0px_2px_var(--color-verse-500)]">
           <slot name="dock-right-bottom" />
         </div>
@@ -156,52 +171,6 @@ const links: TMenu = {
     </div>
   </div>
 </template>
-<!-- 
-<script is:inline>
-  function makeHeaderSticky() {
-    const header = document.querySelector(".menu-wrapper");
-    if (!header) return;
-
-    // Function to be called when the intersection changes
-    function handleIntersection(entries) {
-      entries.forEach((entry) => {
-        if (!header) return;
-        if (entry.isIntersecting) {
-          header.classList.remove("intersect");
-          // console.log("intersecting");
-        } else {
-          header.classList.add("intersect");
-          // console.log("not intersecting");
-        }
-      });
-    }
-
-    // Options for the IntersectionObserver
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: "-200px 0px 0px 0px", // Offset of -300px from the top
-      threshold: 0, // Trigger the callback when even one pixel is visible
-    };
-
-    // Create the IntersectionObserver
-    const observer = new IntersectionObserver(handleIntersection, options);
-
-    // Target element that you want to observe
-    const target = document.querySelector("#sticky-observer");
-
-    if (!target) return;
-
-    // Start observing the target element
-    observer.observe(target);
-  }
-
-  // Call the function to make the .header class sticky
-  // makeHeaderSticky();
-
-  document.addEventListener("DOMContentLoaded", makeHeaderSticky);
-
-  document.addEventListener("astro:after-swap", makeHeaderSticky);
-</script> -->
 
 <style scoped lang="postcss">
 .menu-wrapper {
@@ -224,7 +193,6 @@ const links: TMenu = {
 }
 
 nav {
-
   .nav-links {
     .nav-link {
       position: relative;
