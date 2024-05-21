@@ -79,7 +79,7 @@ export type DirectusEvent = {
 export interface Session {
     id: number
     Events_id: EventsId
-    Session_id: SessionId
+    Session_id: SessionDetail
 }
 
 export interface EventsId {
@@ -224,4 +224,31 @@ export type RSVPResponse = {
 export type MeetupPhotos = string[]
 export interface MeetupAlbums {
     [key: string]: MeetupPhotos;
+}
+
+export interface Meetup {
+    id: string;
+    accepting_rsvp: boolean;
+    title: string;
+    Date: string;
+    Attendees: number;
+    Venue: string;
+    description: string;
+    Location: string;
+    Time: string;
+    images?: [];
+    gallery?: [];
+    album?: string;
+    sessions: Session[];
+}
+
+export interface SessionDetail {
+    title: string;
+    speakers: Speaker;
+}
+
+export interface Speaker {
+    name: string;
+    id: string;
+    github_account: string;
 }
