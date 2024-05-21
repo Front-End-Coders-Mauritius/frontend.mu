@@ -17,6 +17,7 @@ const links: TMenu = {
   about: {
     title: 'About',
     href: '/about',
+    class: 'hidden md:block',
     children: [
       // {
       //   title: 'FAQ',
@@ -105,7 +106,7 @@ onMounted(makeHeaderSticky);
 
 <template>
   <div class="menu-wrapper w-full flex justify-between contain sticky top-0 z-30 h-32 items-center">
-    <div class="megamenu theme-light w-full">
+    <div class="menu theme-light w-full">
       <div class="flex justify-between items-center">
         <div class="flex">
           <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="Hello Kitty!">
@@ -116,51 +117,18 @@ onMounted(makeHeaderSticky);
           </NuxtLink>
         </div>
         <nav>
-          <ul class="nav-links text-sm md:text-sm lg:text-base flex gap-4 font-medium font-heading">
+          <ul class="nav-links text-sm md:text-sm lg:text-base flex md:gap-4 font-medium font-heading">
             <template v-for='item of Object.keys(links)'>
-              <li :class="[
-                { 'nav-link-dropdown': links[item].children },
-                links[item].class,
-                currentPath.includes(links[item].href) ? 'dark:text-white' : 'text-verse-700 dark:text-verse-300',
-                'nav-link',
-              ]">
-                <NuxtLink class="nav-link-text  flex items-center" :href='links[item].href'
-                  :target='!!links[item].href.includes("https") ? "_blank" : "_self"'>
-                  <span style="view-transition-name: menubar" v-if='currentPath.includes(links[item].href)'
-                    class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-verse-700 dark:bg-verse-100" />
-
-                  <span class="relative z-20  p-2">{{ links[item].title }}</span>
-                  <Icon name="carbon:launch" height="1em" v-if='!!links[item].href.includes("https")' />
-                </NuxtLink>
-                <div v-if="links[item].children" class="menu-dropdown px-2 pb-2 bg-white rounded-md text-black">
-                  <div class="menu-dropdown-item  theme-dark">
-                    <ul class="flex flex-col gap-2">
-                      <template v-for="submenu in links[item].children">
-                        <li class:list="[submenu.class]">
-                          <NuxtLink :href="submenu.href" :target='!!submenu.href.includes("https") ? "_blank" : "_self"'
-                            class="hover:bg-verse-100 rounded-md block p-2">
-                            <div class="flex items-center gap-2">
-                              <div class="whitespace-nowrap">
-                                {{ submenu.title }}
-                              </div>
-                              <Icon name="carbon:launch" v-if='!!submenu.href.includes("https")' class="w-4 h-4" />
-                            </div>
-                          </NuxtLink>
-                        </li>
-                      </template>
-                    </ul>
-                  </div>
-                </div>
-              </li>
+              <SiteMenuItem :links="links" :item="item" />
             </template>
           </ul>
         </nav>
         <div>
           <div class="flex items-center gap-2">
-            <a target="_blank" href="https://github.com/Front-End-Coders-Mauritius">
+            <!-- <a target="_blank" href="https://github.com/Front-End-Coders-Mauritius">
               <span class="sr-only">GitHub Repository</span>
-              <Icon name="carbon:logo-github" class="w-6 h-6 text-verse-600 dark:text-verse-100" />
-            </a>
+              <Icon name="carbon:logo-github" class="w-4 h-4 text-verse-600 dark:text-verse-100" />
+            </a> -->
             <slot name="dock-right" />
           </div>
         </div>
@@ -177,7 +145,7 @@ onMounted(makeHeaderSticky);
   transition: all 0.2s ease-out;
 }
 
-.megamenu {
+.menu {
   transition: all 0.2s ease-out;
 }
 
@@ -185,40 +153,10 @@ onMounted(makeHeaderSticky);
   @apply h-16;
 }
 
-.intersect .megamenu {
+.intersect .menu {
   padding: 4px 7px;
   border-radius: 24px;
   box-shadow: 0px 0px 2px var(--color-verse-500);
   backdrop-filter: brightness(0.8) blur(20px);
-}
-
-nav {
-  .nav-links {
-    .nav-link {
-      position: relative;
-
-      &:hover {
-        .menu-dropdown {
-          display: block;
-          opacity: 1;
-          clip-path: circle(100%);
-          transform: translateY(0px);
-          padding-top: 7px;
-          transform-origin: left -100px;
-        }
-      }
-
-      .menu-dropdown {
-        position: absolute;
-        left: 0;
-        top: 100%;
-        clip-path: circle(0%);
-        /* left: 50%; */
-        opacity: 0;
-        transform: translateY(-5px);
-        transition: 0.2s ease;
-      }
-    }
-  }
 }
 </style>
