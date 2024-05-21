@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import eventsResponse from "../../../frontendmu-astro/src/data/meetups-raw.json";
-import speakersResponse from "../../../frontendmu-astro/src/data/speakers-raw.json";
+import eventsResponse from "../../../frontendmu-data/data/meetups-raw.json"
+import speakersResponse from "../../../frontendmu-data/data/speakers-raw.json";
 
 const route = useRoute();
 const id = computed(() => route.params.id as string);

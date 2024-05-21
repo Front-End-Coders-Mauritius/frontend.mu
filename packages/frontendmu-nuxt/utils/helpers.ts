@@ -90,7 +90,7 @@ export function isFalsy(value: any): boolean {
   return value === 'false' || value === '0' || value === null || value === 'undefined' || value === ''
 }
 
-export const getGithubUrl = (username: string) => {
+export const getGithubUrl = (username ?: string) => {
   const speaker_photo = username
     ? "https://github.com/" + username + ".png"
     : "https://github.com/Github.png";

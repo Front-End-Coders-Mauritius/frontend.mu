@@ -3,15 +3,15 @@
     <!-- <pre>
         <code>{{ JSON.stringify(props.speaker, null, 2) }}</code>
     </pre> -->
-    <div :data-title="props.speaker.person.name">
+    <div :data-title="props.speaker.person?.name">
       <ContentBlock>
         <div class="flex md:flex-row flex-col-reverse">
           <div>
             <!-- Content area -->
             <div>
-              <div :style="vTransitionName('speaker-name', props.speaker.person.name)">
+              <div>
                 <BaseHeading :level="1" weight="bold">
-                  {{ props.speaker.person.name }}
+                  {{ props.speaker.person?.name }}
                 </BaseHeading>
               </div>
 
@@ -44,8 +44,8 @@
           <div class="flex-grow relative">
             <div class="w-full">
               <img class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
-                :style="vTransitionName('speaker-avatar', props.speaker.person.name)" :src="speaker_photo"
-                :alt="props.speaker.person.name" :title="props.speaker.person.name" width="300" height="300" />
+                :src="speaker_photo" :alt="props.speaker.person?.name" :title="props.speaker.person?.name" width="300"
+                height="300" />
               <div class="w-full >h-full absolute top-0">
                 <LogoSpiral class="w-full opacity-5 saturate-0" />
               </div>
@@ -70,5 +70,5 @@ const props = defineProps({
   },
 });
 
-const speaker_photo = getGithubUrl(props.speaker.person.github_account);
+const speaker_photo = getGithubUrl(props.speaker.person?.github_account);
 </script>
