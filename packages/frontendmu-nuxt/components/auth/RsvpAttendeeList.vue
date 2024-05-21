@@ -70,7 +70,7 @@ onMounted(async () => {
           class="bg-verse-200 aspect-square z-2 rounded-full inline-grid place-items-center text-verse-800 p-4 md:p-1 text-6xl md:text-xl shadow-sm shadow-black/40 relative z-3">{{
             attendeeCount }}</span>
         <span
-          class="z-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 md:opacity-0 duration-[250ms] rounded-md md:rounded-r-full md:pl-5 ease-in-out md:-translate-x-8 relative transition text-sm text-verse-900 bg-verse-200/60 px-2 pl-4 text-center md:text-left md:-left-8 py-1">
+          class="z-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 md:opacity-0 rounded-md md:rounded-r-full md:pl-5 ease-in-out md:-translate-x-8 relative transition text-sm text-verse-900 bg-verse-200/60 px-2 pl-4 text-center md:text-left md:-left-8 py-1">
           RSVPs so far
         </span>
       </h2>

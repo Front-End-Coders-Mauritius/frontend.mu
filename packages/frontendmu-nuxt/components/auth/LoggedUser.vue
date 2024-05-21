@@ -17,7 +17,12 @@ onMounted(() => {
 <template>
   <div class="dark:text-zinc-200 dark:ring-white/10 pl-4">
 
-    <BaseButton v-if="!isLoggedIn" href="/login" :color="'primary'" class="font-bold" @click="setUrl()">
+    <BaseButton v-if="!isLoggedIn" href="/login" :color="'primary'" class="font-medium hidden md:block"
+      @click="setUrl()">
+      Log In
+    </BaseButton>
+    <BaseButton v-if="!isLoggedIn" href="/login" :color="'primary'" class="font-medium block md:hidden" size="sm"
+      @click="setUrl()">
       Log In
     </BaseButton>
     <div v-else class="flex gap-2 items-center">

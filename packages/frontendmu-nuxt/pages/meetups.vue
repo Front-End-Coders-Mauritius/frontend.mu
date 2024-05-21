@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import ContentBlock from '~/components/misc/ContentBlock.vue';
-import EventCard from '~/components/cards/EventCard.vue';
-
 // group response by year and sort by reverse date
 
 const { allMeetups, meetupsGroupedByYear, nextMeetup } = useMeetups()
@@ -12,7 +9,7 @@ const nextMeetupId = nextMeetup.value.id;
 
 <template>
   <div>
-    <ContentBlock>
+    <MiscContentBlock>
       <div class="past-events-container pb-4 md:pb-16">
         <div class="flex flex-col gap-2">
           <BaseHeading :level="1">All meetups</BaseHeading>
@@ -32,12 +29,42 @@ const nextMeetupId = nextMeetup.value.id;
               {{ year }}
             </div>
             <div class="grid grid-cols-2 gap-8 relative z-10">
-              <EventCard v-for="event in meetupsGroupedByYear[year]" :key="event.id" :event="event"
-                :isNextMeetup="event.id === nextMeetupId" />
+              <CardsEventCard v-for="event in meetupsGroupedByYear[year]" :key="event.id" :event="event"
+                :isNextMeetup="event.id === nextMeetupId" class="card-entrance" />
             </div>
           </div>
         </template>
       </div>
-    </ContentBlock>
+    </MiscContentBlock>
   </div>
 </template>
+
+<style scoped>
+@keyframes list-item-scroll-effect {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  20%,
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.card-entrance {
+  view-timeline-name: --list-item-timeline;
+  animation-timeline: --list-item-timeline;
+  animation-range-start: entry 20%;
+  animation-range-end: cover 95%;
+  animation-fill-mode: both;
+  animation-name: list-item-scroll-effect;
+  transform-origin: center center;
+}
+</style>
