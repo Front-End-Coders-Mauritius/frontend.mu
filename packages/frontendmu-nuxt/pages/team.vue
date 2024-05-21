@@ -72,12 +72,16 @@
                 <h3 class="text-verse-500 dark:text-verse-200">
                   {{ person.name }}
                 </h3>
-                <p class="font-heading text-sm dark:text-verse-400 text-verse-600">
-                  {{ person.github_account }}
-                </p>
               </div>
             </div>
           </NuxtLink>
+          <a v-if="person?.github_account" :href="`https://github.com/${person?.github_account}`" target="_blank"
+            class="flex justify-center gap-2 items-center dark:text-verse-400 text-verse-600 hover:text-verse-100 hover:dark:text-verse-100">
+            <Icon name="carbon:logo-github" class="w-4 h-4" />
+            <p class="font-heading ">
+              {{ person?.github_account }}
+            </p>
+          </a>
         </li>
       </ul>
 
