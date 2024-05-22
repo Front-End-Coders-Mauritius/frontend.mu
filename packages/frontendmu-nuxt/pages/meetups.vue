@@ -39,7 +39,7 @@ const nextMeetupId = nextMeetup.value.id;
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 @keyframes list-item-scroll-effect {
   0% {
     opacity: 0;
@@ -58,13 +58,15 @@ const nextMeetupId = nextMeetup.value.id;
   }
 }
 
-.card-entrance {
-  view-timeline-name: --list-item-timeline;
-  animation-timeline: --list-item-timeline;
-  animation-range-start: entry 20%;
-  animation-range-end: cover 95%;
-  animation-fill-mode: both;
-  animation-name: list-item-scroll-effect;
-  transform-origin: center center;
+@supports (animation-timeline: view()) {
+  .card-entrance {
+    view-timeline-name: --list-item-timeline;
+    animation-timeline: --list-item-timeline;
+    animation-range-start: entry 20%;
+    animation-range-end: cover 95%;
+    animation-fill-mode: both;
+    animation-name: list-item-scroll-effect;
+    transform-origin: center center;
+  }
 }
 </style>
