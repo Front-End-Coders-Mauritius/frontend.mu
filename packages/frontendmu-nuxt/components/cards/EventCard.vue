@@ -84,7 +84,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { format } from 'date-fns';
-import photosResponse from '../../../frontendmu-astro/src/data/photos-raw.json';
+import photosResponse from "../../../frontendmu-data/data/photos-raw.json";
 import CardAlbum from './CardAlbum.vue';
 
 const appConfig = useAppConfig();

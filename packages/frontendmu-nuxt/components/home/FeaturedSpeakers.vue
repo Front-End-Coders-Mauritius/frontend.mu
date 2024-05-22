@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import speakersResponse from '../../../frontendmu-astro/src/data/speakers-raw.json';
+import speakersResponse from "../../../frontendmu-data/data/speakers-raw.json";
 import { getGithubUrl } from '@/utils/helpers';
 
 const featuredSpeakers = ref(
