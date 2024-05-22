@@ -1,4 +1,4 @@
-import eventsResponse from "../../frontendmu-astro/src/data/meetups-raw.json";
+import eventsResponse from "../../frontendmu-data/data/meetups-raw.json";
 
 let allMeetups = eventsResponse;
 export default function useMeetups() {

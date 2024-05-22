@@ -6,11 +6,10 @@
 </template>
 
 <script setup lang="ts">
-import type { MeetupPhotos } from '#build/utils/types';
 import { defineProps } from 'vue';
 
 defineProps<{
-  currentAlbum: MeetupPhotos[] | undefined;
+  currentAlbum: string[] | undefined;
   source: string;
 }>();
 </script>

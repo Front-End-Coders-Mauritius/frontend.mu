@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import sponsors from "../../../frontendmu-astro/src/data/sponsors.js";
+import sponsors from "../../../frontendmu-data/data/sponsors.js";
 </script>
 
 <template>

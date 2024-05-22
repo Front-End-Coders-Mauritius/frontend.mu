@@ -124,8 +124,8 @@ import speakersResponse from "../../frontendmu-data/data/speakers-raw.json";
 // @ts-ignore
 import { getGithubUrl } from "@/utils/helpers";
 
-import Contributors from "../../frontendmu-astro/src/data/contributors.json";
-import { people } from "../../frontendmu-astro/src/data/people";
+import Contributors from "../../frontendmu-data/data/contributors.json";
+import { people } from "../../frontendmu-data/data/people";
 
 interface Contributor {
   username: string;

@@ -99,7 +99,6 @@
             <AuthRsvpAttendeeList :seatCapacity="getCurrentEvent.seats_available" :meetupId="routeId" />
           </ClientOnly>
         </div>
-        {{ currentAlbum }}
         <MeetupAlbum :getCurrentEvent="getCurrentEvent" :currentAlbum="currentAlbum" :source="photoAlbumSource" />
       </ContentBlock>
     </div>
