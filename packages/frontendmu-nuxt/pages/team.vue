@@ -13,41 +13,29 @@
 
       <ul id="team" role="list" class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:gap-x-8">
         <li v-for="person in people" :key="person.id">
-          <template v-if="person.id">
-            <NuxtLink class="space-y-4" :href="`/speaker/${person.id}`">
-              <span class="sr-only">{{ person.name }}</span>
-              <img class="mx-auto h-20 w-20 rounded-lg border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48"
-                :src="person.imageUrl" :alt="person.name" :title="person.name" width="300" height="300" />
+          <component :is="person.id ? NuxtLink : 'div'" :href="person.id ? `/speaker/${person.id}` : null">
+            <span v-if="person.id" class="sr-only">{{ person.name }}</span>
 
-              <div class="space-y-2">
-                <div class="text-xs font-medium lg:text-lg text-center">
-                  <h3 class="text-verse-500 dark:text-verse-200">
-                    {{ person.name }}
-                  </h3>
-                  <p class="font-heading text-sm dark:text-verse-400 text-verse-600">
-                    {{ person.role }}
-                  </p>
-                </div>
-              </div>
-            </NuxtLink>
-          </template>
-          <template v-else>
-            <div class="space-y-4">
-              <img class="mx-auto h-20 w-20 rounded-lg border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48"
-                :src="person.imageUrl" :alt="person.name" :title="person.name" width="300" height="300" />
+            <img
+              class="mx-auto h-20 w-20 rounded-lg border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48"
+              :src="person.imageUrl"
+              :alt="person.name"
+              :title="person.name"
+              width="300"
+              height="300"
+            />
 
-              <div class="space-y-2">
-                <div class="text-xs font-medium lg:text-lg text-center">
-                  <h3 class="text-verse-500 dark:text-verse-200">
-                    {{ person.name }}
-                  </h3>
-                  <p class="font-heading text-sm dark:text-verse-400 text-verse-600">
-                    {{ person.role }}
-                  </p>
-                </div>
+            <div class="space-y-2">
+              <div class="text-xs font-medium lg:text-lg text-center">
+                <h3 class="text-verse-500 dark:text-verse-200">
+                  {{ person.name }}
+                </h3>
+                <p class="font-heading text-sm dark:text-verse-400 text-verse-600">
+                  {{ person.role }}
+                </p>
               </div>
             </div>
-          </template>
+          </component>
         </li>
       </ul>
 
@@ -133,4 +121,5 @@ interface Contributor {
 }
 
 const contributors: Contributor[] = Contributors;
+const NuxtLink = resolveComponent('NuxtLink')
 </script>
