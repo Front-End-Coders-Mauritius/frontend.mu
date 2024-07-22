@@ -98,13 +98,13 @@ export const getGithubUrl = (username ?: string) => {
   return speaker_photo;
 };
 
-export function isUpcoming(currentEventDate: string) {
-  const currentDate = new Date(currentEventDate);
+export function isUpcoming(currentEventDateStr: string) {
+  const currentEventDate = new Date(currentEventDateStr);
   const today = new Date();
 
-  const isPast = dateInPast(currentDate, today);
-  return !isPast;
-};
+  const isDateInPast = dateInPast(currentEventDate, today);
+  return !isDateInPast;
+}
 
 
 export function dateInPast(firstDate: Date, secondDate: Date) {
