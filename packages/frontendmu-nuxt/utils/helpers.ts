@@ -99,10 +99,11 @@ export const getGithubUrl = (username ?: string) => {
 };
 
 export function isUpcoming(currentEventDate: string) {
-  const past = new Date(currentEventDate);
+  const currentDate = new Date(currentEventDate);
   const today = new Date();
-  const verifyValue = dateInPast(past, today);
-  return verifyValue;
+
+  const isPast = dateInPast(currentDate, today);
+  return !isPast;
 };
 
 
