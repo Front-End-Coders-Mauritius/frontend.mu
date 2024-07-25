@@ -9,20 +9,6 @@ const props = defineProps({
   },
 });
 
-const dateInPast = function (firstDate: Date, secondDate: Date) {
-  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0)) {
-    return true;
-  }
-  return false;
-};
-
-const isUpcoming = (currentEventDate: string) => {
-  const past = new Date(currentEventDate);
-  const today = new Date();
-  const verifyValue = dateInPast(past, today);
-  return verifyValue;
-};
-
 const tiltOptions = {
   reverse: false,
   speed: 1000,
@@ -46,8 +32,8 @@ const tiltOptions = {
 
       <div class="flex flex-col md:flex-row w-full justify-between gap-4 border-gray-100">
         <span v-if="props.event.Date" class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/10" :class="isUpcoming(props.event.Date)
-          ? 'bg-gray-50 text-gray-700'
-          : 'bg-green-50 text-green-600 font-bold dark:bg-verse-900'
+            ? 'bg-green-50 text-green-600 font-bold dark:bg-verse-900'
+            : 'bg-gray-50 text-gray-700'
           ">
           <Icon name="carbon:calendar" class="mr-2 h-6 w-6" />
           <span>{{ new Date(props.event.Date).toDateString() }}</span>

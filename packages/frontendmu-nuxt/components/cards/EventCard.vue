@@ -22,7 +22,7 @@
 
         <template v-if="event.Date">
           <div :class="[
-            !isUpcoming(event.Date) ? 'text-green-600 font-bold' : 'text-verse-900 dark:text-verse-300',
+            isUpcoming(event.Date) ? 'text-green-600 font-bold' : 'text-verse-900 dark:text-verse-300',
             'flex flex-col font-mono text-sm font-medium gap-2 w-full justify-between',
           ]">
 
