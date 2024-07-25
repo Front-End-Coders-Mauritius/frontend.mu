@@ -175,12 +175,13 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
                                 </template>
 
                                 <!-- {{ currentEventRsvpDetail }} -->
+                                <BaseButton v-if="rsvpPaneOpen" @click="rsvpPaneOpen = false" color="neutral">
+                                  Close
+                                </BaseButton>
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
-                                <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true"
-                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'">
-                                    {{ isAttendingCurrentEvent ? rsvpPaneOpen ? 'Close' : 'Attending' : 'Attend'
-                                    }}
+                                <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true" :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                  {{ isAttendingCurrentEvent ? 'Attending' : 'Attend' }}
                                 </BaseButton>
 
                                 <!-- <BaseButton  :color="'neutral'">
