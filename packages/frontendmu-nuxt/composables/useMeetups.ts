@@ -12,14 +12,19 @@ export default function useMeetups() {
         return acc;
     }, {}));
 
+    const sortedMeetups = computed(() => {
+        return (allMeetups || []).sort((a, b) => {
+            return (
+                new Date(b.Date).getTime() - new Date(a.Date).getTime()
+            );
+        });
+    })
+
     function upcomingMeetups() {
         if (!allMeetups) return [];
-        const sortedData = allMeetups.sort((a, b) => {
-            return new Date(b.Date).getTime() - new Date(a.Date).getTime();
-        });
 
-        return sortedData.filter((item) => {
-            return !isUpcoming(item.Date);
+        return sortedMeetups.value.filter((item) => {
+          return isUpcoming(item.Date);
         });
     };
 
@@ -29,15 +34,12 @@ export default function useMeetups() {
 
     const pastMeetups = computed(() => {
         if (!allMeetups) return [];
-        const sortedData = allMeetups.sort((a, b) => {
-            return new Date(b.Date).getTime() - new Date(a.Date).getTime();
+
+        const pastMeetupsData = sortedMeetups.value.filter((item) => {
+          return !isUpcoming(item.Date);
         });
 
-        const withoutUpcoming = sortedData.filter((item) => {
-            return isUpcoming(item.Date);
-        });
-
-        return withoutUpcoming.slice(0, 10);
+        return pastMeetupsData.slice(0, 10);
     })
 
 

@@ -6,8 +6,8 @@
       <div v-if="event.Date" class="">
         <span :title="isUpcoming(event.Date) ? 'Upcoming' : 'Past'" :class="[
           isUpcoming(event.Date)
-            ? 'bg-gray-50  dark:bg-transparent text-verse-500 dark:text-verse-400  dark:font-bold'
-            : 'bg-green-50 text-green-600 font-bold',
+            ? 'bg-green-50 text-green-600 font-bold'
+            : 'bg-gray-50 dark:bg-transparent text-verse-500 dark:text-verse-400  dark:font-bold',
           'inline-flex rounded-lg p-[0.35rem] md:p-3 font-mono text-sm font-medium items-center',
         ]">
           <Icon name="carbon:calendar" class="mr-2 h-6 w-6" />
