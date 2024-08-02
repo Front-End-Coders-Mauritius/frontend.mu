@@ -29,9 +29,9 @@ export default defineNuxtConfig({
 
   vite: {
     server: {
-        hmr: {
-            clientPort: 3000
-        }
+      hmr: {
+        clientPort: 3000
+      }
     }
   },
 
@@ -70,6 +70,10 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui',
+  },
+
+  experimental: {
+    viewTransition: true
   },
 
   compatibilityDate: "2024-08-02",
