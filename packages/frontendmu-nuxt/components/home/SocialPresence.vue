@@ -30,7 +30,8 @@
         </template>
       </HomeSocialCard>
 
-      <HomeSocialCard href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
+      <HomeSocialCard
+href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
         class="bg-[#25D366] text-sm md:text-normal">
         <template #tagline>
           <p>Whatsapp Community</p>
@@ -75,7 +76,8 @@
         </template>
       </HomeSocialCard>
 
-      <HomeSocialCard href="https://www.linkedin.com/company/81846464/admin/"
+      <HomeSocialCard
+href="https://www.linkedin.com/company/81846464/admin/"
         class="bg-[#007db1] text-sm md:text-normal">
         <template #tagline>
           <p>LinkedIn Page</p>

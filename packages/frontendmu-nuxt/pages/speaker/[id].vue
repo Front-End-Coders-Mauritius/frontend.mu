@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="speaker">
-      <SpeakerSingle :routeId="id" :speaker="speaker" />
+      <SpeakerSingle :route-id="id" :speaker="speaker" />
     </template>
   </div>
 </template>
@@ -23,7 +23,7 @@ const getSpeaker = (id: string | number) => {
   // Get sessions of this speaker from the events
   const allSessions = eventsResponse.map((event: any) => event.sessions).flat();
   const speakerSession = allSessions.filter((session: any) => {
-    let session_speaker_id = session.Session_id.speakers.id;
+    const session_speaker_id = session.Session_id.speakers.id;
     return id === session_speaker_id;
   });
 

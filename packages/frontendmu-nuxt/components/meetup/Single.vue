@@ -9,7 +9,8 @@
               <template v-if="isUpcoming(getCurrentEvent.Date)">
                 <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
                   <div class="flex w-full items-center justify-start">
-                    <p :class="[
+                    <p
+:class="[
                       isUpcoming(getCurrentEvent.Date)
                         ? 'tagStyle bg-green-100 text-green-800'
                         : 'tagStyle bg-yellow-100 text-yellow-800',
@@ -36,7 +37,7 @@
           </div>
         </div>
         <ClientOnly>
-          <AuthRsvpToMeetup :meetupId="routeId" :meetupDetails="getCurrentEvent" />
+          <AuthRsvpToMeetup :meetup-id="routeId" :meetup-details="getCurrentEvent" />
         </ClientOnly>
         <div class="contain">
           <div class="mt-10">
@@ -96,10 +97,10 @@
         </div>
         <div class="contain">
           <ClientOnly>
-            <AuthRsvpAttendeeList :seatCapacity="getCurrentEvent.seats_available" :meetupId="routeId" />
+            <AuthRsvpAttendeeList :seat-capacity="getCurrentEvent.seats_available" :meetup-id="routeId" />
           </ClientOnly>
         </div>
-        <MeetupAlbum :getCurrentEvent="getCurrentEvent" :currentAlbum="currentAlbum" :source="photoAlbumSource" />
+        <MeetupAlbum :get-current-event="getCurrentEvent" :current-album="currentAlbum" :source="photoAlbumSource" />
       </ContentBlock>
     </div>
   </div>

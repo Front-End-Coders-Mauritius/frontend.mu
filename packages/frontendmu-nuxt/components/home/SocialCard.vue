@@ -1,5 +1,6 @@
 <template>
-  <a :class="[
+  <a
+:class="[
     'social-card hover:opacity-90 cursor-pointer transition-all duration-200 py-4',
   ]" :href="props.href + '?ref=frontend.mu'" target="_blank">
     <div class="flex gap-4 items-center text-white">

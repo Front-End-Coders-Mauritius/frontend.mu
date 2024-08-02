@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const currentPath = computed(() => useRoute().path);
 import { computed, onMounted } from 'vue';
+const currentPath = computed(() => useRoute().path);
 
 interface TMenuItem {
   title: string;
@@ -118,7 +118,7 @@ onMounted(makeHeaderSticky);
         </div>
         <nav>
           <ul class="nav-links text-sm md:text-sm lg:text-base flex md:gap-4 font-medium font-heading">
-            <template v-for='item of Object.keys(links)'>
+            <template v-for='item of Object.keys(links)' :key="item">
               <SiteMenuItem :links="links" :item="item" />
             </template>
           </ul>

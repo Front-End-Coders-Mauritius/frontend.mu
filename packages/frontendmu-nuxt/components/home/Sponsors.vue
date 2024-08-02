@@ -30,7 +30,7 @@ import sponsors from "../../../frontendmu-data/data/sponsors.js";
 
             <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
               <template v-for="sponsorType of sponsors">
-                <template v-for="sponsor of sponsorType.sponsors">
+                <template v-for="sponsor of sponsorType.sponsors" :key="sponsor.name">
                   <a :title="sponsor.description" target="_blank" :href="sponsor.sponsorUrl"
                     class="mt-4 h-full md:mt-0 relative rounded-xl  flex justify-between items-center flex-col gap-4 group bg-white dark:bg-verse-200 dark:backdrop-blur-sm p-6 shadow-md transition-all hover:shadow-lg">
                     <div>
@@ -38,7 +38,7 @@ import sponsors from "../../../frontendmu-data/data/sponsors.js";
                         {{ sponsor.name }}
                       </span>
                     </div>
-                    <img :src="`/img/sponsors/${sponsor.logo}`" :alt="sponsor.description" />
+                    <img :src="`/img/sponsors/${sponsor.logo}`" :alt="sponsor.description">
                     <div v-if="sponsor.description"
                       class="bg-gray-300 py-1 px-4 text-xs w-full text-center text-gray-500 dark:text-black font-medium rounded-2xl self-end">
                       {{ sponsor.description }}

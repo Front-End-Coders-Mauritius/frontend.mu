@@ -48,6 +48,6 @@ async function getCoordinates() {
 <template>
   <div class=" bg-white rounded-lg shadow-lg p-4 z-[1000] relative w-full flex justify-center">
     <img class="w-full aspect-square object-contain max-w-4xl"
-      :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${infoJsonString}`" alt="QR Code" />
+      :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${infoJsonString}`" alt="QR Code">
   </div>
 </template>

@@ -5,9 +5,10 @@
     </div>
     <ul role="list" class="flex flex-col gap-6">
       <li v-for="(session, index) in sessions" :key="index" class="space-y-4 flex gap-10 relative">
-        <img class="h-20 w-20 rounded-full lg:h-24 lg:w-24"
+        <img
+class="h-20 w-20 rounded-full lg:h-24 lg:w-24"
           :src="getSpeakerPhoto(session.Session_id.speakers.github_account)" :alt="session.Session_id.speakers.name"
-          :title="session.Session_id.speakers.name" width="300" height="300" />
+          :title="session.Session_id.speakers.name" width="300" height="300" >
 
         <div class="space-y-2">
           <div>
@@ -20,7 +21,8 @@
           </div>
         </div>
 
-        <NuxtLink :href="`/speaker/${session.Session_id.speakers.id}`" class="absolute inset-0"
+        <NuxtLink
+:href="`/speaker/${session.Session_id.speakers.id}`" class="absolute inset-0"
           :title="`Speaker name: ${session.Session_id.speakers.name}`">
           <span class="sr-only">{{ session.Session_id.speakers.name }}</span>
         </NuxtLink>

@@ -33,12 +33,12 @@ const { links, item } = defineProps<Props>();
                 class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-verse-700 dark:bg-verse-100" />
 
             <span class="relative z-20  p-2">{{ links[item].title }}</span>
-            <Icon name="carbon:launch" height="1em" v-if='!!links[item].href.includes("https")' />
+            <Icon v-if='!!links[item].href.includes("https")' name="carbon:launch" height="1em" />
         </NuxtLink>
         <div v-if="links[item].children" class="menu-dropdown px-2 pb-2 bg-white rounded-md text-black">
             <div class="menu-dropdown-item  theme-dark">
                 <ul class="flex flex-col gap-2">
-                    <template v-for="submenu in links[item].children">
+                    <template v-for="submenu in links[item].children" :key="submenu">
                         <li class:list="[submenu.class]">
                             <NuxtLink :href="submenu.href"
                                 :target='!!submenu.href.includes("https") ? "_blank" : "_self"'
@@ -47,7 +47,7 @@ const { links, item } = defineProps<Props>();
                                     <div class="whitespace-nowrap">
                                         {{ submenu.title }}
                                     </div>
-                                    <Icon name="carbon:launch" v-if='!!submenu.href.includes("https")'
+                                    <Icon v-if='!!submenu.href.includes("https")' name="carbon:launch"
                                         class="w-4 h-4" />
                                 </div>
                             </NuxtLink>

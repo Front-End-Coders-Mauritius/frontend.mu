@@ -2,7 +2,7 @@
 import { useToast } from 'src/auth-utils/useAuth';
 import { computed, onMounted } from 'vue';
 
-let { toastMessage, isVisible, hide } = useToast();
+const { toastMessage, isVisible, hide } = useToast();
 
 onMounted(() => {
     setTimeout(() => {
@@ -27,14 +27,14 @@ const toastClasses = computed(() => {
 
 </script>
 <template>
-    <div class="fixed bottom-0 left-0 w-[350px] z-10" v-if="isVisible">
+    <div v-if="isVisible" class="fixed bottom-0 left-0 w-[350px] z-10">
         <div class="flex gap-1 flex-col p-4 m-4  rounded-2xl shadow-lg dark:backdrop-blur-3xl" :class="[toastClasses]">
             <div class="text-base font-bold  flex justify-between">
                 <span>
                     {{ toastMessage.title }}
                 </span>
 
-                <div @click.prevent="hide" class="text-xs cursor-pointer">
+                <div class="text-xs cursor-pointer" @click.prevent="hide">
                     Close
                 </div>
             </div>

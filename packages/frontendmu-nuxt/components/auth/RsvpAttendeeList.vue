@@ -35,6 +35,7 @@ const seatsTakenPercentage = computed(() => {
   if (attendeeList.value) {
     return (attendeeCount.value / props.seatCapacity) * 100;
   }
+  return 0;
 });
 
 const showAsFrom = computed(() => {
@@ -75,8 +76,8 @@ onMounted(async () => {
         </span>
       </h2>
       <div>
-        <div class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full" v-if="showAsFrom">
-          <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`"></div>
+        <div v-if="showAsFrom" class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full">
+          <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`" />
         </div>
       </div>
     </div>
@@ -88,7 +89,7 @@ onMounted(async () => {
           <div class="relative flex flex-col items-center">
             <template v-if="attendee.profile_picture">
               <img :src="base64Url(attendee.profile_picture)" alt=""
-                class="rounded-full mx-auto w-28 h-28 aspect-square" />
+                class="rounded-full mx-auto w-28 h-28 aspect-square">
             </template>
             <template v-else>
               <div
@@ -98,7 +99,7 @@ onMounted(async () => {
                 </span>
               </div>
             </template>
-            <div title="This person was present at the meetup" v-if="attendee.verified"
+            <div v-if="attendee.verified" title="This person was present at the meetup"
               class="text-xs flex gap-1 tracking-widest p-0.5 shadow-lg font-medium uppercase bg-green-600 rounded-full text-center md:flex text-white w-fit -mt-4">
               <Icon name="mdi:check-decagram" class="text-xl" />
             </div>

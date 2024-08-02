@@ -43,9 +43,10 @@
 
           <div class="flex-grow relative">
             <div class="w-full">
-              <img class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
+              <img
+class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
                 :src="speaker_photo" :alt="props.speaker.person?.name" :title="props.speaker.person?.name" width="300"
-                height="300" />
+                height="300" >
               <div class="w-full >h-full absolute top-0">
                 <LogoSpiral class="w-full opacity-5 saturate-0" />
               </div>

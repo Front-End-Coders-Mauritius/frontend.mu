@@ -7,11 +7,11 @@
             <DialogTrigger as-child>
               <img
                 :src="`${source}/${photo}`"
-                @click="setActiveImageIndex(index)"
                 loading="lazy"
                 tabindex="0"
                 class="object-cover w-full h-full object-center block rounded-md overflow-hidden cursor-zoom-in hover:scale-105 focus-visible:scale-105 transition-transform"
-              />
+                @click="setActiveImageIndex(index)"
+              >
             </DialogTrigger>
           </div>
         </div>
@@ -31,7 +31,7 @@
             <CarouselContent class="h-full max-h-[calc(100svh-160px)]">
               <CarouselItem v-for="photo in currentAlbum" :key="photo">
                 <div class="w-full h-full flex flex-row justify-center items-center">
-                  <img :src="`${source}/${photo}`" class="object-contain max-w-full max-h-full block rounded-md overflow-hidden" />
+                  <img :src="`${source}/${photo}`" class="object-contain max-w-full max-h-full block rounded-md overflow-hidden" >
                 </div>
               </CarouselItem>
             </CarouselContent>

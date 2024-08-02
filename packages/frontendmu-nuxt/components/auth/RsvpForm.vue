@@ -117,7 +117,7 @@ const formIsLocked = ref(true);
 
 onMounted(async () => {
     if (await checkIfLoggedIn()) {
-        let rsvpDetails = await getRsvp({ event_id: props.meetupId });
+        const rsvpDetails = await getRsvp({ event_id: props.meetupId });
 
         if (rsvpDetails) {
             setUserDetails(rsvpDetails[0])
@@ -138,13 +138,13 @@ function unlockForm() {
 }
 
 function setUserDetails(rsvpDetails?: RSVPResponse) {
-    let mealValue = rsvpDetails?.meal || rawUser.value?.meal || foodOptions[0].value;
+    const mealValue = rsvpDetails?.meal || rawUser.value?.meal || foodOptions[0].value;
     foodSelection.value = findObjectByValue(mealValue, foodOptions)
 
-    let transportValue = rsvpDetails?.transport || rawUser.value?.transport || transportOptions[0].value;
+    const transportValue = rsvpDetails?.transport || rawUser.value?.transport || transportOptions[0].value;
     transportSelection.value = findObjectByValue(transportValue, transportOptions)
 
-    let professionValue = rsvpDetails?.occupation || rawUser.value?.occupation || professionOptions[0].value;
+    const professionValue = rsvpDetails?.occupation || rawUser.value?.occupation || professionOptions[0].value;
     professionSelection.value = findObjectByValue(professionValue, professionOptions)
 
     user_full_name.value = rsvpDetails?.name || user.value?.full_name
@@ -163,29 +163,33 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
             <h2>RSVP</h2>
         </div> -->
             <div class="flex justify-start">
-                <BaseButton class="block md:hidden w-32 mr-3" color="primary" v-if="isAttendingCurrentEvent"
+                <BaseButton
+v-if="isAttendingCurrentEvent" class="block md:hidden w-32 mr-3" color="primary"
                     @click="unlockForm()">
                     Update RSVP
                 </BaseButton>
 
-                <BaseButton class="block md:hidden w-32" color="danger" v-if="isAttendingCurrentEvent"
+                <BaseButton
+v-if="isAttendingCurrentEvent" class="block md:hidden w-32" color="danger"
                     @click="cancelRsvpToCurrentMeetup(meetupId)">
                     Cancel RSVP
                 </BaseButton>
             </div>
 
             <FormLabel label="Name">
-                <input type="text" v-model="user_full_name" :disabled="formIsLocked" :class="[
+                <input
+v-model="user_full_name" type="text" :disabled="formIsLocked" :class="[
                     formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10 px-2'
-                ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
+                ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" >
             </FormLabel>
 
             <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
             <FormLabel label="Phone">
-                <input ref="input_phone" v-model="user_phone" required :disabled="formIsLocked" :class="[
+                <input
+ref="input_phone" v-model="user_phone" required :disabled="formIsLocked" :class="[
                     formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2',
                     user_phone_has_error ? 'border border-red-500' : ''
-                ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" />
+                ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1" >
             </FormLabel>
 
             <FormLabel label="Transport">
@@ -238,7 +242,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
             </div> -->
         </form>
 
-        <div class="hidden md:grid place-items-center flex-1 w-full" v-if="avatarUrl">
+        <div v-if="avatarUrl" class="hidden md:grid place-items-center flex-1 w-full">
             <div class="ring-2 ring-white rounded-full">
                 <img :src="avatarUrl" alt="" class="p-2 rounded-full w-10 md:w-32 -mt-10 overflow-hidden">
             </div>

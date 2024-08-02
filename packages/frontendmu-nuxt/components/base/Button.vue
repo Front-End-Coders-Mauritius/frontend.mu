@@ -52,11 +52,12 @@ const colorClasses = computed(() => {
 </script>
 
 <template>
-    <NuxtLink v-bind="$attrs" :class="[sizeClasses, colorClasses]" :disabled="loading"
+    <NuxtLink
+v-bind="$attrs" :class="[sizeClasses, colorClasses]" :disabled="loading"
         class="shadow-xl hover:shadow-lg active:shadow cursor-pointer transition-all inline-flex gap-4 items-center justify-center rounded-full disabled:opacity-20 disabled:cursor-not-allowed">
 
         <Transition mode="out-in" name="fade">
-            <Icon name="svg-spinners:pulse-2" v-if="loading" class="w-4 h-4 text-5xl text-white" />
+            <Icon v-if="loading" name="svg-spinners:pulse-2" class="w-4 h-4 text-5xl text-white" />
         </Transition>
 
         <slot />

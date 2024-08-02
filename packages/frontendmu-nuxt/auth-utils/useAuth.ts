@@ -1,21 +1,21 @@
 import { ref, computed, type Ref } from "vue";
 import { getCookieValue, DIRECTUS_URL, mapToValidUser, base64Url } from '@/utils/helpers';
-import { createDirectus, rest, readMe, staticToken, authentication, updateItem, createItem, updateMe, readItems } from '@directus/sdk';
+import { createDirectus, rest, readMe, staticToken, authentication, updateItem, updateMe, readItems } from '@directus/sdk';
 
 import type { Attendee, RSVPMetaData, RSVPResponse, SiteToast, User } from "../utils/types";
 import type { DirectusAstroUser } from './../utils/types';
-import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient, DirectusUser } from '@directus/sdk';
+import type { AuthenticationData, DirectusClient, AuthenticationClient, RestClient } from '@directus/sdk';
 
 const DIRECTUS_PROJECT_URL = DIRECTUS_URL()
 
-let isAuth = ref(false);
-let user = ref<User | null>(null);
-let rawUser = ref<DirectusAstroUser | null>(null);
-let responseFromServer = ref<any>(null);
-let isLoading = ref(false);
-let meetupAttendees: Ref<Record<string, Attendee[]>> = ref({});
+const isAuth = ref(false);
+const user = ref<User | null>(null);
+const rawUser = ref<DirectusAstroUser | null>(null);
+const responseFromServer = ref<any>(null);
+const isLoading = ref(false);
+const meetupAttendees: Ref<Record<string, Attendee[]>> = ref({});
 
-let toastMessage = ref<SiteToast>({
+const toastMessage = ref<SiteToast>({
     title: undefined,
     message: undefined,
     type: undefined,
@@ -128,7 +128,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
             await getCurrentUser()
             setAuth(true)
             if (!rawUser.value?.profile_picture) {
-                let picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id || '')
+                const picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id || '')
                 console.log(picture)
             }
 
@@ -261,7 +261,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     async function createRsvp({ eventId, userId }: { eventId: string, userId: string }) {
 
-        let payload = {
+        const payload = {
             "Events": {
                 "create": [{ "directus_users_id": userId, "Events_id": { "id": eventId } }],
                 "update": [],
@@ -306,10 +306,10 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
             client = await client.with(staticToken(token))
 
-            let eventIds = currentEventsRSVP.value.map(event => event.Events_id);
-            let updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== currentEventId);
+            const eventIds = currentEventsRSVP.value.map(event => event.Events_id);
+            const updatedEvents = currentEventsRSVP.value.filter(event => event.Events_id !== currentEventId);
 
-            let data = { Events: updatedEvents }
+            const data = { Events: updatedEvents }
 
             if (eventIds.includes(currentEventId)) {
                 const confirmNotAttending = confirm('You are already attending this event! Do you want to remove yourself from the list?');
@@ -362,7 +362,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 ]
             }
 
-            // @ts-expect-error
+            // @ts-expect-error Becauseitems is not typed
             const result = await client.request<RSVPResponse[]>(readItems('Events_directus_users', query_object));
             return result
 
@@ -394,7 +394,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 }
             }
 
-            // @ts-expect-error
+            // @ts-expect-error Becauseitems is not typed
             const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
 
             const updates = {
@@ -469,9 +469,9 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
         }
 
         try {
-            // @ts-expect-error
+            // @ts-expect-error Becauseitems is not typed
             const result = await client.request<Attendee[]>(readItems('Events_directus_users', query_object));
-            let attendees = filterAttendees(result);
+            const attendees = filterAttendees(result);
             meetupAttendees.value[currentEventId] = attendees
             return attendees
         } catch (err) {
@@ -481,7 +481,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
 
     }
 
-    async function updateUserVerification({ user_id, event_id, status }: { user_id: string, event_id: string, status: Boolean }) {
+    async function updateUserVerification({ user_id, event_id, status }: { user_id: string, event_id: string, status: boolean }) {
         try {
             isLoading.value = true;
             const token = getCookieValue('access_token')
@@ -504,7 +504,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
                 }
             }
 
-            // @ts-expect-error
+            // @ts-expect-error Becauseitems is not typed
             const primaryKeyQuery = await client.request(readItems('Events_directus_users', query_object));
 
             const updates = {

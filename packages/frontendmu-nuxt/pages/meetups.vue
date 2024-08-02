@@ -19,7 +19,7 @@ const nextMeetupId = nextMeetup.value.id;
           </p>
         </div>
 
-        <template v-for="year in Object.keys(meetupsGroupedByYear).reverse()">
+        <template v-for="year in Object.keys(meetupsGroupedByYear).reverse()" :key="year">
           <div class="grid pb-16 sm:pb-20 relative group is-page">
             <div class="text-lg font-bold text-verse-900 uppercase md:hidden">
               {{ year }}
@@ -30,7 +30,7 @@ const nextMeetupId = nextMeetup.value.id;
             </div>
             <div class="grid grid-cols-2 gap-8 relative z-10">
               <CardsEventCard v-for="event in meetupsGroupedByYear[year]" :key="event.id" :event="event"
-                :isNextMeetup="event.id === nextMeetupId" class="card-entrance" />
+                :is-next-meetup="event.id === nextMeetupId" class="card-entrance" />
             </div>
           </div>
         </template>
