@@ -21,6 +21,13 @@ export default defineNuxtConfig({
     "#astro": "../frontendmu-astro/src/",
     "#data": "../frontendmu-data/data/",
   },
+  vite: {
+    server: {
+        hmr: {
+            clientPort: 3000
+        }
+    }
+  },
   app: {
 
     head: {
@@ -39,7 +46,7 @@ export default defineNuxtConfig({
     },
   },
   site: {
-    url: 'https://dev.frontend.mu',
+    url: 'https://frontend.mu',
     name: 'Front-End Coders Mauritius',
     description: 'A community around frontend, tech and development in general based in Mauritius. We also organise monthly meetups free for anyone interested to attend.',
     defaultLocale: 'en', // not needed if you have @nuxtjs/i18n installed
