@@ -46,7 +46,8 @@ const fontWeightClasses = () => `font-${props.weight}`;
 </script>
 
 <template>
-  <component :is="Element" :class="[
+  <component
+:is="Element" :class="[
     'font-heading tracking-tight text-verse-900 dark:text-verse-200',
     props.class,
     fontWeightClasses(),

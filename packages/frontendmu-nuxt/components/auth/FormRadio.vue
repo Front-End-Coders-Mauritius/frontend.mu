@@ -16,9 +16,11 @@ defineProps<{
 </script>
 
 <template>
-  <RadioGroupOption as="template" v-for="option in options" :key="option.name" :disabled="disabled"
-    :value="returnValueOnly ? option.value : option" v-slot="{ active, checked }">
-    <div :class="[
+  <RadioGroupOption
+v-for="option in options" :key="option.name" v-slot="{ active, checked }" as="template"
+    :disabled="disabled" :value="returnValueOnly ? option.value : option">
+    <div
+:class="[
     active ? '' : '',
     checked
       ? 'transition-all duration-100 ring-slate-800 bg-white dark:ring-white dark:text-black ring-2  dark:hover:bg-slate-100'
@@ -30,7 +32,8 @@ defineProps<{
   ]">
       <RadioGroupLabel as="div" class="select-none text-center w-full">
         <Transition name="slide">
-          <Icon name="material-symbols:check-circle" v-if="checked"
+          <Icon
+v-if="checked" name="material-symbols:check-circle"
             class="bg-slate-800 dark:bg-white absolute -right-3 top-1/2 -translate-y-1/2 rounded-full w-5 h-5 text-green-600" />
         </Transition>
 

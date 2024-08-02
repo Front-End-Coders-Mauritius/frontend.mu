@@ -8,8 +8,7 @@
   <div class="egg-basket">
     <div class="egg">
       <div class="white">
-        <div class="yolk">
-        </div>
+        <div class="yolk"/>
       </div>
     </div>
   </div>

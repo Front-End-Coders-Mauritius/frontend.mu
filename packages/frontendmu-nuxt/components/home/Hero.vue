@@ -7,7 +7,7 @@
             <div class="flex flex-col justify-center text-center md:text-left gap-10 md:w-2/3">
               <h1
                 class="font-heading dark:text-white font-black text-4xl leading-tight sm:text-5xl lg:text-5xl xl:text-7xl">
-                Frontend Coders<br />
+                Frontend Coders<br >
                 <span
                   class="accent font-bold uppercase sm:text-4xl lg:text-4xl xl:text-6xl inline-block">Mauritius</span>
               </h1>
@@ -16,7 +16,8 @@
                 organise monthly meetups free for anyone interested to attend.
               </p>
               <div class="grid place-items-center md:place-items-start">
-                <NuxtLink href="/meetups"
+                <NuxtLink
+href="/meetups"
                   class="bg-verse-500 hover:bg-verse-600 transition-colors duration-200 text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg">
                   View all meetups
                 </NuxtLink>
@@ -25,7 +26,7 @@
 
             <div class="grid place-items-center">
               <div class="image-container">
-                <div class="image-bg"></div>
+                <div class="image-bg"/>
 
                 <MiscLogoFec class="img-src text-verse-500 dark:text-white" />
               </div>

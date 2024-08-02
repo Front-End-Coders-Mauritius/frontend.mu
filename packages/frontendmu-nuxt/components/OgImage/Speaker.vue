@@ -160,7 +160,7 @@ withDefaults(defineProps<{
               style="
                 border-radius: 50%;
               "
-            />
+            >
           </div>
           <div
             style="

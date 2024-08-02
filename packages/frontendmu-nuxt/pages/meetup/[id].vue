@@ -1,5 +1,5 @@
 <template>
-    <MeetupSingle :routeId="routeId" :getCurrentEvent="meetup" />
+    <MeetupSingle :route-id="routeId" :get-current-event="meetup" />
 </template>
 
 <script setup lang="ts">
@@ -10,7 +10,7 @@ const route = useRoute();
 const routeId = computed(() => route.params.id as string)
 
 function getEvent(id: string | number) {
-    let event = eventsResponse.find((ev) => ev.id == id);
+    const event = eventsResponse.find((ev) => ev.id == id);
 
     if (event === null) {
         console.error("cannot find event id: ", id);

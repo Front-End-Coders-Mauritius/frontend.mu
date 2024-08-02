@@ -1,7 +1,8 @@
 <template>
-  <div class="grid grid-cols-3 items-center h-full" v-if="currentAlbum">
-    <img v-for="photo in currentAlbum" :key="photo" :src="`${source}/${photo}`" class="object-cover w-full h-full block"
-      loading="lazy" />
+  <div v-if="currentAlbum" class="grid grid-cols-3 items-center h-full">
+    <img
+v-for="photo in currentAlbum" :key="photo" :src="`${source}/${photo}`" class="object-cover w-full h-full block"
+      loading="lazy" >
   </div>
 </template>
 

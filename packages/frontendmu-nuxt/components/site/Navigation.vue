@@ -11,8 +11,7 @@
     </template>
     <!-- <RandomColor slot="dock-right" /> -->
   </SiteMenu>
-  <div id="sticky-observer" class="bg-transparent z-0 h-4 w-full top-32 relative">
-  </div>
+  <div id="sticky-observer" class="bg-transparent z-0 h-4 w-full top-32 relative"/>
 </template>
 
 <!-- <script>

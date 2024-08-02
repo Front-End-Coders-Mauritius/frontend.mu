@@ -21,7 +21,7 @@ function getInitialsFromName(name: string) {
 
 <template>
     <div class="flex">
-        <template v-for="speaker in allSpeakersForEvent(event)">
+        <template v-for="speaker in allSpeakersForEvent(event)" :key="speaker.name">
             <div
                 class="group-hover/event:-ml-1 transition-all duration-200 -ml-4 flex first:ml-0 group-hover/event:first:ml-0">
                 <Avatar size="base">

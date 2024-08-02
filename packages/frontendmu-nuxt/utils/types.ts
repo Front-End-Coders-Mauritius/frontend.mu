@@ -15,8 +15,8 @@ export interface IRSVPStatus {
     id?: string;
     meetup_id?: string;
     meta?: RSVPMetaObject;
-    rsvp: Boolean;
-    showOnSite?: Boolean;
+    rsvp: boolean;
+    showOnSite?: boolean;
     user_metadata?: User;
     user_uid?: string;
 }

@@ -2,11 +2,11 @@
 // * Kept for debugging
 import { ref } from 'vue';
 import { QrcodeStream } from 'vue-qrcode-reader'
-// * Kept for debugging
-const { updateUserVerification } = useAuth(getClient());
 import useAuth, { getClient } from '../../auth-utils/useAuth';
 import type { Attendee } from '@/utils/types';
 import { base64Url } from '@/utils/helpers';
+// * Kept for debugging
+const { updateUserVerification } = useAuth(getClient());
 
 // * Kept for debugging
 const props = defineProps<{ meetupId?: string }>()
@@ -64,9 +64,10 @@ async function verifyUser() {
 
 <template>
   <div class="flex flex-col items-center justify-center">
-    <QrcodeStream @detect="onDetect" v-if="!verificationDone" />
+    <QrcodeStream v-if="!verificationDone" @detect="onDetect" />
     <div v-else class=" flex flex-col gap-8 justify-center items-center text-verse-300 text-2xl">
-      <img class="block w-[50vw] aspect-square" v-if="verifiedUserData?.profile_picture"
+      <img
+v-if="verifiedUserData?.profile_picture" class="block w-[50vw] aspect-square"
         :src="base64Url(verifiedUserData?.profile_picture)" alt="">
       <div class="font-bold uppercase text-green-500">Success !</div>
       <div>

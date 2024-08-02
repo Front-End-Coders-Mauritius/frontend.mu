@@ -1,6 +1,6 @@
 <template>
-  <div :class="parallax ? 'preserve' : ''" id="tiltMe" ref="tiltRef">
-    <slot></slot>
+  <div id="tiltMe" ref="tiltRef" :class="parallax ? 'preserve' : ''">
+    <slot/>
   </div>
 </template>
 
@@ -9,15 +9,15 @@ import VanillaTilt from "vanilla-tilt";
 
 export default {
   name: "Tilt",
+  props: {
+    options: Object,
+    parallax: Boolean,
+  },
   data: function () {
     return {};
   },
   mounted() {
     VanillaTilt.init(this.$refs.tiltRef, this.options);
-  },
-  props: {
-    options: Object,
-    parallax: Boolean,
   },
 };
 </script>

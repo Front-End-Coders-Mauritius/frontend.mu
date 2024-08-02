@@ -44,8 +44,8 @@ const counterAnimation = () => {
           const finalNum = +nullCheck;
           // Rest of the code
 
-          if (!!finalNum) {
-            let duration = Math.floor(700 / finalNum);
+          if (finalNum) {
+            const duration = Math.floor(700 / finalNum);
 
             const counter = setInterval(() => {
               startNum += 1;

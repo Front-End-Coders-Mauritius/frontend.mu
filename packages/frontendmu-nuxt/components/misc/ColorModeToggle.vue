@@ -14,10 +14,12 @@ const cycleMode = () => {
 </script>
 
 <template>
-  <div @click="cycleMode()" class="text-verse-600 dark:text-verse-100 w-6 h-6 cursor-pointer">
-    <Icon name="radix-icons:moon"
+  <div class="text-verse-600 dark:text-verse-100 w-6 h-6 cursor-pointer" @click="cycleMode()">
+    <Icon
+name="radix-icons:moon"
       class="absolute w-6 h-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-    <Icon name="radix-icons:sun"
+    <Icon
+name="radix-icons:sun"
       class="absolute w-6 h-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     <span class="sr-only">Toggle theme</span>
   </div>

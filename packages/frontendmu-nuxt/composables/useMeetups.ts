@@ -1,6 +1,6 @@
 import eventsResponse from "../../frontendmu-data/data/meetups-raw.json";
 
-let allMeetups = eventsResponse;
+const allMeetups = eventsResponse;
 export default function useMeetups() {
 
     const meetupsGroupedByYear = computed<{ [key: number | string]: any[] }>(() => allMeetups.reduce((acc: { [key: number | string]: any[] }, event) => {

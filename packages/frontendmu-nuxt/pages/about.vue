@@ -14,7 +14,8 @@ const description = "About us";
             </p>
 
             <p>
-                Do you want to know more? <a class="text-verse-600 dark:text-verse-300"
+                Do you want to know more? <a
+class="text-verse-600 dark:text-verse-300"
                     href="mailto:sandeep@ramgolam.com">
                     Get in touch with the organisers
                 </a>

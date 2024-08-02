@@ -16,7 +16,7 @@ const props = withDefaults(
 <template>
     <div class="flex flex-col md:flex-row gap-1 md:gap-4">
         <label :class="[labelClass]">{{ props.label }}</label>
-        <input v-if="props.value" type="text" v-model="props.value" class="bg-transparent" :disabled="disabled" />
+        <input v-if="props.value" v-model="props.value" type="text" class="bg-transparent" :disabled="disabled" >
 
         <slot />
     </div>

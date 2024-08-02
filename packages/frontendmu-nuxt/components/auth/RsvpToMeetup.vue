@@ -15,7 +15,7 @@ const props = defineProps<{
     meetupDetails: DirectusEvent
 }>();
 
-let arrayOfRandomFoodItems = [
+const arrayOfRandomFoodItems = [
     'pizza',
     'tacos',
     'burgers',
@@ -88,7 +88,7 @@ const isVerified = computed(() =>
 )
 
 const color = computed(() => {
-    return !!isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
+    return isAttendingCurrentEvent.value ? 'text-green-500' : 'text-verse-300';
 });
 
 const rsvpPaneOpen = ref(false);
@@ -109,7 +109,7 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
 
 
 <template>
-    <div class="dock-block sticky top-[90dvh] px-2 md:px-8 z-10 w-full" v-if="rsvpOpen">
+    <div v-if="rsvpOpen" class="dock-block sticky top-[90dvh] px-2 md:px-8 z-10 w-full">
 
         <div class="contain relative h-16">
             <div class="absolute left-0 right-0 bottom-0 w-full max-h-[80vh] overflow-y-auto rounded-2xl ">
@@ -131,7 +131,8 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
                                         Verified
                                     </div>
                                 </template>
-                                <span v-else
+                                <span
+v-else
                                     class="text-xs px-2 py-1 font-bold bg-verse-200/10 rounded-lg text-center hidden md:inline-block text-verse-500 dark:text-verse-200">
                                     FREE TO ATTEND
                                 </span>
@@ -147,40 +148,44 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
                             <div class="flex md:flex-row flex-col items-center gap-2 px-2">
 
                                 <Transition name="fade" mode="out-in">
-                                    <Icon name="" solar:close-circle-linear
-                                        class="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-4xl dark:text-gray-400 cursor-pointer dark:hover:text-white hover:text-verse-700"
-                                        v-if="rsvpPaneOpen" @click="rsvpPaneOpen = false" />
+                                    <Icon
+v-if="rsvpPaneOpen" name=""
+                                        solar:close-circle-linear
+                                        class="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-4xl dark:text-gray-400 cursor-pointer dark:hover:text-white hover:text-verse-700" @click="rsvpPaneOpen = false" />
                                 </Transition>
 
 
-                                <BaseButton color="primary"
-                                    v-if="rsvpPaneOpen && isAttendingCurrentEvent && $rsvpForm?.formIsLocked"
-                                    @click="$rsvpForm?.unlockForm()" class="hidden md:block">
+                                <BaseButton
+v-if="rsvpPaneOpen && isAttendingCurrentEvent && $rsvpForm?.formIsLocked"
+                                    color="primary"
+                                    class="hidden md:block" @click="$rsvpForm?.unlockForm()">
                                     Update RSVP
                                 </BaseButton>
 
 
-                                <BaseButton color="danger"
-                                    v-if="rsvpPaneOpen && isAttendingCurrentEvent && $rsvpForm?.formIsLocked"
-                                    @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)" class="hidden md:block">
+                                <BaseButton
+v-if="rsvpPaneOpen && isAttendingCurrentEvent && $rsvpForm?.formIsLocked"
+                                    color="danger"
+                                    class="hidden md:block" @click="$rsvpForm?.cancelRsvpToCurrentMeetup(meetupId)">
                                     Cancel RSVP
                                 </BaseButton>
 
 
                                 <template v-if="!currentEventRsvpDetail?.verified">
-                                    <BaseButton color="primary" v-if="isAttendingCurrentEvent && isAttendee"
+                                    <BaseButton
+v-if="isAttendingCurrentEvent && isAttendee" color="primary"
                                         @click="showQrModal = true">
                                         QR Code
                                     </BaseButton>
                                 </template>
 
                                 <!-- {{ currentEventRsvpDetail }} -->
-                                <BaseButton v-if="rsvpPaneOpen" @click="rsvpPaneOpen = false" color="neutral">
+                                <BaseButton v-if="rsvpPaneOpen" color="neutral" @click="rsvpPaneOpen = false">
                                   Close
                                 </BaseButton>
 
                                 <!-- @click="rsvpToCurrentMeetup(meetupId)" -->
-                                <BaseButton v-if="!rsvpPaneOpen" @click="rsvpPaneOpen = true" :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                <BaseButton v-if="!rsvpPaneOpen" :color="isAttendingCurrentEvent ? 'success' : 'primary'" @click="rsvpPaneOpen = true">
                                   {{ isAttendingCurrentEvent ? 'Attending' : 'Attend' }}
                                 </BaseButton>
 
@@ -189,7 +194,7 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
 
                                 <BaseButton
                                     v-if="($rsvpForm?.formIsLocked === false && isAttendingCurrentEvent) || (rsvpPaneOpen && !isAttendingCurrentEvent)"
-                                    @click="saveForm()" :color="isAttendingCurrentEvent ? 'success' : 'primary'">
+                                    :color="isAttendingCurrentEvent ? 'success' : 'primary'" @click="saveForm()">
                                     Confirm
                                 </BaseButton>
                                 <!-- <LogoFec :loading="isLoading" :class="color" class="h-16 aspect-square" /> -->
@@ -204,8 +209,8 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
 
                     <!-- RSVP Form -->
                     <Transition mode="out-in" name="slidedown">
-                        <div class="p-6 md:p-8 pt-0 md:pt-8" v-if="rsvpPaneOpen">
-                            <RsvpForm :meetupDetails="meetupDetails" :meetupId="meetupId" ref="$rsvpForm" />
+                        <div v-if="rsvpPaneOpen" class="p-6 md:p-8 pt-0 md:pt-8">
+                            <RsvpForm ref="$rsvpForm" :meetup-details="meetupDetails" :meetup-id="meetupId" />
                         </div>
                     </Transition>
 
@@ -213,12 +218,14 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
             </div>
         </div>
         <Transition mode="out-in" name="fade">
-            <div v-if="showQrModal" @click="showQrModal = false"
-                class="fixed inset-0 h-screen z-[2000] w-full grid place-items-center bg-black/40 backdrop-blur-sm">
+            <div
+v-if="showQrModal" class="fixed inset-0 h-screen z-[2000] w-full grid place-items-center bg-black/40 backdrop-blur-sm"
+                @click="showQrModal = false">
                 <Suspense>
                     <template v-if="isAttendingCurrentEvent && isAttendee">
                         <div class="grid place-items-center">
-                            <AttendeeQRCode client:only="vue" v-if="!isVerified" :meetup-id="meetupId"
+                            <AttendeeQRCode
+v-if="!isVerified" client:only="vue" :meetup-id="meetupId"
                                 :user-id="user!.id" />
                             <div class="text-lg py-4 uppercase font-medium text-white px-4">
                                 Scan to verify {{ user?.full_name }}

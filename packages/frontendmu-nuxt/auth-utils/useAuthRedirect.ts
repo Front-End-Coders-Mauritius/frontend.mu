@@ -8,7 +8,7 @@ export default function useAuthRedirect() {
     });
 
     function setUrl() {
-        let url = window.location.href;
+        const url = window.location.href;
         // Store in session storage
         sessionStorage.setItem('redirectUrl', url);
     }
@@ -23,9 +23,9 @@ export default function useAuthRedirect() {
                 window.location.href = redirectUrl;
             } , duration.value);     
             
-            let intervalDelay = 10;
+            const intervalDelay = 10;
             // start the countdown such that the progress bar is updated every 100ms and and the countdown reaches 0 in duration ms
-            let interval = setInterval(() => {
+            const interval = setInterval(() => {
                 countdown.value -= intervalDelay;
                 if (countdown.value <= 0) {
                     clearInterval(interval);

@@ -1,6 +1,8 @@
 import { Icon } from '#components'
 import type { RendererElement } from 'vue'
 
+import type { Meal, Occupation, Transport } from "@/utils/types";
+
 const IconChicken = h(Icon, { name: 'icon-park-twotone:chicken'})
 const IconVegan = h(Icon, { name: 'iconoir:vegan'})
 const IconBus = h(Icon, { name: 'mdi:bus-side'})
@@ -19,8 +21,6 @@ const IconManager = h(Icon, { name: 'material-symbols:person-celebrate-rounded'}
 const IconDesigner = h(Icon, { name: 'ph:paint-brush-duotone'})
 const IconHr = h(Icon, { name: 'mdi:briefcase-account'})
 const IconEntrepreneur = h(Icon, { name: 'mdi:head-cog-outline'})
-
-import type { Meal, Occupation, Transport } from "@/utils/types";
 
 export const foodOptions = [
     { value: "none", name: "None", icon: IconNoFood },
