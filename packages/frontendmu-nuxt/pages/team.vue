@@ -16,7 +16,8 @@
           <component :is="person.id ? NuxtLink : 'div'" :href="person.id ? `/speaker/${person.id}` : null">
             <span v-if="person.id" class="sr-only">{{ person.name }}</span>
 
-            <img class="mx-auto h-20 w-20 rounded-lg border-verse-600/10 shadow-lg border p-2 lg:w-48 lg:h-48"
+            <img
+              class="mx-auto h-20 w-20 rounded-lg border-verse-200 dark:border-verse-600 shadow-lg border p-2 lg:w-48 lg:h-48"
               :src="person.imageUrl" :alt="person.name" :title="person.name" width="300" height="300">
 
             <div class="space-y-2 py-2">

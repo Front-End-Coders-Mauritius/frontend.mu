@@ -1,7 +1,11 @@
 import eventsResponse from "../../frontendmu-data/data/meetups-raw.json";
 
 const allMeetups = eventsResponse;
-export default function useMeetups() {
+export default function useMeetups({
+    pastMeetupsLimit = 10,
+}: {
+    pastMeetupsLimit?: number;
+}) {
 
     const meetupsGroupedByYear = computed<{ [key: number | string]: any[] }>(() => allMeetups.reduce((acc: { [key: number | string]: any[] }, event) => {
         const year = new Date(event.Date).getFullYear();
@@ -24,7 +28,7 @@ export default function useMeetups() {
         if (!allMeetups) return [];
 
         return sortedMeetups.value.filter((item) => {
-          return isUpcoming(item.Date);
+            return isUpcoming(item.Date);
         });
     };
 
@@ -36,10 +40,10 @@ export default function useMeetups() {
         if (!allMeetups) return [];
 
         const pastMeetupsData = sortedMeetups.value.filter((item) => {
-          return !isUpcoming(item.Date);
+            return !isUpcoming(item.Date);
         });
 
-        return pastMeetupsData.slice(0, 10);
+        return pastMeetupsData.slice(0, pastMeetupsLimit);
     })
 
 

@@ -21,7 +21,7 @@ export const people = [
         name: "Dereck Lam Hon Wah",
         role: "Active Community Member",
         imageUrl: "https://github.com/derecklhw.png",
-        id: "",
+        id: "1b0b22bd-0d92-4328-8d62-0f8468485e5e",
     },
     {
         name: "Noor Joomun",

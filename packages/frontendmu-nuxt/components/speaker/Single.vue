@@ -5,7 +5,7 @@
     </pre> -->
     <div :data-title="props.speaker.person?.name">
       <ContentBlock>
-        <div class="flex md:flex-row flex-col-reverse">
+        <div class="flex md:flex-row justify-between flex-col-reverse">
           <div>
             <!-- Content area -->
             <div>
@@ -42,11 +42,11 @@
           </div>
 
           <div class="flex-grow relative">
-            <div class="w-full">
+            <div class="w-full flex justify-end">
               <img class="h-auto w-[80%] mx-auto md:mx-0 my-10 object-cover rounded-full lg:h-96 lg:w-96"
-                :src="speaker_photo" :style="vTransitionName(props.speaker.person?.name, 'photo')">
-              :alt="props.speaker.person?.name" :title="props.speaker.person?.name" width="300" height="300">
-              <div class="w-full >h-full absolute top-0">
+                :src="speaker_photo" :style="vTransitionName(props.speaker.person?.name, 'photo')"
+                :alt="props.speaker.person?.name" :title="props.speaker.person?.name" width="300" height="300">
+              <div class="w-full h-full absolute top-0">
                 <LogoSpiral class="w-full opacity-5 saturate-0" />
               </div>
             </div>

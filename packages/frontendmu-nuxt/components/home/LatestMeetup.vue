@@ -26,8 +26,7 @@
         </div>
       </div>
       <div class="flex h-32 items-center justify-center">
-        <NuxtLink
-href="/meetups"
+        <NuxtLink href="/meetups"
           class="text-md w-48 rounded-md bg-verse-600 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl">
           View all meetups
         </NuxtLink>
@@ -37,9 +36,7 @@ href="/meetups"
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const { nextMeetup, upcomingMeetups, pastMeetups } = useMeetups();
+const { nextMeetup, upcomingMeetups, pastMeetups } = useMeetups({});
 
 const remainingUpcomingData = ref(upcomingMeetups().slice(0, upcomingMeetups().length - 1));
 </script>

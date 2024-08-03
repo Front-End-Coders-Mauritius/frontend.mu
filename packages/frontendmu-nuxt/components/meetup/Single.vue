@@ -24,7 +24,8 @@
                 Topic
               </div>
               <div>
-                <BaseHeading :level="1" class="font-extrabold">
+                <BaseHeading :level="1" class="font-extrabold"
+                  :style="vTransitionName(getCurrentEvent?.title, 'meetup-title')">
                   {{ getCurrentEvent?.title }}
                 </BaseHeading>
               </div>

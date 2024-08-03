@@ -7,6 +7,14 @@ export default defineNuxtConfig({
     "~/styles/tailwind.css",
   ],
 
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        baseUrl: '.'
+      }
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     "@nuxtjs/tailwindcss",
