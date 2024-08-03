@@ -1,5 +1,5 @@
+import type { DirectusEvent } from "@/utils/types";
 import eventsResponse from "../../frontendmu-data/data/meetups-raw.json";
-
 const allMeetups = eventsResponse;
 export default function useMeetups({
     pastMeetupsLimit = 10,

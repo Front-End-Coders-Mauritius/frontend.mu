@@ -58,21 +58,21 @@ export interface MeetupAttendees {
 
 export type DirectusEvent = {
     id: number
-    title: string
+    title: string | null
     description: string
-    Location: string
-    Venue: string
-    Date: string
-    Time: string
-    Attendees: number
+    Location: string | null
+    Venue: string | null
+    Date: string | null
+    Time: string | null
+    Attendees: number | null
     images: any
     rsvplink: any
-    album: string
+    album: string | null
     seats_available: any
     accepting_rsvp: any
-    rsvp_closing_date: any
+    rsvp_closing_date: any | null
     gallery: any[]
-    sessions: Session[]
+    sessions: Session[] | null
     sponsors: Sponsor[]
 };
 

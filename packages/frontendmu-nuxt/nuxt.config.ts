@@ -87,7 +87,7 @@ export default defineNuxtConfig({
 
   image: {
     quality: 80,
-    domains: ['githubusercontent.com']
+    domains: ['raw.githubusercontent.com']
   },
 
   compatibilityDate: "2024-08-02",

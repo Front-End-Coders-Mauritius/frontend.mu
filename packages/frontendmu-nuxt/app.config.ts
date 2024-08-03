@@ -1,5 +1,5 @@
 export default defineAppConfig({
     photoAlbumSource:
         "https://raw.githubusercontent.com/Front-End-Coders-Mauritius/google-photos-sync/main/",
-    description: 'Front-End Coders Mauritius',
+    description: 'A community around front-end development based in Mauritius. We also organise monthly meetups free for anyone interested to attend.',
 })
