@@ -2,6 +2,8 @@
 import { computed, onMounted } from 'vue';
 const currentPath = computed(() => useRoute().path);
 
+const router = useRouter();
+
 interface TMenuItem {
   title: string;
   href: string;
@@ -101,6 +103,13 @@ function makeHeaderSticky() {
   observer.observe(target);
 }
 
+function handleRightClick(event: MouseEvent) {
+  // prevent default and navigate to /branding
+  event.preventDefault();
+  router.push('/branding');
+
+}
+
 onMounted(makeHeaderSticky);
 </script>
 
@@ -109,7 +118,8 @@ onMounted(makeHeaderSticky);
     <div class="menu theme-light w-full">
       <div class="flex justify-between items-center">
         <div class="flex">
-          <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="Hello Kitty!">
+          <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="frontend.mu"
+            @contextmenu="handleRightClick">
             <SiteLogo class="w-10" />
             <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl md:block">
               frontend.mu
