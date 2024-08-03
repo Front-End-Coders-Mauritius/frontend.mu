@@ -49,9 +49,9 @@ function allSpeakersForEvent(event: Meetup) {
         <div class="p-1">
           <Card class="overflow-hidden relative">
             <CardContent class="flex aspect-video items-end  justify-center p-6">
-              <NuxtLink :to="`/meetup/${meetup.id}`" class="absolute inset-0 z-20">
+              <!-- <NuxtLink :to="`/meetup/${meetup.id}`" class="absolute inset-0 z-20">
                 <span class="sr-only">{{ meetup.title }}</span>
-              </NuxtLink>
+              </NuxtLink> -->
               <CardsCardAlbum class="absolute inset-0 z-0" :current-album="fetchAlbumDetails(meetup.album || '')"
                 :source="photoAlbumSource" />
               <span :style="vTransitionName(meetup.title, 'meetup-title')"

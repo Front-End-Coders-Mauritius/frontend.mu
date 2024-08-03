@@ -12,7 +12,7 @@
                   class="accent font-bold uppercase sm:text-4xl lg:text-4xl xl:text-6xl inline-block">Mauritius</span>
               </h1>
               <p class="text-md md:text-lg dark:text-gray-300 md:w-5/6">
-                Front-End Coders Mauritius is a community around front-end development based in Mauritius. We also
+                We are a community around front-end development based in Mauritius. We also
                 organise monthly meetups free for anyone interested to attend.
               </p>
               <div class="grid place-items-center md:place-items-start">

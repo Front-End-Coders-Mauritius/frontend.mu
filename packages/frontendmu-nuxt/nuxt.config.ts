@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxtjs/seo",
     "shadcn-nuxt",
+    "@nuxt/image"
   ],
 
   tailwindcss: {
@@ -82,6 +83,11 @@ export default defineNuxtConfig({
 
   experimental: {
     viewTransition: true
+  },
+
+  image: {
+    quality: 80,
+    domains: ['githubusercontent.com']
   },
 
   compatibilityDate: "2024-08-02",
