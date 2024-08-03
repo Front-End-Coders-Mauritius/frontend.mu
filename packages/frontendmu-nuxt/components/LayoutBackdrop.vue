@@ -5,7 +5,7 @@ import BackgroundShapes from './misc/BackgroundShapes.vue';
 
 <template>
   <div
-    class="bg-verse-100 bg-fixed dark:from-verse-900 dark:to-verse-950 dark:bg-gradient-to-tl relative min-h-[100dvh]">
+    class="from-verse-100 to-white bg-fixed dark:from-verse-900 dark:to-verse-950 bg-gradient-to-tl relative min-h-[100dvh]">
     <div class="relative z-0">
       <BackgroundShapes />
     </div>
