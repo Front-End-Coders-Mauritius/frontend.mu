@@ -46,6 +46,11 @@ export default function useMeetups({
         return pastMeetupsData.slice(0, pastMeetupsLimit);
     })
 
+    const allSponsors = computed(() => {
+        const sponsors = allMeetups.map((meetup) => meetup.sponsors).flat();
+        return sponsors;
+    })
+
 
 
     return {
@@ -53,6 +58,7 @@ export default function useMeetups({
         meetupsGroupedByYear,
         upcomingMeetups,
         nextMeetup,
-        pastMeetups
+        pastMeetups,
+        allSponsors,
     }
 }

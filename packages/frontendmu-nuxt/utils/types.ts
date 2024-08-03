@@ -58,21 +58,21 @@ export interface MeetupAttendees {
 
 export type DirectusEvent = {
     id: number
-    title: string | null
+    title: string | undefined
     description: string
-    Location: string | null
-    Venue: string | null
-    Date: string | null
-    Time: string | null
-    Attendees: number | null
+    Location: string | undefined
+    Venue: string | undefined
+    Date: string | undefined
+    Time: string | undefined
+    Attendees: number | undefined
     images: any
     rsvplink: any
-    album: string | null
+    album: string | undefined
     seats_available: any
     accepting_rsvp: any
-    rsvp_closing_date: any | null
+    rsvp_closing_date: any | undefined
     gallery: any[]
-    sessions: Session[] | null
+    sessions: Session[] | undefined
     sponsors: Sponsor[]
 };
 
@@ -124,13 +124,18 @@ export interface SponsorId {
     status: string
     sort: any
     date_created: string
-    date_updated: string
+    date_updated: string | null
     Name: string
-    Website: string
+    Website: string | null
     Description: any
     Sponsor_type: string[]
     darkbg: boolean
     Logo: Logo
+}
+
+export interface SponsorType {
+    lunch: "Lunch Sponsor",
+    venue: "Venue Sponsor"
 }
 
 export interface Logo {
@@ -138,7 +143,7 @@ export interface Logo {
     storage: string
     filename_disk: string
     filename_download: string
-    title: string
+    title: string | null
     type: string
     folder: any
     uploaded_by: string
