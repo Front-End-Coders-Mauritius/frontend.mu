@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    'nuxt-icon',
+    '@nuxt/icon',
     "@nuxt/fonts",
     "@nuxtjs/seo",
     "shadcn-nuxt",

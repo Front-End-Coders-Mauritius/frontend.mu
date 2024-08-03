@@ -257,3 +257,10 @@ export interface Speaker {
     id: string;
     github_account: string;
 }
+
+export type BrandingAsset = {
+    name: string;
+    description: string;
+    filename: string;
+    versions: string[];
+};
