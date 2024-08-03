@@ -27,7 +27,8 @@ jobs:
       #     node-version: "18"
 
       - name: Install dependencies
-        run: pnpm install
+        # Exclude the Nuxt package when running pnpm install
+        run: pnpm install --filter astro --filter data
 
       - name: Update Contributors Astro
         env:
