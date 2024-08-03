@@ -5,7 +5,6 @@ const owner = "Front-End-Coders-Mauritius";
 const repo = "frontend.mu";
 const branch = "main"; // Replace with the default branch of your repository
 
-
 const contributorsFile = "./data/contributors.json";
 
 async function updateContributors() {
