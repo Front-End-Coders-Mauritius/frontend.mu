@@ -7,14 +7,23 @@ export default defineNuxtConfig({
     "~/styles/tailwind.css",
   ],
 
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        baseUrl: '.'
+      }
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    'nuxt-icon',
+    '@nuxt/icon',
     "@nuxt/fonts",
     "@nuxtjs/seo",
     "shadcn-nuxt",
+    "@nuxt/image"
   ],
 
   tailwindcss: {
@@ -29,9 +38,9 @@ export default defineNuxtConfig({
 
   vite: {
     server: {
-        hmr: {
-            clientPort: 3000
-        }
+      hmr: {
+        clientPort: 3000
+      }
     }
   },
 
@@ -70,6 +79,15 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui',
+  },
+
+  experimental: {
+    viewTransition: true
+  },
+
+  image: {
+    quality: 80,
+    domains: ['raw.githubusercontent.com']
   },
 
   compatibilityDate: "2024-08-02",

@@ -12,10 +12,22 @@ export const people = [
         id: "5c852db3-4844-4f6d-b6fe-c135963441fb",
     },
     {
-        name: "Michaël Jules",
+        name: "Cedric Poilly",
         role: "Active Community Member",
-        imageUrl: "https://github.com/mgjules.png",
-        id: "d746a55d-bd48-495a-a7af-de65cf067a6c",
+        imageUrl: "https://github.com/cedpoilly.png",
+        id: "549be7b0-1e7d-4deb-9fb3-273cfe0da5b0",
+    },
+    {
+        name: "Dereck Lam Hon Wah",
+        role: "Active Community Member",
+        imageUrl: "https://github.com/derecklhw.png",
+        id: "1b0b22bd-0d92-4328-8d62-0f8468485e5e",
+    },
+    {
+        name: "Noor Joomun",
+        role: "Active Community Member",
+        imageUrl: "https://github.com/joomun.png",
+        id: "",
     },
     {
         name: "Mahima Ramgolam",
@@ -30,21 +42,9 @@ export const people = [
         id: "78966047-4716-4afc-856e-46f1430974ed",
     },
     {
-        name: "Cedric Poilly",
+        name: "Michaël Jules",
         role: "Active Community Member",
-        imageUrl: "https://github.com/cedpoilly.png",
-        id: "549be7b0-1e7d-4deb-9fb3-273cfe0da5b0",
-    },
-    {
-        name: "Noor Joomun",
-        role: "Collaborator",
-        imageUrl: "https://github.com/joomun.png",
-        id: "",
-    },
-    {
-        name: "Dereck Lam Hon Wah",
-        role: "Collaborator",
-        imageUrl: "https://github.com/derecklhw.png",
-        id: "",
+        imageUrl: "https://github.com/mgjules.png",
+        id: "d746a55d-bd48-495a-a7af-de65cf067a6c",
     },
 ];

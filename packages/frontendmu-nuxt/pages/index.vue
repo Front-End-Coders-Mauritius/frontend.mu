@@ -7,8 +7,8 @@ defineOgImageComponent('Home')
 <template>
     <div>
         <HomeHero />
-        <HomeFeaturedSpeakers />
         <HomeLatestMeetup />
+        <HomeFeaturedSpeakers />
         <HomeSocialPresence />
         <HomeStatsCounter />
     </div>

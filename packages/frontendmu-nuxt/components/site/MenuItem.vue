@@ -29,7 +29,7 @@ const { links, item } = defineProps<Props>();
     ]">
         <NuxtLink class="flex items-center" :href='links[item].href'
             :target='!!links[item].href.includes("https") ? "_blank" : "_self"'>
-            <span v-if='currentPath.includes(links[item].href)'
+            <span v-if='currentPath.includes(links[item].href)' :style="vTransitionName('menu-border', 'global')"
                 class="absolute bottom-0 left-0 right-0 h-1 rounded-full bg-verse-700 dark:bg-verse-100" />
 
             <span class="relative z-20  p-2">{{ links[item].title }}</span>

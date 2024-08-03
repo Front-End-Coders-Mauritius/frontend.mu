@@ -6,12 +6,11 @@
           <div class="relative">
             <!-- Content area -->
             <div>
-              <template v-if="isUpcoming(getCurrentEvent.Date)">
+              <template v-if="isUpcoming(getCurrentEvent.Date || '')">
                 <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
                   <div class="flex w-full items-center justify-start">
-                    <p
-:class="[
-                      isUpcoming(getCurrentEvent.Date)
+                    <p :class="[
+                      isUpcoming(getCurrentEvent.Date || '')
                         ? 'tagStyle bg-green-100 text-green-800'
                         : 'tagStyle bg-yellow-100 text-yellow-800',
                       'p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4',
@@ -25,7 +24,8 @@
                 Topic
               </div>
               <div>
-                <BaseHeading :level="1" class="font-extrabold">
+                <BaseHeading :level="1" class="font-extrabold"
+                  :style="vTransitionName(getCurrentEvent?.title, 'meetup-title')">
                   {{ getCurrentEvent?.title }}
                 </BaseHeading>
               </div>
@@ -119,7 +119,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const appConfig = useAppConfig();
-const photoAlbumSource = appConfig.photoAlbumSource;
+const photoAlbumSource = appConfig.photoAlbumSource as string
 
 // const currentAlbum = ref<string[]>([]);
 
@@ -142,5 +142,5 @@ function fetchAlbumDetails(albumName: string | null): string[] {
 
 let maxAlbumLength = 0;
 
-const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.album))
+const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.album || ''))
 </script>

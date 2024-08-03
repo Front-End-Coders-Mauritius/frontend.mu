@@ -1,5 +1,5 @@
 <template>
-    <MeetupSingle :route-id="routeId" :get-current-event="meetup" />
+    <MeetupSingle :key="routeId" :route-id="routeId" :get-current-event="meetup" />
 </template>
 
 <script setup lang="ts">

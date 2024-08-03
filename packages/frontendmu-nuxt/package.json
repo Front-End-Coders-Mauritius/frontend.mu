@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@nuxt/fonts": "^0.7.1",
+    "@nuxt/image": "^1.7.0",
+    "@nuxt/icon": "^1.4.5",
     "@nuxtjs/color-mode": "^3.4.2",
     "@nuxtjs/seo": "2.0.0-rc.16",
     "@vueuse/core": "^10.11.0",
@@ -33,7 +35,6 @@
     "@nuxt/eslint": "^0.4.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "eslint": "^9.8.0",
-    "nuxt-icon": "^0.6.10",
     "typescript": "^5.5.4"
   }
 }

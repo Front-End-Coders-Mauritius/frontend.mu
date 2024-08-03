@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // group response by year and sort by reverse date
 
-const { allMeetups, meetupsGroupedByYear, nextMeetup } = useMeetups()
+const { allMeetups, meetupsGroupedByYear, nextMeetup } = useMeetups({})
 
 const nextMeetupId = nextMeetup.value.id;
 

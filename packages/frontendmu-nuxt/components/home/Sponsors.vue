@@ -11,7 +11,7 @@ import sponsors from "../../../frontendmu-data/data/sponsors.js";
             <div class="flex flex-col justify-center text-center gap-10">
               <h2
                 class="uppercase flex flex-col text-4xl font-extrabold xl:leading-tight text-verse-500 sm:text-5xl lg:text-5xl xl:text-6xl">
-                <span class="block font-sans text-black dark:text-verse-300 xl:inline capitalize font-mono">Our
+                <span class="block text-black dark:text-verse-300 xl:inline capitalize font-mono">Our
                   Sponsors</span>
               </h2>
               <!-- <flip-book class="mt-[-16%] md:mt-[-12%]" /> -->
