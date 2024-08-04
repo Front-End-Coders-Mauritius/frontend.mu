@@ -8,22 +8,23 @@
       <ul id="team" role="list" class="mx-auto flex flex-wrap md:flex-nowrap justify-center gap-4">
         <li
 v-for="(person, index) in featuredSpeakers" :key="person.id" :class="[
-          'single-photo rounded-xl overflow-hidden relative group',
+          'single-photo rounded-xl overflow-hidden relative group cursor-pointer',
           'index-' + index,
-          isCenter(index, featuredSpeakers.length) && 'active',
-        ]">
+          activeSpeakerId === person.id && 'active',
+        ]"
+          @click="activeSpeakerId = person.id">
           <img
-            class="mx-auto md:saturate-0 rounded-xl  ease-in-out duration-300 md:h-[640px] h-[150px] w-[150px] md:w-[90px] object-cover object-center md:group-hover:w-[120px] group-hover:saturate-100 transition-all"
+            class="mx-auto md:saturate-0 rounded-xl ease-in-out duration-300 md:h-[640px] h-[150px] w-[150px] md:w-[90px] object-cover object-center md:group-hover:w-[120px] group-hover:saturate-100 transition-all"
             :src="getGithubUrl(person.github_account || '')" :alt="person.name" :title="person.name" width="300"
             height="300" >
 
           <div
             class="speaker-details-background inset-0 space-y-2 absolute text-center top-0 left-0 flex flex-col justify-end">
             <div class="p-2 md:p-10 speaker-details md:opacity-0 flex flex-col items-center md:gap-2">
-              <p class="text-verse-200 text-xs md:text-2xl block">
+              <p class="text-verse-200 text-xs md:text-2xl block cursor-text">
                 @{{ person.github_account }}
               </p>
-              <h3 class="text-verse-100 font-extrabold text-sm md:text-4xl block">
+              <h3 class="text-verse-100 font-extrabold text-sm md:text-4xl block cursor-text">
                 {{ person.name }}
               </h3>
               <NuxtLink
@@ -50,9 +51,11 @@ const featuredSpeakers = ref(
   speakersResponse.filter((speaker: { featured: boolean }) => speaker.featured)
 );
 
-const isCenter = (index: number, length: number) => {
-  return index === Math.floor(length / 2);
-};
+const initialActiveSpeakerIndex = Math.floor(featuredSpeakers.value.length / 2);
+
+const activeSpeakerId = ref<string>(
+  featuredSpeakers.value[initialActiveSpeakerIndex].id
+);
 </script>
 
 <style lang="postcss" scoped>
