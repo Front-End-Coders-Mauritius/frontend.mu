@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+
+const props = defineProps<{
+  getCurrentEvent: DirectusEvent
+  currentAlbum: string[]
+  source: string
+}>()
+
+const limit = ref(10) // Set your desired limit here
+const maxAlbumLength = computed(() => props.currentAlbum.length)
+const activeImageIndex = ref(0)
+
+function viewMore() {
+  // Implement your logic here
+}
+
+function setActiveImageIndex(index: number) {
+  activeImageIndex.value = index
+}
+</script>
+
 <template>
   <div class="lg:mx-auto lg:w-[80%] px-4">
     <div v-if="getCurrentEvent.album" class="flex flex-col items-center gap-8 py-20">
@@ -19,10 +41,12 @@
           class="bg-zinc-950 bg-opacity-80 border-zinc-800 max-w-7xl"
         >
           <DialogHeader>
-            <DialogTitle class="sr-only">Photos</DialogTitle>
-            <DialogDescription class="sr-only"
-              >Photos in carousel</DialogDescription
-            >
+            <DialogTitle class="sr-only">
+              Photos
+            </DialogTitle>
+            <DialogDescription class="sr-only">
+              Photos in carousel
+            </DialogDescription>
           </DialogHeader>
           <Carousel
             :opts="{ startIndex: activeImageIndex }"
@@ -31,7 +55,7 @@
             <CarouselContent class="h-full max-h-[calc(100svh-160px)]">
               <CarouselItem v-for="photo in currentAlbum" :key="photo">
                 <div class="w-full h-full flex flex-row justify-center items-center">
-                  <img :src="`${source}/${photo}`" class="object-contain max-w-full max-h-full block rounded-md overflow-hidden" >
+                  <img :src="`${source}/${photo}`" class="object-contain max-w-full max-h-full block rounded-md overflow-hidden">
                 </div>
               </CarouselItem>
             </CarouselContent>
@@ -53,25 +77,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, computed } from 'vue';
-
-const props = defineProps<{
-  getCurrentEvent: DirectusEvent;
-  currentAlbum: string[];
-  source: string;
-}>();
-
-const limit = ref(10); // Set your desired limit here
-const maxAlbumLength = computed(() => props.currentAlbum.length);
-const activeImageIndex = ref(0);
-
-function viewMore() {
-  // Implement your logic here
-}
-
-function setActiveImageIndex(index: number) {
-  activeImageIndex.value = index;
-}
-</script>

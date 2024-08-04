@@ -3,27 +3,27 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   css: [
-    "~/styles/global.css",
-    "~/styles/tailwind.css",
+    '~/styles/global.css',
+    '~/styles/tailwind.css',
   ],
 
   typescript: {
     tsConfig: {
       compilerOptions: {
-        baseUrl: '.'
-      }
-    }
+        baseUrl: '.',
+      },
+    },
   },
 
   modules: [
     '@nuxt/eslint',
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
     '@nuxt/icon',
-    "@nuxt/fonts",
-    "@nuxtjs/seo",
-    "shadcn-nuxt",
-    "@nuxt/image"
+    '@nuxt/fonts',
+    '@nuxtjs/seo',
+    'shadcn-nuxt',
+    '@nuxt/image',
   ],
 
   eslint: {
@@ -33,21 +33,21 @@ export default defineNuxtConfig({
   },
 
   tailwindcss: {
-    configPath: "./tailwind.config.js",
+    configPath: './tailwind.config.js',
   },
 
   alias: {
-    "@/*": "./*",
-    "#astro": "../frontendmu-astro/src/",
-    "#data": "../frontendmu-data/data/",
+    '@/*': './*',
+    '#astro': '../frontendmu-astro/src/',
+    '#data': '../frontendmu-data/data/',
   },
 
   vite: {
     server: {
       hmr: {
-        clientPort: 3000
-      }
-    }
+        clientPort: 3000,
+      },
+    },
   },
 
   app: {
@@ -57,14 +57,14 @@ export default defineNuxtConfig({
         {
           rel: 'icon',
           type: 'image/png',
-          href: '/favicon.png'
+          href: '/favicon.png',
         },
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: '/favicon.svg'
+          href: '/favicon.svg',
         },
-      ]
+      ],
     },
   },
 
@@ -88,13 +88,13 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    viewTransition: true
+    viewTransition: true,
   },
 
   image: {
     quality: 80,
-    domains: ['raw.githubusercontent.com']
+    domains: ['raw.githubusercontent.com'],
   },
 
-  compatibilityDate: "2024-08-02",
+  compatibilityDate: '2024-08-02',
 })

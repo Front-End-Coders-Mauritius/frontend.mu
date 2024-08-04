@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  sessions: {
+    type: Object,
+    required: true,
+  },
+})
+</script>
+
 <template>
   <div>
     <ul role="list" class="flex flex-col gap-8 py-8">
@@ -22,14 +33,3 @@
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-import { defineProps } from 'vue';
-
-const props = defineProps({
-  sessions: {
-    type: Object,
-    required: true,
-  },
-});
-</script>

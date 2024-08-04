@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import photosResponse from '../../../frontendmu-data/data/photos-raw.json'
+
+import type { DirectusEvent } from '@/utils/types'
+
+interface Props {
+  routeId: string
+  getCurrentEvent: DirectusEvent
+}
+
+const props = defineProps<Props>()
+const appConfig = useAppConfig()
+const photoAlbumSource = appConfig.photoAlbumSource as string
+
+// const currentAlbum = ref<string[]>([]);
+
+function fetchAlbumDetails(albumName: string | null): string[] {
+  if (!albumName)
+    return []
+
+  if (photosResponse) {
+    // @ts-expect-error
+    const albumPhotosParsed = photosResponse[albumName]
+    if (Array.isArray(albumPhotosParsed)) {
+      maxAlbumLength = albumPhotosParsed.length
+      const filteredPhotos = albumPhotosParsed.filter((photo) => {
+        return !photo.endsWith('.mp4')
+      })
+      return filteredPhotos
+    }
+  }
+  return []
+}
+
+let maxAlbumLength = 0
+
+const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.album || ''))
+</script>
+
 <template>
   <div>
     <div :data-title="getCurrentEvent.title">
@@ -9,12 +48,12 @@
               <template v-if="isUpcoming(getCurrentEvent.Date || '')">
                 <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
                   <div class="flex w-full items-center justify-start">
-                    <p :class="[
+                    <p class="p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4" :class="[
                       isUpcoming(getCurrentEvent.Date || '')
                         ? 'tagStyle bg-green-100 text-green-800'
                         : 'tagStyle bg-yellow-100 text-yellow-800',
-                      'p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4',
-                    ]">
+                    ]"
+                    >
                       happening soon
                     </p>
                   </div>
@@ -25,7 +64,8 @@
               </div>
               <div>
                 <BaseHeading :level="1" class="font-extrabold"
-                  :style="vTransitionName(getCurrentEvent?.title, 'meetup-title')">
+                             :style="vTransitionName(getCurrentEvent?.title, 'meetup-title')"
+                >
                   {{ getCurrentEvent?.title }}
                 </BaseHeading>
               </div>
@@ -105,42 +145,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import photosResponse from "../../../frontendmu-data/data/photos-raw.json";
-
-import type { DirectusEvent } from "@/utils/types";
-
-
-interface Props {
-  routeId: string;
-  getCurrentEvent: DirectusEvent;
-}
-
-const props = defineProps<Props>();
-const appConfig = useAppConfig();
-const photoAlbumSource = appConfig.photoAlbumSource as string
-
-// const currentAlbum = ref<string[]>([]);
-
-function fetchAlbumDetails(albumName: string | null): string[] {
-  if (!albumName) return [];
-
-  if (photosResponse) {
-    // @ts-expect-error
-    const albumPhotosParsed = photosResponse[albumName];
-    if (Array.isArray(albumPhotosParsed)) {
-      maxAlbumLength = albumPhotosParsed.length;
-      const filteredPhotos = albumPhotosParsed.filter((photo) => {
-        return !photo.endsWith(".mp4");
-      });
-      return filteredPhotos;
-    }
-  }
-  return [];
-}
-
-let maxAlbumLength = 0;
-
-const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.album || ''))
-</script>

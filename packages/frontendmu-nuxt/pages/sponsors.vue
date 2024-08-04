@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import sponsorTypes from '../../frontendmu-data/data/sponsors.js'
+import { vTransitionName } from '@/utils/helpers'
+
+const title = 'Our sponsors'
+const description = ''
+</script>
+
 <template>
   <ContentBlock>
     <div class="space-y-8 sm:space-y-12">
@@ -6,7 +14,8 @@
         <p class="text-xl text-verse-600 dark:text-verse-200">
           We're lucky to have sponsors support our community. If you're
           interested in sponsoring us,<a href="mailto:hello@frontend.mu" class="underline"
-            title="Please reach out to us via email"> please reach out to the organizers
+                                         title="Please reach out to us via email"
+          > please reach out to the organizers
             here</a>.
         </p>
       </div>
@@ -15,7 +24,8 @@
           <div class="flex flex-col">
             <div class="space-y-5 sm:mx-auto sm:space-y-2">
               <h3
-                class="text-3xl font-bold tracking-tight text-center md:text-left sm:text-4xl sm:tracking-tight text-verse-500 dark:text-verse-200">
+                class="text-3xl font-bold tracking-tight text-center md:text-left sm:text-4xl sm:tracking-tight text-verse-500 dark:text-verse-200"
+              >
                 {{ sponsorType.title }}
               </h3>
               <p class="max-w-2xl text-xl text-verse-600 dark:text-verse-200">
@@ -23,13 +33,16 @@
               </p>
             </div>
             <ul role="list"
-              class="grid grid-cols-1 sm:ml-0 sm:mr-auto mx-auto mt-6 gap-x-4 gap-y-2 sm:grid-cols-2 md:gap-x-6 lg:gap-x-8 lg:gap-y-12">
+                class="grid grid-cols-1 sm:ml-0 sm:mr-auto mx-auto mt-6 gap-x-4 gap-y-2 sm:grid-cols-2 md:gap-x-6 lg:gap-x-8 lg:gap-y-12"
+            >
               <template v-for="(sponsor, index) in sponsorType.sponsors" :key="index">
                 <li class="pt-4">
                   <a target="_blank" :href="sponsor.sponsorUrl"
-                    class="relative flex flex-col items-center justify-center gap-2 p-6 mt-4 transition-all bg-white border-t-8 border-verse-500 border-solid shadow-md md:mt-0 rounded-xl group hover:shadow-lg">
+                     class="relative flex flex-col items-center justify-center gap-2 p-6 mt-4 transition-all bg-white border-t-8 border-verse-500 border-solid shadow-md md:mt-0 rounded-xl group hover:shadow-lg"
+                  >
                     <img v-if="sponsor.logo" class="w-48 h-auto" :src="`/img/sponsors/${sponsor.logo}`"
-                      :style="vTransitionName('sponsor-name', sponsor.name)">
+                         :style="vTransitionName('sponsor-name', sponsor.name)"
+                    >
                     <div v-else>
                       <span class="text-2xl font-bold">{{ sponsor.name }}</span>
                     </div>
@@ -46,7 +59,8 @@
       <div>
         <div class="space-y-5 sm:mx-auto sm:space-y-2 py-4">
           <h3
-            class="text-3xl font-bold tracking-tight text-center md:text-left sm:text-4xl sm:tracking-tight text-verse-500 dark:text-verse-200">
+            class="text-3xl font-bold tracking-tight text-center md:text-left sm:text-4xl sm:tracking-tight text-verse-500 dark:text-verse-200"
+          >
             Past meetup sponsors
           </h3>
           <p class="max-w-2xl text-xl text-verse-600 dark:text-verse-200">
@@ -59,15 +73,6 @@
     </div>
   </ContentBlock>
 </template>
-
-<script setup lang="ts">
-import sponsorTypes from "../../frontendmu-data/data/sponsors.js";
-import { vTransitionName } from "@/utils/helpers";
-
-const title = "Our sponsors";
-const description = "";
-
-</script>
 
 <style scoped>
 /* Add your styles here */
