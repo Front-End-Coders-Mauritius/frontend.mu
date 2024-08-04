@@ -38,8 +38,7 @@ cp .env.example .env.development
 2. Clone your forked repository on your machine.
 3. Open the cloned `frontend.mu` directory in your code editor.
 4. Run `pnpm install` in your terminal.
-5. Run `cd packages/frontendmu-nuxt`.
-6. Run `pnpm run dev`.
+5. Run `pnpm run nuxt dev`.
 
 ### Submit your PR
 
