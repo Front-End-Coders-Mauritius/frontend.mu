@@ -25,8 +25,7 @@ function fetchAlbumDetails() {
     return []
 
   if (photosResponse) {
-    // @ts-ignore
-    const albumPhotosParsed = photosResponse[albumName]
+    const albumPhotosParsed = photosResponse[albumName as keyof typeof photosResponse]
     // check if array
     if (Array.isArray(albumPhotosParsed)) {
       maxAlbumLength = albumPhotosParsed.length

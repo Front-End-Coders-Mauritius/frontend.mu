@@ -19,6 +19,24 @@ const user_full_name = ref()
 const user_phone = ref<string | undefined | null>(null)
 const user_phone_has_error = ref(false)
 
+// Food Preferences
+
+const foodSelection = shallowRef(foodOptions[1])
+
+// Transport Preferences
+
+const transportSelection = shallowRef(transportOptions[1])
+
+// Profession Preferences
+
+const professionSelection = shallowRef(professionOptions[0])
+
+// Show me as attending
+
+const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
+
+const formIsLocked = ref(true)
+
 const requiredFields = {
   name: 'Name',
   email: 'Email',
@@ -93,24 +111,6 @@ async function rsvpToCurrentMeetup(meetupId: string = props.meetupId) {
 
   formIsLocked.value = true
 }
-
-// Food Preferences
-
-const foodSelection = shallowRef(foodOptions[1])
-
-// Transport Preferences
-
-const transportSelection = shallowRef(transportOptions[1])
-
-// Profession Preferences
-
-const professionSelection = shallowRef(professionOptions[0])
-
-// Show me as attending
-
-const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
-
-const formIsLocked = ref(true)
 
 onMounted(async () => {
   if (await checkIfLoggedIn()) {
@@ -189,7 +189,7 @@ defineExpose({ rsvpToCurrentMeetup, cancelRsvpToCurrentMeetup, formIsLocked, unl
       <FormLabel label="Email" :value="rawUser?.email" :disabled="true" />
       <FormLabel label="Phone">
         <input
-          ref="input_phone" v-model="user_phone" required :disabled="formIsLocked" :class="[
+          v-model="user_phone" required :disabled="formIsLocked" :class="[
             formIsLocked ? 'bg-transparent' : 'shadow-inner dark:bg-verse-900/40 bg-verse-300/10  px-2',
             user_phone_has_error ? 'border border-red-500' : '',
           ]" class="focus:outline-none focus:ring focus:border-verse-200 rounded-md py-1"

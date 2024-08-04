@@ -6,7 +6,7 @@ const route = useRoute()
 const id = computed(() => route.params.id as string)
 
 function getSpeaker(id: string | number) {
-  const speaker = speakersResponse.find((ev: { id: string }) => ev.id == id)
+  const speaker = speakersResponse.find((ev: { id: string }) => String(ev.id) === String(id))
 
   if (speaker === null) {
     console.error('cannot find speaker id: ', id)

@@ -28,6 +28,13 @@ const attendeeList: Ref<Attendee[] | null> = computed(() => {
   return null
 })
 
+const attendeeCount = computed(() => {
+  if (attendeeList.value) {
+    return attendeeList.value.length
+  }
+  return 0
+})
+
 const seatsTakenPercentage = computed(() => {
   if (attendeeList.value) {
     return (attendeeCount.value / props.seatCapacity) * 100
@@ -41,13 +48,6 @@ const showAsFrom = computed(() => {
     return true
   }
   return false
-})
-
-const attendeeCount = computed(() => {
-  if (attendeeList.value) {
-    return attendeeList.value.length
-  }
-  return 0
 })
 
 onMounted(async () => {

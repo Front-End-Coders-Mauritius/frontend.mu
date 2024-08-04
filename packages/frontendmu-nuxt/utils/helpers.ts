@@ -65,8 +65,7 @@ export function DIRECTUS_URL() {
 
 // Converts time from 12-hour AM/PM format to 24-hour format.
 export function convertTo24HourFormat(timeStr: string) {
-  // @ts-expect-error
-  const [time, period] = timeStr.match(/(\d+)(AM|PM)/i).slice(1)
+  const [time, period] = timeStr.match(/(\d+)(AM|PM)/i)!.slice(1)
   let [hours] = time.split(':').map(Number)
   if (period.toUpperCase() === 'PM' && hours < 12) {
     hours += 12

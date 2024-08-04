@@ -47,7 +47,7 @@ definePageMeta({
     }
   }
 
-  .yolk	{
+  .yolk {
     background: #ffcc00;
     width: 6.5rem;
     height: 7rem;

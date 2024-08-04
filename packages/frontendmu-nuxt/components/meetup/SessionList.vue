@@ -1,11 +1,12 @@
 <script setup lang="ts">
 // import { Image } from "astro:assets";
 import { getGithubUrl } from '@/utils/helpers'
+import type { Session } from '@/utils/types'
 // import { vTransitionName } from "@/utils/helpers";
 
 const props = defineProps({
   sessions: {
-    type: Array as PropType<Array<any>>,
+    type: Array as PropType<Array<Session>>,
     required: true,
   },
 })

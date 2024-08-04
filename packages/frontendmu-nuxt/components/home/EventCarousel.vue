@@ -20,8 +20,7 @@ function fetchAlbumDetails(album: string) {
     return []
 
   if (photosResponse) {
-    // @ts-ignore
-    const albumPhotosParsed = photosResponse[albumName]
+    const albumPhotosParsed = photosResponse[albumName as keyof typeof photosResponse]
     // check if array
     if (Array.isArray(albumPhotosParsed)) {
       maxAlbumLength = albumPhotosParsed.length
@@ -49,17 +48,23 @@ function allSpeakersForEvent(event: Meetup) {
         <div class="p-1">
           <Card class="overflow-hidden relative">
             <CardContent class="flex aspect-video items-end  justify-center p-6">
-              <NuxtLink :to="`/meetup/${meetup.id}`" class="absolute inset-0 z-20">
+              <NuxtLink
+                :to="`/meetup/${meetup.id}`"
+                class="absolute inset-0 z-20"
+              >
                 <span class="sr-only">{{ meetup.title }}</span>
               </NuxtLink>
-              <CardsCardAlbum class="absolute inset-0 z-0" :current-album="fetchAlbumDetails(meetup.album || '')"
-                              :source="photoAlbumSource"
+              <CardsCardAlbum
+                class="absolute inset-0 z-0"
+                :current-album="fetchAlbumDetails(meetup.album || '')"
+                :source="photoAlbumSource"
               />
-              <span :style="vTransitionName(meetup.title, 'meetup-title')"
-                    class="text-sm text-center font-semibold truncate relative z-10 bg-verse-900/90 shadow-md shadow-verse-200/20 rounded-full text-white px-4"
-              >{{
-                meetup.title
-              }}</span>
+              <span
+                :style="vTransitionName(meetup.title, 'meetup-title')"
+                class="text-sm text-center font-semibold truncate relative z-10 bg-verse-900/90 shadow-md shadow-verse-200/20 rounded-full text-white px-4"
+              >
+                {{ meetup.title }}
+              </span>
             </CardContent>
           </Card>
         </div>

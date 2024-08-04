@@ -6,7 +6,7 @@ const route = useRoute()
 const routeId = computed(() => route.params.id as string)
 
 function getEvent(id: string | number) {
-  const event = eventsResponse.find(ev => ev.id == id)
+  const event = eventsResponse.find(ev => ev.id === Number(id))
 
   if (event === null) {
     console.error('cannot find event id: ', id)

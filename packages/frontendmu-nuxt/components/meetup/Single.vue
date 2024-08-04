@@ -19,10 +19,8 @@ function fetchAlbumDetails(albumName: string | null): string[] {
     return []
 
   if (photosResponse) {
-    // @ts-expect-error
-    const albumPhotosParsed = photosResponse[albumName]
+    const albumPhotosParsed = photosResponse[albumName as keyof typeof photosResponse]
     if (Array.isArray(albumPhotosParsed)) {
-      maxAlbumLength = albumPhotosParsed.length
       const filteredPhotos = albumPhotosParsed.filter((photo) => {
         return !photo.endsWith('.mp4')
       })
@@ -31,8 +29,6 @@ function fetchAlbumDetails(albumName: string | null): string[] {
   }
   return []
 }
-
-let maxAlbumLength = 0
 
 const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.album || ''))
 </script>
@@ -70,9 +66,9 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
                 </BaseHeading>
               </div>
               <div class="grid md:grid-cols-2">
-                <MeetupSessionList :sessions="getCurrentEvent.sessions" />
+                <MeetupSessionList :sessions="getCurrentEvent.sessions!" />
               </div>
-              <MeetupSonspor :sponsors="getCurrentEvent.sponsors" />
+              <MeetupSponsor :sponsors="getCurrentEvent.sponsors" />
             </div>
           </div>
         </div>

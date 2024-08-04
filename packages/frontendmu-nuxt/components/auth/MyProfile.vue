@@ -30,6 +30,22 @@ const userDetails = reactive({
   profile_picture: '',
 })
 
+// Food Preferences
+
+const foodSelection = shallowRef(foodOptions[1])
+
+// Transport Preferences
+
+const transportSelection = shallowRef(transportOptions[1])
+
+// Profession Preferences
+
+const professionSelection = shallowRef(professionOptions[0])
+
+// Show me as attending
+
+const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
+
 function setUserDetails() {
   userDetails.email = user.value?.email || ''
   userDetails.full_name = user.value?.full_name || ''
@@ -55,22 +71,6 @@ onMounted(async () => {
     setUserDetails()
   }
 })
-
-// Food Preferences
-
-const foodSelection = shallowRef(foodOptions[1])
-
-// Transport Preferences
-
-const transportSelection = shallowRef(transportOptions[1])
-
-// Profession Preferences
-
-const professionSelection = shallowRef(professionOptions[0])
-
-// Show me as attending
-
-const showMeAsAttendingSelection = shallowRef(showMeAsAttendingOptions[0])
 
 function updateProfile() {
   const extractEditableFields = {
@@ -180,7 +180,7 @@ function updateProfile() {
 
           <div>
             <div class="flex flex-col">
-              <template v-for="event in rawUser?.Events" :key="event.id">
+              <template v-for="event in rawUser?.Events" :key="(event.Events_id as DirectusEvent).id">
                 <template v-if="(typeof event.Events_id !== 'string')">
                   <div>
                     <NuxtLink :href="`/meetup/${event.Events_id.id}`" class="text-lg font-medium">
