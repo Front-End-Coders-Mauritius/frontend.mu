@@ -26,6 +26,12 @@ export default defineNuxtConfig({
     "@nuxt/image"
   ],
 
+  eslint: {
+    config: {
+      standalone: false, // <---
+    },
+  },
+
   tailwindcss: {
     configPath: "./tailwind.config.js",
   },

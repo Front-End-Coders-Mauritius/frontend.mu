@@ -1,5 +1,7 @@
 {
   "eslint.useFlatConfig": true,
   "editor.formatOnSave": true,
-  "eslint.codeActionsOnSave.mode": "all"
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.enable": true,
+  "eslint.format.enable": true,
 }
