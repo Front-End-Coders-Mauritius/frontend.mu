@@ -28,9 +28,7 @@ const developmentEnvironment = process.env.NODE_ENV === 'development'
     </h2>
   </div>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px] flex justify-center">
-    <div
-      class="bg-verse-200/10 overflow-hidden dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl rounded-lg sm:px-12 w-11/12"
-    >
+    <div class="bg-verse-200/10 overflow-hidden dark:bg-verse-500/20 backdrop-blur-sm px-6 py-12 shadow-2xl rounded-lg sm:px-12 w-11/12">
       <div v-if="isLoggedIn">
         <div class="text-center flex flex-col gap-8 text-verse-900 dark:text-verse-100 w-full">
           <span>
@@ -57,12 +55,18 @@ const developmentEnvironment = process.env.NODE_ENV === 'development'
             <label
               for="email"
               class="block text-sm font-medium leading-6 text-verse-900 dark:text-verse-100"
-            >Email
-              address</label>
+            >
+              Email address
+            </label>
             <div class="mt-2">
               <input
-                id="email" v-model="email" name="email" type="email" autocomplete="email" required
+                id="email"
+                v-model="email"
+                name="email"
+                type="email"
+                autocomplete="email"
                 class="block w-full rounded-md border-0 p-1.5 text-verse-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verse-600 sm:text-sm sm:leading-6"
+                required
               >
             </div>
           </div>
@@ -71,10 +75,15 @@ const developmentEnvironment = process.env.NODE_ENV === 'development'
             <label
               for="password"
               class="block text-sm font-medium leading-6 text-verse-900 dark:text-verse-100"
-            >Password</label>
+            >
+              Password
+            </label>
             <div class="mt-2">
               <input
-                id="password" v-model="password" name="password" type="password"
+                id="password"
+                v-model="password"
+                name="password"
+                type="password"
                 autocomplete="current-password" required
                 class="block w-full rounded-md border-0 p-1.5 text-verse-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-verse-600 sm:text-sm sm:leading-6"
               >
@@ -98,8 +107,7 @@ const developmentEnvironment = process.env.NODE_ENV === 'development'
               type="submit"
               class="flex w-full justify-center rounded-md bg-verse-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-verse-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-verse-600"
             >
-              Sign
-              in
+              Sign in
             </button>
           </div>
         </form>
@@ -125,8 +133,9 @@ const developmentEnvironment = process.env.NODE_ENV === 'development'
             </a>
 
             <a
-              href="#" disabled
+              href="#"
               class="opacity-60 cursor-not-allowed flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
+              disabled
             >
               <svg class="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                 <path
