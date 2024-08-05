@@ -11,7 +11,7 @@ async function loadEventsUncached() {
   const events = await client.request(
     readItems("Events",
       {
-        fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sponsors.Sponsor_id.*.*"],
+        fields: ["*.*", "sessions.Events_id.*", "sessions.Session_id.speakers.name", "sessions.Session_id.title", "sessions.Session_id.speakers.id", "sessions.Session_id.speakers.github_account", "sessions.Session_id.deck", "sponsors.Sponsor_id.*.*"],
       }
     ));
 
