@@ -1,7 +1,7 @@
 {
   "name": "@frontend.mu/nuxt",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@nuxt/fonts": "^0.7.1",
-    "@nuxt/image": "^1.7.0",
     "@nuxt/icon": "^1.4.5",
+    "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.2",
     "@nuxtjs/seo": "2.0.0-rc.16",
     "@vueuse/core": "^10.11.0",
@@ -32,6 +32,7 @@
     "vue-router": "^4.4.2"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.24.1",
     "@nuxt/eslint": "^0.4.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "eslint": "^9.8.0",

@@ -4,6 +4,6 @@
     "./.nuxt/tsconfig.json"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "."
   }
 }

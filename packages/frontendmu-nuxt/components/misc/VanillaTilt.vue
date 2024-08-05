@@ -1,26 +1,26 @@
-<template>
-  <div id="tiltMe" ref="tiltRef" :class="parallax ? 'preserve' : ''">
-    <slot/>
-  </div>
-</template>
-
 <script>
-import VanillaTilt from "vanilla-tilt";
+import VanillaTilt from 'vanilla-tilt'
 
 export default {
-  name: "Tilt",
+  name: 'Tilt',
   props: {
     options: Object,
     parallax: Boolean,
   },
-  data: function () {
-    return {};
+  data() {
+    return {}
   },
   mounted() {
-    VanillaTilt.init(this.$refs.tiltRef, this.options);
+    VanillaTilt.init(this.$refs.tiltRef, this.options)
   },
-};
+}
 </script>
+
+<template>
+  <div id="tiltMe" ref="tiltRef" :class="parallax ? 'preserve' : ''">
+    <slot />
+  </div>
+</template>
 
 <style>
 .preserve {

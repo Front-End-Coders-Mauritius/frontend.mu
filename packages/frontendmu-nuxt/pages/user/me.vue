@@ -2,10 +2,10 @@
 </script>
 
 <template>
-    <div>
-        <ClientOnly>
-            <AuthMyProfile />
-        </ClientOnly>
-    </div>
+  <div>
+    <ClientOnly>
+      <AuthMyProfile />
+    </ClientOnly>
+  </div>
 </template>
 s

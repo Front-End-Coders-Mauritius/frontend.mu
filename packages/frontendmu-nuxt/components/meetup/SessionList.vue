@@ -1,3 +1,21 @@
+<script setup lang="ts">
+// import { Image } from "astro:assets";
+import { getGithubUrl } from '@/utils/helpers'
+import type { Session } from '@/utils/types'
+// import { vTransitionName } from "@/utils/helpers";
+
+const props = defineProps({
+  sessions: {
+    type: Array as PropType<Array<Session>>,
+    required: true,
+  },
+})
+
+function getSpeakerPhoto(githubAccount: string) {
+  return getGithubUrl(githubAccount)
+}
+</script>
+
 <template>
   <div class="py-8 flex flex-col gap-3">
     <div class="text-base uppercase text-verse-900 dark:text-verse-300 font-semibold">
@@ -6,9 +24,10 @@
     <ul role="list" class="flex flex-col gap-6">
       <li v-for="(session, index) in sessions" :key="index" class="space-y-4 flex gap-10 relative">
         <img class="h-20 w-20 rounded-full lg:h-24 lg:w-24"
-          :src="getSpeakerPhoto(session.Session_id.speakers.github_account)" :alt="session.Session_id.speakers.name"
-          :title="session.Session_id.speakers.name" width="300" height="300"
-          :style="vTransitionName(session?.Session_id.speakers?.name, 'photo')">
+             :src="getSpeakerPhoto(session.Session_id.speakers.github_account)" :alt="session.Session_id.speakers.name"
+             :title="session.Session_id.speakers.name" width="300" height="300"
+             :style="vTransitionName(session?.Session_id.speakers?.name, 'photo')"
+        >
 
         <div class="space-y-2">
           <div>
@@ -22,27 +41,11 @@
         </div>
 
         <NuxtLink :href="`/speaker/${session.Session_id.speakers.id}`" class="absolute inset-0"
-          :title="`Speaker name: ${session.Session_id.speakers.name}`">
+                  :title="`Speaker name: ${session.Session_id.speakers.name}`"
+        >
           <span class="sr-only">{{ session.Session_id.speakers.name }}</span>
         </NuxtLink>
       </li>
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-// import { Image } from "astro:assets";
-import { getGithubUrl } from "@/utils/helpers";
-// import { vTransitionName } from "@/utils/helpers";
-
-const props = defineProps({
-  sessions: {
-    type: Array as PropType<Array<any>>,
-    required: true,
-  },
-});
-
-const getSpeakerPhoto = (githubAccount: string) => {
-  return getGithubUrl(githubAccount);
-};
-</script>

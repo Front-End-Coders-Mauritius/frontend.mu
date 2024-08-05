@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import speakersResponse from '../../frontendmu-data/data/speakers-raw.json'
+import Contributors from '../../frontendmu-data/data/contributors.json'
+import { people } from '../../frontendmu-data/data/people'
+import { getGithubUrl } from '@/utils/helpers'
+
+interface Contributor {
+  username: string
+  contributions: number
+}
+
+const contributors: Contributor[] = Contributors
+const NuxtLink = resolveComponent('NuxtLink')
+</script>
+
 <template>
   <ContentBlock>
     <div class="space-y-8 sm:space-y-12">
@@ -18,7 +33,8 @@
 
             <img
               class="mx-auto h-20 w-20 rounded-lg border-verse-200 dark:border-verse-600 shadow-lg border p-2 lg:w-48 lg:h-48"
-              :src="person.imageUrl" :alt="person.name" :title="person.name" width="300" height="300">
+              :src="person.imageUrl" :alt="person.name" :title="person.name" width="300" height="300"
+            >
 
             <div class="space-y-2 py-2">
               <div class="text-xs font-medium lg:text-lg text-center">
@@ -48,7 +64,8 @@
             <img
               class="mx-auto h-20 w-20 rounded-full border-verse-2 shadow-lg 00 border p-2 lg:w-32 lg:h-32 profile-avatar"
               :style="vTransitionName('speaker-avatar', person.name)" :src="getGithubUrl(person?.github_account || '')"
-              :alt="person.name" :title="person.name" width="300" height="300">
+              :alt="person.name" :title="person.name" width="300" height="300"
+            >
 
             <div class="space-y-2">
               <div class="text-xs font-medium lg:text-lg text-center">
@@ -59,7 +76,8 @@
             </div>
           </NuxtLink>
           <a v-if="person?.github_account" :href="`https://github.com/${person?.github_account}`" target="_blank"
-            class="flex justify-center gap-2 items-center dark:text-verse-400 text-verse-600 hover:text-verse-900 hover:dark:text-verse-100">
+             class="flex justify-center gap-2 items-center dark:text-verse-400 text-verse-600 hover:text-verse-900 hover:dark:text-verse-100"
+          >
             <Icon name="carbon:logo-github" class="w-4 h-4" />
             <p class="font-heading ">
               {{ person?.github_account }}
@@ -79,11 +97,13 @@
       <ul id="team" role="list" class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:gap-x-8">
         <li v-for="person in contributors" :key="person.username">
           <a :href="`https://github.com/Front-End-Coders-Mauritius/frontendmu-astro/commits?author=${person.username}`"
-            target="_blank" class="space-y-4">
+             target="_blank" class="space-y-4"
+          >
             <img
               class="mx-auto h-20 w-20 rounded-full border-verse-2 shadow-lg 00 border p-2 lg:w-48 lg:h-48 profile-avatar"
               :src="getGithubUrl(person.username)" :alt="person.username" :title="person.username" width="300"
-              height="300">
+              height="300"
+            >
 
             <div class="space-y-2">
               <div class="text-xs font-medium lg:text-lg text-center">
@@ -101,20 +121,3 @@
     </div>
   </ContentBlock>
 </template>
-
-<script setup lang="ts">
-import speakersResponse from "../../frontendmu-data/data/speakers-raw.json";
-// @ts-ignore
-import { getGithubUrl } from "@/utils/helpers";
-
-import Contributors from "../../frontendmu-data/data/contributors.json";
-import { people } from "../../frontendmu-data/data/people";
-
-interface Contributor {
-  username: string;
-  contributions: number;
-}
-
-const contributors: Contributor[] = Contributors;
-const NuxtLink = resolveComponent('NuxtLink')
-</script>

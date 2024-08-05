@@ -1,7 +1,12 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
   <div class="bg-verse-950 dark:bg-verse-800/80">
     <div
-      class="max-w-6xl mx-auto py-24 grid gap-8 grid-rows-4 grid-cols-0 md:grid-cols-2 md:grid-rows-none px-8 md:px-16">
+      class="max-w-6xl mx-auto py-24 grid gap-8 grid-rows-4 grid-cols-0 md:grid-cols-2 md:grid-rows-none px-8 md:px-16"
+    >
       <HomeSocialCard href="https://discord.gg/WxXW9Jvv6k" class="bg-[#5865f2] text-sm md:text-normal">
         <template #tagline>
           <p>Discord</p>
@@ -31,13 +36,13 @@
       </HomeSocialCard>
 
       <HomeSocialCard
-href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
-        class="bg-[#25D366] text-sm md:text-normal">
+        href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
+        class="bg-[#25D366] text-sm md:text-normal"
+      >
         <template #tagline>
           <p>Whatsapp Community</p>
         </template>
         <template #description>
-
           <p>
             Join this community to stay informed about our events
           </p>
@@ -53,7 +58,6 @@ href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
           <p>Twitter</p>
         </template>
         <template #description>
-
           <p>Short-form updates from us.</p>
         </template>
 
@@ -67,7 +71,6 @@ href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
           <p>Instagram</p>
         </template>
         <template #description>
-
           <p>Pictures of frontend coders.</p>
         </template>
 
@@ -77,8 +80,9 @@ href="https://chat.whatsapp.com/CqXAj6m8NtQB6NN8B9aoEJ"
       </HomeSocialCard>
 
       <HomeSocialCard
-href="https://www.linkedin.com/company/81846464/admin/"
-        class="bg-[#007db1] text-sm md:text-normal">
+        href="https://www.linkedin.com/company/81846464/admin/"
+        class="bg-[#007db1] text-sm md:text-normal"
+      >
         <template #tagline>
           <p>LinkedIn Page</p>
         </template>
@@ -93,7 +97,3 @@ href="https://www.linkedin.com/company/81846464/admin/"
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-
-</script>

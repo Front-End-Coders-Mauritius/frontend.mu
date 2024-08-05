@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-const currentPath = computed(() => useRoute().path);
+import { computed, onMounted } from 'vue'
 
-const router = useRouter();
+const currentPath = computed(() => useRoute().path)
+
+const router = useRouter()
 
 interface TMenuItem {
-  title: string;
-  href: string;
-  class?: string;
-  children?: TMenuItem[];
+  title: string
+  href: string
+  class?: string
+  children?: TMenuItem[]
 }
 
 interface TMenu {
-  [key: string]: TMenuItem;
+  [key: string]: TMenuItem
 }
 
 const links: TMenu = {
@@ -72,45 +73,48 @@ const links: TMenu = {
     href: '/sponsors',
     class: 'hidden md:block',
   },
-};
+}
 
 function makeHeaderSticky() {
-  const header = document.querySelector('.menu-wrapper');
-  if (!header) return;
+  const header = document.querySelector('.menu-wrapper')
+  if (!header)
+    return
 
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
-      if (!header) return;
+      if (!header)
+        return
       if (entry.isIntersecting) {
-        header.classList.remove('intersect');
-      } else {
-        header.classList.add('intersect');
+        header.classList.remove('intersect')
       }
-    });
+      else {
+        header.classList.add('intersect')
+      }
+    })
   }
 
   const options = {
     root: null,
     rootMargin: '-200px 0px 0px 0px',
     threshold: 0,
-  };
+  }
 
-  const observer = new IntersectionObserver(handleIntersection, options);
-  const target = document.querySelector('#sticky-observer');
+  const observer = new IntersectionObserver(handleIntersection, options)
+  const target = document.querySelector('#sticky-observer')
 
-  if (!target) return;
+  if (!target)
+    return
 
-  observer.observe(target);
+  observer.observe(target)
 }
 
 function handleRightClick(event: MouseEvent) {
   // prevent default and navigate to /branding
-  event.preventDefault();
-  router.push('/branding');
-
+  event.preventDefault()
+  router.push('/branding')
 }
 
-onMounted(makeHeaderSticky);
+onMounted(makeHeaderSticky)
 </script>
 
 <template>
@@ -119,7 +123,8 @@ onMounted(makeHeaderSticky);
       <div class="flex justify-between items-center">
         <div class="flex">
           <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="frontend.mu"
-            @contextmenu="handleRightClick">
+                    @contextmenu="handleRightClick"
+          >
             <SiteLogo class="w-10" />
             <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl md:block">
               frontend.mu
@@ -128,7 +133,7 @@ onMounted(makeHeaderSticky);
         </div>
         <nav>
           <ul class="nav-links text-sm md:text-sm lg:text-base flex md:gap-4 font-medium font-heading">
-            <template v-for='item of Object.keys(links)' :key="item">
+            <template v-for="item of Object.keys(links)" :key="item">
               <SiteMenuItem :links="links" :item="item" />
             </template>
           </ul>

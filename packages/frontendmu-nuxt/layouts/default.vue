@@ -1,17 +1,16 @@
 <script setup lang="ts">
 defineOgImageComponent('Generic')
-
 </script>
 
 <template>
-    <NuxtLoadingIndicator />
-    <LayoutBackdrop>
-        <SiteNavigation />
+  <NuxtLoadingIndicator />
+  <LayoutBackdrop>
+    <SiteNavigation />
 
-        <slot />
+    <slot />
 
-        <HomeSponsors />
+    <HomeSponsors />
 
-        <SiteFooter />
-    </LayoutBackdrop>
+    <SiteFooter />
+  </LayoutBackdrop>
 </template>

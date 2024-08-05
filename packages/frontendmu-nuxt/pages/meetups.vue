@@ -3,8 +3,7 @@
 
 const { allMeetups, meetupsGroupedByYear, nextMeetup } = useMeetups({})
 
-const nextMeetupId = nextMeetup.value.id;
-
+const nextMeetupId = nextMeetup.value.id
 </script>
 
 <template>
@@ -12,7 +11,9 @@ const nextMeetupId = nextMeetup.value.id;
     <MiscContentBlock>
       <div class="past-events-container pb-4 md:pb-16">
         <div class="flex flex-col gap-2">
-          <BaseHeading :level="1">All meetups</BaseHeading>
+          <BaseHeading :level="1">
+            All meetups
+          </BaseHeading>
           <p class="text-verse-700 dark:text-verse-300 py-4">
             Over the years, we've organized a lot of meetups. Here's a list of all
             of them.
@@ -25,12 +26,14 @@ const nextMeetupId = nextMeetup.value.id;
               {{ year }}
             </div>
             <div
-              class="absolute origin-bottom-lef left-[-150px] top-[50px] opacity-10 -rotate-90 text-[100px] font-bold text-verse-900 dark:text-verse-100 group-hover-[.is-page]:left-[-170px] transition-all duration-300 hidden md:block">
+              class="absolute origin-bottom-lef left-[-150px] top-[50px] opacity-10 -rotate-90 text-[100px] font-bold text-verse-900 dark:text-verse-100 group-hover-[.is-page]:left-[-170px] transition-all duration-300 hidden md:block"
+            >
               {{ year }}
             </div>
             <div class="grid grid-cols-2 gap-8 relative z-10">
               <CardsEventCard v-for="event in meetupsGroupedByYear[year]" :key="event.id" :event="event"
-                :is-next-meetup="event.id === nextMeetupId" class="card-entrance" />
+                              :is-next-meetup="event.id === nextMeetupId" class="card-entrance"
+              />
             </div>
           </div>
         </template>

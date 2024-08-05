@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  definePageMeta({
-    layout: false,
-  });
+definePageMeta({
+  layout: false,
+})
 </script>
 
 <template>
   <div class="egg-basket">
     <div class="egg">
       <div class="white">
-        <div class="yolk"/>
+        <div class="yolk" />
       </div>
     </div>
   </div>
@@ -47,7 +47,7 @@
     }
   }
 
-  .yolk	{
+  .yolk {
     background: #ffcc00;
     width: 6.5rem;
     height: 7rem;
