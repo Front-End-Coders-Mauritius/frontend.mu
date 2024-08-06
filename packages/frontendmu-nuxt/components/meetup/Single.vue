@@ -72,11 +72,8 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
             </div>
           </div>
         </div>
-        <ClientOnly>
-          <AuthRsvpToMeetup :meetup-id="routeId" :meetup-details="getCurrentEvent" />
-        </ClientOnly>
         <div class="contain">
-          <div class="mt-10">
+          <div class="mt-10 mb-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-8">
               <template v-if="getCurrentEvent.Date">
                 <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
@@ -137,6 +134,9 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
           </ClientOnly>
         </div>
         <MeetupAlbum :get-current-event="getCurrentEvent" :current-album="currentAlbum" :source="photoAlbumSource" />
+        <ClientOnly>
+          <AuthRsvpToMeetup :meetup-id="routeId" :meetup-details="getCurrentEvent" />
+        </ClientOnly>
       </ContentBlock>
     </div>
   </div>
