@@ -106,9 +106,9 @@ const currentEventRsvpDetail = arrayOfEventRsvpDetail && arrayOfEventRsvpDetail[
 </script>
 
 <template>
-  <div v-if="rsvpOpen" class="dock-block sticky top-[90dvh] px-2 md:px-8 z-10 w-full">
-    <div class="contain relative h-16">
-      <div class="absolute left-0 right-0 bottom-0 w-full max-h-[80vh] overflow-y-auto rounded-2xl ">
+  <div v-if="rsvpOpen" class="dock-block sticky px-2 md:px-8 z-10 w-full bottom-6">
+    <div class="contain">
+      <div class="w-full max-h-[80vh] overflow-y-auto rounded-2xl">
         <div
           class="relative flex md:gap-4 gap-2 flex-col shadow-2xl bg-white/90 text-verse-800 shadow-zinc-800 ring-2 ring-zinc-900/5 backdrop-blur-2xl dark:bg-verse-800/40 dark:text-zinc-200  py-2"
         >
