@@ -70,7 +70,7 @@ function allSpeakersForEvent(event: Meetup) {
         </div>
       </CarouselItem>
     </CarouselContent>
-    <CarouselPrevious />
-    <CarouselNext />
+    <CarouselPrevious class="-left-[14px] xl:-left-[40px]" />
+    <CarouselNext class="-right-[14px] xl:-right-[40px]" />
   </Carousel>
 </template>

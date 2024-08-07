@@ -20,8 +20,9 @@
                 {{ useAppConfig().description }}
               </p>
               <div class="grid place-items-center md:place-items-start">
-                <NuxtLink href="/meetups"
-                          class="bg-verse-500 hover:bg-verse-600 transition-colors duration-200 text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
+                <NuxtLink
+                  href="/meetups"
+                  class="bg-verse-500 hover:bg-verse-600 transition-colors duration-200 text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg"
                 >
                   View all meetups
                 </NuxtLink>
