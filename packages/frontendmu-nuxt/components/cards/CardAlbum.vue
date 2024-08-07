@@ -12,8 +12,8 @@ defineProps<{
       :key="photo"
       :src="`${source}/${photo}`"
       alt="Album Photo"
-      width="100"
-      height="160"
+      width="242"
+      height="408"
       class="object-cover w-full h-full block"
       loading="lazy"
     />
