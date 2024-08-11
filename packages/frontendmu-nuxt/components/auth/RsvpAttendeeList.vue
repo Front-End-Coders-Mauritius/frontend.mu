@@ -57,7 +57,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="attendeeList" class="contain text-verse-500 dark:text-verse-200 py-8">
+  <div
+    v-if="attendeeList"
+    class="contain text-verse-500 dark:text-verse-200 py-8"
+  >
     <div class="flex flex-col py-8 gap-4 [--bar-height:15px]">
       <h2
         class="group relative flex flex-col justify-center md:justify-start md:flex-row items-center gap-4 text-2xl font-bold cursor-pointer"
@@ -74,19 +77,30 @@ onMounted(async () => {
         </span>
       </h2>
       <div>
-        <div v-if="showAsFrom" class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full">
-          <div class="h-[var(--bar-height)] rounded-full bg-green-500" :style="`width: ${seatsTakenPercentage}%`" />
+        <div
+          v-if="showAsFrom"
+          class="w-full bg-slate-500/10 h-[var(--bar-height)] rounded-full"
+        >
+          <div
+            class="h-[var(--bar-height)] rounded-full bg-green-500"
+            :style="`width: ${seatsTakenPercentage}%`"
+          />
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 sm:flex flex-wrap gap-8">
-      <div v-for="(attendee, index) in attendeeList" :key="`attendee-${index}`">
+    <div class="grid grid-cols-1 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 md:gap-12">
+      <div
+        v-for="(attendee, index) in attendeeList"
+        :key="`attendee-${index}`"
+      >
         <div class="flex flex-col gap-4 justify-center">
           <div class="relative flex flex-col items-center">
             <template v-if="attendee.profile_picture">
-              <img :src="base64Url(attendee.profile_picture)" alt=""
-                   class="rounded-full mx-auto w-28 h-28 aspect-square"
+              <img
+                :src="base64Url(attendee.profile_picture)"
+                alt=""
+                class="rounded-full mx-auto w-full max-w-[130px] aspect-square"
               >
             </template>
             <template v-else>
@@ -98,14 +112,21 @@ onMounted(async () => {
                 </span>
               </div>
             </template>
-            <div v-if="attendee.verified" title="This person was present at the meetup"
-                 class="text-xs flex gap-1 tracking-widest p-0.5 shadow-lg font-medium uppercase bg-green-600 rounded-full text-center md:flex text-white w-fit -mt-4"
+            <div
+              v-if="attendee.verified"
+              title="This person was present at the meetup"
+              class="text-xs flex gap-1 tracking-widest p-0.5 shadow-lg font-medium uppercase bg-green-600 rounded-full text-center md:flex text-white w-fit -mt-4"
             >
-              <Icon name="mdi:check-decagram" class="text-xl" />
+              <Icon
+                name="mdi:check-decagram"
+                class="text-xl"
+              />
             </div>
           </div>
-          <div :title="attendee.name" class="font-bold w-[150px] text-center truncate"
-               :class="[attendee.verified ? ' -mt-4' : '']"
+          <div
+            :title="attendee.name"
+            class="font-bold w-full text-center truncate"
+            :class="[attendee.verified ? ' -mt-4' : '']"
           >
             {{ attendee.name }}
           </div>
