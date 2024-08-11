@@ -8,11 +8,12 @@ export default withNuxt(
   }),
   {
     rules: {
-      'vue/first-attribute-linebreak': 'off',
+      'vue/first-attribute-linebreak': 'warn',
       'vue/require-default-prop': 'off',
       'vue/no-mutating-props': 'off',
       'vue/no-template-shadow': 'off',
       'vue/no-multiple-template-root': 'off',
+      'vue/max-attributes-per-line': 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
