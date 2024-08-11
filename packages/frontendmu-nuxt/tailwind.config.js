@@ -15,6 +15,9 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        xs: '475px',
+      },
       height: {
         80: '80vh',
         85: '85vh',
