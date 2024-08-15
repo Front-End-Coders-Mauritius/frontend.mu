@@ -1,6 +1,7 @@
 # Coding Guidelines
 
 To maintain code quality and consistency across the Frontend.mu project, please adhere to the following guidelines:
+However,These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## 1. General Principles
 
