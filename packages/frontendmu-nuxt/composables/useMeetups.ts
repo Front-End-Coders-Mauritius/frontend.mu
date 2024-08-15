@@ -48,8 +48,21 @@ export default function useMeetups({
   })
 
   const allSponsors = computed(() => {
+    const sponsorsByName = new Map<string, typeof allMeetups[number]['sponsors'][number]>()
     const sponsors = allMeetups.map(meetup => meetup.sponsors).flat()
-    return sponsors
+
+    sponsors.forEach((sponsor) => {
+      const sponsorName = sponsor.Sponsor_id.Name.toLowerCase()
+
+      if (sponsorsByName.has(sponsorName))
+        return
+
+      sponsorsByName.set(sponsorName, sponsor)
+    })
+
+    const dedupedSponsors = [...sponsorsByName.values()]
+
+    return dedupedSponsors
   })
 
   return {
