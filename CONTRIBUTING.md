@@ -1,7 +1,8 @@
 <!-- omit in toc -->
 # Contributing to frontend.mu
 
-Thank you for your interest in contributing to Frontend.mu! 🎉 Our community-driven platform thrives on contributions from members like you, whether you're helping 
+Thank you for your interest in contributing to Frontend.mu! 🎉 
+Our community-driven platform thrives on contributions from members like you, whether you're helping 
 to organize events, enhancing the website, or simply sharing knowledge.
 
 <!-- omit in toc -->
@@ -33,18 +34,22 @@ There are many ways you can contribute to Frontend.mu:
 1. **Fork the Repository:** Start by forking the repository to create your own copy on GitHub.
 2. **Clone Your Fork:** Clone your forked repository to your local machine.
 3. **Open the Project:** Navigate to the cloned `frontend.mu` directory in your code editor.
-4. **Install Dependencies:** Run `pnpm install` in your terminal to install the required packages.
+4. **Install Dependencies:** Run `pnpm install` to install the required packages.
+5. **Set Up Environment Variables:** Copy `.env.example` to `.env.development`:
+   ```bash
+   cp .env.example .env.development
+   ```
 5. **Start the Development Server:** Use `pnpm run nuxt dev` to launch the project locally.
 
 ## Submitting Contributions
 
 1. **Commit & Push:** Commit your changes and push them to your forked repository.
 2. **Open a Pull Request:** Head to your fork on GitHub, click on the `Contribute` button, and then `Open a pull request` to submit your changes.
-3. **Need Help?** If you run into any issues, feel free to chat with us on Discord! ✌️
 
 ## Reporting Issues and Suggestions
 
-If you encounter any issues or have ideas for improvements, please open an issue on GitHub. Provide as much detail as possible, including screenshots or logs if applicable.
+If you encounter any issues or have ideas for improvements, please open an issue on GitHub. 
+Provide as much detail as possible, including screenshots or logs if applicable.
 
 ## Code Style and Guidelines
 
@@ -55,4 +60,5 @@ If you encounter any issues or have ideas for improvements, please open an issue
 
 ## Acknowledgements
 
-Thank you for being a part of Frontend.mu! Your contributions help us build a stronger community and better resources for frontend developers in Mauritius. If you have any questions, feel free to reach out to us via GitHub issues or at our next meetup!
+Thank you for being a part of Frontend.mu! Your contributions help us build a stronger community and better resources for frontend developers in Mauritius. 
+If you have any questions, feel free to reach out to us via GitHub issues, Discord or at our next meetup!
