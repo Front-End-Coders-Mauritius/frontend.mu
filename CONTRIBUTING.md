@@ -24,7 +24,6 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to ensure a wel
 There are many ways you can contribute to Frontend.mu:
 
 - **Event Organization:** Help us plan, promote, and run meetups. You can propose topics, suggest speakers, or volunteer to help with logistics.
-- **Content Creation:** Contribute to our website by writing articles, creating tutorials, or adding information about past and upcoming events.
 - **Design and Frontend Development:** Improve the look and feel of our website. Whether it's updating the UI, enhancing accessibility, or fixing bugs, your skills are invaluable.
 - **Speaker and Sponsor Management:** Assist in managing the list of speakers and sponsors, ensuring that information is up-to-date and accurately represented.
 - **Community Engagement:** Help us grow the community by spreading the word, engaging with attendees, and fostering discussions online and offline.
