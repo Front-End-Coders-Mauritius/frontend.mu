@@ -54,9 +54,6 @@ export default function useMeetups({
     sponsors.forEach((sponsor) => {
       const sponsorName = sponsor.Sponsor_id.Name.toLowerCase()
 
-      if (sponsorsByName.has(sponsorName))
-        return
-
       sponsorsByName.set(sponsorName, sponsor)
     })
 

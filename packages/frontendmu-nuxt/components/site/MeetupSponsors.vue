@@ -34,7 +34,7 @@ function sponsorClassList(sponsor: Sponsor) {
     >
       <div :class="sponsorClassList(sponsor)">
         <NuxtLink
-          :to="sponsor.Sponsor_id.Website ?? ''"
+          :to="`/meetup/${sponsor.Events_id}`"
           class="absolute inset-0"
         >
           <span class="sr-only">
