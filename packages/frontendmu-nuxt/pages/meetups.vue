@@ -21,7 +21,7 @@ const nextMeetupId = nextMeetup.value.id
         </div>
 
         <template v-for="year in Object.keys(meetupsGroupedByYear).reverse()" :key="year">
-          <div class="grid pb-16 sm:pb-20 relative group is-page">
+          <div class="grid pb-16 sm:pb-40 relative group is-page">
             <div class="text-lg font-bold text-verse-900 uppercase md:hidden">
               {{ year }}
             </div>
