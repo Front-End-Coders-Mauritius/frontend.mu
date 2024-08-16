@@ -2,11 +2,18 @@
 
 Front-End coders Mauritius is a free meetup that's dedicated to all aspect of Front-End development. it occurs in general one a month at announced date and place. Feel free to join!
 
-Live website : https://frontend.mu/
+Live website : [https://frontend.mu/](https://frontend.mu/)
 
-## Setup
+## Getting Started
+
+### Prerequisites
 
 [Install pnpm](https://pnpm.io/installation) on your development environment for the best experience. 
+
+### Dependencies
+
+Use pnpm to install the dependencies.
+
 
 ```
 pnpm install
@@ -20,30 +27,19 @@ To run the astro project, run the following command
 pnpm run astro dev
 ```
 
-## Environment variables
+### Environment variables
 
 Make a copy of .env.example and rename it to .env.development on your local machine.
-If not, the application will fail to start
 
 ```
 cp .env.example .env.development
 
 ```
+If you don't do this, the application will fail to start
 
-## Feel free to contribute :D
+## Contributing
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to get started, submit PRs, and more.
 
-### Run the project locally
+## Community
+Join our community on [Discord](https://discord.gg/WxXW9Jvv6k?ref=frontend.mu) if you have any questions or need assistance. We're here to help!
 
-1. Fork the repository to get your copy on your account.
-2. Clone your forked repository on your machine.
-3. Open the cloned `frontend.mu` directory in your code editor.
-4. Run `pnpm install` in your terminal.
-5. Run `pnpm run nuxt dev`.
-
-### Submit your PR
-
-1. Commit & push your changes on your forked repository.
-2. Log in to your GitHub account & go to your forked repository's page.
-3. On the `Code` tab, click `Contribute` and then `Open a pull request` to submit your PR ([read more about this](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project#making-a-pull-request)).
-
-**Chat with us on [Discord](https://discord.gg/WxXW9Jvv6k?ref=frontend.mu) if you're having any issue! ✌️**
