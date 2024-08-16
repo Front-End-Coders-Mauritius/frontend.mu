@@ -8,38 +8,36 @@ Live website : [https://frontend.mu/](https://frontend.mu/)
 
 ### Prerequisites
 
-[Install pnpm](https://pnpm.io/installation) on your development environment for the best experience. 
+[Install pnpm](https://pnpm.io/installation) on your development environment for the best experience.
 
 ### Dependencies
 
 Use pnpm to install the dependencies.
 
-
-```
+```sh
 pnpm install
 ```
 
-This project uses pnpm workspaces
+### Running the project
 
-To run the astro project, run the following command
+This project uses `pnpm workspaces`
 
-```
+To run the **legacy** astro project locally, run
+
+```sh
 pnpm run astro dev
 ```
 
-### Environment variables
+To run the **new** Nuxt.js project locally, run
 
-Make a copy of .env.example and rename it to .env.development on your local machine.
-
+```sh
+pnpm run nuxt dev
 ```
-cp .env.example .env.development
-
-```
-If you don't do this, the application will fail to start
 
 ## Contributing
+
 We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to get started, submit PRs, and more.
 
 ## Community
-Join our community on [Discord](https://discord.gg/WxXW9Jvv6k?ref=frontend.mu) if you have any questions or need assistance. We're here to help!
 
+Join our community on [Discord](https://discord.gg/WxXW9Jvv6k?ref=frontend.mu) if you have any questions or need assistance. We're here to help!
