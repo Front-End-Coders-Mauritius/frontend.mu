@@ -28,16 +28,26 @@ function sponsorClassList(sponsor: Sponsor) {
                 :height="sponsor.Sponsor_id.Logo.height">
         </template> -->
 
-    <template v-for="sponsor in allSponsors" :key="sponsor.Sponsor_id">
+    <template
+      v-for="sponsor in allSponsors"
+      :key="sponsor.Sponsor_id"
+    >
       <div :class="sponsorClassList(sponsor)">
-        <NuxtLink :to="`/meetup/${sponsor.Events_id}`" class="absolute inset-0">
+        <NuxtLink
+          :to="`/meetup/${sponsor.Events_id}`"
+          class="absolute inset-0"
+        >
           <span class="sr-only">
             {{ sponsor.Sponsor_id.Name }}
           </span>
         </NuxtLink>
-        <img class="w-full object-contain md:object-cover" :src="sponsorLogoUrl(sponsor)"
-             :alt="sponsor.Sponsor_id.Name" :title="sponsor.Sponsor_id.Name"
-             :width="sponsor.Sponsor_id.Logo.width" :height="sponsor.Sponsor_id.Logo.height"
+        <img
+          class="w-full object-contain md:object-cover"
+          :src="sponsorLogoUrl(sponsor)"
+          :alt="sponsor.Sponsor_id.Name"
+          :title="sponsor.Sponsor_id.Name"
+          :width="sponsor.Sponsor_id.Logo.width"
+          :height="sponsor.Sponsor_id.Logo.height"
         >
 
         <!-- <div class="flex flex-col text-md font-bold gap-1 md:gap-4">
