@@ -220,9 +220,19 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     return false
   })
 
-  function oAuthLogin() {
-    const currentPage = new URL(window.location.origin)
-    return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
+  function oAuthLogin(provider: string) {
+    if (provider === 'google') {
+      const currentPage = new URL(window.location.origin)
+      return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
+    }
+    else if (provider === 'github') {
+      const currentPage = new URL(window.location.origin)
+      return `${DIRECTUS_URL()}/auth/login/github?redirect=${currentPage}redirect`
+    }
+
+    console.log('Provider not found')
+
+    return false
   }
 
   async function updateUserProfile({ profile_updates }: { profile_updates: DirectusAstroUser }) {
