@@ -227,7 +227,11 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     }
     else if (provider === 'github') {
       const currentPage = new URL(window.location.origin)
-      return `${DIRECTUS_URL()}/auth/login/github?redirect_uri=${currentPage}redirect`
+      return `${DIRECTUS_URL()}/auth/login/github?redirect=${currentPage}redirect`
+    }
+    else if (provider === 'discord') {
+      const currentPage = new URL(window.location.origin)
+      return `${DIRECTUS_URL()}/auth/login/discord?redirect=${currentPage}redirect`
     }
 
     console.log('Provider not found')

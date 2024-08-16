@@ -122,6 +122,13 @@ const developmentEnvironment = process.env.NODE_ENV === 'development'
               </svg>
               <span class="text-sm font-semibold leading-6">GitHub</span>
             </a>
+
+            <a :href="oAuthLogin('discord')"
+              class="flex w-full items-center justify-center gap-3 rounded-md bg-[#000000]  hover:bg-black/50  px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
+              disabled>
+              <Icon name="logos:discord-icon" class="h-5 w-5" />
+              <span class="text-sm font-semibold leading-6">Discord</span>
+            </a>
           </div>
         </div>
       </div>
