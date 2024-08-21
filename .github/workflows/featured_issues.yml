@@ -16,7 +16,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Fetch all open issues labeled as "featured"
-        issues=$(gh issue list --limit 1000 --state open --label "featured" --json number,title,url --jq '.[] | "- [**\(.title)**](\(.url))"')
+        issues=$(gh issue list --limit 1000 --state open --label "featured" --json number,title,url --jq '.[] | "\(.number)- [\(.title)](\(.url))"')
         
         # Save the issues to a featured-issues.md file
         echo "# Featured Issues\n\n$issues" > packages/frontendmu-nuxt/content/featured-issues.md
