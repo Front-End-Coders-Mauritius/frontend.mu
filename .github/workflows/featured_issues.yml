@@ -3,31 +3,33 @@ name: Fetch Featured Issues
 on:
   issues:
     types: [opened, labeled]
-  pull_request:
-    types: 
-      - opened
-      - updated
     
 jobs:
   fetch-issues:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Fetch Featured Issues
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Fetch all open issues labeled as "featured"
-        issues=$(gh issue list --limit 1000 --state open --label "featured" --json number,title,url)
-        
-        # Save the issues to a featured-issues.json 
+        issues=$(gh issue list --limit 1000 --state open --label "featured" --json number,title,url,author,assignees,createdAt,state,comments | jq '.[] | {number, title, url, author, assignees, createdAt, state, comments_count: .comments | length}')
+
+        # Save the issues to a featured-issues.json
         echo "$issues" | jq > packages/frontendmu-data/data/featured-issues.json
-        
-        # Commit the changes
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "GitHub Action[bot]"
-        git add packages/frontendmu-data/data/featured-issues.json
-        git commit -m "Update featured issues"
-        git push
+
+        # Check if there are any changes
+        if [ -n "$(git status --porcelain packages/frontendmu-data/data/featured-issues.json)" ]; then
+          # Commit and push changes if the file has been modified
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Action[bot]"
+          git add packages/frontendmu-data/data/featured-issues.json
+          git commit -m "Update featured issues"
+          git push
+        else
+          echo "No changes detected in featured-issues.json. Skipping commit."
+        fi
+
