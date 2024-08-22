@@ -31,4 +31,4 @@ jobs:
 
       - name: Run Playwright tests
         run: |
-          pnpm run astro test
+          pnpm run nuxt test
