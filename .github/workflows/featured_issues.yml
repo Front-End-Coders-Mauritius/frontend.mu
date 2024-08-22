@@ -18,7 +18,7 @@ jobs:
         # Fetch all open issues labeled as "featured"
         issues=$(gh issue list --limit 1000 --state open --label "featured" --json number,title,url)
         
-        # Save the issues to a featured-issues.md file
+        # Save the issues to a featured-issues.json 
         echo "$issues" | jq > packages/frontendmu-data/data/featured-issues.json
         
         # Commit the changes
