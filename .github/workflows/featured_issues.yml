@@ -3,7 +3,9 @@ name: Fetch Featured Issues
 on:
   issues:
     types: [opened, labeled]
-
+  pull_request:
+    types: [opened]
+    
 jobs:
   fetch-issues:
     runs-on: ubuntu-latest
