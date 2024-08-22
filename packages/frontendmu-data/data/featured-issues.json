@@ -124,3 +124,18 @@
   "state": "OPEN",
   "comments_count": 4
 }
+{
+  "number": 44,
+  "title": "Request for Speaker Slides Post-Conference",
+  "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/44",
+  "author": {
+    "id": "MDQ6VXNlcjQ4MTc0OTk5",
+    "is_bot": false,
+    "login": "k3ii",
+    "name": "Jain Ramchurn"
+  },
+  "assignees": [],
+  "createdAt": "2023-04-29T15:46:56Z",
+  "state": "OPEN",
+  "comments_count": 10
+}
