@@ -24,7 +24,6 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'shadcn-nuxt',
     '@nuxt/image',
-    '@nuxt/content',
   ],
 
   eslint: {

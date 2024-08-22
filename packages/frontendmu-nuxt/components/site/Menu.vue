@@ -28,11 +28,6 @@ const links: TMenu = {
       //   class: '',
       // },
       {
-        title: 'History',
-        href: '/history',
-        class: '',
-      },
-      {
         title: 'WhatsApp',
         href: 'https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q',
         class: '',
@@ -128,7 +123,8 @@ onMounted(makeHeaderSticky)
       <div class="flex justify-between items-center">
         <div class="flex">
           <NuxtLink href="/" class="flex gap-2 text-verse-500 dark:text-verse-200" title="frontend.mu"
-            @contextmenu="handleRightClick">
+                    @contextmenu="handleRightClick"
+          >
             <SiteLogo class="w-10" />
             <span class="hidden text-lg font-bold leading-none tracking-tighter md:text-3xl md:block">
               frontend.mu
