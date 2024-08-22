@@ -14,6 +14,21 @@
   "comments_count": 0
 }
 {
+  "number": 188,
+  "title": "Data visualisation on meetup data ",
+  "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/188",
+  "author": {
+    "id": "U_kgDOBla0SA",
+    "is_bot": false,
+    "login": "derecklhw",
+    "name": "Dereck Lam Hon Wah"
+  },
+  "assignees": [],
+  "createdAt": "2024-08-16T16:21:20Z",
+  "state": "OPEN",
+  "comments_count": 0
+}
+{
   "number": 186,
   "title": "Attendee List - Display Count ",
   "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/186",
