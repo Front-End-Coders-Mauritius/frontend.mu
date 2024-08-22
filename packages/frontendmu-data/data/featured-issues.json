@@ -43,3 +43,24 @@
   "state": "OPEN",
   "comments_count": 1
 }
+{
+  "number": 163,
+  "title": "Let's implement GitHub login",
+  "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/163",
+  "author": {
+    "id": "U_kgDOBb5yZQ",
+    "is_bot": false,
+    "login": "n-d-r-d-g",
+    "name": "n-d-r-d-g"
+  },
+  "assignees": [
+    {
+      "id": "MDQ6VXNlcjE3MjE2MTE=",
+      "login": "MrSunshyne",
+      "name": "Sandeep Ramgolam"
+    }
+  ],
+  "createdAt": "2024-08-04T10:27:55Z",
+  "state": "OPEN",
+  "comments_count": 4
+}
