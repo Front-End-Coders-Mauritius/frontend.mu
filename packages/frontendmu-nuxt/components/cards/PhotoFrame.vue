@@ -11,7 +11,7 @@ const firstName = computed(() => props.name.split(' ')[0])
 
 <template>
     <div class="relative parent">
-        <!-- Trou -->
+        <!-- Trou-->
         <div class="absolute left-[50%] -translate-x-3 top-[-5px]">
             <CardsPhotoTrou />
         </div>
