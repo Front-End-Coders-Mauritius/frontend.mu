@@ -44,6 +44,21 @@
   "comments_count": 1
 }
 {
+  "number": 184,
+  "title": "History page",
+  "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/184",
+  "author": {
+    "id": "MDQ6VXNlcjE3MjE2MTE=",
+    "is_bot": false,
+    "login": "MrSunshyne",
+    "name": "Sandeep Ramgolam"
+  },
+  "assignees": [],
+  "createdAt": "2024-08-16T15:33:19Z",
+  "state": "OPEN",
+  "comments_count": 0
+}
+{
   "number": 182,
   "title": "Community Page & Community Section on the homepage",
   "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/182",
