@@ -38,7 +38,7 @@ const links: TMenu = {
         class: '',
       },
       {
-        title: 'CODE OF CONDUCT',
+        title: 'Code of conduct',
         href: '/code_of_conduct',
         class: '',
       },
