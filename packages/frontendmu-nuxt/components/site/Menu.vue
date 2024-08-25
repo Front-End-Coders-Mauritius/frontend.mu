@@ -38,6 +38,16 @@ const links: TMenu = {
         class: '',
       },
       {
+        title: 'CODE OF CONDUCT',
+        href: '/code_of_conduct',
+        class: '',
+      },
+      {
+        title: 'Coding Guidelines',
+        href: '/coding_guidelines',
+        class: '',
+      },
+      {
         title: 'WhatsApp',
         href: 'https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q',
         class: '',
