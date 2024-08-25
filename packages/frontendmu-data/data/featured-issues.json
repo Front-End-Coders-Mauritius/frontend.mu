@@ -1,5 +1,20 @@
 [
   {
+    "number": 215,
+    "title": "Create \"Call for Sponsors\" form to the Front-End Coders Discord",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/215",
+    "author": {
+      "id": "MDQ6VXNlcjQ4MTc0OTk5",
+      "is_bot": false,
+      "login": "k3ii",
+      "name": "Jain Ramchurn"
+    },
+    "assignees": [],
+    "createdAt": "2024-08-25T09:19:58Z",
+    "state": "OPEN",
+    "comments_count": 0
+  },
+  {
     "number": 214,
     "title": "Create \"Call for Speaker\" form to the Front-End Coders Discord",
     "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/214",
