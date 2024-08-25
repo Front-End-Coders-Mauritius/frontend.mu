@@ -33,6 +33,11 @@ const links: TMenu = {
         class: '',
       },
       {
+        title: 'Contribute',
+        href: '/contribute',
+        class: '',
+      },
+      {
         title: 'WhatsApp',
         href: 'https://chat.whatsapp.com/invite/0kQ2QX0ZQ0j1YQ4X6Q4Q4Q',
         class: '',
