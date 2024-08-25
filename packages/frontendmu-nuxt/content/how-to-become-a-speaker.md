@@ -1,5 +1,4 @@
 # Become a Speaker at Our Frontend Community
-
 Are you passionate about frontend development, or do you have insights into related areas like 
 devtools, backend, or full-stack development? Becoming a speaker at our frontend community 
 events is a great way to contribute, gain recognition, and grow your professional network.
@@ -41,20 +40,20 @@ Make sure it’s something you can confidently speak about for 20–45 minutes.
 
 Reach out to us on our socials with a brief description of your talk.
 
-3. Prepare Your Talk:
+3. Practice runs:
 
-You'll have plenty of time to prepare your talk. We also do practice runs and provide feedback to help you refine your presentation.
+We do practice runs and provide feedback to help you refine your presentation.
 The practice runs are usually done on a Thursday on [cedpoilly Discord server](https://discord.gg/M2VRY39A) before the event.
 
 ## Tips for First-Time Speakers
 
 Tips for First-Time Speakers
 
-* Start Small: If you're new to public speaking, consider doing a lightning talk (5-10 minutes) as a way to ease into it.
+* Start Small: If you're new to public speaking, consider doing a topic you know well and comfortable with as a way to ease into it.
 * Practice: Rehearse your talk multiple times. Practice in front of a friend or record yourself to identify areas for improvement.
 * Engage with the Audience: Encourage questions and be open to feedback. Engaging with the audience makes your talk more interactive and memorable.
 * Be Yourself: Authenticity resonates with the audience. Don’t try to imitate someone else’s style—just be yourself.
 
-Ready to Inspire?
+## Ready to Inspire?
 
 We’re excited to hear from you! Apply now to become a speaker at our next frontend community event and share your passion with others.
