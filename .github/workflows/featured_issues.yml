@@ -24,8 +24,8 @@ jobs:
           # Check if there are any changes
           if [ -n "$(git status --porcelain packages/frontendmu-data/data/featured-issues.json)" ]; then
             # Commit and push changes if the file has been modified
-            git config --local user.email "github-actions[bot]@users.noreply.github.com"
-            git config --local user.name "GitHub Action[bot]"
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
             git add packages/frontendmu-data/data/featured-issues.json
             git commit -m "Update featured issues"
             git push
