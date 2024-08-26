@@ -83,6 +83,10 @@ const links: TMenu = {
     title: 'Meetups',
     href: '/meetups',
   },
+  community: {
+    title: 'Community',
+    href: '/community',
+  },
   team: {
     title: 'Team',
     href: '/team',
