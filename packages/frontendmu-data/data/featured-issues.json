@@ -1,32 +1,32 @@
 [
   {
-    "number": 215,
-    "title": "Create \"Call for Sponsors\" form to the Front-End Coders Discord",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/215",
+    "number": 213,
+    "title": "Improve the post-login redirect page",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/213",
     "author": {
-      "id": "MDQ6VXNlcjQ4MTc0OTk5",
+      "id": "MDQ6VXNlcjIwOTIzOTc4",
       "is_bot": false,
-      "login": "k3ii",
-      "name": "Jain Ramchurn"
+      "login": "danshilm",
+      "name": "Danshil Kokil Mungur"
     },
     "assignees": [],
-    "createdAt": "2024-08-25T09:19:58Z",
+    "createdAt": "2024-08-24T09:44:25Z",
     "state": "OPEN",
     "comments_count": 0
   },
   {
-    "number": 214,
-    "title": "Create \"Call for Speaker\" form to the Front-End Coders Discord",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/214",
+    "number": 202,
+    "title": "Add NuxtContent module for docs",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/202",
     "author": {
-      "id": "MDQ6VXNlcjQ4MTc0OTk5",
+      "id": "MDQ6VXNlcjE3MjE2MTE=",
       "is_bot": false,
-      "login": "k3ii",
-      "name": "Jain Ramchurn"
+      "login": "MrSunshyne",
+      "name": "Sandeep Ramgolam"
     },
     "assignees": [],
-    "createdAt": "2024-08-25T09:19:32Z",
-    "state": "OPEN",
+    "createdAt": "2024-08-21T18:47:48Z",
+    "state": "CLOSED",
     "comments_count": 0
   },
   {
@@ -86,21 +86,6 @@
     },
     "assignees": [],
     "createdAt": "2024-08-16T15:33:19Z",
-    "state": "OPEN",
-    "comments_count": 0
-  },
-  {
-    "number": 183,
-    "title": "Light mode background animation",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/183",
-    "author": {
-      "id": "MDQ6VXNlcjE3MjE2MTE=",
-      "is_bot": false,
-      "login": "MrSunshyne",
-      "name": "Sandeep Ramgolam"
-    },
-    "assignees": [],
-    "createdAt": "2024-08-16T15:30:26Z",
     "state": "OPEN",
     "comments_count": 0
   },
