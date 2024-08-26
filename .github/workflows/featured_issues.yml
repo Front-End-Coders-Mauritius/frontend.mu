@@ -16,7 +16,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Fetch all open issues labeled as "featured"
-          issues=$(gh issue list --limit 1000 --state open --label "featured" --json number,title,url,author,assignees,createdAt,state,comments)
+          issues=$(gh issue list --limit 1000 --state all --label "featured" --json number,title,url,author,assignees,createdAt,state,comments)
 
           # Save the issues to a featured-issues.json
           echo "$issues" | jq 'map({number, title, url, author, assignees, createdAt, state, comments_count: .comments | length})' > packages/frontendmu-data/data/featured-issues.json
