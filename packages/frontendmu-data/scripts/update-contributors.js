@@ -23,7 +23,7 @@ async function updateContributors() {
       })
       .filter((contributor) => {
         // Exclude the following contributors from the list
-        const excludedContributors = ["actions-user", "GitHub Action[bot]", "GitHub Action"];
+        const excludedContributors = ["actions-user", "github-actions[bot]"];
         return !excludedContributors.includes(contributor.username);
       });
 
