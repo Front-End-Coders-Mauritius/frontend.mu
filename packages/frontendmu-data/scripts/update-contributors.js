@@ -40,8 +40,8 @@ async function updateContributors() {
       console.log("Contributors file updated.");
 
       // Configure Git user and email for the commit
-      execSync('git config --global user.name "GitHub Action"');
-      execSync('git config --global user.email "action@github.com"');
+      execSync('git config user.name "GitHub Action"');
+      execSync('git config user.email "action@github.com"');
 
       // Stage the changes
       execSync("git add .");
