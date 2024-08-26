@@ -11,6 +11,7 @@ interface Contributor {
 
 const contributors: Contributor[] = Contributors
 const NuxtLink = resolveComponent('NuxtLink')
+const displayContributors = computed(() => contributors?.filter((c: Contributor) => c.username !== 'github-actions[bot]')) || []
 </script>
 
 <template>
@@ -95,7 +96,7 @@ const NuxtLink = resolveComponent('NuxtLink')
       </div>
 
       <ul id="team" role="list" class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:gap-x-8">
-        <li v-for="person in contributors" :key="person.username">
+        <li v-for="person in displayContributors" :key="person.username">
           <a :href="`https://github.com/Front-End-Coders-Mauritius/frontendmu-astro/commits?author=${person.username}`"
              target="_blank" class="space-y-4"
           >
