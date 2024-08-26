@@ -62,7 +62,7 @@ function isTabActive(state: IssueState) {
                 </template>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid md:grid-cols-2 gap-3">
             <TransitionGroup name="list">
                 <template v-for="issue in filteredIssues" :key="issue.number">
                     <div class="border dark:bg-verse-950 border-verse-400/50 p-3 rounded-md flex gap-2">
