@@ -22,7 +22,7 @@ export const projects: Project[] = [
         project_url: 'https://github.com/nicolasstrands/zourer',
         author_github_username: 'nicolasstrands',
         categories: ['dictionary', 'open-data'],
-        description: 'A dictionary of profanity words in the Mauritian Kreol language'
+        description: 'A dictionary of profanity words in the Mauritian Kreol language.'
     },
     {
         title: 'Mauritius Tax Calculator',
