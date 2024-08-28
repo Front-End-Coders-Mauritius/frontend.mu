@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import issues from '../../../frontendmu-data/data/featured-issues.json'
+import { cn } from '@/lib/utils'
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', {
@@ -55,7 +56,7 @@ function isTabActive(state: IssueState) {
         <template v-for="state in states" :key="state">
           <div
             class="flex items-center gap-1 rounded-md px-2 py-1 text-xs cursor-pointer font-medium"
-            :class="isTabActive(state as IssueState) && 'dark:bg-verse-900 bg-verse-200'"
+            :class="isTabActive(state as IssueState) && 'text-black dark:text-white bg-verse-100 dark:bg-verse-950 border border-verse-200 dark:border-verse-700'"
             @click="filteredBy = state as IssueState"
           >
             <Icon
@@ -70,48 +71,44 @@ function isTabActive(state: IssueState) {
     <div class="grid md:grid-cols-2 gap-3">
       <TransitionGroup name="list">
         <template v-for="issue in filteredIssues" :key="issue.number">
-          <div
-            class="border dark:bg-verse-950 border-verse-400/50 p-3 rounded-md flex gap-2"
+          <a
+            :href="issue.url"
+            target="_blank"
+            class="border text-verse-600 bg-white hover:bg-verse-50 dark:bg-verse-950 dark:text-verse-300 border-verse-400/50 p-3 rounded-md flex items-start gap-2 hover:text-black dark:hover:text-white motion-safe:transition-all"
           >
             <div class="flex-1">
               <div class="flex gap-1.5 items-center">
                 <Icon
                   :name="issueIcon(issue.state as IssueState)"
-                  :class="issueColor(issue.state as IssueState)"
+                  :class="cn(issueColor(issue.state as IssueState), 'min-w-[16px] min-h-[16px]')"
                 />
-                <a
-                  :href="issue.url"
-                  target="_blank"
-                  class="text-verse-600 hover:text-verse-800 dark:hover:text-white no-underline dark:text-verse-300"
+                <p
+                  class="text-start no-underline"
                 >
                   {{ issue.title }}
-                </a>
+                </p>
               </div>
-              <div class="text-xs text-verse-400 lowercase flex gap-2">
-                <div>
-                  opened {{ formatDate(issue.createdAt) }} by
+              <div class="text-xs text-verse-600 dark:text-verse-400 flex gap-3">
+                <div class="text-start">
+                  Opened on {{ formatDate(issue.createdAt) }} by
                   {{ issue.author.login }}
                 </div>
-                <a
-                  :href="`${issue.url}`"
-                  class="flex items-center text-xs gap-1 cursor-pointer"
-                  target="_blank"
-                >
-                  <Icon name="octicon:comment-24" class="text-verse-400" />
-                  <div class="text-verse-400 no-underline dark:text-verse-300">
+                <div class="flex items-center text-xs gap-1 cursor-pointer">
+                  <Icon name="octicon:comment-24" />
+                  <div class="no-underline dark:text-verse-300">
                     {{ issue.comments_count }}
                   </div>
-                </a>
+                </div>
               </div>
             </div>
             <div class="flex items-center">
               <NuxtImg
                 :src="githubProfileUrl(issue.author.login)"
                 alt=""
-                class="bg-red-500 w-8 h-8 rounded-full"
+                class="mt-1 bg-verse-200 dark:bg-verse-900 w-8 h-8 rounded-full"
               />
             </div>
-          </div>
+          </a>
         </template>
       </TransitionGroup>
     </div>

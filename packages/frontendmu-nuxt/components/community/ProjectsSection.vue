@@ -28,21 +28,21 @@ const sortedProjects = projects.sort((a, b) => {
     <div class="grid md:grid-cols-3 gap-3">
       <TransitionGroup name="list">
         <template v-for="project in sortedProjects" :key="project.title">
-          <div class="border dark:bg-verse-950 border-verse-400/50 p-3 rounded-md flex flex-col gap-2">
-            <div class="flex gap-2">
+          <div class="border bg-white dark:bg-verse-950 border-verse-400/50 p-3 rounded-md flex flex-col gap-2">
+            <div class="flex items-start gap-2">
               <div v-if="project.icon" class="flex items-center">
-                <Icon :name="project.icon" class="text-verse-400 w-8 h-8 rounded-full" />
+                <Icon :name="project.icon" class="text-verse-600 dark:text-verse-400 w-8 h-8 rounded-full" />
               </div>
               <div class="flex-1">
                 <div class="flex gap-1.5 items-center">
                   <a
                     :href="project.project_url" target="_blank"
-                    class="text-verse-600 hover:text-verse-800 dark:hover:text-white no-underline dark:text-verse-300"
+                    class="text-start text-verse-600 dark:text-verse-300 hover:text-black dark:hover:text-white no-underline"
                   >
                     {{ project.title }}
                   </a>
                 </div>
-                <div class="text-xs text-verse-400 lowercase flex gap-2">
+                <div class="text-xs text-verse-600 dark:text-verse-400 lowercase flex gap-2">
                   <div>
                     by {{ project.author_github_username }}
                   </div>
@@ -51,17 +51,17 @@ const sortedProjects = projects.sort((a, b) => {
               <div class="flex items-center">
                 <NuxtImg
                   :src="githubProfileUrl(project.author_github_username)" alt=""
-                  class="bg-red-500 w-8 h-8 rounded-full"
+                  class="bg-verse-200 dark:bg-verse-900 w-8 h-8 rounded-full"
                 />
               </div>
             </div>
-            <div class="py-2 text-sm">
+            <div class="py-2 text-sm text-start">
               {{ project.description }}
             </div>
 
             <div class="flex gap-2 flex-wrap">
               <template v-for="category in project.categories" :key="category">
-                <div class="text-xs bg-verse-700 rounded-md px-2">
+                <div class="text-xs text-verse-800 dark:text-verse-200 bg-verse-100 dark:bg-verse-800 rounded-md px-2 py-0.5">
                   <!-- <Icon :name="issueIcon(category as ProjectCategory)"
                                         :class="issueColor(category as ProjectCategory)" /> -->
                   {{ category }}
