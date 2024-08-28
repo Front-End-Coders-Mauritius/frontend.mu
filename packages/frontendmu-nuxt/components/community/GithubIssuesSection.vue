@@ -88,7 +88,7 @@ function isTabActive(state: IssueState) {
                   {{ issue.title }}
                 </p>
               </div>
-              <div class="text-xs text-verse-600 dark:text-verse-400 flex gap-3">
+              <div class="text-xs text-verse-600 dark:text-verse-400 flex items-start gap-3">
                 <div class="text-start">
                   Opened on {{ formatDate(issue.createdAt) }} by
                   {{ issue.author.login }}
