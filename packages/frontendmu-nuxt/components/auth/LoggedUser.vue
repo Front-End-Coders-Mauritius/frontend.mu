@@ -15,9 +15,6 @@ onMounted(() => {
 
 <template>
   <div class="dark:text-zinc-200 dark:ring-white/10 pl-4">
-    <pre>
-      {{ user }}
-    </pre>
     <BaseButton
       v-if="!isLoggedIn"
       href="/login"
