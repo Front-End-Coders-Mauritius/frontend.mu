@@ -36,7 +36,7 @@ export function formatDate(date: string) {
 export function mapToValidUser(user: any): User {
   const full_name = user?.full_name
     ? user.full_name
-    : `${user.first_name} ${user.last_name}`
+    : `${user.first_name} ${user.last_name ?? ''}`.trim()
 
   return {
     id: user.id,
