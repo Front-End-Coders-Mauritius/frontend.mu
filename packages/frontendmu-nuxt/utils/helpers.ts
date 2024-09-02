@@ -53,6 +53,7 @@ export function mapToValidUser(user: any): User {
     profile_picture: user.profile_picture || '',
     google: user.google,
     role: user.role.name,
+    provider: user.provider,
   }
 }
 
