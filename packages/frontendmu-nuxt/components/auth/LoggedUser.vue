@@ -15,6 +15,9 @@ onMounted(() => {
 
 <template>
   <div class="dark:text-zinc-200 dark:ring-white/10 pl-4">
+    <pre>
+      {{ user }}
+    </pre>
     <BaseButton
       v-if="!isLoggedIn"
       href="/login"
@@ -47,7 +50,10 @@ onMounted(() => {
             class="inline-flex items-center w-full justify-center gap-x-1.5 rounded-full  text-sm font-semibold text-verse-900 dark:text-verse-100 shadow-sm  ring-gray-300 hover:bg-gray-50"
           >
             <template v-if="user?.provider === 'github'">
-              <img :src="`https://github.com/${user?.external_identifier}.png`">
+              <img
+                class="w-10 aspect-square rounded-full"
+                :src="`https://github.com/${user?.external_identifier}.png`"
+              >
             </template>
             <template v-else>
               <div v-if="avatarUrl">
