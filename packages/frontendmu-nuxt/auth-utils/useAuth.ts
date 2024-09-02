@@ -172,6 +172,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
       'meal',
       'occupation',
       'github_username',
+      'external_identifier',
       'Events.Events_id.id',
       'Events.Events_id.title',
       'profile_picture',

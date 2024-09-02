@@ -36,6 +36,8 @@ export interface User {
   github_username?: string
   profile_picture?: string | null
   role: 'sso_google' | 'Admin'
+  provider?: string
+  external_identifier?: string
 }
 
 // export type Transport = "car" | "bus" | "need a ride";
