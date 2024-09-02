@@ -44,7 +44,7 @@ onMounted(() => {
       >
         <div>
           <MenuButton
-            class="inline-flex items-center w-full justify-center gap-x-1.5 rounded-full  text-sm font-semibold text-verse-900 dark:text-verse-100 shadow-sm  ring-gray-300 hover:bg-gray-50"
+            class="inline-flex relative items-center w-full justify-center gap-x-1.5 rounded-full  text-sm font-semibold text-verse-900 dark:text-verse-100 shadow-sm  ring-gray-300 hover:bg-gray-50"
           >
             <template v-if="user?.provider === 'github'">
               <img
@@ -60,7 +60,21 @@ onMounted(() => {
                 >
               </div>
             </template>
-            <!-- <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" /> -->
+            <!-- Provider Hint -->
+            <div class="absolute bottom-0 right-0 bg-white rounded-full">
+              <div v-if="user?.provider === 'default'">
+                <Icon
+                  class="block w-3 h-3 p-0.5 text-black"
+                  name="fluent:animal-rabbit-24-regular"
+                />
+              </div>
+              <div v-else>
+                <Icon
+                  :name="`carbon:logo-${user?.provider}`"
+                  class="block w-3 h-3 p-0.5 text-black"
+                />
+              </div>
+            </div>
           </MenuButton>
         </div>
 
