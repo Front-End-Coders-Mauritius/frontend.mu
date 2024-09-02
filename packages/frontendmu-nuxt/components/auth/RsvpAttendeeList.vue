@@ -96,11 +96,18 @@ onMounted(async () => {
       >
         <div class="flex flex-col gap-4 justify-center">
           <div class="relative flex flex-col items-center">
-            <template v-if="attendee.profile_picture">
+            <template v-if="attendee.provider === 'github'">
+              <img
+                :src="`https://github.com/${attendee.external_identifier}.png`"
+                alt=""
+                class="rounded-full mx-auto w-28 h-28 aspect-square"
+              >
+            </template>
+            <template v-else-if="attendee.profile_picture">
               <img
                 :src="base64Url(attendee.profile_picture)"
                 alt=""
-                class="rounded-full mx-auto w-full max-w-[130px] aspect-square"
+                class="rounded-full mx-auto w-28 h-28 aspect-square"
               >
             </template>
             <template v-else>

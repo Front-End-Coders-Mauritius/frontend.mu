@@ -216,6 +216,8 @@ export interface Attendee {
   name: string
   profile_picture: string
   verified: boolean
+  provider: string
+  external_identifier: string
 }
 
 export interface RSVPResponse {
