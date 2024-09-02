@@ -3,6 +3,8 @@ name: Fetch Featured Issues
 on:
   issues:
     types: [opened, labeled]
+  label:
+    types: [created, edited, deleted]
 
 jobs:
   fetch-issues:
