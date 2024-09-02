@@ -36,7 +36,6 @@ export interface User {
   github_username?: string
   profile_picture?: string | null
   role: 'sso_google' | 'Admin'
-  provider: string
 }
 
 // export type Transport = "car" | "bus" | "need a ride";
@@ -178,7 +177,6 @@ export interface DirectusAstroUser {
   github_username?: string
   profile_picture?: string
   Events?: { Events_id: DirectusEvent | string }[]
-  provider?: string
 }
 
 export type ToastTypes = 'SUCCESS' | 'WARNING' | 'INFO' | 'ERROR'

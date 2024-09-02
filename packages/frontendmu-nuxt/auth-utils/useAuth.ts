@@ -114,6 +114,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
           credentials: 'include', // this is required in order to send the refresh token cookie
           body: JSON.stringify({
             refresh_token: getCookieValue('directus_session_token'),
+            mode: 'cookie',
           }),
         },
       )
@@ -123,7 +124,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
       setCookie(response.data)
       await getCurrentUser()
       setAuth(true)
-      if (!rawUser.value?.profile_picture && rawUser.value?.provider === 'google') {
+      if (!rawUser.value?.profile_picture) {
         const picture = await cloudFunctionUpdateProfilePicture(rawUser.value?.id || '')
         console.log(picture)
       }
@@ -175,7 +176,6 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
       'Events.Events_id.title',
       'profile_picture',
       'role.name',
-      'provider',
     ]
 
     try {
