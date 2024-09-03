@@ -45,21 +45,6 @@
     "comments_count": 0
   },
   {
-    "number": 186,
-    "title": "Attendee List - Display Count ",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/186",
-    "author": {
-      "id": "U_kgDOBla0SA",
-      "is_bot": false,
-      "login": "derecklhw",
-      "name": "Dereck Lam Hon Wah"
-    },
-    "assignees": [],
-    "createdAt": "2024-08-16T16:03:41Z",
-    "state": "OPEN",
-    "comments_count": 1
-  },
-  {
     "number": 185,
     "title": "Event location should be a link to map",
     "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/185",
