@@ -1,35 +1,5 @@
 [
   {
-    "number": 213,
-    "title": "Improve the post-login redirect page",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/213",
-    "author": {
-      "id": "MDQ6VXNlcjIwOTIzOTc4",
-      "is_bot": false,
-      "login": "danshilm",
-      "name": "Danshil Kokil Mungur"
-    },
-    "assignees": [],
-    "createdAt": "2024-08-24T09:44:25Z",
-    "state": "OPEN",
-    "comments_count": 0
-  },
-  {
-    "number": 202,
-    "title": "Add NuxtContent module for docs",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/202",
-    "author": {
-      "id": "MDQ6VXNlcjE3MjE2MTE=",
-      "is_bot": false,
-      "login": "MrSunshyne",
-      "name": "Sandeep Ramgolam"
-    },
-    "assignees": [],
-    "createdAt": "2024-08-21T18:47:48Z",
-    "state": "CLOSED",
-    "comments_count": 0
-  },
-  {
     "number": 188,
     "title": "Data visualisation on meetup data ",
     "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/188",
@@ -139,26 +109,5 @@
     "createdAt": "2023-04-29T15:46:56Z",
     "state": "OPEN",
     "comments_count": 10
-  },
-  {
-    "number": 9,
-    "title": "Add Mission Statement on Home page",
-    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/9",
-    "author": {
-      "id": "MDQ6VXNlcjE3MjE2MTE=",
-      "is_bot": false,
-      "login": "MrSunshyne",
-      "name": "Sandeep Ramgolam"
-    },
-    "assignees": [
-      {
-        "id": "MDQ6VXNlcjE3MjE2MTE=",
-        "login": "MrSunshyne",
-        "name": "Sandeep Ramgolam"
-      }
-    ],
-    "createdAt": "2022-08-26T08:32:47Z",
-    "state": "OPEN",
-    "comments_count": 0
   }
 ]
