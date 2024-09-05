@@ -13,7 +13,7 @@ export default withNuxt(
       'vue/no-mutating-props': 'off',
       'vue/no-template-shadow': 'off',
       'vue/no-multiple-template-root': 'off',
-      'vue/max-attributes-per-line': 'warn',
+      'vue/max-attributes-per-line': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',

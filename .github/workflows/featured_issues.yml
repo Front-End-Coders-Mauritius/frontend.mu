@@ -3,6 +3,8 @@ name: Fetch Featured Issues
 on:
   issues:
     types: [opened, labeled]
+  label:
+    types: [created, edited, deleted]
 
 jobs:
   fetch-issues:
@@ -20,13 +22,17 @@ jobs:
 
           # Save the issues to a featured-issues.json
           echo "$issues" | jq 'map({number, title, url, author, assignees, createdAt, state, comments_count: .comments | length})' > packages/frontendmu-data/data/featured-issues.json
+          echo "export default " > packages/frontendmu-data/data/featured-issues.ts
+          cat packages/frontendmu-data/data/featured-issues.json | jq '.' >> packages/frontendmu-data/data/featured-issues.ts
+          sed -i '$d' packages/frontendmu-data/data/featured-issues.ts
+          echo "] as const" >> packages/frontendmu-data/data/featured-issues.ts
 
           # Check if there are any changes
           if [ -n "$(git status --porcelain packages/frontendmu-data/data/featured-issues.json)" ]; then
             # Commit and push changes if the file has been modified
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add packages/frontendmu-data/data/featured-issues.json
+            git add packages/frontendmu-data/data/featured-issues.json packages/frontendmu-data/data/featured-issues.ts
             git commit -m "Update featured issues"
             git push
           else
