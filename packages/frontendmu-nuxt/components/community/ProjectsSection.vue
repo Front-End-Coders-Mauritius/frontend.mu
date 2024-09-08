@@ -55,7 +55,7 @@ const sortedProjects = projects.sort((a, b) => {
                 />
               </div>
             </div>
-            <div class="py-2 text-sm text-start">
+            <div class="py-2 text-sm text-start flex-grow">
               {{ project.description }}
             </div>
 
