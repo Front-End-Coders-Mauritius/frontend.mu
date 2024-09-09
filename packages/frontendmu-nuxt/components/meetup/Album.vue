@@ -59,8 +59,8 @@ function setActiveImageIndex(index: number) {
                 </div>
               </CarouselItem>
             </CarouselContent>
-            <CarouselPrevious class="left-1 bg-[#00000097]" />
-            <CarouselNext class="right-1 bg-[#00000097]" />
+            <CarouselPrevious class="left-1" />
+            <CarouselNext class="right-1" />
           </Carousel>
         </DialogContent>
       </Dialog>

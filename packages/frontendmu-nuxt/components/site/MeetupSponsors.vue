@@ -21,7 +21,7 @@ function sponsorClassList(sponsor: Sponsor) {
 </script>
 
 <template>
-  <div class="grid grid-cols-7 gap-8">
+  <div class="grid lg:grid-cols-7 md:gap-8 md:grid-cols-3 grid-cols-2 gap-4 auto-rows-auto">
     <!-- <template v-for="sponsor in allSponsors" :key="sponsor.Sponsor_id">
             <img class="h-16 w-20 md:w-auto object-contain md:object-cover" :src="sponsorLogoUrl(sponsor)"
                 :alt="sponsor.Sponsor_id.Name" :title="sponsor.Sponsor_id.Name" :width="sponsor.Sponsor_id.Logo.width"
