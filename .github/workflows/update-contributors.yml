@@ -5,12 +5,9 @@ on:
     branches:
       - main # Change 'main' to your default branch name if it's different
 
-  pull_request:
-    types:
-      - closed
-
 jobs:
   update-contributors:
+    if: github.event_name == 'pull_request' && github.event_name == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -20,11 +17,6 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 6.0.2
-
-      # - name: Install Node.js
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: "18"
 
       - name: Install dependencies
         # Exclude the Nuxt package when running pnpm install
