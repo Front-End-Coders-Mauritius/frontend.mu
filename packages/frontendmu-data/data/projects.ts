@@ -55,6 +55,70 @@ export const projects: Project[] = [
     author_github_username: 'cedpoilly',
     categories: ['quiz', 'game', 'real-time', 'ai'],
     description: 'A real-time quiz game with AI',
+  },
+  {
+    title: 'mudocs',
+    icon: 'material-symbols:edit-document-rounded',
+    project_url: 'https://github.com/n-d-r-d-g/redesigned/tree/main/mudocs',
+    author_github_username: 'n-d-r-d-g',
+    categories: ['Document', 'Generators', 'mauritius'],
+    description: 'A community-driven solution to public processes in Mauritius',
+  },
+  {
+    title: 'kouran',
+    icon: 'pepicons-pop:electricity-off',
+    project_url: 'https://github.com/k3ii/kouran',
+    author_github_username: 'k3ii',
+    categories: ['Mauritius', 'cli'],
+    description: 'View Power outages in Mauritius from your terminal'
+  },
+  {
+    title: 'Dodo Dodge',
+    icon: 'game-icons:dodo',
+    project_url: 'https://github.com/nicolasstrands//dodo-dodge-ce',
+    author_github_username: 'nicolasstrands',
+    categories: ['game', 'dodo'],
+    description: 'Dodo Dodge is a simple runner game where you play as a dodo bird and either dodge hunters or stomp on them.'
+  },
+  {
+    title: 'Mauritius public holidays dataset',
+    icon: 'material-symbols:dataset',
+    project_url: 'https://github.com/nicolasstrands/mauritius-public-holidays-dataset',
+    author_github_username: 'nicolasstrands',
+    categories: ['open-data', 'Mauritus'],
+    description: 'Simple Dataset for Public Holidays in Mauritius'
+  },
+  {
+    title: 'The Philosophical Code',
+    icon: 'game-icons:greek-temple',
+    project_url: 'https://github.com/houzyk/thephilosophicalcode',
+    author_github_username: 'houzyk',
+    categories: ['philosophy'],
+    description: 'Exploring code from a philosophical point of view'
+  },
+  {
+    title: 'MoBouzer',
+    icon: 'ic:baseline-directions-bus',
+    project_url: 'https://github.com/danshilm/MoBouzer',
+    author_github_username: 'danshilm',
+    categories: ['navigation', 'Mauritius'],
+    description: 'A cross-platform mobile app for navigating Mauritius by bus based on public transport data and user contributions to OpenStreetMaps.'
+  },
+  {
+    title: 'Animal breeds search',
+    icon: 'maki:dog-park-11',
+    project_url: 'https://github.com/mahima98/animal-breeds',
+    author_github_username: 'mahima98',
+    categories: ['animal', 'data'],
+    description: 'You choose a dog breed. It returns you an image of that breed!'
+  },
+  {
+    title: 'ambiance',
+    icon: 'ph:music-note-simple-duotone',
+    project_url: 'https://ambiance.netlify.app/',
+    author_github_username: 'Saamiyah',
+    categories: ['music', 'ambiance'],
+    description: 'Ambiance was created to mimic a different environment for working everyday.'
   }
 
 ]
