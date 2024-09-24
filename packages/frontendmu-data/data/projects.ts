@@ -85,7 +85,7 @@ export const projects: Project[] = [
     icon: 'material-symbols:dataset',
     project_url: 'https://github.com/nicolasstrands/mauritius-public-holidays-dataset',
     author_github_username: 'nicolasstrands',
-    categories: ['open-data', 'Mauritus'],
+    categories: ['open-data', 'Mauritius'],
     description: 'Simple Dataset for Public Holidays in Mauritius'
   },
   {
