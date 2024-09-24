@@ -118,7 +118,7 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
                     {{ getCurrentEvent.Location }}
                   </dd>
                   <div v-if="getCurrentEvent.map">
-                    <a :href="getCurrentEvent.map" target="_blank" class="uppercase text-xs text-verse-100 bg-verse-400 rounded-full p-2">
+                    <a :href="getCurrentEvent.map" target="_blank" class="uppercase text-xs text-verse-100 bg-verse-400 rounded-full p-2" aria-label="View event location on map">
                       View on map
                     </a>
                   </div>
