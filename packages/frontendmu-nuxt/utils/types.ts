@@ -74,6 +74,7 @@ export interface DirectusEvent {
   gallery: any[]
   sessions: Session[] | undefined
   sponsors: Sponsor[]
+  map: string | undefined
 }
 
 export interface Session {
