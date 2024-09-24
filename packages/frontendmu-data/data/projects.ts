@@ -75,7 +75,7 @@ export const projects: Project[] = [
   {
     title: 'Dodo Dodge',
     icon: 'game-icons:dodo',
-    project_url: 'https://github.com/nicolasstrands//dodo-dodge-ce',
+    project_url: 'https://github.com/nicolasstrands/dodo-dodge-ce',
     author_github_username: 'nicolasstrands',
     categories: ['game', 'dodo'],
     description: 'Dodo Dodge is a simple runner game where you play as a dodo bird and either dodge hunters or stomp on them.'
