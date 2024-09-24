@@ -25,7 +25,7 @@ const sortedProjects = projects.sort((a, b) => {
                 </template>
 </div>
 </div> -->
-    <div class="grid md:grid-cols-3 gap-3">
+    <div class="grid md:grid-cols-3 auto-rows-fr gap-6">
       <TransitionGroup name="list">
         <template v-for="project in sortedProjects" :key="project.title">
           <div class="border bg-white dark:bg-verse-950 border-verse-400/50 p-3 rounded-md flex flex-col gap-2">
