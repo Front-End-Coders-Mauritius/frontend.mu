@@ -10,7 +10,7 @@ const remainingUpcomingData = ref(areThereMeetupsToday.value ? upcomingMeetups.v
       <div v-if="areThereMeetupsToday">
         <div class="py-8">
           <BaseHeading weight="light">
-            Meetups Today
+            Today's Meetups
           </BaseHeading>
         </div>
         <div class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">
