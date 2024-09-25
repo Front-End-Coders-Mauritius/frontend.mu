@@ -13,8 +13,12 @@ const photoAlbumSource = appConfig.photoAlbumSource as string
 interface Props {
   event: Meetup
   isNextMeetup: boolean
-  isMeetupToday?: boolean
+  isMeetupToday: boolean
 }
+
+const isHighlightedEvent = computed(() =>
+  (!areThereMeetupsToday && isNextMeetup) || isMeetupToday,
+)
 
 function hasAlbum() {
   return Boolean(event && event.album && event?.album.toString() === 'null')
@@ -57,7 +61,7 @@ function formatDate(date: Date, formatString: string) {
     class="group group/event in-card bg-white dark:bg-verse-700/30 dark:backdrop-blur-sm border-2 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300"
     :class="[
       event?.album ? 'col-span-2 md:col-span-1' : 'md:col-span-1 col-span-2',
-      (!areThereMeetupsToday && isNextMeetup) || isMeetupToday ? 'border-green-600 dark:border-green-500' : 'border-verse-50 dark:border-white/10 ',
+      isHighlightedEvent ? 'border-green-600 dark:border-green-500' : 'border-verse-50 dark:border-white/10 ',
     ]"
   >
     <div
@@ -105,7 +109,10 @@ function formatDate(date: Date, formatString: string) {
               </template>
 
               <template v-if="isMeetupToday">
-                <span class="flex flex-row items-center gap-1 text-sm font-mono justify-end text-red-800 dark:text-red-300 ps-2 pe-3 rounded-md font-bold outline outline-1">
+                <span
+                  aria-label="This meetup is happening today"
+                  class="flex flex-row items-center gap-1 text-sm font-mono justify-end text-red-800 dark:text-red-300 ps-2 pe-3 rounded-md font-bold outline outline-1"
+                >
                   <Icon name="fad:armrecording" size="0.875em" class="motion-safe:animate-pulse" />
                   <span>TODAY</span>
                 </span>

@@ -96,6 +96,11 @@ export function getGithubUrl(username?: string) {
   return speaker_photo
 }
 
+/**
+ * Returns the timestamp in milliseconds for the given date at midnight.
+ * @param {Date} date - The date to convert
+ * @returns {number} Timestamp in milliseconds
+ */
 function dateAtMidnightInMs(date: Date) {
   const clonedDate = new Date(date)
 
@@ -104,14 +109,32 @@ function dateAtMidnightInMs(date: Date) {
   return clonedDate.getTime()
 }
 
+/**
+ * Checks if the given date is in the future relative to the reference date.
+ * @param {Date} date - The date to check
+ * @param {Date} now - The reference date (defaults to the current date)
+ * @returns {boolean} True if the date is in the future, false otherwise
+ */
 export function isDateInFuture(date: Date, now: Date = new Date()) {
   return dateAtMidnightInMs(date) > dateAtMidnightInMs(now)
 }
 
+/**
+ * Checks if the given date is in the past relative to the reference date.
+ * @param {Date} date - The date to check
+ * @param {Date} now - The reference date (defaults to the current date)
+ * @returns {boolean} True if the date is in the past, false otherwise
+ */
 export function isDateInPast(date: Date, now: Date = new Date()) {
   return dateAtMidnightInMs(date) < dateAtMidnightInMs(now)
-};
+}
 
+/**
+ * Checks if the given date is the same as the reference date.
+ * @param {Date} date - The date to check
+ * @param {Date} now - The reference date (defaults to the current date)
+ * @returns {boolean} True if the date is the same as the reference date, false otherwise
+ */
 export function isDateToday(date: Date, now: Date = new Date()) {
   return dateAtMidnightInMs(date) === dateAtMidnightInMs(now)
-};
+}
