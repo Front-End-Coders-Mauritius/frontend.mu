@@ -140,7 +140,16 @@ function toggleHeader() {
       lastScrollPosition = currentScrollPosition;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.addEventListener("scroll", handleScroll, { passive: true });
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe($header);
   }
 }
 
