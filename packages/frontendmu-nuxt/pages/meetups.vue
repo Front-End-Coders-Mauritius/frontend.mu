@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { isDateToday } from '../utils/helpers'
 // group response by year and sort by reverse date
 
-const { allMeetups, meetupsGroupedByYear, nextMeetup } = useMeetups({})
+const { allMeetups, meetupsGroupedByYear, nextMeetup, todaysMeetups } = useMeetups({})
 
 const nextMeetupId = nextMeetup.value.id
 </script>
@@ -31,8 +32,13 @@ const nextMeetupId = nextMeetup.value.id
               {{ year }}
             </div>
             <div class="grid grid-cols-2 gap-8 relative z-10">
-              <CardsEventCard v-for="event in meetupsGroupedByYear[year]" :key="event.id" :event="event"
-                              :is-next-meetup="event.id === nextMeetupId" class="card-entrance"
+              <CardsEventCard
+                v-for="event in meetupsGroupedByYear[year]"
+                :key="event.id"
+                :event="event"
+                :is-next-meetup="event.id === nextMeetupId"
+                :is-meetup-today="todaysMeetups.some(meetup => meetup.id === event.id)"
+                class="card-entrance"
               />
             </div>
           </div>

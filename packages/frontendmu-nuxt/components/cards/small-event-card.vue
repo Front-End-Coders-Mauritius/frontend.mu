@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { DirectusEvent } from '@/utils/types'
+import { isDateInFuture } from '@/utils/helpers'
 
 const props = defineProps({
   event: {
@@ -16,7 +17,7 @@ const props = defineProps({
   >
     <div v-if="event.Date" class="">
       <span
-        class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/5" :class="isUpcoming(event.Date)
+        class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/5" :class="isDateInFuture(new Date(event.Date))
           ? 'bg-verse-50 text-verse-600 dark:text-verse-400 font-bold dark:bg-verse-900/10'
           : 'bg-gray-50 text-gray-700'
         "

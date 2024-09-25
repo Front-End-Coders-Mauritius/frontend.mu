@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import photosResponse from '../../../frontendmu-data/data/photos-raw.json'
-import { isUpcoming, vTransitionName } from '@/utils/helpers'
+import { isDateInFuture, vTransitionName } from '@/utils/helpers'
 import type { DirectusEvent } from '@/utils/types'
 
 interface Props {
@@ -41,12 +41,12 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
           <div class="relative">
             <!-- Content area -->
             <div>
-              <template v-if="isUpcoming(getCurrentEvent.Date || '')">
+              <template v-if="isDateInFuture(getCurrentEvent.Date || '')">
                 <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
                   <div class="flex w-full items-center justify-start">
                     <p
                       class="p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4" :class="[
-                        isUpcoming(getCurrentEvent.Date || '')
+                        isDateInFuture(getCurrentEvent.Date || '')
                           ? 'tagStyle bg-green-100 text-green-800'
                           : 'tagStyle bg-yellow-100 text-yellow-800',
                       ]"

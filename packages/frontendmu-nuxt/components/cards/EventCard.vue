@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { format } from 'date-fns'
+import { defineProps } from 'vue'
 import photosResponse from '../../../frontendmu-data/data/photos-raw.json'
+import { isDateInFuture } from '../../utils/helpers'
 import CardAlbum from './CardAlbum.vue'
 
-const { event, isNextMeetup } = defineProps<Props>()
+const { event, isNextMeetup, isMeetupToday } = defineProps<Props>()
+const { areThereMeetupsToday } = useMeetups({ pastMeetupsLimit: 10 })
 const appConfig = useAppConfig()
 const photoAlbumSource = appConfig.photoAlbumSource as string
 
 interface Props {
   event: Meetup
   isNextMeetup: boolean
+  isMeetupToday: boolean
 }
+
+const isHighlightedEvent = computed(() =>
+  (!areThereMeetupsToday && isNextMeetup) || isMeetupToday,
+)
 
 function hasAlbum() {
   return Boolean(event && event.album && event?.album.toString() === 'null')
@@ -54,7 +61,7 @@ function formatDate(date: Date, formatString: string) {
     class="group group/event in-card bg-white dark:bg-verse-700/30 dark:backdrop-blur-sm border-2 rounded-xl overflow-hidden hover:border-verse-500 transition-all duration-300"
     :class="[
       event?.album ? 'col-span-2 md:col-span-1' : 'md:col-span-1 col-span-2',
-      isNextMeetup ? 'border-green-600 dark:border-green-500' : 'border-verse-50 dark:border-white/10 ',
+      isHighlightedEvent ? 'border-green-600 dark:border-green-500' : 'border-verse-50 dark:border-white/10 ',
     ]"
   >
     <div
@@ -83,7 +90,7 @@ function formatDate(date: Date, formatString: string) {
           <div
             class="flex flex-col font-mono text-sm font-medium gap-2 w-full justify-between"
             :class="[
-              isUpcoming(event.Date) ? 'text-green-600 font-bold' : 'text-verse-900 dark:text-verse-300',
+              isMeetupToday || isDateInFuture(new Date(event.Date)) ? 'text-green-600 font-bold' : 'text-verse-900 dark:text-verse-300',
             ]"
           >
             <!-- Title -->
@@ -98,6 +105,16 @@ function formatDate(date: Date, formatString: string) {
               <template v-if="isNextMeetup">
                 <span class="bg-green-700 text-sm font-mono justify-end text-white px-3 rounded-md font-bold">
                   NEXT MEETUP
+                </span>
+              </template>
+
+              <template v-if="isMeetupToday">
+                <span
+                  aria-label="This meetup is happening today"
+                  class="flex flex-row items-center gap-1 text-sm font-mono justify-end text-red-800 dark:text-red-300 ps-2 pe-3 rounded-md font-bold outline outline-1"
+                >
+                  <Icon name="fad:armrecording" size="0.875em" class="motion-safe:animate-pulse" />
+                  <span>TODAY</span>
                 </span>
               </template>
             </div>
