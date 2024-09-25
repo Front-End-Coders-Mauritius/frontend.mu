@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { DirectusEvent } from '@/utils/types'
-import { isDateInFuture } from '@/utils/helpers'
 
 const props = defineProps({
   event: {
