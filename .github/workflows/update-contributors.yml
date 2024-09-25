@@ -1,12 +1,13 @@
 name: Update Contributors
 
 on:
-  push:
-    branches:
-      - main # Change 'main' to your default branch name if it's different
+  pull_request_target:
+    types:
+      - closed
 
 jobs:
   update-contributors:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:

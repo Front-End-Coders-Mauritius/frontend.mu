@@ -25,13 +25,13 @@ const sortedProjects = projects.sort((a, b) => {
                 </template>
 </div>
 </div> -->
-    <div class="grid md:grid-cols-3 gap-3">
+    <div class="grid md:grid-cols-3 auto-rows-fr gap-6">
       <TransitionGroup name="list">
         <template v-for="project in sortedProjects" :key="project.title">
           <div class="border bg-white dark:bg-verse-950 border-verse-400/50 p-3 rounded-md flex flex-col gap-2">
-            <div class="flex items-start gap-2">
+            <div class="flex items-center gap-4">
               <div v-if="project.icon" class="flex items-center">
-                <Icon :name="project.icon" class="text-verse-600 dark:text-verse-400 w-8 h-8 rounded-full" />
+                <Icon :name="project.icon" class="text-verse-600 dark:text-verse-400 w-12 h-12 rounded-full" />
               </div>
               <div class="flex-1">
                 <div class="flex gap-1.5 items-center">
