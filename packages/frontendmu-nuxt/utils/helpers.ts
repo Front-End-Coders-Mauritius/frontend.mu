@@ -96,17 +96,22 @@ export function getGithubUrl(username?: string) {
   return speaker_photo
 }
 
-export function isUpcoming(currentEventDateStr: string) {
-  const currentEventDate = new Date(currentEventDateStr)
-  const today = new Date()
+function dateAtMidnightInMs(date: Date) {
+  const clonedDate = new Date(date)
 
-  const isDateInPast = dateInPast(currentEventDate, today)
-  return !isDateInPast
+  clonedDate.setHours(0, 0, 0, 0)
+
+  return clonedDate.getTime()
 }
 
-export function dateInPast(firstDate: Date, secondDate: Date) {
-  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
-    return true
+export function isDateInFuture(date: Date, now: Date = new Date()) {
+  return dateAtMidnightInMs(date) > dateAtMidnightInMs(now)
+}
 
-  return false
+export function isDateInPast(date: Date, now: Date = new Date()) {
+  return dateAtMidnightInMs(date) < dateAtMidnightInMs(now)
+};
+
+export function isDateToday(date: Date, now: Date = new Date()) {
+  return dateAtMidnightInMs(date) === dateAtMidnightInMs(now)
 };
