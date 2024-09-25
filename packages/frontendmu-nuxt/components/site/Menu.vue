@@ -113,12 +113,15 @@ function toggleHeader() {
         headerHeight
       );
 
-      if (nextTransition !== currentTransition) {
+      if (
+        currentScrollPosition >= headerHeight &&
+        nextTransition !== currentTransition
+      ) {
         currentTransition = nextTransition;
         $header.style.transform = `translateY(-${currentTransition}px)`;
       }
 
-      if (currentScrollPosition > 60) {
+      if (currentScrollPosition > headerHeight) {
         $header.classList.add(
           "intersect",
           "shadow-sm",
