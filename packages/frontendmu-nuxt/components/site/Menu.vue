@@ -108,52 +108,53 @@ function toggleHeader() {
 
   if (headerElement) {
     const handleScroll = () => {
-      const headerHeight = headerElement.clientHeight;
+      window.requestAnimationFrame(() => {
+        const headerHeight = headerElement.clientHeight;
 
-      // the current vertical scroll position of the page
-      const currentScrollPosition =
-        window.scrollY || document.documentElement.scrollTop;
+        // the current vertical scroll position of the page
+        const currentScrollPosition =
+          window.scrollY || document.documentElement.scrollTop;
 
-      // the distance that the user has scrolled since the last scroll event
-      const distance = currentScrollPosition - previousScrollPosition;
+        // the distance that the user has scrolled since the last scroll event
+        const distance = currentScrollPosition - previousScrollPosition;
 
-      // New vertical position of the header
-      const nextHeaderOffset = Math.min(
-        Math.max(headerOffset + distance, 0),
-        headerHeight
-      );
-
-      // checks if the user has scrolled past the header and nextHeaderOffset differs from the current position
-      if (
-        currentScrollPosition >= headerHeight &&
-        nextHeaderOffset !== headerOffset
-      ) {
-        headerOffset = nextHeaderOffset;
-        headerElement.style.transform = `translateY(-${headerOffset}px)`;
-      }
-
-      // if the user has scrolled past the header, we add these classes
-      if (currentScrollPosition > headerHeight) {
-        headerElement.classList.add(
-          "intersect",
-          "shadow-sm",
-          "dark:bg-verse-900/50",
-          "bg-verse-50/50"
+        // New vertical position of the header
+        const nextHeaderOffset = Math.min(
+          Math.max(headerOffset + distance, 0),
+          headerHeight
         );
-      } else {
-        headerElement.classList.remove(
-          "intersect",
-          "shadow-sm",
-          "dark:bg-verse-900/50",
-          "bg-verse-50/50"
-        );
-      }
 
-      previousScrollPosition = currentScrollPosition;
+        // checks if the user has scrolled past the header and nextHeaderOffset differs from the current position
+        if (
+          currentScrollPosition >= headerHeight &&
+          nextHeaderOffset !== headerOffset
+        ) {
+          headerOffset = nextHeaderOffset;
+          headerElement.style.transform = `translateY(-${headerOffset}px)`;
+        }
+
+        // if the user has scrolled past the header, we add these classes
+        if (currentScrollPosition > headerHeight) {
+          headerElement.classList.add(
+            "intersect",
+            "shadow-sm",
+            "dark:bg-verse-900/50",
+            "bg-verse-50/50"
+          );
+        } else {
+          headerElement.classList.remove(
+            "intersect",
+            "shadow-sm",
+            "dark:bg-verse-900/50",
+            "bg-verse-50/50"
+          );
+        }
+
+        previousScrollPosition = currentScrollPosition;
+      });
     };
 
-    console.log("test");
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
   }
 }
 
