@@ -98,38 +98,50 @@ const links: TMenu = {
 };
 
 function toggleHeader() {
-  const $header = document.querySelector(".menu-wrapper");
-  let currentTransition = 0;
-  let lastScrollPosition = 0;
-  if ($header) {
+  const headerElement = document.querySelector(".menu-wrapper") as HTMLElement;
+
+  // headerOffset tracks how much the header has been moved vertically
+  let headerOffset = 0;
+
+  // This keeps track of the previous scroll position to calculate whether the user is scrolling up or down.
+  let previousScrollPosition = 0;
+
+  if (headerElement) {
     const handleScroll = () => {
-      const headerHeight = $header.clientHeight;
+      const headerHeight = headerElement.clientHeight;
+
+      // the current vertical scroll position of the page
       const currentScrollPosition =
         window.scrollY || document.documentElement.scrollTop;
-      const distance = currentScrollPosition - lastScrollPosition;
 
-      const nextTransition = Math.min(
-        Math.max(currentTransition + distance, 0),
+      // the distance that the user has scrolled since the last scroll event
+      const distance = currentScrollPosition - previousScrollPosition;
+
+      // New vertical position of the header
+      const nextHeaderOffset = Math.min(
+        Math.max(headerOffset + distance, 0),
         headerHeight
       );
 
+      // checks if the user has scrolled past the header and nextHeaderOffset differs from the current position
       if (
         currentScrollPosition >= headerHeight &&
-        nextTransition !== currentTransition
+        nextHeaderOffset !== headerOffset
       ) {
-        currentTransition = nextTransition;
-        $header.style.transform = `translateY(-${currentTransition}px)`;
+        headerOffset = nextHeaderOffset;
+        headerElement.style.transform = `translateY(-${headerOffset}px)`;
       }
 
+      // if the user has scrolled past the header, we add these classes
       if (currentScrollPosition > headerHeight) {
-        $header.classList.add(
+        headerElement.classList.add(
           "intersect",
           "shadow-sm",
           "dark:bg-verse-900/50",
           "bg-verse-50/50"
         );
       } else {
-        $header.classList.remove(
+        headerElement.classList.remove(
           "intersect",
           "shadow-sm",
           "dark:bg-verse-900/50",
@@ -137,19 +149,11 @@ function toggleHeader() {
         );
       }
 
-      lastScrollPosition = currentScrollPosition;
+      previousScrollPosition = currentScrollPosition;
     };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          window.addEventListener("scroll", handleScroll, { passive: true });
-        }
-      },
-      { threshold: 0 }
-    );
-
-    observer.observe($header);
+    console.log("test");
+    window.addEventListener("scroll", handleScroll);
   }
 }
 
