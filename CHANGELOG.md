@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
+## [09.24] - 2024-09-28
+
+### ⛰️  Features
+
+- *(community)* Add more projects - ([b2e0b15](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/b2e0b15e78d673ef5002a5d75a169ff48e2f27a7))
+- Add map - ([038e87c](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/038e87c894c3cda880e9c4233c7f24ec0c700a5e))
+
+### 🐛 Bug Fixes
+
+- *(github)* Correct  operators - ([828dc9d](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/828dc9d093f670b759a0ea613f338cfaa24f3f7e))
+- *(github)* Trigger workflow only on pull request MERGE - ([d33b7a4](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/d33b7a4dc02e6f162d6fbae81c2bc058f2cb9389))
+- Fix - ([5391a15](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/5391a15a077c2b586678837244ead9a3547b83a3))
+
+### 🎨 Styling
+
+- *(community)* Resize icons - ([8896735](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/88967357cb52ca22e3ac2a3e453ff0672a89b3a0))
+
+### ⚙️ Miscellaneous Tasks
+
+- *(cliff)* Unfilter commits - ([6b91b9a](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/6b91b9aae134d75100920a9f12e21576772def49))
+- *(github)* Use pull_request_target for update_contributors.yml - ([7bb9ee8](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/7bb9ee853315b6184649c1ce1fa8a049c7477b3d))
+- *(github)* Remove if condition on update-contributors.yml - ([64cfde2](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/64cfde2f334aecbea47f8eaf38f114969bd521d1))
+
+fix: spacing & height in community cards - ([1dd8f8e](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/1dd8f8e9eac3c7d86d475408bcae3b63b220ac81))
+- Update data - ([2585d25](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/2585d2545414991302b066de2593c719812298fe))
+- Add CHANGELOG - ([7552694](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/75526940f8c3900936e5bc67d821d0e3823ee693))
+- Add cliff.toml - ([9b558ff](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/9b558ffde87cdab402519f99a6ba4104bc8d434e))
+- Add LICENSE - ([d144245](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/d14424564659558bdf0221479ba54de914685446))
+
+### A11y
+
+- Added aria label - ([748f921](https://github.com/Front-End-Coders-Mauritius/frontend.mu/commit/748f921fc0e97f735b54c141cc48edafc199536a))
+
 ## [08.24] - 2024-09-09
 
 ### ⛰️  Features
