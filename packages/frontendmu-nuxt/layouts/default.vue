@@ -9,7 +9,7 @@ defineOgImageComponent('Generic')
 
     <slot />
 
-    <HomeSponsors />
+    <HomeSponsorHighlight />
 
     <SiteFooter />
   </LayoutBackdrop>
