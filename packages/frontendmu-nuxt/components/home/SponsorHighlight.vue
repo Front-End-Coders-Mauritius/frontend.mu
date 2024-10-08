@@ -7,7 +7,7 @@ import sponsors from '../../../frontendmu-data/data/sponsors.js'
     <div class="homepage-wrapper">
       <main>
         <div class="relative pb-20 z-0 h-[auto] w-full">
-          <div class="relative z-20 mx-auto grid grid-cols-1 gap-8 md:flex-row h-full justify-center max-w-6xl px-12">
+          <div class="relative z-20 mx-auto grid grid-cols-1 gap-10 md:flex-row h-full justify-center max-w-6xl px-12">
             <div class="flex flex-col justify-center text-center gap-10">
               <BaseHeading>Our Sponsors</BaseHeading>
               <!-- <flip-book class="mt-[-16%] md:mt-[-12%]" /> -->
@@ -17,10 +17,10 @@ import sponsors from '../../../frontendmu-data/data/sponsors.js'
                   class="underline">please reach out to us here</a>.
               </p>
               <div class="grid place-items-center">
-                <a href="/sponsors"
-                  class="text-md block w-48 rounded-md bg-yellow-500/90 dark:bg-white/10 px-4 py-4 text-center font-medium text-white md:w-64 md:px-8 md:text-xl">
+                <NuxtLink to="/sponsors"
+                  class="bg-verse-500 hover:bg-verse-600 transition-colors duration-200 text-md block w-48 rounded-full px-4 py-4 text-center font-medium text-white md:w-52 md:px-6 md:text-lg">
                   View all sponsors
-                </a>
+                </NuxtLink>
               </div>
             </div>
 
