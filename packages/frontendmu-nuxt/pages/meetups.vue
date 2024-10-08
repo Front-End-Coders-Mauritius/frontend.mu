@@ -10,7 +10,7 @@ const nextMeetupId = nextMeetup.value.id
 <template>
   <div>
     <MiscContentBlock>
-      <div class="past-events-container pb-4 md:pb-16">
+      <div class="past-events-container pb-4">
         <div class="flex flex-col gap-2">
           <BaseHeading :level="1">
             All meetups
@@ -22,24 +22,18 @@ const nextMeetupId = nextMeetup.value.id
         </div>
 
         <template v-for="year in Object.keys(meetupsGroupedByYear).reverse()" :key="year">
-          <div class="grid pb-16 sm:pb-40 relative group is-page">
+          <div class="grid pb-16 sm:pb-40 last:pb-0 relative group is-page">
             <div class="text-lg font-bold text-verse-900 uppercase md:hidden">
               {{ year }}
             </div>
             <div
-              class="absolute origin-bottom-lef left-[-150px] top-[50px] opacity-10 -rotate-90 text-[100px] font-bold text-verse-900 dark:text-verse-100 group-hover-[.is-page]:left-[-170px] transition-all duration-300 hidden md:block"
-            >
+              class="absolute origin-bottom-lef left-[-150px] top-[50px] opacity-10 -rotate-90 text-[100px] font-bold text-verse-900 dark:text-verse-100 group-hover-[.is-page]:left-[-170px] transition-all duration-300 hidden md:block">
               {{ year }}
             </div>
             <div class="grid grid-cols-2 gap-8 relative z-10">
-              <CardsEventCard
-                v-for="event in meetupsGroupedByYear[year]"
-                :key="event.id"
-                :event="event"
+              <CardsEventCard v-for="event in meetupsGroupedByYear[year]" :key="event.id" :event="event"
                 :is-next-meetup="event.id === nextMeetupId"
-                :is-meetup-today="todaysMeetups.some(meetup => meetup.id === event.id)"
-                class="card-entrance"
-              />
+                :is-meetup-today="todaysMeetups.some(meetup => meetup.id === event.id)" class="card-entrance" />
             </div>
           </div>
         </template>

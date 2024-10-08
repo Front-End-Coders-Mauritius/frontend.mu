@@ -3,7 +3,7 @@ import sponsors from '../../../frontendmu-data/data/sponsors.js'
 </script>
 
 <template>
-  <div class="homepage-container">
+  <div class="homepage-container pt-20">
     <div class="homepage-wrapper">
       <main>
         <div class="relative pb-20 z-0 h-[auto] w-full">
