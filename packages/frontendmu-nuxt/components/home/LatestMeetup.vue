@@ -1,13 +1,23 @@
 <script setup lang="ts">
-const { nextMeetup, upcomingMeetups, pastMeetups } = useMeetups({})
+const { nextMeetup, upcomingMeetups, pastMeetups, todaysMeetups, areThereMeetupsToday } = useMeetups({})
 
-const remainingUpcomingData = ref(upcomingMeetups().slice(0, upcomingMeetups().length - 1))
+const remainingUpcomingData = ref(areThereMeetupsToday.value ? upcomingMeetups.value : upcomingMeetups.value.slice(0, upcomingMeetups.value.length - 1))
 </script>
 
 <template>
   <div class="latest-events-container relative z-20 sm:py-6 md:pt-8 md:px-8 px-0">
     <div class="latest-events-wrapper mx-auto flex flex-col gap-16 px-4 pt-8 md:max-w-3xl md:px-0 lg:max-w-5xl">
-      <div>
+      <div v-if="areThereMeetupsToday">
+        <div class="py-8">
+          <BaseHeading weight="light">
+            Today's Meetups
+          </BaseHeading>
+        </div>
+        <div class="sm:grid sm:grid-cols-1 gap-8 px-4 md:px-0 card-3d">
+          <CardsEventTilt v-for="meetup in todaysMeetups" :key="meetup.id" :event="meetup" />
+        </div>
+      </div>
+      <div v-if="!areThereMeetupsToday">
         <div class="py-8">
           <BaseHeading weight="light">
             Next Meetup
@@ -38,8 +48,9 @@ const remainingUpcomingData = ref(upcomingMeetups().slice(0, upcomingMeetups().l
         </div>
       </div>
       <div class="flex h-32 items-center justify-center">
-        <NuxtLink href="/meetups"
-                  class="text-md w-48 rounded-md bg-verse-600 px-4 py-8 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
+        <NuxtLink
+          href="/meetups"
+          class="text-md w-48 rounded-md bg-verse-600 px-4 py-8 text-center font-medium text-white md:w-64 md:px-8 md:text-xl"
         >
           View all meetups
         </NuxtLink>

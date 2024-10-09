@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import photosResponse from '../../../frontendmu-data/data/photos-raw.json'
-
+import { isDateInFuture, vTransitionName } from '@/utils/helpers'
 import type { DirectusEvent } from '@/utils/types'
 
 interface Props {
@@ -41,14 +41,15 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
           <div class="relative">
             <!-- Content area -->
             <div>
-              <template v-if="isUpcoming(getCurrentEvent.Date || '')">
+              <template v-if="isDateInFuture(getCurrentEvent.Date || '')">
                 <div class="flex flex-col pb-4 gap-2 md:flex-row md:justify-between md:items-center">
                   <div class="flex w-full items-center justify-start">
-                    <p class="p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4" :class="[
-                      isUpcoming(getCurrentEvent.Date || '')
-                        ? 'tagStyle bg-green-100 text-green-800'
-                        : 'tagStyle bg-yellow-100 text-yellow-800',
-                    ]"
+                    <p
+                      class="p-2 rounded-full text-sm font-medium tracking-wide uppercase px-4" :class="[
+                        isDateInFuture(getCurrentEvent.Date || '')
+                          ? 'tagStyle bg-green-100 text-green-800'
+                          : 'tagStyle bg-yellow-100 text-yellow-800',
+                      ]"
                     >
                       happening soon
                     </p>
@@ -59,8 +60,9 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
                 Topic
               </div>
               <div>
-                <BaseHeading :level="1" class="font-extrabold"
-                             :style="vTransitionName(getCurrentEvent?.title, 'meetup-title')"
+                <BaseHeading
+                  :level="1" class="font-extrabold"
+                  :style="vTransitionName(getCurrentEvent?.title, 'meetup-title')"
                 >
                   {{ getCurrentEvent?.title }}
                 </BaseHeading>
@@ -106,13 +108,20 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
                 </div>
               </template>
               <template v-if="getCurrentEvent.Location">
-                <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
-                  <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                    Location
+                <div class="border-t-2 grid gap-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
+                  <dt class="text-base flex justify-between font-medium text-verse-500 dark:text-verse-300">
+                    <div>
+                      Location
+                    </div>
                   </dt>
                   <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
                     {{ getCurrentEvent.Location }}
                   </dd>
+                  <div v-if="getCurrentEvent.map">
+                    <a :href="getCurrentEvent.map" target="_blank" class="uppercase text-xs text-verse-100 bg-verse-400 rounded-full p-2" aria-label="View event location on map">
+                      View on map
+                    </a>
+                  </div>
                 </div>
               </template>
               <template v-if="getCurrentEvent.Attendees || getCurrentEvent.seats_available">

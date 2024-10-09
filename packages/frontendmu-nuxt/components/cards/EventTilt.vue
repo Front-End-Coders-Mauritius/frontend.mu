@@ -26,7 +26,7 @@ const tiltOptions = {
       <!-- <div class="w-64 top-0 h-64 z-10 bg-gradient-to-t from-white to-transparent absolute">&nbsp;</div> -->
 
       <h3 class="leading-2 text-xl md:text-5xl font-medium md:h-12 z-20 text-verse-600 dark:text-verse-300">
-        <NuxtLink :href="`/meetup/${props.event.id}`" class="w-[300px] md:w-96 focus:outline-none">
+        <NuxtLink :href="`/meetup/${event.id}`" class="w-[300px] md:w-96 focus:outline-none">
           <span class="absolute inset-0" aria-hidden="true" />
           {{ event?.title }}
         </NuxtLink>
@@ -34,13 +34,10 @@ const tiltOptions = {
 
       <div class="flex flex-col md:flex-row w-full justify-between gap-4 border-gray-100">
         <span
-          v-if="props.event.Date" class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/10" :class="isUpcoming(props.event.Date)
-            ? 'bg-green-50 text-green-600 font-bold dark:bg-verse-900'
-            : 'bg-gray-50 text-gray-700'
-          "
+          v-if="event.Date" class="inline-flex rounded-lg p-3 ring-4 ring-white dark:ring-white/10 text-green-600 bg-green-50 dark:bg-verse-900 font-bold"
         >
           <Icon name="carbon:calendar" class="mr-2 h-6 w-6" />
-          <span>{{ new Date(props.event.Date).toDateString() }}</span>
+          <span>{{ new Date(event.Date).toDateString() }}</span>
         </span>
 
         <div
@@ -59,7 +56,7 @@ const tiltOptions = {
         </div>
 
         <div
-          v-if="props.event.Venue"
+          v-if="event.Venue"
           class="flex gap-1 md:gap-0 items-center justify-start text-xl font-medium text-gray-500 dark:text-gray-100"
         >
           <Icon
@@ -67,7 +64,7 @@ const tiltOptions = {
             class="ml-[-1px] mr-1.5 h-5 w-5 flex-shrink-0 truncate text-gray-500 dark:text-gray-100"
             aria-hidden="true"
           />
-          <div>{{ props.event.Venue }}</div>
+          <div>{{ event.Venue }}</div>
         </div>
 
         <div v-else>

@@ -39,9 +39,10 @@ function allSpeakersForEvent(event: Meetup) {
 </script>
 
 <template>
-  <Carousel class="relative w-full" :opts="{
-    align: 'start',
-  }"
+  <Carousel
+    class="relative w-full" :opts="{
+      align: 'start',
+    }"
   >
     <CarouselContent class="-ml-1">
       <CarouselItem v-for="(meetup, index) in meetupsWithAlbums" :key="index" class="pl-1 md:basis-1/2 lg:basis-1/4">

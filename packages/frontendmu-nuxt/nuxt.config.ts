@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'shadcn-nuxt',
     '@nuxt/image',
+    '@nuxt/content',
   ],
 
   eslint: {
@@ -93,7 +94,7 @@ export default defineNuxtConfig({
 
   image: {
     quality: 80,
-    domains: ['raw.githubusercontent.com'],
+    domains: ['raw.githubusercontent.com', 'avatars.githubusercontent.com'],
   },
 
   compatibilityDate: '2024-08-02',

@@ -5,10 +5,21 @@
     "scripts": {
         "astro": "pnpm --filter @frontend.mu/astro",
         "nuxt": "pnpm --filter @frontend.mu/nuxt",
-        "data": "pnpm --filter @frontend.mu/data"
+        "data": "pnpm --filter @frontend.mu/data",
+        "commit": "cz"
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-git"
+        }
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
+    "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771",
+    "devDependencies": {
+        "@commitlint/cli": "^19.4.0",
+        "commitizen": "^4.3.0",
+        "cz-git": "^1.9.4"
+    }
 }

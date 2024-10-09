@@ -98,17 +98,45 @@ export function getGithubUrl(username?: string) {
   return speaker_photo
 }
 
-export function isUpcoming(currentEventDateStr: string) {
-  const currentEventDate = new Date(currentEventDateStr)
-  const today = new Date()
+/**
+ * Returns the timestamp in milliseconds for the given date at midnight.
+ * @param {Date} date - The date to convert
+ * @returns {number} Timestamp in milliseconds
+ */
+function dateAtMidnightInMs(date: Date) {
+  const clonedDate = new Date(date)
 
-  const isDateInPast = dateInPast(currentEventDate, today)
-  return !isDateInPast
+  clonedDate.setHours(0, 0, 0, 0)
+
+  return clonedDate.getTime()
 }
 
-export function dateInPast(firstDate: Date, secondDate: Date) {
-  if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0))
-    return true
+/**
+ * Checks if the given date is in the future relative to the reference date.
+ * @param {Date} date - The date to check
+ * @param {Date} now - The reference date (defaults to the current date)
+ * @returns {boolean} True if the date is in the future, false otherwise
+ */
+export function isDateInFuture(date: Date, now: Date = new Date()) {
+  return dateAtMidnightInMs(date) > dateAtMidnightInMs(now)
+}
 
-  return false
-};
+/**
+ * Checks if the given date is in the past relative to the reference date.
+ * @param {Date} date - The date to check
+ * @param {Date} now - The reference date (defaults to the current date)
+ * @returns {boolean} True if the date is in the past, false otherwise
+ */
+export function isDateInPast(date: Date, now: Date = new Date()) {
+  return dateAtMidnightInMs(date) < dateAtMidnightInMs(now)
+}
+
+/**
+ * Checks if the given date is the same as the reference date.
+ * @param {Date} date - The date to check
+ * @param {Date} now - The reference date (defaults to the current date)
+ * @returns {boolean} True if the date is the same as the reference date, false otherwise
+ */
+export function isDateToday(date: Date, now: Date = new Date()) {
+  return dateAtMidnightInMs(date) === dateAtMidnightInMs(now)
+}

@@ -9,8 +9,6 @@ defineOgImageComponent('Generic')
 
     <slot />
 
-    <HomeSponsorHighlight />
-
     <SiteFooter />
   </LayoutBackdrop>
 </template>

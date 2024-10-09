@@ -1,0 +1,98 @@
+[
+  {
+    "number": 188,
+    "title": "Data visualisation on meetup data ",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/188",
+    "author": {
+      "id": "U_kgDOBla0SA",
+      "is_bot": false,
+      "login": "derecklhw",
+      "name": "Dereck Lam Hon Wah"
+    },
+    "assignees": [],
+    "createdAt": "2024-08-16T16:21:20Z",
+    "state": "OPEN",
+    "comments_count": 0
+  },
+  {
+    "number": 185,
+    "title": "Event location should be a link to map",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/185",
+    "author": {
+      "id": "MDQ6VXNlcjE3MjE2MTE=",
+      "is_bot": false,
+      "login": "MrSunshyne",
+      "name": "Sandeep Ramgolam"
+    },
+    "assignees": [],
+    "createdAt": "2024-08-16T15:42:01Z",
+    "state": "OPEN",
+    "comments_count": 0
+  },
+  {
+    "number": 184,
+    "title": "History page",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/184",
+    "author": {
+      "id": "MDQ6VXNlcjE3MjE2MTE=",
+      "is_bot": false,
+      "login": "MrSunshyne",
+      "name": "Sandeep Ramgolam"
+    },
+    "assignees": [],
+    "createdAt": "2024-08-16T15:33:19Z",
+    "state": "OPEN",
+    "comments_count": 0
+  },
+  {
+    "number": 181,
+    "title": "Speaker profile with description",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/181",
+    "author": {
+      "id": "MDQ6VXNlcjE3MjE2MTE=",
+      "is_bot": false,
+      "login": "MrSunshyne",
+      "name": "Sandeep Ramgolam"
+    },
+    "assignees": [],
+    "createdAt": "2024-08-16T14:55:56Z",
+    "state": "OPEN",
+    "comments_count": 0
+  },
+  {
+    "number": 163,
+    "title": "Let's implement GitHub login",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/163",
+    "author": {
+      "id": "U_kgDOBb5yZQ",
+      "is_bot": false,
+      "login": "n-d-r-d-g",
+      "name": "n-d-r-d-g"
+    },
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjE3MjE2MTE=",
+        "login": "MrSunshyne",
+        "name": "Sandeep Ramgolam"
+      }
+    ],
+    "createdAt": "2024-08-04T10:27:55Z",
+    "state": "OPEN",
+    "comments_count": 4
+  },
+  {
+    "number": 44,
+    "title": "Request for Speaker Slides Post-Conference",
+    "url": "https://github.com/Front-End-Coders-Mauritius/frontend.mu/issues/44",
+    "author": {
+      "id": "MDQ6VXNlcjQ4MTc0OTk5",
+      "is_bot": false,
+      "login": "k3ii",
+      "name": "Jain Ramchurn"
+    },
+    "assignees": [],
+    "createdAt": "2023-04-29T15:46:56Z",
+    "state": "OPEN",
+    "comments_count": 10
+  }
+]

@@ -23,28 +23,32 @@ export default function useMeetups({
     })
   })
 
-  function upcomingMeetups() {
-    if (!allMeetups)
-      return []
-
+  const upcomingMeetups = computed(() => {
     return sortedMeetups.value.filter((item) => {
-      return isUpcoming(item.Date)
+      return isDateInFuture(new Date(item.Date))
     })
-  };
+  })
 
-  const nextMeetup = computed(() => {
-    return upcomingMeetups()[upcomingMeetups().length - 1]
+  const todaysMeetups = computed(() => {
+    return sortedMeetups.value.filter((item) => {
+      return isDateToday(new Date(item.Date))
+    })
   })
 
   const pastMeetups = computed(() => {
-    if (!allMeetups)
-      return []
-
     const pastMeetupsData = sortedMeetups.value.filter((item) => {
-      return !isUpcoming(item.Date)
+      return isDateInPast(new Date(item.Date))
     })
 
     return pastMeetupsData.slice(0, pastMeetupsLimit)
+  })
+
+  const nextMeetup = computed(() => {
+    return upcomingMeetups.value[upcomingMeetups.value.length - 1]
+  })
+
+  const areThereMeetupsToday = computed(() => {
+    return todaysMeetups.value.length > 0
   })
 
   const allSponsors = computed(() => {
@@ -66,8 +70,10 @@ export default function useMeetups({
     allMeetups,
     meetupsGroupedByYear,
     upcomingMeetups,
-    nextMeetup,
+    todaysMeetups,
     pastMeetups,
+    nextMeetup,
+    areThereMeetupsToday,
     allSponsors,
   }
 }

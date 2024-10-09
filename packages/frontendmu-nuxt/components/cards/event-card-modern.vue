@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
+import { isDateInFuture } from '@/utils/helpers'
 
 interface Meetup {
   id: string
@@ -30,8 +31,8 @@ const props = defineProps({
       <!-- Date -->
       <div v-if="event.Date" class="">
         <span
-          :title="isUpcoming(event.Date) ? 'Upcoming' : 'Past'" class="inline-flex rounded-lg p-[0.35rem] md:p-3 font-mono text-sm font-medium items-center" :class="[
-            isUpcoming(event.Date)
+          :title="isDateInFuture(new Date(event.Date)) ? 'Upcoming' : 'Past'" class="inline-flex rounded-lg p-[0.35rem] md:p-3 font-mono text-sm font-medium items-center" :class="[
+            isDateInFuture(new Date(event.Date))
               ? 'bg-green-50 text-green-600 font-bold'
               : 'bg-gray-50 dark:bg-transparent text-verse-500 dark:text-verse-400  dark:font-bold',
           ]"
