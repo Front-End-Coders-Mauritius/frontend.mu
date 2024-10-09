@@ -107,11 +107,21 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
                   </dd>
                 </div>
               </template>
+              <template v-if="getCurrentEvent.Attendees || getCurrentEvent.seats_available">
+                <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
+                  <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
+                    Seats Limit
+                  </dt>
+                  <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                    {{ getCurrentEvent.Attendees || getCurrentEvent.seats_available }}
+                  </dd>
+                </div>
+              </template>
               <template v-if="getCurrentEvent.Location">
                 <div class="border-t-2 grid gap-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
                   <dt class="text-base flex justify-between font-medium text-verse-500 dark:text-verse-300">
                     <div>
-                      Location
+                      Meetup Location
                     </div>
                   </dt>
                   <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
@@ -124,16 +134,21 @@ const currentAlbum = computed(() => fetchAlbumDetails(props.getCurrentEvent?.alb
                   </div>
                 </div>
               </template>
-              <template v-if="getCurrentEvent.Attendees || getCurrentEvent.seats_available">
-                <div class="border-t-2 border-verse-900/20 dark:border-verse-800/50 pt-6">
-                  <dt class="text-base font-medium text-verse-500 dark:text-verse-300">
-                    Seats Limit
-                  </dt>
-                  <dd class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
-                    {{ getCurrentEvent.Attendees || getCurrentEvent.seats_available }}
-                  </dd>
-                </div>
-              </template>
+              <div class="border-t-2 grid grid-rows-[auto_1fr] gap-2 border-verse-900/20 dark:border-verse-800/50 pt-4 md:pt-6">
+                <dt class="text-base flex justify-between font-medium text-verse-500 dark:text-verse-300">
+                  <div>
+                    Parking Location
+                  </div>
+                </dt>
+                <dd v-if="getCurrentEvent.parking_location">
+                  <a :href="getCurrentEvent.parking_location" target="_blank" class="uppercase text-xs text-verse-100 bg-verse-400 rounded-full p-2" aria-label="View parking location on map">
+                    View on map
+                  </a>
+                </dd>
+                <dd v-else class="text-2xl font-extrabold tracking-tight text-verse-900 dark:text-verse-200 md:text-3xl">
+                  Not available
+                </dd>
+              </div>
             </div>
           </div>
         </div>
