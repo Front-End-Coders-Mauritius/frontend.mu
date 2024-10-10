@@ -114,6 +114,7 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
           credentials: 'include', // this is required in order to send the refresh token cookie
           body: JSON.stringify({
             refresh_token: getCookieValue('directus_session_token'),
+            mode: 'cookie',
           }),
         },
       )
@@ -171,10 +172,12 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
       'meal',
       'occupation',
       'github_username',
+      'external_identifier',
       'Events.Events_id.id',
       'Events.Events_id.title',
       'profile_picture',
       'role.name',
+      'provider',
     ]
 
     try {
@@ -220,9 +223,23 @@ export default function useAuth(client: DirectusClient<any> & AuthenticationClie
     return false
   })
 
-  function oAuthLogin() {
-    const currentPage = new URL(window.location.origin)
-    return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
+  function oAuthLogin(provider: string) {
+    if (provider === 'google') {
+      const currentPage = new URL(window.location.origin)
+      return `${DIRECTUS_URL()}/auth/login/google?redirect=${currentPage}redirect`
+    }
+    else if (provider === 'github') {
+      const currentPage = new URL(window.location.origin)
+      return `${DIRECTUS_URL()}/auth/login/github?redirect=${currentPage}redirect`
+    }
+    else if (provider === 'discord') {
+      const currentPage = new URL(window.location.origin)
+      return `${DIRECTUS_URL()}/auth/login/discord?redirect=${currentPage}redirect`
+    }
+
+    console.log('Provider not found')
+
+    return false
   }
 
   async function updateUserProfile({ profile_updates }: { profile_updates: DirectusAstroUser }) {
