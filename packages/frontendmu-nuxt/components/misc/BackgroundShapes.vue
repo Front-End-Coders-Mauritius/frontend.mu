@@ -135,16 +135,12 @@
 </template>
 
 <style>
-  .bg-animation {
-    display: none;
-  }
-
   .bg-position {
     left: -30%;
     top: -50%;
   }
 
-  html.dark-mode .bg-animation {
+  .bg-animation {
     display: block;
     animation: spin 50s ease-in-out infinite;
     opacity: 0.2;
